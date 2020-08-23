@@ -1,0 +1,20 @@
+# Static information about the filesystems.
+# See fstab(5) for details.
+
+# <file system> <dir> <type> <options> <dump> <pass>
+UUID=$UUID	/         	ext4      	noatime	0 1
+
+# /dev/nvme0n1p1
+UUID=$UUID      	/boot     	vfat      	noauto,x-systemd.automount,noatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro	0 2
+
+# /dev/nvme0n1p3
+UUID=$UUID	/home     	xfs       	rw,noatime,attr2,inode64,noquota	0 2
+
+# Swapfile
+/swapfile none swap defaults 0 0
+
+# Additional Drives
+
+UUID="$UUID" /path/to/miunt ntfs-3g defaults,uid=1000,gid=985,noatime 0 0
+
+UUID="$UUID" /path/to/mount ext4 rw,noatime 0 0
