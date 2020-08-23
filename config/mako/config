@@ -1,0 +1,14 @@
+font=Hack 12
+width=350
+padding=10
+margin=10
+border-size=3
+default-timeout=4000
+
+background-color=#2E3440
+border-color=#A3BE8C
+text-color=#D8DEE9
+
+[urgency=high]
+border-color=#BF616A
+ignore-timeout=1

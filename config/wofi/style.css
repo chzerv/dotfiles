@@ -1,0 +1,31 @@
+* {
+  background-color: rgba(59, 66, 82, 100);
+  border-color: rgba(59, 66, 82, 100);
+  color: rgba(216, 222, 233, 100);
+}
+
+window {
+  margin: 5px;
+  padding: 5px;
+}
+
+#input {
+  margin: 10px 5px 10px 5px;
+  border: 2px dotted #A3BE8C;
+  font-size: 20px;
+  color: #fff;
+}
+
+#outer-box {
+  margin: 10px;
+}
+
+#scroll {
+  margin: 5px 0px;
+  font-size: 16px;
+  color: #ccc;
+}
+
+#scroll label {
+    margin: 2px 0px;
+}

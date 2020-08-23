@@ -1,0 +1,201 @@
+# vim: filetype=config
+
+set $left h
+set $down j
+set $up k
+set $right l
+set $mod Mod4
+
+
+# Wallpaper
+output "*" bg $HOME/Pictures/Wallpapers/lava_in_the_ocean.jpg fill
+set $term alacritty
+set $menu dmenu_path | wofi --show run | xargs swaymsg exec --
+
+# Disable window titles
+default_border pixel 2
+gaps inner 5
+gaps outer 7
+hide_edge_borders smart
+show_marks yes
+
+# Colors
+set $color_urgent #cc241d
+set $color_focus #A3BE8C
+set $color_bg #2E3440
+
+client.focused $color_focus $color_focus $color_bg $color_focus $color_focus
+client.focused_inactive $color_bg $color_bg $color_focus $color_bg $color_bg
+client.unfocused $color_bg $color_bg $color_focus $color_bg $color_bg
+client.urgent $color_urgent $color_urgent $color_bg $color_urgent $color_urgent
+
+
+# flash window transparent when switching focus
+exec_always --no-startup-id flashfocus
+
+seat * hide_cursor 8000
+
+# #--- Keybindings --- # #
+
+# sway
+bindsym $mod+F7 reload
+bindsym $mod+F8 restart
+
+# Logout
+bindsym $mod+F10 exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+bindsym $mod+F12 exec ~/.config/sway/lock.sh
+
+# Terminal
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec alacritty --title float
+
+# Emacsclient
+bindsym $mod+Shift+e exec /home/cofefe/.local/bin/scripts/emacs_sec.sh
+
+# Floating mode
+bindsym $mod+Shift+p floating toggle
+bindsym $mod+p focus mode_toggle
+
+bindsym $mod+o sticky toggle
+
+# Kill focused window
+bindsym $mod+q kill
+
+# Screenshots
+# bindsym --release Print exec flameshot full -c -p /home/cofefe/Pictures/Screenshots
+
+bindsym --release Ctrl+Print exec grim -g "$(slurp)" - | wl-copy
+bindsym --release Print exec grim -g "$(slurp)" - > ~/Pictures/Screenshots/$(date -Iseconds).png
+
+bindsym $mod+e exec --no-startup-id nemo
+
+bindsym $mod+t layout tabbed
+bindsym $mod+Shift+t layout stacking
+bindsym $mod+equal layout toggle split
+
+bindsym $mod+a focus parent
+bindsym $mod+Shift+a focus child
+
+bindsym $mod+x move scratchpad
+bindsym $mod+Shift+x scratchpad show
+
+bindsym $mod+space exec "pkill -SIGRTMIN+1 waybar &"
+
+# Split panes
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+# bindsym $mod+d exec $menu
+bindsym $mod+d exec wofi --show drun
+bindsym $mod+Shift+d exec --no-startup-id ~/.local/bin/rofi-bangs.sh
+
+bindsym $mod+h                      focus left
+bindsym $mod+Shift+h                move left 30
+
+bindsym $mod+j                      focus down
+bindsym $mod+Shift+j                move down 30
+bindsym $mod+ctrl+j                 split vertical
+
+bindsym $mod+k                      focus up
+bindsym $mod+Shift+k                move up 30
+
+bindsym $mod+l                      focus right
+bindsym $mod+Shift+l                move right 30
+bindsym $mod+ctrl+l                 split horizontal
+
+bindsym $mod+apostrophe split horizontal ;; exec $term
+bindsym $mod+slash      split vertical ;; exec $term
+
+## Workspaces
+# Switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+bindsym $mod+Tab        workspace back_and_forth
+bindsym $mod+Shift+Tab  workspace prev
+bindsym $mod+backslash  workspace next
+
+# Make the current window fullscreen
+bindsym $mod+f fullscreen
+
+# Redshift control
+bindsym $mod+F1 exec redshift -O 3600k
+bindsym $mod+Shift+F1 exec redshift -x
+
+# Music Control (No fn keys)
+bindsym $mod+Shift+comma exec playerctl previous
+bindsym $mod+Shift+period exec playerctl next
+bindsym $mod+m exec playerctl play
+bindsym $mod+Shift+m exec playerctl pause
+
+## Resize mode
+mode "resize" {
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Return to normal mode
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Window-specific
+for_window [app_id="org.gnome.Nautilus"] floating toggle
+for_window [app_id="(?i)gnome-calculator"] floating toggle
+for_window [app_id="(?i)syncthing-gtk"] move window to workspace 10
+for_window [class="(?i)discord"] move window to workspace 10
+for_window [class="(?i)spotify"] move window to workspace 9
+for_window [app_id="(?i)mpv"] floating toggle, resize set 1000 600, move position down right, border none
+for_window [app_id="(?i)eog"] floating toggle, resize set 1000 600, move position down right, border none
+for_window [title="float"] floating toggle
+for_window [workspace=10] floating toggle
+for_window [workspace=9] floating toggle
+
+# Commmon floating windows
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [title="New Folder"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+
+##################################################
+## Status bar configuration                     ##
+##################################################
+bar {
+    swaybar_command waybar
+}
+
+# exec mako -c ~/.config/mako/config
+
+# Lock
+# exec swayidle -w \
+#     before-sleep 'loginctl lock-session $XDG_SESSION_ID' \
+#     lock '~/.config/sway/lock.sh'
+
+# Include other configuration
+include ~/.config/sway/conf.d/*
+
+exec "systemctl --user import-environment; systemctl --user start sway-session.target"
