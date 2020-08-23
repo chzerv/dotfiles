@@ -1,5 +1,9 @@
 # Personal dotfiles
 
+[![Archlinux](https://img.shields.io/badge/arch-linux-blue.svg?style=flat-square&logo=Arch-Linux&logoColor=white)](https://archlinux.org)
+[![Fedora](https://img.shields.io/badge/Fedora-v32-blue.svg?style=flat-square&logo=Fedora&logoColor=white&)](https://getfedora.org)
+[![Ansible](https://img.shields.io/badge/Ansible-Managed-blue.svg?style=flat-square&logo=Ansible&logoColor=white&labelColor=red&color=black)](https://github.com/ansible/ansible)
+
 - **Operating System**: Mainly [Archlinux](https://www.archlinux.org/), but I also use [Fedora](https://getfedora.org/) on some machines.
 - **DE/WM**: GNOME/mutter
 - **Editor**: [Doom Emacs](https://github.com/hlissner/doom-emacs) (also [neovim](https://github.com/neovim/neovim), occasionally).
