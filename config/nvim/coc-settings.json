@@ -1,0 +1,25 @@
+{
+    "emmet.includeLanguages": {"javascript":"javascriptreact"},
+    "coc.preferences.useQuickfixForLocations": true,
+    "signature.enable": true,
+    "signature.target": "echo",
+    "signature.preferShownAbove": false,
+    "coc.preferences.enableFloatHighlight": true,
+    "coc.preferences.hoverTarget": "float",
+    "suggest.enablePreview": true,
+    "diagnostic.joinMessageLines": true,
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": ["c", "cpp"],
+            "rootPatterns": [".ccls", "compile_commands.json"],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "/tmp/ccls"
+                }
+            }
+        }
+    },
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true
+}

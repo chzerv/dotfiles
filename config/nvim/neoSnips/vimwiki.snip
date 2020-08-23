@@ -1,0 +1,62 @@
+snippet it
+abbr _emphasis_
+options word
+    _${1}_ ${0}
+
+snippet bl
+abbr *strong*
+options word
+    *${1}* ${0}
+
+snippet cil
+abbr `code`
+options word
+    \`${1}\` ${0}
+
+snippet cbl
+abbr code block
+options head
+    {{{${1:#:language}
+    ${2:#:code}
+    }}}
+
+    ${0}
+
+snippet se1
+	= ${1:Section Name} =
+
+	${0}
+
+
+snippet se2
+	== ${1:Section Name} ==
+
+	${0}
+
+
+snippet se3
+	=== ${1:Section Name} ===
+
+	${0}
+
+snippet se4
+	==== ${1:Section Name} ====
+
+	${0}
+
+snippet se5
+	===== ${1:Section Name} =====
+
+	${0}
+
+snippet subs
+        ^${1}^ ${0}
+
+snippet sups
+        ~${1}~ ${0}
+
+snippet fnt
+        [^${1}]: ${2}
+
+        ${0}
+

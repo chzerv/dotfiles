@@ -1,0 +1,66 @@
+
+snippet link
+abbr [link][url]
+options word
+    [${1:#:link}](${2:url})  ${0}
+
+snippet idurl
+abbr [id]: url "title"
+options word
+    [${1:#:id}]: http://${2:#:url} "${3:#:title}"
+
+snippet img
+abbr ![alt](url)
+options word
+    ![${1:#:alt}](${2:#:url})  $0
+
+snippet it
+abbr *emphasis*
+options word
+    *${1}*  $0
+
+snippet bl
+abbr **strong**
+options word
+    **${1}**  $0
+
+snippet ilc
+abbr `code`
+options word
+    \`${1}\`  $0
+
+snippet cbl
+abbr code block
+options head
+    \`\`\`${1:#:language}
+    ${2:#:code }
+    \`\`\`
+    ${0}
+
+snippet sec
+	# ${1:Section Name}
+
+	${0}
+
+
+snippet ssec
+	## ${1:Section Name}
+
+	${0}
+
+
+snippet sssec
+	### ${1:Section Name}
+
+	${0}
+
+snippet subs
+        ^${1}^ ${0}
+
+snippet sups
+        ~${1}~ ${0}
+
+snippet fnt
+        [^${1}]: ${2}
+
+        ${0}

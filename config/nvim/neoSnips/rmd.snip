@@ -1,0 +1,111 @@
+snippet _skel
+	---
+	output: pdf_document
+	---
+
+	${0}
+
+
+###########################
+# Sections and Paragraphs #
+###########################
+snippet sec
+	# ${1:Section Name} #
+
+	${0}
+
+
+snippet ssec
+	## ${1:Section Name} ##
+
+	${0}
+
+
+snippet sssec
+	### ${1:Section Name} ###
+
+	${0}
+
+
+snippet par
+	#### ${1:Paragraph Name} ####
+	${0}
+
+
+snippet spar
+	##### ${1:Paragraph Name} #####
+	${0}
+
+
+###################
+# Text formatting #
+###################
+
+snippet *
+	*${1:${VISUAL}}* ${0}
+
+
+snippet **
+	**${1:${VISUAL}}** ${0}
+
+
+snippet ***
+	***${1:${VISUAL}}*** ${0}
+
+snippet ~
+        ~~${1:${VISUAL}}~~ ${0}
+
+
+
+################
+# Common stuff #
+################
+snippet link
+	[${1:${VISUAL:Text}}](${3:http://${2:www.url.com}}) ${0}
+
+
+
+snippet img
+        ![${1:${VISUAL:Alt Tex}}](${2:${VISUAL:path to img}})
+
+
+snippet ilc
+	\`$1\` ${0}
+
+
+snippet cbl
+	\`\`\`
+	${1}
+	\`\`\`
+
+	${0}
+
+
+snippet pbl
+	\`\`\`{python}
+	${1}
+	\`\`\`
+
+	${0}
+
+snippet rbl
+	\`\`\`{r, eval=FALSE}
+	${1}
+	\`\`\`
+
+	${0}
+
+snippet subs
+        ^${1}^ ${0}
+
+snippet sups
+        ~${1}~ ${0}
+
+snippet fnt
+        [^${1}]: ${2}
+
+        ${0}
+
+snippet todo
+        + [${1:Status}] ${2}
+        ${0}
