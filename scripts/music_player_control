@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Same keybindings for different music players.
+
+spotify=$(pgrep spotify)
+ncmpcpp=$(pgrep ncmpcpp)
+audacious=$(pgrep audacious)
+
+
+if [[ "$ncmpcpp" ]]; then
+    case "$1" in
+	    "toggle") mpc toggle ; $newmpd ;;
+	    "pause") mpc pause ; $newmpd ; pauseallmpv ;;
+	    "forward") mpc seek +"$2" ; $newmpd ;;
+	    "back") mpc seek -"$2" ; $newmpd ;;
+	    "next") mpc next ; $newmpd ;;
+	    "prev") mpc prev ; $newmpd ;;
+	    "replay") mpc seek 0% ; $newmpd ;;
+    esac
+elif [ "$spotify" ] || [ "$audacious" ]; then
+    case "$1" in
+	    "toggle") playerctl play-pause ;;
+	    "stop") playerctl stop ;;
+        "forward") playerctl position 5+ ;;
+	    "back") playerctl position 5- ;;
+	    "next") playerctl next ;;
+	    "prev") playerctl previous ;;
+	    "replay") playerctl position 0 ;;
+    esac
+fi
+
+

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Let's you connect to mullvad's (VPN) wireguard servers.
+
+SERVERS=$(cat ~/.local/bin/servers)
+# echo $SERVERS
+
+status=$(sudo wg | ag interface | awk '{print $2}')
+
+if [[ $status ]]; then
+    to_fzf=$(echo -e "$status" | fzf --height 50% --border --header " "$status" is active. Press <CR> to disconnect..")
+    [[ -n "$to_fzf" ]]; wg-quick down "$status"
+else
+    to_fzf=$(echo -e "$SERVERS" | fzf --height 50% --border --header "No active profiles. Select a server..")
+    if [[ "$to_fzf" =~ 'Multihop' ]]; then
+        server_code=$(echo "$to_fzf" | cut -c1-7 | sed 's/-//g')
+        connect_to="mullvad"$server_code""
+    else
+        server_code=$(echo "$to_fzf" | cut -c1-3)
+        connect_to="mullvad-"$server_code""
+    fi
+    [[ -n "$server_code" ]] && wg-quick up "$connect_to"
+fi

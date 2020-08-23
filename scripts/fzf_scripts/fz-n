@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Preview rmd files in my "Notes" directory
+# ### Needs to be in that specific directory in order for it to work ###
+
+edit() {
+
+    wd=$(pwd)
+    cd ~/Documents/Notes/
+    previous_file="$1"
+    file_to_edit=`select_file $previous_file`
+
+    if [ -n "$file_to_edit" ] ; then
+        "$EDITOR" "$file_to_edit"
+        edit "$file_to_edit"
+    fi
+    cd "$wd" || exit
+}
+
+select_file() {
+    given_file="$1"
+    fd --follow ".*.(r)?md" | fzf --preview="cat {}" --preview-window=right:60%:wrap --query="$given_file"
+}
+
+edit ""

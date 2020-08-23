@@ -1,0 +1,59 @@
+#!/bin/bash
+
+esc='\033'
+c_reset="${esc}[0m"
+c_green="${esc}[32m"
+c_blue="${esc}[34m"
+
+function select_from() {
+  local cmd='command -v'
+  for a; do
+    case "$a" in
+      -c)
+        cmd="$2"
+        shift 2
+        ;;
+    esac
+  done
+  for c; do
+    if $cmd "${c%% *}" &> /dev/null; then
+      echo "$c"
+      return 0
+    fi
+  done
+  return 1
+}
+
+function fzf() {
+  command fzf -e +s --multi --cycle --ansi \
+    --bind='Ctrl-X:toggle-preview' \
+    --no-hscroll --inline-info \
+    --header='tab to select multiple packages, Ctrl-X for more info on a package' "$@"
+}
+
+function search_packages() {
+    search='pacman'
+    [[ -n "$1" ]] && search=$(select_from 'yay' 'pacman')
+    packages=$(fzf --preview-window right:55% --preview="$search -Si {2}" \
+      < <( $search -Ss "$1" |
+      gawk '{
+        getline descr;
+        sub(/ */,"", descr);
+        repo = blue "[" gensub(/\/.*/, "", 1) "]" reset;
+        name = green gensub(/.*\//, "", 1, $1) reset;
+        info = gensub(/[^ ]* /, "", 1);
+        print repo, name, info, descr;
+      }' blue="$c_blue" green="$c_green" reset="$c_reset"
+    ) | cut -d' ' -f2)
+    if [[ -n "$packages" ]]; then
+        if [[ "$search" == "pacman" ]]; then
+            sudo "$search" -S "$packages"
+        elif [[ "$search" == "yay" ]]; then
+            yay -S "$packages"
+        fi
+    fi
+}
+
+request="$*"
+
+search_packages "$request"

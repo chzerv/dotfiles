@@ -1,0 +1,8 @@
+#!/bin/bash
+
+tmux new-session -d
+tmux rename-session dropdown
+tmux new-window 'python'
+tmux new-window 'ss -tulpn'
+tmux select-window -t 0
+tmux -2 attach-session -d

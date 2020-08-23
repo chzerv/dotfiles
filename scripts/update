@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Update Archlinux systems.
+# Fetches updates from official repositories, AUR and configured flatpak repositories.
+
+RED='\033[0;31m'
+NC='\033[0m'
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+
+
+echo -e "\n${GREEN}Updating system..${NC}"
+echo -e "\n${CYAN}1.Official repositories...${NC}"
+
+sudo pacman -Syu && \
+    echo -e "\n${CYAN}2.AUR...${NC}" && \
+    yay -Syua --devel && \
+    echo -e "\n${CYAN}3.Flatpak...${NC}" && \
+    flatpak update && \
+    echo -e "\n${GREEN}Updates finished!${NC}"

@@ -1,0 +1,58 @@
+au1  : Australia, Syndey
+at1  : Austria, Wien
+be1  : Belgium, Brussels
+br1  : Brazil, Sao Paulo
+bg1  : Bulgaria, Sofia
+ca3  : Canada, Montreal
+ca1  : Canada, Toronto
+ca2  : Canada, Vancouver
+cz1  : Czech Republic, Prague
+dk1  : Denmark, Copenhagen
+fi1  : Finland, Helsinki
+fr1  : France, Paris
+de1  : Germany, Frankfurt
+de2  : Germany, Frankfurt
+de4  : Germany, Frankfurt
+de5  : Germany, Frankfurt
+hk1  : Hong, Kong
+in1  : India, Pune
+it1  : Italy, Milan
+jp1  : Japan, Tokyo
+md1  : Moldova, Chisinau
+nl1  : Netherlands, Amsterdam
+nl2  : Netherlands, Amsterdam
+nl3  : Netherlands, Amsterdam
+no1  : Norway, Oslo
+pl1  : Poland, Warsaw
+ro1  : Romania, Bucharest
+rs1  : Serbia, Belgrade
+sg1  : Singapore, Singapore
+es1  : Spain , Madrid
+se3  : Sweden, Gothenburg
+se5  : Sweden, Gothenburg
+se4  : Sweden, Malmö
+se2  : Sweden, Stockholm
+se6  : Sweden, Stockholm
+se7  : Sweden, Stockholm
+se8  : Sweden, Stockholm
+ch1  : Switzerland, Zurich
+ch2  : Switzerland, Zurich
+gb2  : UK, London
+gb4  : UK, London
+gb5  : UK, London
+gb3  : UK, Manchester
+us6  : USA, Atlanta
+us4  : USA, Chicago
+us7  : USA, Dallas
+us11 : USA, LA
+us12 : USA, LA
+us2  : USA, LA
+us3  : USA, Miami, FL
+us1  : USA, New York, NY
+us13 : USA, New York, NY
+us15 : US , Phoenix, AZ
+us14 : USA, Piscataway, NJ
+us9  : USA, Salt Lake City
+us5  : USA, Seattle, WA
+ua1  : Ukrain, Kiev
+de1-se6 : Hop from de1 to se6

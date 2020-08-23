@@ -1,0 +1,49 @@
+#!/bin/bash
+
+
+MARKS=$(cdg_glob.sh)
+
+function fzf_opts() {
+    local list
+    list='exa -lhg'
+    fzf --border \
+        --ansi \
+        --cycle \
+        --reverse \
+        --height '60%' \
+        --preview="echo {} | sed 's|~|${HOME}|g' |sed 's/^[0-9]*\s*//'| xargs $list --color=always" \
+        --preview-window="right:70%" \
+        --header "^-D to delete a bookmark" \
+        --query="$*" \
+        -0 \
+        -1 \
+        --expect=ctrl-r \
+        --bind='Ctrl-X:toggle-preview'
+}
+
+function lmarks() {
+    echo "$MARKS" | sort -n | sed "s|${HOME}|~|g"
+}
+
+function main() {
+    local dest_dir
+    if [ -z "$1" ]; then
+        dest_dir=$(lmarks | fzf_opts "$@" | sed 's/^[0-9]*\s*//' | sed 's/\s\+$//' | sed "s|~|${HOME}|g")
+    else
+        dest_dir=$(lmarks | ag "$1" | fzf_opts "$@" | sed 's/^[0-9]*\s*//' | sed 's/\s\+$//' | sed "s|~|${HOME}|g")
+    fi
+
+    if [[ -n "$dest_dir" ]]; then
+        key=$(head -1 <<< "$dest_dir")
+        file=$(head -2 <<< "$dest_dir" | tail -1)
+        if [[ $key == "${FZF_MARKS_DELETE:-ctrl-r}" ]]; then
+            sed -i "s|$file||" ~/.config/zsh.d/cdg_path
+        else
+            echo "$file"
+        fi
+    else
+        pwd
+    fi
+}
+
+main "$@"

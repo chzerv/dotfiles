@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Switch between speakers and headphones.
+
+lineout=$(pacmd list | ag "active port" | ag "lineout")
+headphones=$(pacmd list | ag "active port" | ag "headphones")
+
+
+if [[ -z "$lineout" ]]; then
+    pacmd set-sink-port alsa_output.pci-0000_23_00.3.analog-stereo analog-output-lineout
+else
+    pacmd set-sink-port alsa_output.pci-0000_23_00.3.analog-stereo analog-output-headphones
+fi
+

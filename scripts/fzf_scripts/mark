@@ -1,0 +1,19 @@
+#!/bin/sh
+
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+RED='\033[0;31m'
+
+MARKS_FILE=~/.config/zsh.d/cdg_path
+# mark_to_add=$(pwd | sed 's/\/home\/wok\//~\//g')
+mark_to_add=$(pwd)
+
+if grep  -Fxq "$mark_to_add" ${MARKS_FILE}
+then
+    echo -e "${RED}${mark_to_add} is already bookmarked.${NC}"
+else
+    echo "${mark_to_add}" >> ${MARKS_FILE}
+    echo -e "${GREEN}Mark${NC} ${CYAN}${mark_to_add}${NC} ${GREEN}has been added!"
+fi
+
