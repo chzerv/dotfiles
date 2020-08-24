@@ -176,4 +176,18 @@
 
        :config
        ;;literate
-       (default +bindings +smartparens))
+       (default +bindings +smartparens)
+
+       :chz
+       evil
+       bindings
+       company
+       dired
+       ivy
+       lsp
+       notmuch
+       org
+       rss
+       ;; rust
+       ;; treemacs
+       misc)
