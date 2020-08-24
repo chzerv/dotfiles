@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: javascript
+# key: <js
+# condition: t
+# --
+#+BEGIN_SRC javascript :tangle no
+$0
+#+END_SRC

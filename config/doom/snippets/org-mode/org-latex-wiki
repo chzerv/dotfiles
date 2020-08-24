@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: org-latex-wiki
+# key: trigger-key
+# condition: t
+# --
+
+#+TITLE: ${1:TITLE}
+#+AUTHOR: Xristos Zervakis
+#+DESCRIPTION: ${2:DESCRIPTION}
+#+SETUPFILE: ~/Documents/Writing/Org/org-html-themes/setup/theme-readtheorg.setup
+#+STARTUP: inlineimages content
+
+* Index
+    ${0:Content}

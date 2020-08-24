@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: org-latex-summary
+# key: trigger-key
+# condition: t                                        
+# --
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a5paper,landscape,fourcolumn]
+#+LATEX_COMPILER: xelatex
+#+LATEX_HEADER: \\input{$HOME/Documents/Writing/LaTeX/Summary_header.tex}
+#+STARTUP: showeverything
+#+OPTIONS: toc:nil
+\\begin{multicols*}{4}
+$0
+\\end{multicols*}

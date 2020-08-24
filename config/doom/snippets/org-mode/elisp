@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: elisp
+# key: <e
+# uuid: elisp
+# --
+#+BEGIN_SRC emacs-lisp :tangle yes
+$0
+#+END_SRC

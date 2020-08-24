@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: python
+# key: <py
+# condition: t
+# --
+#+BEGIN_SRC python :tangle yes :async yes
+$0
+#+END_SRC

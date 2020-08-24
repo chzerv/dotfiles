@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: org-latex-article
+# key: trigger-key
+# condition: t
+# --
+#+STARTUP: showeverything
+#+TITLE: ${0:TITLE}
+#+AUTHOR: Xristos Zervakis
+#+DATE: \\today
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [12pt,a4paper]
+#+LATEX_HEADER: \\input{$HOME/Documents/Writing/LaTeX/Article_header.tex}
+#+STARTUP: showeverything
+#+OPTIONS: toc:nil
