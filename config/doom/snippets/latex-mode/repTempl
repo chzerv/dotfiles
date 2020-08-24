@@ -1,0 +1,49 @@
+# -*- mode: snippet -*-
+# name: greekStart
+# uuid: greekStart
+# key: greekStart
+# condition: t
+# --
+\documentclass[10pt,a4paper]{article}
+\usepackage[normalem]{ulem}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{gensymb}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{unicode-math}
+\setmathfont[Scale=2]{Noto Sans Math}
+\usepackage{titlesec}
+\usepackage{xfrac}
+\usepackage{tipa}
+\usepackage{amsmath}
+\usepackage{fontspec}
+\usepackage[hidelinks]{hyperref}
+\setmainfont[Script=Greek,Scale=1.2]{Noto Sans}
+\setsansfont[Script=Greek,Scale=1.2]{Noto Sans}
+
+\newcommand{\ibf}[1]{\item \textbf{#1}}
+\newcommand{\mano}[1]{\large $\mathnormal{{#1}}$ \normalsize}
+\newcommand{\marm}[1]{\large $\mathrm{{#1}}$ \normalsize}
+\newcommand{\mait}[1]{\large $\mathit{{#1}}$ \normalsize}
+\newcommand{\mabf}[1]{\large $\mathbf{{#1}}$ \normalsize}
+\newcommand{\masf}[1]{\large $\mathsf{{#1}}$ \normalsize}
+\newcommand{\matt}[1]{\large $\mathtt{{#1}}$ \normalsize}
+
+% Center numberless subsections, and use small font
+\titleformat{name=\subsection,numberless}[block]
+{\large\sffamily\bfseries\filcenter{}}
+{}
+{1em}
+{}
+
+\title{${1:title}}
+\author{Χρήστος Ζερβάκης, ΑΜ: 2013030109}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+`%`$0
+
+\end{document}

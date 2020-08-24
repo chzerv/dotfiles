@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: sidebar
+# key: sidebar
+# --
+
+\newsavebox{\mybox}
+\newlength{\mydepth}
+\newlength{\myheight}
+
+\newenvironment{sidebar}%
+{\begin{lrbox}{\mybox}\begin{minipage}{\textwidth}}%
+    {\end{minipage}\end{lrbox}%
+  \settodepth{\mydepth}{\usebox{\mybox}}%
+  \settoheight{\myheight}{\usebox{\mybox}}%
+  \addtolength{\myheight}{\mydepth}%
+  \noindent\makebox[0pt]{\hspace{-20pt}\rule[-\mydepth]{1pt}{\myheight}}%
+  \usebox{\mybox}}

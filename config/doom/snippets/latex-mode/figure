@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: figure
+# uuid: figure
+# key: figure
+# condition: t
+# --
+\begin{figure}
+    \includegraphics[width=\linewidth]{${1:file}}
+    \caption{${2:caption}}
+    \label{fig:${3:label}}
+\end{figure}

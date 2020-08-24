@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: boltItem
+# key: bit
+# uuid: bit
+# --
+
+\item \textbf{${1:item}} $0

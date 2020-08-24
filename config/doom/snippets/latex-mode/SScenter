@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: SScenter
+# key: SScenter
+# --
+
+\titleformat{name=\subsection,numberless}[block]
+{\large\sffamily\bfseries\filcenter{}}
+{}
+{1em}
+{}

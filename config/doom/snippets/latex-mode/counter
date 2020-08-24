@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: counter
+# uuid: counter
+# key: counter
+# condition: t         
+# --
+\setcounter{enumi}{${1:prevNum}}
+`%`$0
