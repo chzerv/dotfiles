@@ -1,0 +1,79 @@
+;;; ../../dotfiles/config/doom/autoload/util.el -*- lexical-binding: t; -*-
+
+;;;###autoload
+(defun util/append-to-path (path)
+  "Add a path to both the $PATH variable and the emac's exec-path."
+  (setenv "PATH" (concat (getenv "PATH") ":" path))
+  (add-to-list 'exec-path path))
+
+;;;###autoload
+(defun util/latex-save-and-compile ()
+  "Save the current buffer and compile it with 'xelatex'"
+  (interactive)
+  (save-buffer)
+  (compile (format "xelatex %s" (file-name-nondirectory buffer-file-name)))
+  (TeX-clean))
+
+;;;###autoload
+(defun util/find-in-dotfiles ()
+  "Open a file somewhere in ~/.dotfiles via a fuzzy filename search."
+  (interactive)
+  (doom-project-find-file (expand-file-name "~/dotfiles/")))
+
+;;;###autoload
+(defun util/browse-dotfiles ()
+  "Browse the files in ~/.dotfiles."
+  (interactive)
+  (doom-project-browse (expand-file-name "~/dotfiles/")))
+
+;;;###autoload
+(defun util/yt-dl-it (url)
+    "Downloads the URL in an async shell"
+    (let ((default-directory "~/Downloads/yt-dl"))
+      (async-shell-command (format "youtube-dl %s" url))))
+
+;;;###autoload
+(defun util/eval-and-replace ()
+  "Replace the preceding sexp with its value."
+  (interactive)
+  (backward-kill-sexp)
+  (condition-case nil
+      (prin1 (eval (read (current-kill 0)))
+             (current-buffer))
+    (error (message "Invalid expression")
+           (insert (current-kill 0)))))
+
+;;;###autoload
+(defun util/kill-other-buffers ()
+  "Kill all buffers except current one."
+  (interactive)
+  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+
+;;;###autoload
+(defun util/kill-all-dired-buffers ()
+  "Kill all open dired buffers."
+  (interactive)
+  (mapc (lambda (buffer)
+          (when (eq 'dired-mode (buffer-local-value 'major-mode buffer))
+            (kill-buffer buffer)))
+        (buffer-list)))
+
+;;;###autoload
+(defun util/markdown-save-and-compile ()
+  "Save and compiles the currently loaded markdown buffer using pandoc into a PDF"
+  (interactive)
+  (save-buffer)
+  (shell-command (concat "pandoc " (buffer-file-name) " -o "
+                         (replace-regexp-in-string "md" "pdf" (buffer-file-name)))))
+
+;;;###autoload
+(defun util/imenu-reveal-entry ()
+  "Reveal content of header at point after successful `imenu'
+execution."
+  (cond
+   ((and (eq major-mode 'org-mode)
+         (org-at-heading-p))
+    (org-show-entry)
+    (org-reveal t))
+   ((when contrib/outline-minor-mode
+      (outline-show-entry)))))
