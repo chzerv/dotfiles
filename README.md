@@ -20,6 +20,38 @@ Sometimes, I feel like running a tiling Window Manager. For those times, I use:
 
 _Note_ that Sway etc. are launched using a `systemd` user service.
 
+## How to use
+
+### The Ansible way
+
+**NOTE:** After running the code below, my dotfiles will be symlinked to their respective places. Please, make sure you've read through my dotfiles and know what you're doing before proceeding.
+
+1. [Install Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+
+2. Clone my [linux-workstation-playbook](https://github.com/chzerv/linux-workstation-playbook.git) and `cd` into it:
+
+   ```sh
+   git clone https://github.com/chzerv/linux-workstation-playbook.git && cd linux-workstation-playbook
+   ```
+
+3. Run my Ansible playbook, with the `--tag=dotfiles` option:
+
+   ```sh
+   ansible-playbook -i inventory main.yml --tag=dotfiles
+   ```
+
+   After a couple of minutes everything should be setup, except what's listed in [this section](https://github.com/chzerv/linux-workstation-playbook#stuff-that-still-have-to-be-done-manually).
+
+### The standard way
+
+1. Clone this repository:
+
+   ```sh
+   git clone https://github.com/chzerv/dotfiles.git
+   ```
+
+2. Copy/symlink whatever you need.
+
 ## Directory Structure
 
 The repository uses a structure similar to a [GNU stow](https://www.gnu.org/software/stow/) managed repository.
