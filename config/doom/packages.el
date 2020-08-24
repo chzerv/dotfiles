@@ -46,3 +46,4 @@
 (package! opencl-mode :disable t)
 (package! glsl-mode :disable t)
 (package! company-glsl :disable t)
+(package! flyspell-lazy :disable t)
