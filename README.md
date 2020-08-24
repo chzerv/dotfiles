@@ -1,8 +1,23 @@
 # Personal dotfiles
 
+[![Made with Doom Emacs](https://img.shields.io/badge/Made_with-Doom_Emacs-blueviolet.svg?style=flat-square&logo=GNU%20Emacs&logoColor=white)](https://github.com/hlissner/doom-emacs)
 [![Archlinux](https://img.shields.io/badge/arch-linux-blue.svg?style=flat-square&logo=Arch-Linux&logoColor=white)](https://archlinux.org)
 [![Fedora](https://img.shields.io/badge/Fedora-v32-blue.svg?style=flat-square&logo=Fedora&logoColor=white&)](https://getfedora.org)
 [![Ansible](https://img.shields.io/badge/Ansible-Managed-blue.svg?style=flat-square&logo=Ansible&logoColor=white&labelColor=red&color=black)](https://github.com/ansible/ansible)
+
+This repository is a place for my personal Linux dotfiles. It uses a structure similar to a [GNU stow](https://www.gnu.org/software/stow/) managed repository, but not quite.
+
+- Configs that reside inside `~/.config` are found in `config`.
+- Configs that reside inside `~/.local/share` are found in `share`.
+- Configs that reside in `~/` are found in the root of the repository.
+
+Aside from that, the `Templates` folder contains some less-important templates for files that I can't seem to remember their syntax.
+
+To easily deploy them in my machines I use [Ansible](https://github.com/ansible/ansible), and specifically my [linux-workstation-playbook](https://github.com/chzerv/linux-workstation-playbook.git).
+
+---
+
+**System info:**
 
 - **Operating System**: Mainly [Archlinux](https://www.archlinux.org/), but I also use [Fedora](https://getfedora.org/) on some machines.
 - **DE/WM**: GNOME/mutter
@@ -51,16 +66,6 @@ _Note_ that Sway etc. are launched using a `systemd` user service.
    ```
 
 2. Copy/symlink whatever you need.
-
-## Directory Structure
-
-The repository uses a structure similar to a [GNU stow](https://www.gnu.org/software/stow/) managed repository.
-
-- Configs that reside inside `~/.config` are found in `config`.
-- Configs that reside inside `~/.local/share` are found in `share`.
-- Configs that reside in `~/` are found in the root of the repository.
-
-Aside from that, the `Templates` folder contains some less-important templates for files that I can't seem to remember their syntax.
 
 ## Notes
 
