@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: react-component-function
+# key: rfc
+# condition: t       
+# --
+import React from 'react';
+
+function ${1:`(f-base buffer-file-name)`}() {
+  return (
+    ${2:// insert code here..}
+  );
+}
+
+export default $1;
