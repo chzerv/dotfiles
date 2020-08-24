@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: ansible-os-family
+# uuid: ansible-os-family
+# key: aof
+# condition: t
+# --
+\{\{ ansible_os_family \}\}

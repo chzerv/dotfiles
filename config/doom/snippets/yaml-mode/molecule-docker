@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# name: molecule-docker
+# key: molecule-docker
+# condition: t
+# --
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+platforms:
+  - name: instance
+    image: "chzerv/docker-\$\{IMAGE:-${1:fedora}\}-ansible:\$\{TAG:-${2:latest}\}"
+    command: \$\{DOCKER_COMMAND:-${3:""}\}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+provisioner:
+  name: ansible
+  playbooks:
+    converge: "\$\{MOLECULE_PLAYBOOK:-${4:converge.yml}\}"
+verifier:
+  name: ansible

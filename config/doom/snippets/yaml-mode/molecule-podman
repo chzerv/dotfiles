@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: molecule-podman
+# key: molecule-podman
+# condition: t                                               
+# --
+---
+dependency:
+  name: galaxy
+driver:
+  name: podman
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+platforms:
+  - name: instance
+    image: "chzerv/docker-\$\{IMAGE:-${1:fedora}\}-ansible:\$\{TAG:-${2:latest}\}"
+    command: \$\{DOCKER_COMMAND:-${3:""}\}
+    pre_build_image: true
+provisioner:
+  name: ansible
+  playbooks:
+    converge: "\$\{MOLECULE_PLAYBOOK:-${4:converge.yml}\}"
+verifier:
+  name: ansible
