@@ -1,0 +1,71 @@
+;;; chz/dired/config.el -*- lexical-binding: t; -*-
+
+;;; Better defaults
+(after! dired
+  (setq dired-recursive-deletes 'always
+        delete-by-moving-to-trash t
+        dired-listing-switches "-AGFhlv --group-directories-first --time-style=long-iso")
+  (add-hook 'dired-mode-hook (lambda () (dired-hide-details-mode 1))))
+
+;;; Key bindings
+(after! dired
+  (map! :after dired
+        (:map dired-mode-map
+         :enm "M-h" #'evil-window-left
+         :enm "M-j" #'evil-window-bottom
+         :enm "M-k" #'evil-window-up
+         :enm "M-l" #'evil-window-right
+         :enm "M-q" #'evil-quit)
+        "s-j" 'dired-jump
+        "s-J" 'dired-jump-other-window))
+
+;;; dired-async
+;; Gives dired the ability to  perform actions asynchronously.
+(after! (:and dired async)
+  (dired-async-mode 1))
+
+;;; dired-open
+;; Let's us specify the default application to be used when opening
+;; different files.
+(use-package! dired-open
+  :after (dired)
+  :config
+  (setq dired-open-extensions
+        '(("pdf" . "evince")
+          ("jpg" . "eog")
+          ("png" . "eog")
+          ("mkv" . "mpv")
+          ("mov" . "mpv")
+          ("mp3" . "mpv")
+          ("mp4" . "mpv")
+          ("avi" . "mpv"))))
+
+;;; dired-subtree
+;; Provides a more intuitive view of the subtree.
+(use-package! dired-subtree
+  :after dired)
+
+;;; dired-narrow
+;; Easier narrowing in dired buffers.
+(use-package! dired-narrow
+  :after dired
+  :config
+  (setq dired-narrow-exit-when-one-left t
+        dired-narrow-enable-blinking t
+        dired-narrow-blink-time 0.3)
+  (map! :map dired-mode-map
+        "C-c /" 'dired-narrow-regexp))
+
+
+;;; peep-dired
+;; File previews (including images) in dired.
+(use-package! peep-dired
+  :after dired
+  :config
+  (setq peep-dired-cleanup-on-disable t
+        peep-dired-cleanup-eagerly t
+        peep-dired-enable-on-directories nil
+        peep-dired-ignored-extensions
+        '("mkv" "webm" "mp4" "mp3" "ogg" "iso"))
+  (map! :map dired-mode-map
+        "P" 'peep-dired))
