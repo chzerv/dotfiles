@@ -12,13 +12,18 @@ prompt-on-delete-profile=true
 sidebar-on-right=false
 tab-position='right'
 terminal-title-show-when-single=false
-terminal-title-style='none'
+terminal-title-style='small'
+use-overlay-scrollbar=true
 use-tabs=false
 warn-vte-config-issue=false
 window-save-state=false
 window-style='normal'
 
 [keybindings]
+session-resize-terminal-down='<Alt>Down'
+session-resize-terminal-left='<Alt>Left'
+session-resize-terminal-right='<Alt>Right'
+session-resize-terminal-up='<Alt>Up'
 session-switch-to-terminal-0='<Primary>parenright'
 session-switch-to-terminal-1='<Primary>1'
 session-switch-to-terminal-2='<Primary>2'
@@ -29,30 +34,40 @@ session-switch-to-terminal-6='<Primary>6'
 session-switch-to-terminal-7='<Primary>7'
 session-switch-to-terminal-8='<Primary>8'
 session-switch-to-terminal-9='<Primary>9'
+session-switch-to-terminal-down='<Shift><Alt>j'
+session-switch-to-terminal-left='<Shift><Alt>h'
+session-switch-to-terminal-right='<Shift><Alt>l'
+session-switch-to-terminal-up='<Shift><Alt>k'
 terminal-advanced-paste='<Primary><Alt>v'
 terminal-file-browser='<Primary><Alt>o'
-terminal-find='<Primary>f'
+terminal-find='<Primary><Shift>f'
 terminal-layout='disabled'
 terminal-maximize='<Primary><Alt>z'
+terminal-scroll-down='<Primary><Shift>j'
+terminal-scroll-up='<Primary><Shift>k'
+terminal-zoom-normal='<Primary>BackSpace'
 
 [profiles]
+default='2b7c4080-0ddd-46c5-8f23-563fd3ba789d'
 list=['2b7c4080-0ddd-46c5-8f23-563fd3ba789d']
 
 [profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
 automatic-switch=@as []
-background-color='#282C34'
+background-color='#282936'
 background-transparency-percent=3
+badge-color='#AC7EA8'
 badge-color-set=false
 bold-color-set=false
 cursor-background-color='#A1B0B8'
 cursor-colors-set=false
 cursor-foreground-color='#BDC3C7'
-cursor-shape='ibeam'
+cursor-shape='block'
 font='SauceCodePro Nerd Font 12'
-foreground-color='#ABB2BF'
+foreground-color='#F8F8F2'
 highlight-colors-set=false
 login-shell=true
-palette=['#000000', '#E06C75', '#98C379', '#D19A66', '#61AEEE', '#C678DD', '#56B6C2', '#ABB2BF', '#5C6370', '#E06C75', '#98C379', '#D19A66', '#62AFEE', '#C678DD', '#56B6C2', '#FFFFFF']
+palette=['#000000', '#FF5454', '#50FA7B', '#F1FA8C', '#BD93F9', '#FF79C6', '#8BE8FD', '#BFBFBF', '#4D4D4D', '#FF6E67', '#5AF78D', '#F4F99D', '#CAA8FA', '#FF92D0', '#9AEDFE', '#E6E6E6']
+terminal-title='${id}'
 use-system-font=false
 use-theme-colors=false
 visible-name='Default'
