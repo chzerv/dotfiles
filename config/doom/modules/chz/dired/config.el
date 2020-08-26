@@ -43,7 +43,16 @@
 ;;; dired-subtree
 ;; Provides a more intuitive view of the subtree.
 (use-package! dired-subtree
-  :after dired)
+  :after dired
+  :config
+  (setq dired-subtree-cycle-depth 4)
+  (map! :map dired-mode-map
+        [backtab] #'dired-subtree-cycle
+        [tab] #'dired-subtree-toggle
+        :n "g^" #'dired-subtree-beginning
+        :n "g$" #'dired-subtree-end
+        :n "gm" #'dired-subtree-mark-subtree
+        :n "gu" #'dired-subtree-unmark-subtree))
 
 ;;; dired-narrow
 ;; Easier narrowing in dired buffers.
