@@ -15,6 +15,12 @@
    :desc "Git diff buffer"
    "g d" 'magit-diff-buffer-file)))
 
+;; dired-sidebar
+(map! :leader
+      :prefix ("o" . "+open")
+      :desc "Project sidebar"
+      "p" #'dired-sidebar-toggle-sidebar)
+
 ;; Mode maps
 (map! (:when (featurep! :lang latex)
        (:map LaTeX-mode-map

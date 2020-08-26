@@ -13,3 +13,6 @@
 
 ;; File previews (including images) in dired.
 (package! peep-dired)
+
+;; dired-sidebar
+(package! dired-sidebar)

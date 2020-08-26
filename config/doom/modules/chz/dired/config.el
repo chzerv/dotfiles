@@ -78,3 +78,23 @@
         '("mkv" "webm" "mp4" "mp3" "ogg" "iso"))
   (map! :map dired-mode-map
         "P" 'peep-dired))
+
+;;; dired-sidebar
+(use-package! dired-sidebar
+  :after dired
+  :init
+  (add-hook 'dired-sidebar-mode-hook
+            (lambda ()
+              (unless (file-remote-p default-directory)
+                (auto-revert-mode))))
+  :config
+  (setq dired-sidebar-width 25
+        dired-sidebar-theme 'nerd
+        dired-sidebar-tui-update-delay 5
+        dired-sidebar-recenter-cursor-on-tui-update t
+        dired-sidebar-no-delete-other-windows t
+        dired-sidebar-use-custom-modeline t)
+  (pushnew! dired-sidebar-toggle-hidden-commands
+            'evil-window-rotate-upwards 'evil-window-rotate-downwards)
+  (map! :map dired-sidebar-mode-map
+        :n "q" #'dired-sidebar-toggle-sidebar))
