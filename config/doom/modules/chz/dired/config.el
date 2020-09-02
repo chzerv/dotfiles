@@ -21,6 +21,13 @@
         "s-j" 'dired-jump
         "s-J" 'dired-jump-other-window))
 
+;;; dired-x
+(after! dired-x
+  (setq dired-clean-up-buffers-too t
+        dired-clean-confirm-killing-deleted-buffers t
+        dired-bind-info nil
+        dired-bind-man nil))
+
 ;;; dired-async
 ;; Gives dired the ability to  perform actions asynchronously.
 (after! (:and dired async)
