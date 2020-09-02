@@ -257,18 +257,8 @@ work with.")
 (use-package! tree-sitter-langs)
 
 ;;; Spelling
-(after! ispell
-  (setq ispell-program-name "hunspell"
-        ispell-dictionary "en_US,el_GR")
-  (ispell-set-spellchecker-params)
-  (ispell-hunspell-add-multi-dic "en_US,el_GR")
 
-  ;; Don't spell check the following org source blocks.
-  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
-  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_LATEX" . "#\\+END_LATEX"))
-  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_EXAMPLE" . "#\\+END_EXAMPLE")))
-
-;;; Spelling
+;; Use ispell's multiple dictionaries functionality.
 (after! ispell
   (setq ispell-program-name "hunspell"
         ispell-dictionary "en_US,el_GR")
