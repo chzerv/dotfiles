@@ -8,6 +8,7 @@
    ;; After splitting a window, switch to it immediatelly.
    evil-split-window-below t
    evil-vsplit-window-right t)
+  (add-to-list 'evil-emacs-state-modes 'dired-mode)
 
   ;;; Key bindings
 

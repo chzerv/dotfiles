@@ -17,7 +17,11 @@
          :enm "M-j" #'evil-window-bottom
          :enm "M-k" #'evil-window-up
          :enm "M-l" #'evil-window-right
-         :enm "M-q" #'evil-quit)
+         :enm "M-q" #'evil-quit
+         "j" 'dired-next-line
+         "k" 'dired-previous-line
+         "h" 'dired-up-directory
+         "l" 'dired-open-file)
         "s-j" 'dired-jump
         "s-J" 'dired-jump-other-window))
 
