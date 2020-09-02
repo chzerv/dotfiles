@@ -16,3 +16,6 @@
 
 ;; dired-sidebar
 (package! dired-sidebar)
+
+;; Check disk usage using dired.
+(package! dired-du)

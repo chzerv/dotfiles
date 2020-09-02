@@ -107,3 +107,9 @@
             'evil-window-rotate-upwards 'evil-window-rotate-downwards)
   (map! :map dired-sidebar-mode-map
         :n "q" #'dired-sidebar-toggle-sidebar))
+
+;;; dired-du
+;; Check directory size, inside dired.
+(use-package! dired-du
+  :after dired
+  :commands dired-du-mode)
