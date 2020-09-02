@@ -172,6 +172,7 @@ source /usr/bin/virtualenvwrapper_lazy.sh
 
 eval "$(fasd --init auto)"
 [ -f "$ZDOTDIR/clrs.zsh" ] && source "$ZDOTDIR/clrs.zsh"
+source <(echo "$(navi widget zsh)")
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
