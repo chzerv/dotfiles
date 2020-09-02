@@ -5,7 +5,9 @@
   (setq dired-recursive-deletes 'always
         delete-by-moving-to-trash t
         dired-listing-switches "-AGFhlv --group-directories-first --time-style=long-iso")
-  (add-hook 'dired-mode-hook (lambda () (dired-hide-details-mode 1))))
+  (add-hook 'dired-mode-hook (lambda ()
+                               (dired-hide-details-mode 1)
+                               (hl-line-mode))))
 
 ;;; Key bindings
 (after! dired
