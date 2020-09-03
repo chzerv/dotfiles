@@ -33,3 +33,6 @@
   (map! (:map evil-normal-state-map
          "j" 'evil-next-visual-line
          "k" 'evil-previous-visual-line)))
+
+(after! evil-snipe-
+  (setq evil-snipe-scope 'buffer))
