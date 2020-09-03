@@ -81,6 +81,10 @@
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+
+;;;; Associate filetypes with modes
+(add-to-list 'auto-mode-alist '("\\.cheat\\'" . sh-mode))
+
 ;;; Projectile configuration
 
 ;; 1. Open up the the project in dired instead of the search prompt.
