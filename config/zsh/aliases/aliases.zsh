@@ -53,6 +53,18 @@ alias ping="prettyping --nolegend"
 alias ip="ip --color=always"
 # }}}
 
+# Safety nets {{{
+alias rm='rm -I --preserve-root'
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
+
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+#
+# }}}
+
 alias -g bg="& disown"
 # Horizontal ruler
 alias hr=' tput setaf 3; for i in $(seq 1 $COLUMNS); do printf '='; done; tput sgr0'
