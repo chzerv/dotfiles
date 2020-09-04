@@ -150,14 +150,13 @@
 
 (remove-hook 'text-mode-hook #'highlight-indent-guides-mode)
 (remove-hook 'prog-mode-hook #'highlight-indent-guides-mode)
-(add-hook! 'yaml-mode-hook #'highlight-indent-guides-mode)
-(add-hook! 'python-mode-hook #'highlight-indent-guides-mode)
+(add-hook 'yaml-mode-hook #'highlight-indent-guides-mode)
+(add-hook 'python-mode-hook #'highlight-indent-guides-mode)
 
 ;;; yaml-mode
 ;; Enable ansible-mode on every YAML file.
 (after! yaml-mode
-  (add-hook 'yaml-mode-hook '(lambda () (ansible 1)))
-  (add-hook 'yaml-mode-hook 'spell-fu-mode-disable))
+  (add-hook 'yaml-mode-hook #'+ansible-yaml-mode))
 
 ;;; Popup rules
 
