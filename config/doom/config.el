@@ -84,6 +84,7 @@
 
 ;;;; Associate filetypes with modes
 (add-to-list 'auto-mode-alist '("\\.cheat\\'" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\zshenv" . sh-mode))
 
 ;;; Projectile configuration
 
