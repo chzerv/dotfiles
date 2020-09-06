@@ -94,6 +94,7 @@
 
 ;;; dired-sidebar
 (use-package! dired-sidebar
+  :disabled t
   :after dired
   :init
   (add-hook 'dired-sidebar-mode-hook
