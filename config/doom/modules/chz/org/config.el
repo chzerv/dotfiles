@@ -14,7 +14,8 @@
   (setq org-fontify-quote-and-verse-blocks nil
         org-fontify-whole-heading-line nil
         ;; org-hide-leading-stars t
-        org-hide-leading-stars nil))
+        org-hide-leading-stars nil)
+  (add-hook 'org-mode-hook #'turn-off-smartparens-mode))
 
 ;;; Key bindings
 (after! org
