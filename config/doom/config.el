@@ -95,11 +95,17 @@
 ;; 1. Open up the the project in dired instead of the search prompt.
 ;; 2. Don't require a project for projectile to work.
 ;; 3. Don't create projects in the ignored directories.
+
+(defun +projectile-ignore-project-p (project-root)
+  (string-match-p "/\\.emacs\\.d/\\.local/straight/repos" project-root))
+
 (after! projectile
   (setq
    projectile-switch-project-action 'projectile-dired
    projectile-require-project-root nil
-   projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos" "~/.emacs/.local/straight/build")))
+   projectile-indexing-method 'alien
+   projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos" "~/.emacs/.local/straight/build")
+   projectile-ignored-project-function #'+projectile-ignore-project-p))
 
 ;;; Flycheck configuration
 
