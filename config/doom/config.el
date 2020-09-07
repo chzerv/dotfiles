@@ -18,11 +18,15 @@
 ;;;;; Modus-themes tweaks
 (if (equal doom-theme 'modus-operandi)
     (setq modus-operandi-theme-distinct-org-blocks t
-          modus-operandi-theme-scale-headings nil))
+          modus-operandi-theme-scale-headings nil
+          modus-operandi-theme-completions 'moderate
+          modus-operandi-theme-visible-fringes 'subtle))
 
 (if (equal doom-theme 'modus-vivendi)
     (setq modus-vivendi-theme-distinct-org-blocks t
-          modus-vivendi-theme-scale-headings nil))
+          modus-vivendi-theme-scale-headings nil
+          modus-vivendi-theme-completions 'moderate
+          modus-vivendi-theme-visible-fringes 'subtle))
 
 ;;;; Don't show line numbers.
 (setq display-line-numbers-type nil)
