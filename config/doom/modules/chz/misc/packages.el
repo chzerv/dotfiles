@@ -17,3 +17,10 @@
 
 ;; A sidebar for imenu
 (package! imenu-list)
+
+;; Add some faces to separate outline headings from comments.
+(package! outline-minor-faces)
+;; Kinda like narrow.
+(package! foldout)
+;; Cycle between showall and fold, like in org-mode.
+(package! bicycle)

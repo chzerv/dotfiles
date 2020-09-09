@@ -94,3 +94,67 @@
         (:leader
          :desc "imenu-list-dwim"
          "s I" 'contrib/imenu-list-dwim)))
+
+;;; outline-minor-mode
+
+;; Stolen from
+;; https://gitlab.com/protesilaos/dotfiles/-/blob/master/emacs/.emacs.d/emacs-init.org#h:c519300f-8a9a-472b-b26d-c2f49adbdb5d
+
+(use-package! outline-minor-faces
+  :after outline
+  :config (add-hook 'outline-minor-mode-hook
+                    'outline-minor-faces-add-font-lock-keywords))
+
+(use-package! foldout
+  :after outline)
+
+(use-package! bicycle
+  :after outline)
+
+(use-package! outline
+  :config
+  (defvar contrib/outline-minor-mode-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "M-n") 'outline-next-visible-heading)
+      (define-key map (kbd "M-p") 'outline-previous-visible-heading)
+      (define-key map (kbd "C-c C-n") 'outline-next-visible-heading)
+      (define-key map (kbd "C-c C-p") 'outline-previous-visible-heading)
+      (define-key map (kbd "C-c C-f") 'outline-forward-same-level)
+      (define-key map (kbd "C-c C-b") 'outline-backward-same-level)
+      (define-key map (kbd "C-c C-a") 'outline-show-all)
+      (define-key map (kbd "C-c C-q") 'contrib/outline-hide-all)
+      (define-key map (kbd "C-c C-u") 'outline-up-heading)
+      (define-key map (kbd "C-c C-d") 'contrib/outline-down-heading)
+      (define-key map (kbd "C-c C-z") 'foldout-zoom-subtree)
+      (define-key map (kbd "C-c C-x") 'foldout-exit-fold)
+      (define-key map (kbd "<tab>") 'contrib/bicycle-cycle-tab-dwim)
+      (define-key map (kbd "<C-tab>") 'bicycle-cycle)
+      (define-key map (kbd "<S-iso-lefttab>") 'bicycle-cycle-global)
+      map)
+    "Key map for `prot/outline-minor-mode'.
+The idea is to make `outline-minor-mode' keys a bit easier to
+work with.")
+
+  (define-minor-mode contrib/outline-minor-mode
+    "Toggles `outline-minor-mode' and extras.
+
+\\{contrib/outline-minor-mode-map}"
+    :init-value nil
+    :lighter " =┆"
+    :global nil
+    :keymap contrib/outline-minor-mode-map
+    (if contrib/outline-minor-mode
+        (progn
+          (when (eq major-mode 'org-mode)
+            (user-error "Don't use `outline-minor-mode' with Org"))
+          (outline-minor-mode 1)
+          (run-hooks 'contrib/outline-minor-mode-enter-hook))
+      (outline-minor-mode -1)
+      (run-hooks 'contrib/outline-minor-mode-exit-hook)))
+
+  ;; Use f9 to toggle the minor mode.
+  (map! [f9] 'contrib/outline-minor-mode)
+
+  :hook ((contrib/outline-minor-mode-enter-hook . contrib/outline-imenu-setup)
+         (contrib/outline-minor-mode-exit-hook . contrib/outline-imenu-restore)
+         (contrib/outline-minor-mode-exit-hook . contrib/outline-minor-refontify)))

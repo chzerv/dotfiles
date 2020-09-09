@@ -9,15 +9,6 @@
 ;; A much cleaner agenda, with easily defined groups.
 (package! org-super-agenda)
 
-;; outline-mode tweaks
-
-;; Add some faces to separate outline headings from comments.
-(package! outline-minor-faces)
-;; Kinda like narrow.
-(package! foldout)
-;; Cycle between showall and fold, like in org-mode.
-(package! bicycle)
-
 ;; Testing tree-sitter for syntax highlighting
 (package! tree-sitter 
           :recipe (:host github
