@@ -1,12 +1,16 @@
 ;;; chz/bindings/config.el -*- lexical-binding: t; -*-
 
-;; Find file in/Browse user-defined directories.
-(map!
- (:leader
-  :desc "Find File in private Notes"
-  "n f" 'org/find-in-notes
-  "f t" #'util/find-in-dotfiles
-  "f T" #'util/browse-dotfiles))
+;; Bindings for utility functions
+(map! (:when (featurep! :lang latex)
+       (:map LaTeX-mode-map
+        :ni "C-c s" 'util/latex-save-and-compile))
+      (:leader
+       :desc "Find File in private Notes"
+       "n f" 'org/find-in-notes
+       "f t" #'util/find-in-dotfiles
+       "f T" #'util/browse-dotfiles)
+      "s-k" 'util/kill-other-buffers
+      "s-K" 'util/kill-all-dired-buffers)
 
 ;; Show git diff of the current buffer.
 (map!
@@ -22,12 +26,7 @@
        :desc "Project sidebar"
        "p" #'dired-sidebar-toggle-sidebar))
 
-;; Mode maps
-(map! (:when (featurep! :lang latex)
-       (:map LaTeX-mode-map
-        :ni "C-c s" 'util/latex-save-and-compile)))
-
- ;; Custom bindings
+ ;; Open RSS/mail (if the modules are enabled).
 (map! :leader
       (:prefix ("e" . "External")
        ;; Mail
@@ -45,7 +44,15 @@
         (:prefix ("e" . "Elfeed")
          :desc "Open elfeed" "o" 'rss/elfeed-open))))
 
- ;; ;; Hydras
+;; Wrap selection in an existing snippet, according to active major-mode.
+(map! :v [tab] (cmds! (and (bound-and-true-p yas-minor-mode)
+                           (or (eq evil-visual-selection 'line)
+                               (not (memq (char-after) (list ?\( ?\[ ?\{ ?\} ?\] ?\))))))
+                      #'yas-insert-snippet
+                      (fboundp 'evil-jump-item)
+                      #'evil-jump-item))
+
+ ;; Hydras
  (defhydra hydra-search-notes ()
    "Search notes"
    ("g" org/org-notes-search "General notes")
@@ -53,10 +60,3 @@
 
  (map! (:leader
         "n s" 'hydra-search-notes/body))
-
-(map! :v [tab] (cmds! (and (bound-and-true-p yas-minor-mode)
-                           (or (eq evil-visual-selection 'line)
-                               (not (memq (char-after) (list ?\( ?\[ ?\{ ?\} ?\] ?\))))))
-                      #'yas-insert-snippet
-                      (fboundp 'evil-jump-item)
-                      #'evil-jump-item))
