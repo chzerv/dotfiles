@@ -284,3 +284,6 @@ work with.")
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_LATEX" . "#\\+END_LATEX"))
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_EXAMPLE" . "#\\+END_EXAMPLE")))
+
+;; Don't immediately run a spell check on every LaTeX file.
+(setq-hook! 'TeX-mode-hook +spellcheck-immediately nil)
