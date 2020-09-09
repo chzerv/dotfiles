@@ -10,7 +10,8 @@
        "f t" #'util/find-in-dotfiles
        "f T" #'util/browse-dotfiles)
       "s-k" 'util/kill-other-buffers
-      "s-K" 'util/kill-all-dired-buffers)
+      "s-K" 'util/kill-all-dired-buffers
+      "s-o" 'util/switch-to-last-window)
 
 ;; Show git diff of the current buffer.
 (map!

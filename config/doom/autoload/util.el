@@ -77,3 +77,11 @@ execution."
     (org-reveal t))
    ((when contrib/outline-minor-mode
       (outline-show-entry)))))
+
+;;;###autoload
+(defun util/switch-to-last-window ()
+  "Switch to the most recently used window."
+  (interactive)
+  (let ((win (get-mru-window nil t t)))
+    (unless win (error "Most recent window not found."))
+    (select-window win)))
