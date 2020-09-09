@@ -11,6 +11,7 @@
   (setq doom-font (font-spec :family "Hack" :size 15)
         doom-big-font (font-spec :family "Hack" :size 18)
         doom-variable-pitch-font (font-spec :family "FiraGO" :size 17)))
+(setq doom-unicode-font (font-spec :name "DejaVu Sans Mono"))
 
 ;;;; Theme configuration
 (setq doom-theme 'modus-operandi)
