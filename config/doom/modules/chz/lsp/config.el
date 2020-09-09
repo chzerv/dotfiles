@@ -16,3 +16,11 @@
         lsp-ui-peek-fontify 'on-demand)
 
   (map! :ne "C-S-k" 'lsp-ui-doc-glance))
+
+;; Python stuff (ms-python server)
+
+(after! lsp
+  ;; lsp-python-ms (or rather the ms-python server) doesn't use other backends,
+  ;; so manually set `flycheck-checker' in `python-mode'
+  (add-hook! lsp-mode (when (derived-mode-p 'python-mode)
+                        (setq-local flycheck-checker 'python-flake8))))
