@@ -5,10 +5,15 @@
        (:map LaTeX-mode-map
         :ni "C-c s" 'util/latex-save-and-compile))
       (:leader
-       :desc "Find File in private Notes"
+       :desc "Find file in private notes"
        "n f" 'org/find-in-notes
+       :desc "Find file in dotfiles"
        "f t" #'util/find-in-dotfiles
-       "f T" #'util/browse-dotfiles)
+       :desc "Browse dotiles"
+       "f T" #'util/browse-dotfiles
+       (:prefix ("o" . "+open")
+        :desc "Open external terminal here"
+        "x" 'util/terminal-here))
       "s-k" 'util/kill-other-buffers
       "s-K" 'util/kill-all-dired-buffers
       "s-o" 'util/switch-to-last-window)

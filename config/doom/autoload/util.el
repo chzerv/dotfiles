@@ -85,3 +85,11 @@ execution."
   (let ((win (get-mru-window nil t t)))
     (unless win (error "Most recent window not found."))
     (select-window win)))
+
+;;;###autoload
+(defun util/terminal-here ()
+  "Open a terminal in the current working directory"
+  (interactive "@")
+  (shell-command
+   (concat "cd '" (file-name-directory (or (or load-file-name buffer-file-name) "")) "' ; exec nohup $TERMINAL >/dev/null 2>&1")
+   nil nil))
