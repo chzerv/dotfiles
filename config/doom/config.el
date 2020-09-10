@@ -90,6 +90,15 @@
 ;;;; Associate filetypes with modes
 (add-to-list 'auto-mode-alist '("\\.cheat\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\zshenv" . sh-mode))
+;;;; Emacsclient
+;; Whenever I start the deamon, I manually load a few particular things.
+;; Better spend the time loading them during startup.
+(defun greedy-daemon-startup ()
+  (when (daemonp)
+    (require 'org)
+    (require 'org-super-agenda)
+    (require 'notmuch)))
+(add-hook 'emacs-startup-hook #'greedy-daemon-startup)
 
 ;;; Projectile configuration
 
