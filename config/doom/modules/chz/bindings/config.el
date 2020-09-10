@@ -13,7 +13,7 @@
        "f T" #'util/browse-dotfiles
        (:prefix ("o" . "+open")
         :desc "Open external terminal here"
-        "x" 'util/terminal-here))
+        "x" 'util/tilix-here))
       "s-k" 'util/kill-other-buffers
       "s-K" 'util/kill-all-dired-buffers
       "s-o" 'util/switch-to-last-window)

@@ -87,9 +87,9 @@ execution."
     (select-window win)))
 
 ;;;###autoload
-(defun util/terminal-here ()
-  "Open a terminal in the current working directory"
-  (interactive "@")
-  (shell-command
-   (concat "cd '" (file-name-directory (or (or load-file-name buffer-file-name) "")) "' ; exec nohup $TERMINAL >/dev/null 2>&1")
-   nil nil))
+(defun util/tilix-here ()
+  "Open the current dir in a new tilix window"
+  (interactive)
+  (let ((process-connection-type nil))
+    (start-process "" nil "tilix"
+                   (concat "--working-directory=" default-directory))))
