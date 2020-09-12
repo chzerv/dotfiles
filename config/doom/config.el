@@ -173,11 +173,6 @@
 (add-hook 'yaml-mode-hook #'highlight-indent-guides-mode)
 (add-hook 'python-mode-hook #'highlight-indent-guides-mode)
 
-;;; yaml-mode
-;; Enable ansible-mode on every YAML file.
-(after! yaml-mode
-  (add-hook 'yaml-mode-hook #'+ansible-yaml-mode))
-
 ;;; Popup rules
 
 ;; TODO: There might be a way to autoload those rules, for better performance.
@@ -186,7 +181,9 @@
 (set-popup-rule! "*Man.*" :side 'right :width .50 :select t :slot 1 :ttl 3 :quit t :modeline nil)
 (set-popup-rule! "*ansible-doc.*" :side 'bottom :height .40 :select t :vslot 1 :ttl 3 :quit nil)
 (set-popup-rule! "*Flycheck errors*" :side 'bottom :height .2 :select nil :quit t)
-(set-popup-rule! "*Ilist" :side 'right :width .3 :select t :slot 2 :quit t :parameters '(no-other-window . nil))
+(after! imenu-list
+  (set-popup-rule! "^\\*Ilist"
+    :side 'right :size 35 :quit nil :select t :ttl 0))
 (set-popup-rule! "*helpful.*" :side 'bottom :height .30 :select t :vslot 0 :ttl 3 :quit 'other)
 
 ;;; Run all Doom hooks on startup.
@@ -194,12 +191,6 @@
 ;; This will delay startup a bit, but it can offer a much
 ;; more responsive experience.
 (run-hooks 'doom-first-input-hook)
-
-;;; File templates
-
-(after! dockerfile-mode
-  (set-file-template! 'dockerfile-mode
-    :trigger "dockerfile-template"))
 
 ;;; imenu
 
@@ -229,6 +220,3 @@
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_LATEX" . "#\\+END_LATEX"))
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_EXAMPLE" . "#\\+END_EXAMPLE")))
-
-;; Don't immediately run a spell check on every LaTeX file.
-(setq-hook! 'TeX-mode-hook +spellcheck-immediately nil)

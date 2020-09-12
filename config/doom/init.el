@@ -187,7 +187,7 @@
        company
        dired
        ivy
-       lsp
+       tools
        notmuch
        org
        rss
