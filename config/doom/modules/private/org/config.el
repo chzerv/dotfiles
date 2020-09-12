@@ -5,7 +5,8 @@
 ;; the other two, often help to avoid hangs
 ;; in case inline images exist.
 (setq org-directory "~/Documents/Syncthing/Org/"
-      org-startup-with-inline-images nil)
+      org-startup-with-inline-images nil
+      org-link-file-path-type 'relative)
 
 (add-hook 'org-src-mode-hook 'org/disable-flycheck-in-org-src-block)
 
