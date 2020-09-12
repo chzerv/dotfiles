@@ -181,7 +181,7 @@
        ;;literate
        (default +bindings +smartparens)
 
-       :chz
+       :private
        evil
        bindings
        company
