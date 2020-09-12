@@ -191,6 +191,6 @@
        notmuch
        org
        rss
-       ;; rust
+       lang
        treemacs
        misc)
