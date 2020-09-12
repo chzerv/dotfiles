@@ -25,7 +25,11 @@
         :ne "[i" 'org-previous-item)
        (:map org-super-agenda-header-map
         "j" 'org-agenda-next-line
-        "k" 'org-agenda-previous-line)))
+        "k" 'org-agenda-previous-line)
+       (:leader
+        :prefix ("n" . "+notes")
+        :desc "Search headline and narrow it"
+        "V" 'org/org-search-and-narrow-headlines)))
 
 ;;; Better defaults
 (after! org

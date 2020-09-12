@@ -23,3 +23,11 @@
   (interactive)
   (let ((default-directory "~/Documents/Notes"))
     (+default/search-project-for-symbol-at-point "")))
+
+;;;###autoload
+(defun org/org-search-and-narrow-headlines ()
+  "Jump to an Org headline in `org-agenda-files' and narrow it."
+  (interactive)
+  (doom-completing-read-org-headings
+   "Jump to org headline: " org-agenda-files 3 t)
+  (org-narrow-to-subtree))
