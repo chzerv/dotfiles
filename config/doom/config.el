@@ -150,7 +150,10 @@
         lazy-count-prefix-format nil
         lazy-count-suffix-format " (%s/%s)"
         isearch-yank-on-move 'shift
-        isearch-allow-scroll 'unlimited))
+        isearch-allow-scroll 'unlimited)
+
+  (map! :desc "Query replace symbol at point"
+        "M-s %" 'util/isearch-query-replace-symbol-at-point))
 
 ;;; yasnippet configuration
 

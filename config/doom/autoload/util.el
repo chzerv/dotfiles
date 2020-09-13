@@ -93,3 +93,10 @@ execution."
   (let ((process-connection-type nil))
     (start-process "" nil "tilix"
                    (concat "--working-directory=" default-directory))))
+
+;;;###autoload
+(defun util/isearch-query-replace-symbol-at-point ()
+    "Run `query-replace-regexp' for symbol at point."
+    (interactive)
+    (isearch-forward-symbol-at-point)
+    (isearch-query-replace-regexp))
