@@ -14,6 +14,10 @@
   (advice-add 'TeX-pdf-tools-sync-view :around #'latex/display-buffer-use-some-frame)
   (advice-add 'pdf-sync-backward-search-mouse :around #'latex/display-buffer-use-some-frame))
 
+(map! (:when (featurep! :lang latex)
+       (:map LaTeX-mode-map
+        :ni "C-c s" 'util/latex-save-and-compile)))
+
 ;; Do not spellcheck latex documents when opened, this takes a lot of time.
 ;;(remove-hook 'flyspell-mode-hook #'+spellcheck|immediately)
 (after! tex

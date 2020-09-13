@@ -1,10 +1,7 @@
 ;;; private/bindings/config.el -*- lexical-binding: t; -*-
 
 ;; Bindings for utility functions
-(map! (:when (featurep! :lang latex)
-       (:map LaTeX-mode-map
-        :ni "C-c s" 'util/latex-save-and-compile))
-      (:leader
+(map! (:leader
        :desc "Find file in private notes"
        "n f" 'org/find-in-notes
        :desc "Find file in dotfiles"
