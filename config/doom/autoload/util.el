@@ -100,3 +100,10 @@ execution."
     (interactive)
     (isearch-forward-symbol-at-point)
     (isearch-query-replace-regexp))
+
+;;;###autoload
+(defun util/occur-urls ()
+  "Produce a list with all the URLs found in the current buffer."
+  (interactive)
+  (let ((urls browse-url-button-regexp))
+    (occur urls "\\&")))
