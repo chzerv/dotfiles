@@ -15,6 +15,10 @@
       "s-K" 'util/kill-all-dired-buffers
       "s-o" 'util/switch-to-last-window)
 
+;; SPC should never complete in the minibuffer.
+(map! (:map minibuffer-local-completion-map
+       "SPC" 'nil))
+
 ;; Show git diff of the current buffer.
 (map!
  (:after magit
