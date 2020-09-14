@@ -3,7 +3,16 @@
 
 (after! elfeed
   (setq elfeed-search-filter "@2-week-ago +unread -bugs -music -reddit"
-        elfeed-show-unique-buffers t)
+        elfeed-show-unique-buffers t
+        elfeed-search-trailing-width 25)
+
+  (defface elfeed-search-starred-title-face
+    '((t :inherit hl-todo))
+    "Masks a starred entry in elfeed.")
+
+  (push '(star elfeed-search-starred-title-face)
+        elfeed-search-face-alist)
+
   (map! (:map elfeed-show-mode-map
          "q" 'nil
          (:localleader
