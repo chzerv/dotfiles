@@ -124,3 +124,26 @@ browser defined by `browse-url-generic-program'."
     (mapc #'elfeed-search-update-entry entries)
     (unless (or elfeed-search-remain-on-entry (use-region-p))
       (forward-line))))
+
+;; Stolen from
+;; https://gitlab.com/protesilaos/dotfiles/-/blob/master/emacs/.emacs.d/emacs-init.org
+
+;;;###autoload
+(defun rss/elfeed-make-archive ()
+    "Create an archive copy of the current `elfeed' entry."
+    (interactive)
+    (let* ((entry (if (eq major-mode 'elfeed-show-mode)
+                      elfeed-show-entry
+                    (elfeed-search-selected :ignore-region)))
+           ;; TODO how to cleanly add hyphens instead of spaces?
+           (title (elfeed-entry-title entry))
+           (elfeed-show-truncate-long-urls nil)
+           (archives "~/Documents/feeds/")
+           (file (format "%s%s.txt" archives title)))
+      (unless (file-exists-p archives)
+        (make-directory archives t))
+      (when (derived-mode-p 'elfeed-show-mode)
+        ;; Refresh to expand truncated URLs
+        (elfeed-show-refresh)
+        (write-file file t)
+        (message "Saved buffer at %s" file))))
