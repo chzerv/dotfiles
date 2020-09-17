@@ -181,7 +181,7 @@
 ;; TODO: There might be a way to autoload those rules, for better performance.
 (set-popup-rule! "*eww*" :side 'bottom :size .70 :slect t :vslot 5 :ttl 3 :quit nil)
 (set-popup-rule! "*Help.*" :side 'right :width .50 :select t :vslot 0 :ttl 3 :quit nil)
-(set-popup-rule! "*Man.*" :side 'right :width .50 :select t :slot 1 :ttl 3 :quit t :modeline nil)
+(set-popup-rule! "*Man.*" :side 'right :width .50 :select t :slot 1 :ttl 3 :quit 'current :modeline nil)
 (set-popup-rule! "*ansible-doc.*" :side 'bottom :height .40 :select t :vslot 1 :ttl 3 :quit nil)
 (set-popup-rule! "*Flycheck errors*" :side 'bottom :height .2 :select nil :quit t)
 (after! imenu-list
