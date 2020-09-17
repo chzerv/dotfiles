@@ -22,7 +22,7 @@
 
 ;;; LSP configuration
 
-(setq read-process-output-max (* 2 1024 1024)) ;; 2mb
+(setq read-process-output-max (* 1024 1024))
 (after! lsp
   (setq lsp-completion-provider :capf
         lsp-idle-delay 0.500))
