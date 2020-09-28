@@ -1,47 +1,50 @@
-;;; private/org/chz_org-agenda.el -*- lexical-binding: t; -*-
+;;; private/org/agenda.el -*- lexical-binding: t; -*-
 
-;; Agenda
 (after! org
   (setq org-agenda-dim-blocked-tasks t
         org-agenda-use-time-grid t
-        org-agenda-files '("~/Documents/Syncthing/Org/"
-                            "~/Documents/Syncthing/Org/Notebooks/")
-        ;; org-agenda-hide-tags-regexp ":\\w+:"
-        ;; Ignore archived tasks in agenda.
-        org-agenda-tag-filter-preset '("-ARCHIVE")
+        org-agenda-hide-tags-regexp "\\w+"
+        org-agenda-compact-blocks nil
+        org-agenda-block-separator ""
         org-agenda-skip-scheduled-if-done t
         org-agenda-skip-deadline-if-done t
         org-enforce-todo-checkbox-dependencies nil
-        org-habit-show-habits t
+        org-enforce-todo-dependencies t
         org-deadline-warning-days 14
-        org-agenda-start-day (org-today)
+        org-agenda-tag-filter-preset '("-ARCHIVE")
+        org-habit-show-habits t
+        org-agenda-start-on-weekday 1
+        org-agenda-start-day "+0d"
         org-agenda-time-grid
         (quote
-         ((daily today remove-match)
-          (800 1200 1600 2000)
-          "......" "----------------"))
+         ((require-timed remove-match)
+          (0900 2100)
+          "      " "┈┈┈┈┈┈┈┈┈┈┈┈┈"))
         ;; Modify the way that deadlines are displayed
         org-agenda-deadline-leaders
         '("Deadline:  " "----- In %3d d.: -----")
         ;; Modify the way that scheduled items are displayed
-        org-agenda-scheduled-leaders
-        '(">> Scheduled: <<" "** Sched.%2dx: **")))
+        ;; org-agenda-scheduled-leaders
+        ;; '(">> Scheduled: <<" "** Sched.%2dx: **")
+        ))
 
+;; org-super-agenda
 (after! org
   (setq org-agenda-custom-commands
         '(("o" "Task Overview"
            ((agenda ""
                     ((org-agenda-span 3)
-                     (org-agenda-files '("~/Documents/Syncthing/Org/index.org"
-                                         "~/Documents/Syncthing/Org/projects.org"
-                                         "~/Documents/Syncthing/Org/refile.org"))))
-            (tags-todo "@university"
+                     (org-agenda-files '("~/Documents/Syncthing/Org/index.org"))))
+            (tags-todo "@uni"
                        ((org-agenda-overriding-header "University")
                         (org-super-agenda-groups
                          '((:name "Labs"
-                            :tag "@lab")
-                           (:name "Projects"
-                            :tag "@project")))))
+                            :tag "lab")
+                           (:name "Course"
+                            :tag "course")
+                           (:name "Assignments"
+                            :tag "assignment")
+                           ))))
             (tags-todo "@personal"
                        ((org-agenda-overriding-header "Personal")))
             (tags-todo "@appointment"
@@ -73,5 +76,4 @@
             ))
           ))
   (org-super-agenda-mode t))
-
 (provide 'agenda)
