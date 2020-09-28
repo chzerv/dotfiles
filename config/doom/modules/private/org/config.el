@@ -145,3 +145,4 @@
         deft-use-filename-as-title nil))
 
 (load! "agenda")
+(load! "capture-templates")

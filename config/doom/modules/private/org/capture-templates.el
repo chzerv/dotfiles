@@ -1,70 +1,40 @@
-;;; private/org/chz_org-capture-templates.el -*- lexical-binding: t; -*-
+;;; private/org/capture-templates.el -*- lexical-binding: t; -*-
 
-(defvar org-uni-file "~/Documents/Syncthing/Org/uni.org")
 (defvar org-refile-file "~/Documents/Syncthing/Org/refile.org")
 
 (after! org
   (setq org-capture-templates
-        '(("t" "Todo" entry
+        '(("!" "Quick capture" plain
            (file+headline org-refile-file "Todo")
-           "* TODO %? \n%U\n%a\n"
+           "* TODO %? \n:PROPERTIES:\n:CREATED: %U\n:END:\n%a"
            :prepend t)
-          ;; Next task
-          ("n" "Next task" entry
+          ("n" "Task with a deadline" entry
            (file+headline org-refile-file "Tasks")
-           "* NEXT %? \nDEADLINE: %t"
+           "* %^{Scope of task||TODO|assignment} %^{Title} %^g\nSCHEDULED: %^t\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%i%?"
            :prepend t)
 
-          ("N" "Note" entry
-           (file+headline org-refile-file "Notes")
-           "* %? :@note:\n%U\n%a\n"
+          ("r" "Reply to an email" entry
+           (file+headline org-refile-file "Mail correspondence")
+           "* TODO [#B] %:subject :mail:\nSCHEDULED: %t\n:PROPERTIES:\n:CONTEXT: %a\n:END:\n\n%i%?"
            :prepend t)
-
-          ;; Blank
-          ("b" "Blank" entry
-           (file org-refile-file)
-           "* %? \n%U\n%a\n"
-           :prepend t)
-
-          ;; Journal
-          ("j" "Journal" entry
-           (file+olp+datetree +org-capture-journal-file)
-           "* %U %?\n%i\n%a"
-           :prepend t)
-
-          ;; Interesting: stuff that might seem interesting.
-          ("r" "Reading")
-          ("rw" "From the web" entry
-           (file+headline org-refile-file "Reading")
-           "* [[%^C][%^{description}]]  :@read:\n%U\n%i\n%?"
-           :prepend t)
-          ("re" "From within emacs" entry
-           (file+headline org-refile-file "Reading")
-           "* %? :@read:\n%U\n%a"
-           :prepend t)
-
-
-          ;; Capture an idea, and clock it.
-          ("i" "Idea" entry (file org-refile-file)
-           "* %? :#IDEA:\n")
 
           ;; University related templates.
           ("u" "University")
           ;; Capture a test. Asks for schedule.
           ("ut" "Test" entry
            (file+headline org-uni-file "University")
-           "* TODO [#A] %^{Test name} :@university:@tests:\nSCHEDULED:%^{Test date}T\n%i\n%?"
+           "* TODO [#A] %^{Test name} :@uni:@tests:\nSCHEDULED:%^{Test date}T\n%i\n%?"
            :prepend t)
           ;; Capture an assignment. Asks for a deadline.
           ("ua" "Assignment" entry
            (file+headline org-uni-file "University")
-           "* TODO [#B] %^{Assignment name} :@university:@assignment:\nDEADLINE:%^{Due date}T\n
+           "* TODO [#B] %^{Assignment name} :@uni:assignment:\nDEADLINE:%^{Due date}T\n
               %i\n%?"
            :prepend t)
           ;; Capture a course.
           ("uc" "Course" entry
            (file+headline org-uni-file "University")
-           "* TODO [#B] %^{Course}  :@university:@course:\nSCHEDULED:%^{Course date}T\n%i\n%?"
+           "* TODO [#B] %^{Course}  :@uni:course:\nSCHEDULED:%^{Course date}T\n%i\n%?"
            :prepend t)
 
           ;; Will use {project-root}/{todo,notes,changelog}.org, unless a
