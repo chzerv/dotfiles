@@ -8,7 +8,7 @@ set $mod Mod4
 
 
 # Wallpaper
-output "*" bg $HOME/Pictures/Wallpapers/lava_in_the_ocean.jpg fill
+output "*" bg $HOME/Pictures/Wallpapers/Unsplash/autumn.jpg fill
 set $term alacritty
 set $menu dmenu_path | wofi --show run | xargs swaymsg exec --
 
@@ -51,7 +51,7 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+Return exec alacritty --title float
 
 # Emacsclient
-bindsym $mod+Shift+e exec /home/cofefe/.local/bin/scripts/emacs_sec.sh
+bindsym $mod+Shift+e exec $HOME/.local/bin/scripts/emacs_sec
 
 # Floating mode
 bindsym $mod+Shift+p floating toggle
@@ -197,5 +197,3 @@ bar {
 
 # Include other configuration
 include ~/.config/sway/conf.d/*
-
-exec "systemctl --user import-environment; systemctl --user start sway-session.target"
