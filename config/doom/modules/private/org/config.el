@@ -1,6 +1,6 @@
 ;;; private/org/config.el -*- lexical-binding: t; -*-
 
-(setq org-directory "~/Documents/Syncthing/Org/"
+(setq org-directory "~/Documents/Syncthing/Org/roam/"
       org-link-file-path-type 'relative)
 
 ;;; Better defaults
@@ -117,5 +117,31 @@
           ;; ("framesep" "2mm")))
   (setq org-latex-pdf-process
         '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")))
+
+;;; org-roam
+(after! org-roam
+  (setq org-roam-directory "~/Documents/Syncthing/Org/roam"))
+
+(use-package! org-roam-server
+  :after org-roam
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 8088
+        org-roam-server-export-inline-images t
+        org-roam-server-authenticate nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows 'from))
+
+;;; deft
+(after! deft
+  (setq deft-directory "~/Documents/Syncthing/Org/roam"
+        deft-auto-save-interval 0
+        deft-recursive t
+        deft-current-sort-method 'title
+        deft-extensions '("md" "txt" "org")
+        deft-use-filename-as-title nil))
 
 (load! "agenda")
