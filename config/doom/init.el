@@ -104,7 +104,8 @@
 
        :lang
        ;;agda              ; types of types of types of types...
-       ;;cc                ; C/C++/Obj-C madness
+       (cc                ; C/C++/Obj-C madness
+        +lsp)
        ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
@@ -148,7 +149,8 @@
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        (python            ; beautiful is better than ugly
-        +lsp)
+        +lsp
+        +pyenv)
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
