@@ -196,4 +196,5 @@
        rss
        lang
        treemacs
+       transparency
        misc)
