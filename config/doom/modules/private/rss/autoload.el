@@ -155,5 +155,5 @@ browser defined by `browse-url-generic-program'."
   ;; TODO make this work when called from a mode other than
   ;; elfeed-search-mode.
   (elfeed-search-clear-filter)
-  (setq elfeed-search-filter "star")
+  (setq elfeed-search-filter "+star")
   (elfeed-search-update :force))
