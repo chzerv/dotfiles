@@ -120,7 +120,20 @@
 
 ;;; org-roam
 (after! org-roam
-  (setq org-roam-directory "~/Documents/Syncthing/Org/roam"))
+  (setq org-roam-directory "~/Documents/Syncthing/Org/roam/")
+  (add-hook 'org-roam-backlinks-mode-hook #'flyspell-mode-off)
+  (remove-hook 'org-load-hook #'org-roam-mode)
+
+  (map! :leader
+        "n r t" 'org-roam-dailies-today)
+
+  ;; Change the default "daily" org-roam-dailies-capture-template
+  ;; so it: includes the name of the day in the filename and the title.
+  (setq org-roam-dailies-capture-templates
+        '(("d" "daily" plain (function org-roam-capture--get-point) ""
+           :immediate-finish t
+           :file-name "%<%A-%Y-%m-%d>"
+           :head "#+TITLE: %<%A %Y-%m-%d>\n#+STARTUP: content\n\n"))))
 
 (use-package! org-roam-server
   :after org-roam
@@ -137,7 +150,7 @@
 
 ;;; deft
 (after! deft
-  (setq deft-directory "~/Documents/Syncthing/Org/roam"
+  (setq deft-directory "~/Documents/Syncthing/Org/roam/"
         deft-auto-save-interval 0
         deft-recursive t
         deft-current-sort-method 'title
