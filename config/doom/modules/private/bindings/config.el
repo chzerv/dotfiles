@@ -15,6 +15,12 @@
       "s-K" 'util/kill-all-dired-buffers
       "s-o" 'util/switch-to-last-window)
 
+;; Use ido for switching between buffers.
+;; Every other switch-buffer command is SLOW!
+(map! :leader
+      "," nil
+      "," 'ido-switch-buffer)
+
 ;; SPC should never complete in the minibuffer.
 (map! (:map minibuffer-local-completion-map
        "SPC" 'nil))
