@@ -5,16 +5,16 @@
 ;;;; Font configuration
 
 (if (<= (display-pixel-width) 1366)
-    (setq doom-font (font-spec :family "Hack" :size 13)
-          doom-big-font (font-spec :family "Hack" :size 15)
+    (setq doom-font (font-spec :family "Source Code Pro" :size 13)
+          doom-big-font (font-spec :family "Source Code Pro" :size 15)
           doom-variable-pitch-font (font-spec :family "FiraGO" :size 14))
-  (setq doom-font (font-spec :family "Hack" :size 15)
-        doom-big-font (font-spec :family "Hack" :size 18)
+  (setq doom-font (font-spec :family "Source Code Pro" :size 15)
+        doom-big-font (font-spec :family "Source Code Pro" :size 18)
         doom-variable-pitch-font (font-spec :family "FiraGO" :size 17)))
 (setq doom-unicode-font (font-spec :name "DejaVu Sans Mono"))
 
 ;;;; Theme configuration
-(setq doom-theme 'modus-operandi)
+(setq doom-theme 'sanityinc-tomorrow-eighties)
 
 ;;;;; Modus-themes tweaks
 (if (equal doom-theme 'modus-operandi)
