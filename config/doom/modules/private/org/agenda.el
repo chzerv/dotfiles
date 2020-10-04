@@ -34,7 +34,12 @@
         '(("o" "Task Overview"
            ((agenda ""
                     ((org-agenda-span 3)
-                     (org-agenda-files '("~/Documents/Syncthing/Org/index.org"))))
+                     (org-agenda-files '("~/Documents/Syncthing/Org/roam/"))))
+            (alltodo ""
+                     ((org-agenda-overriding-header "Lens")
+                      (org-super-agenda-groups
+                       '((:name none
+                          :discard (:tag "schedule" :todo "SOMEDAY" :tag "bdays"))))))
             (tags-todo "@uni"
                        ((org-agenda-overriding-header "University")
                         (org-super-agenda-groups
@@ -44,7 +49,14 @@
                             :tag "course")
                            (:name "Assignments"
                             :tag "assignment")
-                           ))))
+                           (:discard (:anything t))))))
+            (todo "SOMEDAY"
+                       ((org-agenda-overriding-header "Maybe, one day..")
+                        (org-super-agenda-groups
+                         '((:name "Learn stuff"
+                            :tag "@read")
+                           (:name "What to do.."
+                            :anything t)))))
             (tags-todo "@personal"
                        ((org-agenda-overriding-header "Personal")))
             (tags-todo "@appointment"
@@ -76,4 +88,5 @@
             ))
           ))
   (org-super-agenda-mode t))
+
 (provide 'agenda)
