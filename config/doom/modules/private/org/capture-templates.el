@@ -1,12 +1,13 @@
 ;;; private/org/capture-templates.el -*- lexical-binding: t; -*-
 
 (defvar org-refile-file "~/Documents/Syncthing/Org/refile.org")
+(defvar org-tasks-file "~/Documents/Syncthing/Org/roam/Index.org")
 
 (after! org
   (setq org-capture-templates
         '(("!" "Quick capture" plain
-           (file+headline org-refile-file "Todo")
-           "* TODO %? \n:PROPERTIES:\n:CREATED: %U\n:END:\n%a"
+           (file+headline org-tasks-file "Tasks")
+           "** TODO %? \n:PROPERTIES:\n:CREATED: %U\n:END:\n%a"
            :prepend t)
           ("n" "Task with a deadline" entry
            (file+headline org-refile-file "Tasks")
