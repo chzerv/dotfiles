@@ -37,12 +37,13 @@
             '(lambda ()
                (setq org-file-apps
                      '((auto-mode . emacs)
-                       ("\\.mm\\'" . default)
-                       ("\\.png\\'" . "eog %s")
-                       ("\\.jpg\\'" . "eog %s")
-                       ("\\.jpeg\\'" . "eog %s")
+                       ("\\.mm\\'"      . default)
+                       ("\\.png\\'"     . "eog %s")
+                       ("\\.jpg\\'"     . "eog %s")
+                       ("\\.jpeg\\'"    . "eog %s")
+                       ("\\.mp4\\'"     . "mpv %s")
                        ("\\.x?html?\\'" . default)
-                       ("\\.pdf\\'" . "evince %s"))))))
+                       ("\\.pdf\\'"     . "evince %s"))))))
 ;;; Key bindings
 (after! org
   (map! (:map org-mode-map
