@@ -105,7 +105,8 @@
         org-outline-path-complete-in-steps t
         org-refile-allow-creating-parent-nodes 'confirm))
 
-;;; Syntag highlighting in LaTeX exports, using pygments
+;;; LaTeX stuff
+;; Syntax highlighting in LaTeX exports, using pygments
 (after! org
   (setq org-latex-listings 'minted
         org-latex-minted-options
@@ -115,9 +116,14 @@
           ("breaklines" "true")
           ("breakanywhere" "true")
           ("frame" "lines")))
-          ;; ("framesep" "2mm")))
+  ;; ("framesep" "2mm")))
   (setq org-latex-pdf-process
-        '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")))
+        '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+  ;; Adjust org-latex-preview scaling.
+  ;; The default 1.5 makes latex previews seem kinda out of place.
+  (setq org-format-latex-options '(:foreground default :background default :scale 1.1 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+                                   ("begin" "$1" "$" "$$" "\\(" "\\["))))
 
 ;;; org-roam
 (after! org-roam
