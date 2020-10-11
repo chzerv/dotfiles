@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Branched equation
+# key: bre
+# condition: t                                          
+# --
+
+\begin{${1:$$(yas-choose-value '("equation" "equation*"))}}
+  ${2:left part} = \left\{
+  \begin{array}{${3:ll}}
+    ${4:equation1} & , ${5:condition} \\
+    ${6:equation2} &, ${7:condition}
+  \end{array}
+  \right.
+\end{$1}

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: textbf
+# key: bf
+# condition: t
+# --
+\textbf{`%`$1}$0

@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Org Template
+# --
+#+TITLE: ${1:`(s-titleized-words (file-name-base buffer-file-name))`}
+#+AUTHOR: ${2:`(user-full-name)`}
+#+DATE: ${3: `(format-time-string "%Y-%m-%d")`}
+#+DESCRIPTION: ${4: Description}
+#+STARTUP: content
+
+$0
