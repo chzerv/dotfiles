@@ -39,7 +39,11 @@
                      ((org-agenda-overriding-header "Lens")
                       (org-super-agenda-groups
                        '((:name none
-                          :discard (:tag "schedule" :todo "SOMEDAY" :tag "bdays"))))))
+                          :discard (:tag "schedule" :todo "SOMEDAY" :tag "bdays"))
+                         (:name "Must do!"
+                          :priority "A")
+                         (:name "Just do it.."
+                          :priority<= "B")))))
             (tags-todo "@uni"
                        ((org-agenda-overriding-header "University")
                         (org-super-agenda-groups
@@ -49,14 +53,16 @@
                             :tag "course")
                            (:name "Assignments"
                             :tag "assignment")
+                           (:name "Study"
+                            :tag "study")
                            (:discard (:anything t))))))
             (todo "SOMEDAY"
-                       ((org-agenda-overriding-header "Maybe, one day..")
-                        (org-super-agenda-groups
-                         '((:name "Learn stuff"
-                            :tag "@read")
-                           (:name "What to do.."
-                            :anything t)))))
+                  ((org-agenda-overriding-header "Maybe, one day..")
+                   (org-super-agenda-groups
+                    '((:name "Learn stuff"
+                       :tag "@read")
+                      (:name "What to do.."
+                       :anything t)))))
             (tags-todo "@personal"
                        ((org-agenda-overriding-header "Personal")))
             (tags-todo "@appointment"
