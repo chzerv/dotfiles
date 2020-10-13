@@ -43,7 +43,11 @@
                          (:name "Must do!"
                           :and (:priority "A" :not (:tag "@uni")))
                          (:name "Just do it.."
-                          :and (:priority<= "B" :not (:tag "@uni")))))))
+                          :and (:priority<= "B" :not (:tag "@uni")))
+                         (:name "On hold"
+                          :todo "HOLD")
+                         (:name none
+                          :discard (:anything t))))))
             (tags-todo "@uni"
                        ((org-agenda-overriding-header "University")
                         (org-super-agenda-groups
