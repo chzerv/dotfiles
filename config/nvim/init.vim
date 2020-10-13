@@ -70,7 +70,7 @@ if exists(':MatchupReload')
 endif
 
  let g:lightline = {
-            \ 'colorscheme': 'nord',
+            \ 'colorscheme': 'gruvbox',
             \ 'active': {
              \   'left': [ ['mode', 'paste'],
             \             [ 'readonly', 'filename', 'modified' ]],
@@ -97,7 +97,7 @@ let g:nord_italic_comments = 1
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 " set background=dark
-colorscheme nord
+colorscheme gruvbox
 set shortmess+=c    " Suppress messages when reaching end of pummenu.
 set shortmess+=I    " Disable vim intro.
 set cmdheight=2     " Cmd window height.

@@ -34,6 +34,7 @@ export MANPAGER="nvim -c 'set ft=man' -"
 export BAT_CONFIG_PATH="$HOME/.config/bat/bat.conf"
 export npm_config_prefix=~/.node_modules
 export WORKON_HOME=~/.virtualenvs
+export CHROOT=/media/General/Builds
 # }}}
 
 # Fix Firefox remote protocol on mixed Wayland/X11 environments.
