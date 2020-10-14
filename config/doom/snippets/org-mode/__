@@ -5,6 +5,6 @@
 #+AUTHOR: ${2:`(user-full-name)`}
 #+DATE: ${3: `(format-time-string "%Y-%m-%d")`}
 #+DESCRIPTION: ${4: Description}
-#+STARTUP: content
+#+STARTUP: content latexpreview
 
 $0

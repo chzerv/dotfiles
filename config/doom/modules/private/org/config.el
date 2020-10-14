@@ -128,7 +128,6 @@
 (setq org-roam-directory "~/Documents/Syncthing/Org/roam/")
 (after! org-roam
   (add-hook 'org-roam-backlinks-mode-hook #'flyspell-mode-off)
-  (remove-hook 'org-load-hook #'org-roam-mode)
 
   (map! :leader
         "n r t" 'org-roam-dailies-today)
