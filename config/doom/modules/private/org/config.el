@@ -122,8 +122,7 @@
 
   ;; Adjust org-latex-preview scaling.
   ;; The default 1.5 makes latex previews seem kinda out of place.
-  (setq org-format-latex-options '(:foreground default :background default :scale 1.1 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
-                                   ("begin" "$1" "$" "$$" "\\(" "\\["))))
+  (plist-put org-format-latex-options :scale 1.2))
 
 ;;; org-roam
 (setq org-roam-directory "~/Documents/Syncthing/Org/roam/")
