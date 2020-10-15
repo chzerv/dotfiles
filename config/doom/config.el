@@ -169,6 +169,14 @@
 (add-hook 'yaml-mode-hook #'highlight-indent-guides-mode)
 (add-hook 'python-mode-hook #'highlight-indent-guides-mode)
 
+;;; format configuration
+;; Disable format-on-save for specified modes.
+(setq +format-on-save-enabled-modes
+      '(not tex-mode
+            latex-mode
+            emacs-lisp-mode
+            c-mode))
+
 ;;; Popup rules
 
 ;; TODO: There might be a way to autoload those rules, for better performance.
