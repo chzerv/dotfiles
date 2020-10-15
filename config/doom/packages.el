@@ -6,20 +6,6 @@
 (package! modus-vivendi-theme)
 (package! color-theme-sanityinc-tomorrow)
 
-;; A much cleaner agenda, with easily defined groups.
-(package! org-super-agenda)
-
-;; Testing tree-sitter for syntax highlighting
-(package! tree-sitter 
-          :recipe (:host github
-                   :repo "ubolonton/emacs-tree-sitter"
-                   :files ("lisp/*.el")))
-
-(package! tree-sitter-langs 
-          :recipe (:host github
-                   :repo "ubolonton/emacs-tree-sitter"
-                   :files ("langs/*.el" "langs/queries")))
-
 ;; Unpin packages
 (unpin! doom-modeline)
 (unpin! doom-themes)

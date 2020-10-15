@@ -81,12 +81,6 @@
 ;; I find it quite useful.
 (put 'narrow-to-region 'disabled nil)
 
-;;;; Auto-saving
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
-
 ;;;; Associate filetypes with modes
 (add-to-list 'auto-mode-alist '("\\.cheat\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\zshenv" . sh-mode))
@@ -102,16 +96,15 @@
 
 ;;; Projectile configuration
 
-;; 1. Open up the the project in dired instead of the search prompt.
-;; 2. Don't require a project for projectile to work.
+;; 1. Don't require a project for projectile to work.
+;; 2. Faster indexing.
 ;; 3. Don't create projects in the ignored directories.
-
-(defun +projectile-ignore-project-p (project-root)
-  (string-match-p "/\\.emacs\\.d/\\.local/straight/repos" project-root))
-
 (after! projectile
+
+  (defun +projectile-ignore-project-p (project-root)
+    (string-match-p "/\\.emacs\\.d/\\.local/straight/repos" project-root))
+
   (setq
-   projectile-switch-project-action 'projectile-dired
    projectile-require-project-root nil
    projectile-indexing-method 'alien
    projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos" "~/.emacs/.local/straight/build")
@@ -199,16 +192,6 @@
 
 (after! imenu
   (add-hook 'imenu-after-jump-hook 'util/imenu-reveal-entry))
-
-;;; Tree-sitter
-
-(use-package! tree-sitter
-  :defer 2
-  :config
-  (global-tree-sitter-mode t)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
-(use-package! tree-sitter-langs)
 
 ;;; Spelling
 

@@ -1,12 +1,13 @@
 ;;; private/org/config.el -*- lexical-binding: t; -*-
 
-(setq org-directory "~/Documents/Syncthing/Org/roam/"
-      org-link-file-path-type 'relative)
+;; Set these as early as possible.
+(setq org-directory "~/Documents/Syncthing/Org/roam/")
+
+(when (featurep! :lang org +roam)
+  (setq org-roam-directory "~/Documents/Syncthing/Org/roam/"))
 
 ;;; Better defaults
 (after! org
-  (setq org-archive-location
-        (concat (org/org-file-path "archive.org") "::* From %s"))
 
   ;; Enable org-habit
   (add-to-list 'org-modules 'org-habit)
@@ -20,17 +21,15 @@
               (assq-delete-all :results org-babel-default-header-args)))
 
   ;; Improve org-mode's performance.
-  (setq org-fontify-quote-and-verse-blocks nil
-        org-fontify-whole-heading-line nil
+  (setq org-fontify-whole-heading-line nil
         org-highlight-latex-and-related nil
         org-hide-leading-stars nil)
-  (add-hook 'org-mode-hook #'turn-off-smartparens-mode)
 
   ;; org-startup
   (setq org-startup-indented t
         org-startup-with-latex-preview t
         org-startup-with-inline-images nil
-        org-startup-folded 'fold)
+        org-startup-folded 'overview)
   (add-hook 'org-src-mode-hook 'org/disable-flycheck-in-org-src-block)
 
   (add-hook 'org-mode-hook
@@ -42,8 +41,7 @@
                        ("\\.jpg\\'"     . "eog %s")
                        ("\\.jpeg\\'"    . "eog %s")
                        ("\\.mp4\\'"     . "mpv %s")
-                       ("\\.x?html?\\'" . default)
-                       ("\\.pdf\\'"     . "evince %s"))))))
+                       ("\\.x?html?\\'" . firefox))))))
 ;;; Key bindings
 (after! org
   (map! (:map org-mode-map
@@ -81,16 +79,16 @@
 (after! org
   (setq org-tag-alist
         '(("@uni"         . ?u)
-          ("study")
-          ("lab")
-          ("course")
-          ("assignment")
+          ("study"            )
+          ("lab"              )
+          ("course"           )
+          ("assignment"       )
           ("@personal"    . ?p)
-          ("health")
-          ("coding")
-          ("brainstorming")
-          ("goal")
-          ("learn")
+          ("health"           )
+          ("coding"           )
+          ("brainstorming"    )
+          ("goal"             )
+          ("learn"            )
           ("@read"        . ?r)
           ("@appointment" . ?i)
           ("@project"     . ?P)
@@ -125,7 +123,6 @@
   (plist-put org-format-latex-options :scale 1.2))
 
 ;;; org-roam
-(setq org-roam-directory "~/Documents/Syncthing/Org/roam/")
 (after! org-roam
   (add-hook 'org-roam-backlinks-mode-hook #'flyspell-mode-off)
 
@@ -141,6 +138,7 @@
            :head "#+TITLE: %<%A %Y-%m-%d>\n#+STARTUP: content\n\n"))))
 
 (use-package! org-roam-server
+  :disabled t
   :after org-roam
   :config
   (setq org-roam-server-host "127.0.0.1"
