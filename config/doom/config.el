@@ -218,6 +218,10 @@
         ispell-dictionary "en_US,el_GR")
   (ispell-set-spellchecker-params)
   (ispell-hunspell-add-multi-dic "en_US,el_GR")
+  (setq ispell-personal-dictionary "~/.hunspell_personal")
+
+  (unless (file-exists-p ispell-personal-dictionary)
+    (write-region "" nil ispell-personal-dictionary nil 0))
 
   ;; Don't spell check the following org source blocks.
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
