@@ -6,6 +6,9 @@
 (when (featurep! :lang org +roam)
   (setq org-roam-directory "~/Documents/Syncthing/Org/roam/"))
 
+(setq org-archive-location
+        (concat (org/org-file-path "archive.org") "::* From %s"))
+
 ;;; Better defaults
 (after! org
 
