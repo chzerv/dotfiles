@@ -32,7 +32,7 @@
   (setq org-startup-indented t
         org-startup-with-latex-preview t
         org-startup-with-inline-images nil
-        org-startup-folded 'overview)
+        org-startup-folded t)
   (add-hook 'org-src-mode-hook 'org/disable-flycheck-in-org-src-block)
 
   (add-hook 'org-mode-hook
@@ -123,7 +123,7 @@
 
   ;; Adjust org-latex-preview scaling.
   ;; The default 1.5 makes latex previews seem kinda out of place.
-  (plist-put org-format-latex-options :scale 1.2))
+  (plist-put org-format-latex-options :scale 1.3))
 
 ;;; org-roam
 (after! org-roam
