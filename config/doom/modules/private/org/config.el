@@ -12,6 +12,20 @@
 ;;; Better defaults
 (after! org
 
+  ;; Make the title just a little bit bigger.
+  (custom-set-faces!
+    '(org-document-title :height 1.5))
+
+  (custom-set-faces!
+    '(org-level-1 :weight extra-bold :height 1.1)
+    '(org-level-2 :weight bold :height 1.085)
+    '(org-level-3 :weight bold :height 1.065)
+    '(org-level-4 :weight semi-bold :height 1.055)
+    '(org-level-5 :weight semi-bold :height 1.035)
+    '(org-level-6 :weight semi-bold :height 1.025)
+    '(org-level-8 :weight semi-bold)
+    '(org-level-9 :weight semi-bold))
+
   ;; Enable org-habit
   (add-to-list 'org-modules 'org-habit)
 

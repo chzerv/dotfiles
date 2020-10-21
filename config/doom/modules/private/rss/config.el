@@ -4,11 +4,16 @@
 (after! elfeed
   (setq elfeed-search-filter "@2-week-ago +unread -bugs -music -reddit"
         elfeed-show-unique-buffers t
-        elfeed-search-trailing-width 25)
+        elfeed-search-trailing-width 25
+        elfeed-db-directory "~/Documents/Syncthing/elfeed/db/"
+        shr-max-image-proportion 0.6)
+
+  (add-hook! 'elfeed-show-mode-hook (hide-mode-line-mode 1))
 
   (defface elfeed-search-starred-title-face
     '((t :inherit hl-todo))
-    "Masks a starred entry in elfeed.")
+    "starred entry face."
+    :group 'elfeed)
 
   (push '(star elfeed-search-starred-title-face)
         elfeed-search-face-alist)
@@ -44,4 +49,4 @@
            "e" '=rss)))))
 
 (after! elfeed-org
-  (setq rmh-elfeed-org-files (list "~/Documents/Syncthing/elfeed.org")))
+  (setq rmh-elfeed-org-files (list "~/Documents/Syncthing/elfeed/elfeed.org")))
