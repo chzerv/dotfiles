@@ -5,7 +5,8 @@
   (setq ivy-count-format "(%d/%d) "
         ivy-display-style 'fancy
         ivy-use-selectable-prompt t
-        ivy-fixed-height-minibuffer nil))
+        ivy-fixed-height-minibuffer nil
+        ivy-read-action-function #'ivy-hydra-read-action))
 
 ;;; Key-bindings
 (after! ivy
