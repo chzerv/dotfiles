@@ -84,7 +84,10 @@
   :defer t
   :config
   (setq olivetti-body-width 100
-        olivetti-minimum-body-width 80))
+        olivetti-minimum-body-width 80)
+
+  (map! :map text-mode-map
+        "<f8>" 'olivetti-mode))
 
 ;;; imenu-list
 (use-package! imenu-list
