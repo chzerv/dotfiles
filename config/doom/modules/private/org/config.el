@@ -1,7 +1,7 @@
 ;;; private/org/config.el -*- lexical-binding: t; -*-
 
 ;; Set these as early as possible.
-(setq org-directory "~/Documents/Syncthing/Org/roam/")
+(setq-default org-directory "~/Documents/Syncthing/Org/roam/")
 
 (when (featurep! :lang org +roam)
   (setq org-roam-directory "~/Documents/Syncthing/Org/roam/"))

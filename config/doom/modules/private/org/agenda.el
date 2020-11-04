@@ -34,7 +34,7 @@
         '(("o" "Task Overview"
            ((agenda ""
                     ((org-agenda-span 3)
-                     (org-agenda-files '("~/Documents/Syncthing/Org/roam/"))))
+                     (org-agenda-files (list org-directory))))
             (alltodo ""
                      ((org-agenda-overriding-header "Lens")
                       (org-super-agenda-groups

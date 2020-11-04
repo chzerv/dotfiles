@@ -105,7 +105,7 @@
     (string-match-p "/\\.emacs\\.d/\\.local/straight/repos" project-root))
 
   (setq
-   projectile-require-project-root nil
+   projectile-require-project-root 'prompt
    projectile-indexing-method 'alien
    projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos" "~/.emacs/.local/straight/build")
    projectile-ignored-project-function #'+projectile-ignore-project-p))

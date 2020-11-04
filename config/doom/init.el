@@ -144,8 +144,7 @@
        (org               ; organize your plain life in plain text
         +dragndrop
         +noter
-        +roam
-        +gnuplot)
+        +roam)
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
