@@ -1,0 +1,33 @@
+# -*- mode: snippet -*-
+# name: pgfplot
+# key: pgfplot
+# condition: t
+# --
+
+\begin{center}
+  \begin{tikzpicture}[trim axis left]
+    \begin{axis}[
+        scaled ticks=false,
+        height=${1:20em},
+        width=${2:0.8\textwidth},
+        xlabel={${3:xlabel}},
+        ylabel={${4:ylabel}},
+        xmin=0,
+        xmax={${5:xmax}},
+        ytick={${6:0.1, 0.3}},
+        xtick={${7:0.1, 0.3}},
+        xticklabel style={
+        rotate=45,
+        anchor=east,
+        },
+    ]
+
+    \addplot[
+    color=blue,
+    mark=*,
+    ]table {${8:data file}};
+    \end{axis}
+  \end{tikzpicture}
+\end{center}
+
+$0
