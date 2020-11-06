@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Org Attribute
+# key: attr
+# condition: t
+# --
+#+ATTR_ORG: :${1:option, e.g., width} ${2:value}

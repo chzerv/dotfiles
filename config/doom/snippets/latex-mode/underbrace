@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: underbrace
+# key: ubr
+# condition: t
+# --
+$\underbrace{${1:actual stuff}}_\text{${2:description}}$
