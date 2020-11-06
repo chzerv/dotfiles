@@ -74,20 +74,20 @@
 (after! counsel
   (ivy-add-actions
    'counsel-fzf
-   '(("r" +contrib/counsel-fzf-dir "change root directory")
-     ("g" +contrib/counsel-rg-dir "use ripgrep in root directory")
-     ("a" +contrib/counsel-fzf-ace-window "ace-window switch")))
+   '(("r" contrib/counsel-fzf-dir "change root directory")
+     ("g" contrib/counsel-rg-dir "use ripgrep in root directory")
+     ("a" contrib/counsel-fzf-ace-window "ace-window switch")))
 
   (ivy-add-actions
    'counsel-rg
-   '(("r" +contrib/counsel-rg-dir "change root directory")
-     ("z" +contrib/counsel-fzf-dir "find file with fzf in root directory")))
+   '(("r" contrib/counsel-rg-dir "change root directory")
+     ("z" contrib/counsel-fzf-dir "find file with fzf in root directory")))
 
   (ivy-add-actions
    'counsel-find-file
-   '(("g" +contrib/counsel-rg-dir "use ripgrep in root directory")
-     ("z" +contrib/counsel-fzf-dir "find file with fzf in root directory")))
+   '(("g" contrib/counsel-rg-dir "use ripgrep in root directory")
+     ("z" contrib/counsel-fzf-dir "find file with fzf in root directory")))
 
   (ivy-set-actions
    'counsel-recentf
-   '(("a" +contrib/counsel-fzf-ace-window "ace-window switch"))))
+   '(("a" contrib/counsel-fzf-ace-window "ace-window switch"))))

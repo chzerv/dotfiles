@@ -4,13 +4,14 @@
 
 ;;;; Font configuration
 
-(if (<= (display-pixel-width) 1366)
-    (setq doom-font (font-spec :family "Source Code Pro" :size 13)
-          doom-big-font (font-spec :family "Source Code Pro" :size 15)
-          doom-variable-pitch-font (font-spec :family "FiraGO" :size 14))
-  (setq doom-font (font-spec :family "Source Code Pro" :size 15)
-        doom-big-font (font-spec :family "Source Code Pro" :size 18)
-        doom-variable-pitch-font (font-spec :family "FiraGO" :size 17)))
+(when window-system
+  (if (<= (display-pixel-width) 1366)
+      (setq doom-font (font-spec :family "Fira Code" :size 13)
+            doom-big-font (font-spec :family "Fira Code" :size 15)
+            doom-variable-pitch-font (font-spec :family "FiraGO" :size 14))
+    (setq doom-font (font-spec :family "Fira Code" :size 15)
+          doom-big-font (font-spec :family "Fira Code" :size 18)
+          doom-variable-pitch-font (font-spec :family "FiraGO" :size 17))))
 (setq doom-unicode-font (font-spec :name "DejaVu Sans Mono"))
 
 ;;;; Theme configuration
@@ -84,14 +85,15 @@
 ;;;; Associate filetypes with modes
 (add-to-list 'auto-mode-alist '("\\.cheat\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\zshenv" . sh-mode))
+
 ;;;; Emacsclient
-;; Whenever I start the deamon, I manually load a few particular things.
-;; Better spend the time loading them during startup.
+;; Load "heavy" packages during daemon startup.
 (defun greedy-daemon-startup ()
   (when (daemonp)
     (require 'org)
-    (require 'org-super-agenda)
-    (require 'notmuch)))
+    (require 'org-roam)
+    (require 'org-super-agenda)))
+
 (add-hook 'emacs-startup-hook #'greedy-daemon-startup)
 
 ;;; Projectile configuration

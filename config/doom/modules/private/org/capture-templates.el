@@ -27,18 +27,18 @@
           ("u" "University")
           ;; Capture a test. Asks for schedule.
           ("ut" "Test" entry
-           (file+headline org-uni-file "University")
+           (file+headline org-tasks-file "University")
            "* TODO [#A] %^{Test name} :@uni:@tests:\nSCHEDULED:%^{Test date}T\n%i\n%?"
            :prepend t)
           ;; Capture an assignment. Asks for a deadline.
           ("ua" "Assignment" entry
-           (file+headline org-uni-file "University")
-           "* TODO [#B] %^{Assignment name} :@uni:assignment:\nDEADLINE:%^{Due date}T\n
+           (file+headline org-tasks-file "University")
+           "* TODO [#A] %^{Assignment name} :@uni:assignment:\nDEADLINE:%^{Due date}T\n
               %i\n%?"
            :prepend t)
           ;; Capture a course.
           ("uc" "Course" entry
-           (file+headline org-uni-file "University")
+           (file+headline org-tasks-file "University")
            "* TODO [#B] %^{Course}  :@uni:course:\nSCHEDULED:%^{Course date}T\n%i\n%?"
            :prepend t)
 

@@ -58,7 +58,11 @@
                        ("\\.jpg\\'"     . "eog %s")
                        ("\\.jpeg\\'"    . "eog %s")
                        ("\\.mp4\\'"     . "mpv %s")
-                       ("\\.x?html?\\'" . firefox))))))
+                       ("\\.x?html?\\'" . firefox)))))
+
+  ;; Set width of images according to display size
+  org-image-actual-width (truncate (* (display-pixel-width) 0.15)))
+
 ;;; Key bindings
 (after! org
   (map! (:map org-mode-map

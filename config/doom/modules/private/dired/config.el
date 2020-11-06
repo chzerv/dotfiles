@@ -23,7 +23,8 @@
          "h" 'dired-up-directory
          "l" 'dired-open-file)
         "s-j" 'dired-jump
-        "s-J" 'dired-jump-other-window))
+        "s-J" 'dired-jump-other-window
+        "M-RET" 'dired-display-file))
 
 ;;; dired-x
 (after! dired-x
