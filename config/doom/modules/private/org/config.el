@@ -127,6 +127,7 @@
 ;;; LaTeX stuff
 ;; Syntax highlighting in LaTeX exports, using pygments
 (after! org
+  (add-to-list 'org-latex-packages-alist '("minted" "cancel"))
   (setq org-latex-listings 'minted
         org-latex-minted-options
         '(("mathescape" "true")
