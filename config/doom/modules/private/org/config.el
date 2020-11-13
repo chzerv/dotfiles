@@ -82,12 +82,13 @@
 ;;; TODO keywords
 (after! org
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n!)" "SOMEDAY(s)" "HOLD(h!)" "|" "DONE(d!)" "CANCELLLED(c@/!)")))
+        '((sequence "TODO(t)" "NEXT(n!)" "WIP(w)" "SOMEDAY(s)" "HOLD(h!)" "|" "DONE(d!)" "CANCELLLED(c@/!)")))
   (setq org-todo-keyword-faces
         '(("TODO" :foreground "OrangeRed" :weight bold :underline t :overline t)
           ("NEXT" :foreground "spring green" :weight bold :underline t :overline t)
           ("SOMEDAY" :foreground "coral" :weight bold)
           ("HOLD" :foreground "DeepPink" :weight bold)
+          ("WIP" :foreground "DarkCyan" :weight bold)
           ("DONE" :foreground "slategrey" :weight bold :strike-through t)
           ("CANCELLED" :foreground "red2" :weight bold :strike-through t))))
 
