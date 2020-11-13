@@ -67,7 +67,10 @@
 (after! org
   (map! (:map org-mode-map
          :ne "]i" 'org-next-item
-         :ne "[i" 'org-previous-item)
+         :ne "[i" 'org-previous-item
+         (:localleader
+          :desc "Heading to roam note"
+          "n" 'org/convert-task-to-org-note))
         (:map org-super-agenda-header-map
          "j" 'org-agenda-next-line
          "k" 'org-agenda-previous-line)

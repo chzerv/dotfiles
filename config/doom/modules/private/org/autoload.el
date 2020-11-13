@@ -31,3 +31,51 @@
   (doom-completing-read-org-headings
    "Jump to org headline: " org-agenda-files 3 t)
   (org-narrow-to-subtree))
+
+;; Create org-roam notes from org-headings.
+;; Idea/code taken from https://ag91.github.io/blog/2020/11/12/write-org-roam-notes-via-elisp/
+
+;;;###autoload
+(defun org/make-filepath (title now &optional zone)
+  "Make filename from note TITLE and NOW time (assumed in the current time ZONE)."
+  (concat
+   org-roam-directory
+   (format-time-string "%Y%m%d%H%M%S_" now (or zone (current-time-zone)))
+   (org-roam--title-to-slug title)
+   ".org"))
+
+;;;###autoload
+(defun org/insert-org-roam-file (file-path title &optional links sources text quote)
+  "Insert org roam file in FILE-PATH with TITLE, LINKS, SOURCES, TEXT, QUOTE."
+  (with-temp-file file-path
+    (insert
+     "#+TITLE: " title "\n"
+     "\n"
+     "- tags :: " (--reduce (concat acc ", " it) links) "\n"
+     (if sources (concat "- source :: " (--reduce (concat acc ", " it) sources) "\n") "")
+     "\n"
+     (if text text "")
+     "\n"
+     "\n"
+     (if quote
+         (concat "#+begin_src text \n"
+                 quote "\n"
+                 "#+end_src")
+       ""))))
+
+;;;###autoload
+(defun org/convert-task-to-org-note ()
+  "Convert a task in a `org-roam' note."
+  (interactive)
+  (let* ((heading (org-get-heading t t t t))
+         (body (org-get-entry))
+         (link (format "[[id:%s][%s]]" (org-id-get-create) heading))
+         (filepath (org/make-filepath heading (current-time))))
+    (org/insert-org-roam-file
+     filepath
+     heading
+     nil
+     (list link)
+     (format "* Note stored from tasks\n%s" body)
+     nil)
+    (find-file filepath)))
