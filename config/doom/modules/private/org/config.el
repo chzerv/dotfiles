@@ -153,7 +153,7 @@
   (add-hook 'org-roam-backlinks-mode-hook #'flyspell-mode-off)
 
   (map! :leader
-        "n r t" 'org-roam-dailies-today)
+        "n r t" 'org-roam-dailies-find-today)
 
   ;; Change the default "daily" org-roam-dailies-capture-template
   ;; so it: includes the name of the day in the filename and the title.
