@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: dfrac
+# key: dfr
+# uuid: dfr
+# condition: t
+# --
+\dfrac{${1:numerator}}{${2:denominator}}
+

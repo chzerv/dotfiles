@@ -3,7 +3,6 @@
 # key: pgfplot
 # condition: t
 # --
-
 \begin{center}
   \begin{tikzpicture}[trim axis left]
     \begin{axis}[

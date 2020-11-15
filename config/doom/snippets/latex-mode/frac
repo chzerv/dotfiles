@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: frac
+# key: fr
+# uuid: frac
+# condition: t
+# --
+\frac{${1:numerator}}{${2:denominator}}

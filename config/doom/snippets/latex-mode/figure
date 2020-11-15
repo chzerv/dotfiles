@@ -1,11 +1,12 @@
 # -*- mode: snippet -*-
 # name: figure
-# uuid: figure
-# key: figure
+# key: fig
+# uuid: fig
 # condition: t
 # --
-\begin{figure}
-    \includegraphics[width=\linewidth]{${1:file}}
-    \caption{${2:caption}}
-    \label{fig:${3:label}}
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=\linewidth]{${1:file}}
+  \caption{${2:caption}}
+  \label{fig:${3:label}}
 \end{figure}

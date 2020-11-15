@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: sfrac
+# key: sfr
+# uuid: sfr
+# condition: t
+# --
+\sfrac{${1:numerator}}{${2:denominator}}
+
