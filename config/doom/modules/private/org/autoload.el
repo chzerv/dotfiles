@@ -79,3 +79,15 @@
      (format "* Note stored from tasks\n%s" body)
      nil)
     (find-file filepath)))
+
+;;;###autoload
+(defun org/open-link-in-other-window ()
+  (interactive)
+  (let ((org-link-frame-setup (quote
+                               ((vm . vm-visit-folder)
+                                (vm-imap . vm-visit-imap-folder)
+                                (gnus . gnus)
+                                (file . find-file-other-window)
+                                (wl . wl)))
+                              ))
+    (org-open-at-point)))

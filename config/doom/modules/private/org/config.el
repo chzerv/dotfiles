@@ -70,7 +70,8 @@
          :ne "[i" 'org-previous-item
          (:localleader
           :desc "Heading to roam note"
-          "n" 'org/convert-task-to-org-note))
+          "n" 'org/convert-task-to-org-note)
+         "C-c C-o" 'org/open-link-in-other-window)
         (:map org-super-agenda-header-map
          "j" 'org-agenda-next-line
          "k" 'org-agenda-previous-line)
