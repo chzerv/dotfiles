@@ -19,6 +19,7 @@
         elfeed-search-face-alist)
 
   (map! (:map elfeed-show-mode-map
+         :after elfeed-show
          "q" 'nil
          (:localleader
           :desc "Open readable part in eww"
@@ -28,8 +29,10 @@
           :desc "Open with external"
           "x" 'rss/elfeed-visit-maybe-external
           :desc "Kill buffer and close window"
-          "q" 'rss/elfeed-kill-buffer-close-window-dwim))
+          "q" 'rss/elfeed-kill-buffer-close-window-dwim
+          "y" #'elfeed-show-yank))
         (:map elfeed-search-mode-map
+         :after elfeed-search
          "M-RET" 'nil
          :desc "Open entry in $BROWSER"
          "M-RET" 'rss/elfeed-search-browse-url
@@ -47,6 +50,10 @@
           (:when (featurep! :app rss)
            :desc "elfeed"
            "e" '=rss)))))
+
+(after! evil-snipe
+  (push 'elfeed-show-mode   evil-snipe-disabled-modes)
+  (push 'elfeed-search-mode evil-snipe-disabled-modes))
 
 (after! elfeed-org
   (setq rmh-elfeed-org-files (list "~/Documents/Syncthing/elfeed/elfeed.org")))

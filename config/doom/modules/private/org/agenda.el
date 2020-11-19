@@ -4,7 +4,8 @@
   (setq org-agenda-dim-blocked-tasks t
         org-agenda-use-time-grid t
         org-agenda-hide-tags-regexp "\\w+"
-        org-agenda-compact-blocks nil
+        org-agenda-compact-blocks t
+        org-agenda-follow-indirect t
         org-agenda-block-separator ""
         org-agenda-skip-scheduled-if-done t
         org-agenda-skip-deadline-if-done t
