@@ -23,6 +23,10 @@
            "* TODO [#B] %:subject :mail:\nSCHEDULED: %t\n:PROPERTIES:\n:CONTEXT: %a\n:END:\n\n%i%?"
            :prepend t)
 
+          ("w" "Web site" entry
+           (file+headline "~/Documents/Syncthing/Org/roam/Index.org" "Websites")
+           "* %c \n%U %?%:initial")
+
           ;; University related templates.
           ("u" "University")
           ;; Capture a test. Asks for schedule.
