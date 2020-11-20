@@ -29,6 +29,9 @@
   ;; Enable org-habit
   (add-to-list 'org-modules 'org-habit)
 
+  ;; Auto save doesn't work nicely with org-crypt.
+  (setq org-crypt-disable-auto-save t)
+
   ;; Place a blank line before a new heading or list item.
   org-blank-before-new-entry (quote ((heading) (plain-list-item)))
 
@@ -152,9 +155,11 @@
 ;;; org-roam
 (after! org-roam
   (add-hook 'org-roam-backlinks-mode-hook #'flyspell-mode-off)
+  (setq +org-roam-open-buffer-on-find-file nil)
 
   (map! :leader
-        "n r t" 'org-roam-dailies-find-today)
+        "n r t" 'org-roam-dailies-find-today
+        "n r j" 'org-roam-jump-to-index)
 
   ;; Change the default "daily" org-roam-dailies-capture-template
   ;; so it: includes the name of the day in the filename and the title.
