@@ -24,7 +24,7 @@
            :prepend t)
 
           ("w" "Web site" entry
-           (file+headline "~/Documents/Syncthing/Org/roam/Index.org" "Websites")
+           (file+headline "~/Documents/Syncthing/Org/roam/index.org" "Websites")
            "* %c \n%U %?%:initial")
 
           ;; University related templates.
