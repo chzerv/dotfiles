@@ -1,7 +1,7 @@
 ;;; private/org/capture-templates.el -*- lexical-binding: t; -*-
 
 (defvar org-refile-file "~/Documents/Syncthing/Org/refile.org")
-(defvar org-tasks-file "~/Documents/Syncthing/Org/roam/Index.org")
+(defvar org-tasks-file "~/Documents/Syncthing/Org/roam/index.org")
 
 (after! org
   (setq org-capture-templates
@@ -24,7 +24,7 @@
            :prepend t)
 
           ("w" "Web site" entry
-           (file+headline "~/Documents/Syncthing/Org/roam/index.org" "Websites")
+           (file+headline org-tasks-file "Websites")
            "* %c \n%U %?%:initial")
 
           ;; University related templates.
