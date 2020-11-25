@@ -9,11 +9,6 @@
            (file+headline org-tasks-file "Tasks")
            "** TODO %? \n:PROPERTIES:\n:CREATED: %U\n:END:\n %i\n\n%a"
            :prepend t)
-          ("n" "Task with a deadline" entry
-           (file+headline org-refile-file "Tasks")
-           "* %^{Scope of task||TODO|assignment} %^{Title} %^g\nSCHEDULED: %^t\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%i%?"
-           :prepend t)
-
           ("m" "Mail" entry
            (file+headline org-refile-file "Mails")
            "* TODO %(org-insert-time-stamp (org-read-date nil t \"%:date\") nil t) From: %:fromname %a \t")

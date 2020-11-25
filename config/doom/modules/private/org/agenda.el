@@ -3,7 +3,6 @@
 (after! org
   (setq org-agenda-dim-blocked-tasks t
         org-agenda-use-time-grid t
-        org-agenda-hide-tags-regexp "\\w+"
         org-agenda-compact-blocks t
         org-agenda-follow-indirect t
         org-agenda-block-separator ""
@@ -69,7 +68,9 @@
                       (:name "What to do.."
                        :anything t)))))
             (tags-todo "@personal"
-                       ((org-agenda-overriding-header "Personal")))
+                       ((org-agenda-overriding-header "Personal")
+                        (org-super-agenda-groups
+                         '((:discard (:tag "bdays"))))))
             (tags-todo "@appointment"
                        ((org-agenda-overriding-header "Appointments")))
             ))
@@ -79,16 +80,6 @@
                    (org-agenda-files '("~/Documents/Syncthing/Org/projects.org"))
                    (org-super-agenda-groups
                     '((:auto-group t)))))
-            ))
-          ("w" "Will do.."
-           ((todo ""
-                  ((org-agenda-overriding-header "Maybe sometime in the future..")
-                   (org-agenda-files '("~/Documents/Syncthing/Org/index.org"
-                                       "~/Documents/Syncthing/Org/refile.org"))
-                   (org-super-agenda-groups
-                    '((:name "Someday"
-                       :todo "SOMEDAY")
-                      (:discard (:anything))))))
             ))
           ("r" "Tasks to refile"
            ((tags-todo "REFILE"
