@@ -106,3 +106,14 @@ execution."
   (interactive)
   (let ((urls browse-url-button-regexp))
     (occur urls "\\&")))
+
+;;;###autoload
+(defun util/find-auth-field (host prop)
+  "Search `auth-sources' for HOST entry."
+  (let* ((source (auth-source-search :host host))
+         (field (plist-get
+                 (flatten-list source)
+                 prop)))
+    (if source
+        field
+      (user-error "No entry found in auth-sources!"))))
