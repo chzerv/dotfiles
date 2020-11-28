@@ -158,7 +158,6 @@
   (setq +org-roam-open-buffer-on-find-file nil)
 
   (map! :leader
-        "n r t" 'org-roam-dailies-find-today
         "n r j" 'org-roam-jump-to-index)
 
   ;; Change the default "daily" org-roam-dailies-capture-template
