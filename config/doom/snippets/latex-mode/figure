@@ -6,7 +6,7 @@
 # --
 \begin{figure}[!htb]
   \centering
-  \includegraphics[width=\linewidth]{${1:file}}
-  \caption{${2:caption}}
-  \label{fig:${3:label}}
+  \includegraphics[width=${1:0.7\textwidth}]{${2:file}}
+  \caption{${3:caption}}
+  \label{fig:${4:label}}
 \end{figure}
