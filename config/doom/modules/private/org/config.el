@@ -75,9 +75,6 @@
           :desc "Heading to roam note"
           "n" 'org/convert-task-to-org-note)
          "C-c C-o" 'org/open-link-in-other-window)
-        (:map org-super-agenda-header-map
-         "j" 'org-agenda-next-line
-         "k" 'org-agenda-previous-line)
         (:leader
          :prefix ("n" . "+notes")
          :desc "Search headline and narrow it"
@@ -190,6 +187,16 @@
         deft-current-sort-method 'title
         deft-extensions '("md" "txt" "org")
         deft-use-filename-as-title nil))
+
+;;; org-super-agenda
+;; A much cleaner agenda, with easily defined groups.
+(use-package! org-super-agenda
+  :after org
+  :config
+  (map! (:after org
+         :map org-super-agenda-header-map
+         "j" 'org-agenda-next-line
+         "k" 'org-agenda-previous-line)))
 
 (load! "agenda")
 (load! "capture-templates")
