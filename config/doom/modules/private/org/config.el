@@ -75,6 +75,8 @@
           :desc "Heading to roam note"
           "n" 'org/convert-task-to-org-note)
          "C-c C-o" 'org/open-link-in-other-window)
+        (:map pdf-annot-minor-mode-map
+         "C-c C-a H" 'org/noter-highlight-and-annotate)
         (:leader
          :prefix ("n" . "+notes")
          :desc "Search headline and narrow it"
