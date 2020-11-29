@@ -7,13 +7,6 @@
   (add-to-list 'exec-path path))
 
 ;;;###autoload
-(defun util/latex-save-and-compile ()
-  "Save the current buffer and compile it with 'xelatex'"
-  (interactive)
-  (save-buffer)
-  (compile (format "xelatex %s" (file-name-nondirectory buffer-file-name))))
-
-;;;###autoload
 (defun util/find-in-dotfiles ()
   "Open a file somewhere in ~/.dotfiles via a fuzzy filename search."
   (interactive)

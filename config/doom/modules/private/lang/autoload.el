@@ -13,3 +13,10 @@
 Then run FUN with ARGS."
   (let ((display-buffer-overriding-action '(display-buffer-use-some-frame)))
     (apply fun args)))
+
+;;;###autoload
+(defun latex/latex-save-and-compile ()
+  "Save the current buffer and compile it with 'xelatex'"
+  (interactive)
+  (save-buffer)
+  (compile (format "xelatex %s" (file-name-nondirectory buffer-file-name))))

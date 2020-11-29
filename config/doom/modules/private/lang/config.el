@@ -16,7 +16,7 @@
 
 (map! (:when (featurep! :lang latex)
        (:map LaTeX-mode-map
-        :ni "C-c s" 'util/latex-save-and-compile
+        :ni "C-c s" 'latex/latex-save-and-compile
         :ei [C-return] #'LaTeX-insert-item)))
 
 ;; Do not spellcheck latex documents when opened, this takes a lot of time.
