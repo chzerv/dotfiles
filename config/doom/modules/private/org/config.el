@@ -198,5 +198,15 @@
          "j" 'org-agenda-next-line
          "k" 'org-agenda-previous-line)))
 
+;;; org-wild-notifier
+;; Notifications for upcoming events
+(use-package! org-wild-notifier
+  :after org
+  :config
+  (setq org-wild-notifier-alert-time 15
+        org-wild-notifier-keyword-whitelist '("TODO", "WIP")
+        alert-default-style 'libnotify)
+  (add-hook 'org-mode-hook #'org-wild-notifier-mode))
+
 (load! "agenda")
 (load! "capture-templates")

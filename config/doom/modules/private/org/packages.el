@@ -5,3 +5,6 @@
 
 ;; A much cleaner agenda, with easily defined groups.
 (package! org-super-agenda)
+
+;; Notifications for upcoming events
+(package! org-wild-notifier)
