@@ -91,3 +91,16 @@
                                 (wl . wl)))
                               ))
     (org-open-at-point)))
+
+;;;###autoload
+(defun org/noter-highlight-and-annotate (region)
+  "Highlight, annotate and add note of the selected region
+using org-noter and pdf-tools"
+  (interactive (list (pdf-view-active-region nil)))
+  (unless (pdf-view-active-region-p)
+    (user-error "A selected region is required!"))
+  ;; Highlight selection
+  (let ((pdf-annot-activate-created-annotations nil))
+    (pdf-annot-add-highlight-markup-annotation region "yellow3"))
+  ;; add pdf-noter note
+  (org-noter-insert-precise-note))
