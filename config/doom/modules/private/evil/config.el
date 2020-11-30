@@ -34,5 +34,5 @@
          "j" 'evil-next-visual-line
          "k" 'evil-previous-visual-line)))
 
-(after! evil-snipe-
+(after! evil-snipe
   (setq evil-snipe-scope 'buffer))
