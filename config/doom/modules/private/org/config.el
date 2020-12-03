@@ -111,6 +111,7 @@
           ("lab"              )
           ("course"           )
           ("assignment"       )
+          ("exam"             )
           ("@personal"    . ?p)
           ("health"           )
           ("coding"           )

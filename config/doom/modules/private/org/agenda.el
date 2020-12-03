@@ -51,7 +51,9 @@
             (tags-todo "@uni"
                        ((org-agenda-overriding-header "University")
                         (org-super-agenda-groups
-                         '((:name "Labs"
+                         '((:name "Exams"
+                            :tag "exam")
+                           (:name "Labs"
                             :tag "lab")
                            (:name "Course"
                             :tag "course")
