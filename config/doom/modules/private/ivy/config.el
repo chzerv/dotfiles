@@ -16,39 +16,6 @@
          :desc "Search all buffers for thing at point"
          "s A" 'swiper-all-thing-at-point)))
 
-;;; Ivy posframe
-(use-package! ivy-posframe
-  :disabled t
-  :after ivy
-  :diminish
-  :config
-  (setq ivy-posframe-parameters
-        '((left-fringe . 2)
-          (right-fringe . 2)
-          (internal-border-width . 2)
-          ))
-  (setq ivy-posframe-height-alist
-        '((swiper . 15)
-          (swiper-isearch . 15)
-          (t . 10)))
-  (setq ivy-posframe-min-width 125
-        ivy-posframe-width 125)
-  ;; Make sure to disable all async sources cause they can cause
-  ;; violent redrawing of the posframe.
-  (setq ivy-posframe-display-functions-alist
-        '((complete-symbol . ivy-posframe-display-at-point)
-          (swiper . ivy-display-function-fallback)
-          (swiper-isearch . ivy-display-function-fallback)
-          (counsel-rg . ivy-display-function-fallback)
-          (counsel-grep . ivy-display-function-fallback)
-          (counsel-grep-or-swiper . ivy-display-function-fallback)
-          (counsel-git-grep . ivy-display-function-fallback)
-          (counsel-describe-function . ivy-display-function-fallback)
-          (counsel-describe-variable . ivy-display-function-fallback)
-          (t . ivy-posframe-display-at-frame-center)))
-  (add-hook 'doom-reload-hook #'posframe-delete-all)
-  (ivy-posframe-mode 1))
-
 ;;; Counsel
 
 ;;;; Better defaults
