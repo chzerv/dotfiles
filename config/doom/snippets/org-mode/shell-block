@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: shell block
+# key: <sh
+# condition: t
+# --
+#+begin_src shell :eval ${1:yes/no$$(yas-choose-value '("yes" "no"))} :async yes
+$0
+#+end_src

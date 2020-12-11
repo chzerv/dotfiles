@@ -3,6 +3,6 @@
 # key: <js
 # condition: t
 # --
-#+BEGIN_SRC javascript :tangle no
+#+begin_src javascript :tangle no
 $0
-#+END_SRC
+#+end_src

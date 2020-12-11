@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: python block
+# key: <py
+# condition: t
+# --
+#+begin_src python :async yes
+$0
+#+end_src
