@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Source block - eval arg
+# key: ev
+# condition: t
+# --
+:eval `(ivy-read "Evaluate: " '("no" "query" "no-export" "query-export"))` $0
