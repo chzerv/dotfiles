@@ -2524,6 +2524,15 @@ Ansible, and if it's not, there is no downside to enabling ~ansible-mode~.
   (add-hook 'yaml-mode-hook #'+ansible-yaml-mode))
 #+end_src
 
+Let's also enable =evil-mode= and =visual-line-mode= for =ansible-doc-mode=.
+
+#+begin_src emacs-lisp
+(after! ansible-doc
+  (when (featurep! :editor evil)
+    (add-hook 'ansible-doc-module-mode-hook #'evil-motion-state))
+  (add-hook 'ansible-doc-module-mode-hook #'visual-line-mode))
+#+end_src
+
 ** Docker
 
 The default Dockerfile template is a bit outdated.
