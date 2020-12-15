@@ -938,21 +938,35 @@ delete one space. I prefer to delete the whole TAB.
 (setq backward-delete-char-untabify-method 'hungry)
 #+end_src
 
-*** highlight-indent-guides
+*** Indentation guides
 
-Disable highlight-indent-guides everywhere but ~yaml~ and ~python~ modes.
+Doom has its own =indent-guides= module, but I only need indentation guides in Python
+and YAML files. Instead of removing hooks etc, let's configure it from scratch (well, I
+I stole the terminal part from Doom).
+
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! highlight-indent-guides :pin "cf352c85cd15dd18aa096ba9d9ab9b7ab493e8f6")
+#+end_src
 
 #+begin_src emacs-lisp
-(after! highlight-indent-guides
-  (setq highlight-indent-guides-method 'character
-        highlight-indent-guides-auto-odd-face-perc 15
-        highlight-indent-guides-auto-even-face-perc 15
-        highlight-indent-guides-auto-character-face-perc 20))
+(use-package! highlight-indent-guides
+  :hook ((python-mode yaml-mode) . highlight-indent-guides-mode)
+  :init
+  (setq highlight-indent-guides-method 'character)
+  :config
 
-(remove-hook 'text-mode-hook #'highlight-indent-guides-mode)
-(remove-hook 'prog-mode-hook #'highlight-indent-guides-mode)
-(add-hook 'yaml-mode-hook #'highlight-indent-guides-mode)
-(add-hook 'python-mode-hook #'highlight-indent-guides-mode)
+  ;; Stolen from Doom Emacs 'indent-guides' module.
+  (defun +indent-guides-init-faces-h (&rest _)
+    (when (display-graphic-p)
+      (highlight-indent-guides-auto-set-faces)))
+
+  ;; HACK `highlight-indent-guides' calculates its faces from the current theme,
+  ;;      but is unable to do so properly in terminal Emacs, where it only has
+  ;;      access to 256 colors. So if the user uses a daemon we must wait for
+  ;;      the first graphical frame to be available to do.
+  (add-hook 'doom-load-theme-hook #'+indent-guides-init-faces-h)
+  (when doom-init-theme-p
+    (+indent-guides-init-faces-h)))
 #+end_src
 
 ** Associate filetypes with modes
@@ -2319,6 +2333,34 @@ the text.
                   (org-level-7 . 1.1)
                   (org-level-8 . 1.1)))
     (set-face-attribute (car face) nil :font "Hack" :weight 'bold :height (cdr face))))
+#+end_src
+** Fancier Org bullets with org-superstar
+
+[[https://github.com/integral-dw/org-superstar-mode][org-superstar-mode]] makes org-mode heading stars and list items appear nice and modern.
+Once again, Doom provides a module for this (=org +pretty=), but it also enables
+~org-fancy-priorities~, which I do not want. Instead of disabling packages etc., let's
+install ~org-superstar~ from scratch.
+
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! org-superstar :pin "7f83636db215bf5a10edbfdf11d12a132864a914")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! org-superstar
+  :after org
+  :hook (org-mode . org-superstar-mode)
+  :init
+  :config
+  ;; Make leading stars truly invisible, by rendering them as spaces!
+  (setq org-superstar-leading-bullet ?\s
+        org-superstar-leading-fallback ?\s
+        org-hide-leading-stars nil
+        org-superstar-remove-leading-stars nil
+        org-superstar-todo-bullet-alist
+        '(("TODO" . 9744)
+          ("[ ]"  . 9744)
+          ("DONE" . 9745)
+          ("[X]"  . 9745))))
 #+end_src
 
 * Writing prose
