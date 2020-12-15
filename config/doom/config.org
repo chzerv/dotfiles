@@ -1547,12 +1547,20 @@ call ~browse-url-firefox~ and provide a URL, which will be opened in a private w
   (concat (file-name-as-directory org-directory) filename))
 
 ;;;###autoload
-(defun ch/org-search-and-narrow-headlines ()
+(defun ch/org-search-and-narrow-agenda-headlines ()
   "Jump to an Org headline in `org-agenda-files' and narrow it."
   (interactive)
   (doom-completing-read-org-headings
    "Jump to org headline: " org-agenda-files 3 t)
   (org-narrow-to-subtree))
+
+;;;###autoload
+(defun ch/org-search-and-narrow-buffer-headlines ()
+  "Goto org headling and narrow it."
+  (interactive)
+  (counsel-org-goto)
+  (org-narrow-to-subtree)
+  (org-show-entry))
 
 ;;;###autoload
 (defun ch/open-link-in-other-window ()
@@ -2310,9 +2318,12 @@ with easily defined groups.
        (:map pdf-annot-minor-mode-map
         "C-c C-a H" 'ch/noter-highlight-and-annotate)
        (:leader
-        :prefix ("n" . "+notes")
-        :desc "Search headline and narrow it"
-        "V" 'ch/org-search-and-narrow-headlines)))
+        (:prefix ("n" . "+notes")
+         :desc "Search and narrow agenda headlines"
+         "V" 'ch/org-search-and-narrow-agenda-headlines)
+        (:prefix ("s" . "+search")
+         :desc "Search and narrow buffer headlines"
+         "q" 'ch/org-search-and-narrow-buffer-headlines))))
 #+end_src
 
 ** Custom faces for Org headings
