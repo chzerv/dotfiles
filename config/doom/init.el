@@ -87,7 +87,6 @@
         +dictionary
         +docsets)
        lsp
-       ;;macos             ; MacOS-specific commands
        magit             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
@@ -134,7 +133,8 @@
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        (latex             ; writing papers in Emacs has never been so fun
-        +cdlatex)
+        +cdlatex
+        +lsp)
        ;;lean
        ;;factor
        ;;ledger            ; an accounting system in Emacs
@@ -152,7 +152,6 @@
        ;;purescript        ; javascript, but functional
        (python            ; beautiful is better than ugly
         +lsp
-        +pyright
         +pyenv)
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
@@ -184,20 +183,5 @@
        ;;twitter           ; twitter client https://twitter.com/vnought
 
        :config
-       ;;literate
-       (default +bindings +smartparens)
-
-       :private
-       evil
-       bindings
-       company
-       dired
-       ivy
-       tools
-       notmuch
-       org
-       rss
-       lang
-       treemacs
-       transparency
-       misc)
+       literate
+       (default +bindings +smartparens))

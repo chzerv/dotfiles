@@ -1,0 +1,17 @@
+# Doom Emacs Configuration
+
+![Supported versions](https://img.shields.io/badge/Supports-Emacs_26.3_--_27.1-blueviolet.svg?style=flat-square&logo=GNU%20Emacs&logoColor=white)
+
+This is my personal configuration for [Doom Emacs](https://github.com/hlissner/doom-emacs), mostly focused towards programming and org-mode.
+
+The magic happens in [[file:config.org][config.org]].
+
+## How to use
+
+1. [Install Doom Emacs](https://github.com/hlissner/doom-emacs#install)
+2. Clone this repository:
+   ```sh
+   git clone https://github.com/chzerv/dotffiles
+   ```
+3. Copy/symlink my `config/doom` folder to either `~/.config/doom` or `~/.doom.d`.
+4. Run `~/.emacs.d/bin/doom sync` to sync your Doom Emacs with my configuration.
