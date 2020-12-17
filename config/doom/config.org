@@ -2310,11 +2310,7 @@ with easily defined groups.
          :desc "Heading to roam note"
          "n" 'contrib/convert-task-to-org-note)
         "C-c C-o" 'ch/open-link-in-other-window)
-       (:map evil-org-mode-map
-        [return] 'nil
-        "RET" 'nil
-        :n [return] #'ch/org-dwim-at-point
-        :n "RET" #'ch/org-dwim-at-point)
+
        (:map pdf-annot-minor-mode-map
         "C-c C-a H" 'ch/noter-highlight-and-annotate)
        (:leader
@@ -2323,7 +2319,14 @@ with easily defined groups.
          "V" 'ch/org-search-and-narrow-agenda-headlines)
         (:prefix ("s" . "+search")
          :desc "Search and narrow buffer headlines"
-         "q" 'ch/org-search-and-narrow-buffer-headlines))))
+         "q" 'ch/org-search-and-narrow-buffer-headlines)))
+
+      (:after evil-org
+       (:map evil-org-mode-map
+        [return] 'nil
+        "RET" 'nil
+        :n [return] #'ch/org-dwim-at-point
+        :n "RET" #'ch/org-dwim-at-point)))
 #+end_src
 
 ** Custom faces for Org headings
