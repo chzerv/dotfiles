@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: tabular
+# key: tab
+# condition: t
+# --
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{${1:column definition}}
+    \toprule \midrule
+    ${2:elements} \\ \midrule
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+$0

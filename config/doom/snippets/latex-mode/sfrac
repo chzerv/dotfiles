@@ -4,5 +4,5 @@
 # uuid: sfr
 # condition: t
 # --
-\sfrac{${1:numerator}}{${2:denominator}}
+\sfrac{${1:`(or % "numerator")`}}{${2:denominator}}$0
 

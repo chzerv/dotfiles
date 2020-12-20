@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: boldItem
-# key: bit
-# uuid: bit
-# --
-
-\item \textbf{${1:item}} $0

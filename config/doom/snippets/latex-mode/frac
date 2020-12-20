@@ -4,4 +4,4 @@
 # uuid: frac
 # condition: t
 # --
-\frac{${1:numerator}}{${2:denominator}}
+\frac{${1:`(or % "numerator")`}}{${2:denominator}}$0

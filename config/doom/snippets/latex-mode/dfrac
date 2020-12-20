@@ -4,5 +4,5 @@
 # uuid: dfr
 # condition: t
 # --
-\dfrac{${1:numerator}}{${2:denominator}}
+\dfrac{${1:`(or % "numerator")`}}{${2:denominator}}$0
 
