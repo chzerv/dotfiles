@@ -894,7 +894,8 @@ I like having buffers formatted on-save, but not for every mode.
       '(not tex-mode
             latex-mode
             emacs-lisp-mode
-            c-mode))
+            c-mode
+            yaml-mode))
 #+end_src
 
 ** Indentation
