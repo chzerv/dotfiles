@@ -1,17 +1,23 @@
-# Doom Emacs Configuration
+* Doom Emacs Literate Configuration
 
-![Supported versions](https://img.shields.io/badge/Supports-Emacs_26.3_--_27.1-blueviolet.svg?style=flat-square&logo=GNU%20Emacs&logoColor=white)
+This is my personal (literate) configuration for [[https://github.com/hlissner/doom-emacs][Doom Emacs]], mostly focused towards programming and org-mode.
 
-This is my personal configuration for [Doom Emacs](https://github.com/hlissner/doom-emacs), mostly focused towards programming and org-mode.
+Doom separates the configuration in three parts:
 
-The magic happens in [[file:config.org][config.org]].
++ [[file:init.el][init.el]] contains Doom's modules (packages that we can easily enable/disable).
++ [[file:packages.el][packages.el]] is where package management happens.
++ [[file:config.org][config.org]] contains the actual configuration.
 
-## How to use
+** How to use
 
-1. [Install Doom Emacs](https://github.com/hlissner/doom-emacs#install)
+1. [[https://github.com/hlissner/doom-emacs#install][Install]] Doom Emacs.
+
 2. Clone this repository:
-   ```sh
-   git clone https://github.com/chzerv/dotffiles
-   ```
-3. Copy/symlink my `config/doom` folder to either `~/.config/doom` or `~/.doom.d`.
-4. Run `~/.emacs.d/bin/doom sync` to sync your Doom Emacs with my configuration.
+
+ #+begin_src shell :eval no :async yes
+  git clone https://github.com/chzerv/dotffiles
+ #+end_src
+
+3. Copy/symlink my =config/doom= folder to either =~/.config/doom= or =~/.doom.d=.
+
+4. Run =~/.emacs.d/bin/doom sync= to sync your Doom Emacs with my configuration.
