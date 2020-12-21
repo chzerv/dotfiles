@@ -59,6 +59,8 @@
 
 (package! org-super-agenda)
 
+(package! org-superstar :pin "7f83636db215bf5a10edbfdf11d12a132864a914")
+
 (package! olivetti)
 
 (package! pkgbuild-mode)
