@@ -2419,7 +2419,10 @@ window margins, so that the text is always centered.
 
 ** LaTeX
 
-*** Functions
+Let's create two functions that will:
+
+1. Save the file and run ~latexmk~ (only usable when the =+latexmk= module is enabled).
+2. Save the file and compile it using ~xelatex~.
 
 #+begin_src emacs-lisp :tangle "autoload.el"
 ;;;###autoload
@@ -2435,7 +2438,35 @@ window margins, so that the text is always centered.
   (interactive)
   (save-buffer)
   (compile (format "xelatex %s" (file-name-nondirectory buffer-file-name))))
+#+end_src
 
+Furthermore, let's make ~xetex~ the default engine, and make sure that when invoking TeX
+commands, the file will be automatically saved (super useful when invoking =C-c C-a= to
+compile LaTeX source). Also, some keybindings..
+
+#+begin_src emacs-lisp
+(setq +latex-viewers '(pdf-tools evince zathura)
+      TeX-engine 'xetex)
+
+(after! latex
+  (setq TeX-save-query nil))
+
+(map! (:after latex
+       (:map LaTeX-mode-map
+        :ni "C-c s" 'ch/latex-save-and-compile
+        :ei [C-return] #'LaTeX-insert-item)))
+#+end_src
+
+*** LaTeX and pdf-tools
+
+By default, ~pdf-tools~ will create a buffer with the resulting pdf besides the LaTeX
+source. This is fine in most cases, however, sometimes I would like to have the resulting
+pdf in a separate frame, maybe in the second monitor.
+
+This can easily be done, of course, but the problem is that when I recompile the LaTeX
+source, the side buffer will re-appear. [[https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separate-frames-for-dual-monitor-setup][This SO post]] provides a nice workaround.
+
+#+begin_src emacs-lisp :tangle "autoload.el"
 ;;;###autoload
 (defun contrib/display-buffer-use-some-frame (fun &rest args)
   "Use `display-buffer-use-some-frame' as `display-buffer-overriding-action'.
@@ -2444,32 +2475,11 @@ Then run FUN with ARGS."
     (apply fun args)))
 #+end_src
 
-*** Configuration
-
 #+begin_src emacs-lisp
-(setq +latex-viewers '(pdf-tools evince zathura))
-
 (after! latex
-  ;; Save without asking when invoking TeX commands
-  (setq TeX-save-query nil)
-  ;; While inserting commands in comment sections, do not be intelligent and comment the command
-  (setq LaTeX-insert-into-comments nil)
   ;; Allow `TeX-view' to refresh a PDF in another frame
-  ;; https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separate-frames-for-dual-monitor-setup
   (advice-add 'TeX-pdf-tools-sync-view :around #'contrib/display-buffer-use-some-frame)
   (advice-add 'pdf-sync-backward-search-mouse :around #'contrib/display-buffer-use-some-frame))
-
-(map! (:when (featurep! :lang latex)
-       (:map LaTeX-mode-map
-        :ni "C-c s" 'ch/latex-save-and-compile
-        :ei [C-return] #'LaTeX-insert-item)))
-#+end_src
-
-Don't spellcheck latex files immediately when opened, it takes a lot of time.
-#+begin_src emacs-lisp
-(after! tex
-  (setq TeX-engine 'xetex)
-  (setq-hook! 'TeX-mode-hook +flyspell-immediately nil))
 #+end_src
 
 ** Markdown
