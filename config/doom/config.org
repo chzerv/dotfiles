@@ -1072,13 +1072,52 @@ More fine-grained control when zooming.
 
 ** Magit
 
-Easily create a ~diff~ for the current buffer.
+Show a ~diff~ for the current buffer, in a split.
+
+#+begin_src emacs-lisp :tangle "autoload.el"
+;;;###autoload
+(defun ch/magit-split-and-diff-buffer ()
+  (interactive)
+  (evil-window-vsplit)
+  (magit-diff-buffer-file))
+#+end_src
 
 #+begin_src emacs-lisp
 (map! (:after magit
        (:leader
         :desc "Git diff buffer"
-        "g d" 'magit-diff-buffer-file)))
+        "g d" 'ch/magit-split-and-diff-buffer)))
+#+end_src
+
+** authinfo
+
+I have all my information stored in ~authinfo.gpg~, and use the following function to easily
+extract them:
+
+#+begin_src emacs-lisp :tangle "autoload.el"
+;;;###autoload
+(defun ch/find-auth-field (host prop)
+  "Search `auth-sources' for HOST entry."
+  (let* ((source (auth-source-search :host host))
+         (field (plist-get
+                 (flatten-list source)
+                 prop)))
+    (if source
+        field
+      (user-error "No entry found in auth-sources!"))))
+#+end_src
+
+For example, say we have the following entry in ~authinfo.gpg~, which contains a mail
+address we don't want to publicly share:
+
+#+begin_example
+machine prv login foo@mail.com
+#+end_example
+
+We can now retrieve this address using the ~ch/find-auth-field~ function like so:
+
+#+begin_src emacs-lisp :tangle no :eval no
+(user-mail-address . ,(ch/find-auth-field "prv" :user))
 #+end_src
 
 * Applications
