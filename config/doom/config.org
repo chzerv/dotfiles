@@ -1085,29 +1085,75 @@ Easily create a ~diff~ for the current buffer.
 
 ** Elfeed (RSS feed reader)
 
-;; TODO: FIX FUNCTION NAMES
+[[https://github.com/skeeto/elfeed][elfeed]] is a feed reader that treats the feeds as a list, which can be narrowed using tags.
+[[https://github.com/remyhonig/elfeed-org][elfeed-org]] further enhances this tagging system by providing the ability to manage our
+feeds in =org-mode.= This means we can use =org-mode= tags to tag our feeds.
 
-*** Functions
+*** Base elfeed configuration
+
+I'm pretty happy with what the package offers by default, but there are a few things I
+would like to customize.
+
+#+begin_src emacs-lisp
+(after! elfeed
+  (setq elfeed-search-filter "@2-week-ago +unread -bugs -reddit"
+        elfeed-show-unique-buffers t
+        elfeed-search-trailing-width 25
+        elfeed-db-directory "~/Documents/Syncthing/elfeed/db/"
+        shr-max-image-proportion 0.6)
+
+  (add-hook! 'elfeed-show-mode-hook (hide-mode-line-mode 1)))
+
+(after! elfeed-org
+  (setq rmh-elfeed-org-files (list "~/Documents/Syncthing/elfeed/elfeed.org")))
+#+end_src
+
+Oh! ~evil-snipe~ is pretty much useless in ~elfeed~, so let's just disable it.
+#+begin_src emacs-lisp
+(after! evil-snipe
+  (push 'elfeed-show-mode   evil-snipe-disabled-modes)
+  (push 'elfeed-search-mode evil-snipe-disabled-modes))
+#+end_src
+
+What follows is a bunch of functions that extend ~elfeed~'s functionality.
+
+*** Open feeds with eww
+
+#+begin_comment
+A lot of the code in the next two sections has been taken from [[https://github.com/wandersoncferreira/dotfiles#rss-feed][wandersoncferreira's]] and
+[[https://gitlab.com/protesilaos/dotfiles][Protesilaos']] dotfiles, with small modifications.
+#+end_comment
+
+There are some sites who only provide a preview of the article as the feed, and not the
+entire article. To actually read the article, the feed must be opened in a browser. This
+can be annoying at times, so I would rather open it inside Emacs, using ~eww~. ~eww~ also
+has the ability to strip down a site and only show us the "readable" part.
 
 #+begin_src emacs-lisp :tangle "autoload.el"
 ;;;###autoload
-(defun ch/yt-dl-it (url)
-  "Downloads the URL in an async shell"
-  (let ((default-directory "~/Downloads/yt-dl"))
-    (async-shell-command (format "youtube-dl %s" url))))
-
-;;;###autoload
-(defun rss/elfeed-open ()
+(defun contrib/elfeed-show-eww (&optional link)
+  "Browse current `elfeed' entry link in `eww'.
+Only show the readable part once the website loads.  This can
+fail on poorly-designed websites."
   (interactive)
-  (elfeed)
-  (elfeed-update)
-  (hide-mode-line-mode +1))
+  (let* ((entry (if (eq major-mode 'elfeed-show-mode)
+                    elfeed-show-entry
+                  (elfeed-search-selected :ignore-region)))
+         (link (if link link (elfeed-entry-link entry))))
+    (eww link)
+    (delete-other-windows)
+    (add-hook 'eww-after-render-hook 'eww-readable nil t)))
+#+end_src
 
-;; Ideas taken from https://github.com/wandersoncferreira/dotfiles#rss-feed,
-;; with small modifications.
+*** Handling visual and audio feeds
 
+I also have some feeds that provide visual or audio content (e.g., youtube videos and
+podcasts). I would like to either "play" this content~, or download it.
+To achieve this, we'll use [[https://github.com/mpv-player/mpv][mpv]] and [[https://github.com/ytdl-org/youtube-dl][youtube-dl]].
+
+#+begin_src emacs-lisp :tangle "autoload.el"
 ;;;###autoload
-(defun rss/elfeed-play-with-mpv ()
+(defun ch/elfeed-play-with-mpv ()
   "Play entry link with mpv."
   (interactive)
   (let ((entry (if (eq major-mode 'elfeed-show-mode) elfeed-show-entry (elfeed-search-selected :single)))
@@ -1120,43 +1166,13 @@ Easily create a ~diff~ for the current buffer.
     (start-process "elfeed-mpv" nil "mpv" quality-arg (elfeed-entry-link entry))))
 
 ;;;###autoload
-(defun rss/elfeed-open-with-eww (&optional use-generic-p)
-  "open with eww"
-  (interactive "P")
-  (let ((entries (elfeed-search-selected)))
-    (cl-loop for entry in entries
-             do (elfeed-untag entry 'unread)
-             when (elfeed-entry-link entry)
-             do (eww-browse-url it))
-    (mapc #'elfeed-search-update-entry entries)
-    (unless (use-region-p) (forward-line))))
-
-(defvar elfeed-visit-patterns
-  '(("youtu\\.?be" . rss/elfeed-play-with-mpv)
-    ("phoronix" . rss/elfeed-open-with-eww))
-  "List of (regexps . function) to match against elfeed entry link to know
-whether how to visit the link.")
+(defun ch/yt-dl-it (url)
+  "Downloads the URL in an async shell"
+  (let ((default-directory "~/Downloads/yt-dl"))
+    (async-shell-command (format "youtube-dl %s" url))))
 
 ;;;###autoload
-(defun rss/elfeed-visit-maybe-external ()
-  "Visit with external function if entry link matches `elfeed-visit-patterns',
-visit otherwise."
-  (interactive)
-  (let ((entry (if (eq major-mode 'elfeed-show-mode)
-                   elfeed-show-entry
-                 (elfeed-search-selected :single)))
-        (patterns elfeed-visit-patterns))
-    (while (and patterns (not (string-match (caar patterns) (elfeed-entry-link entry))))
-      (setq patterns (cdr patterns)))
-    (cond
-     (patterns
-      (funcall (cdar patterns)))
-     ((eq major-mode 'elfeed-search-mode)
-      (call-interactively 'elfeed-search-show-entry))
-     (t (elfeed-show-visit)))))
-
-;;;###autoload
-(defun rss/elfeed-dl (&optional use-generic-p)
+(defun ch/elfeed-dl (&optional use-generic-p)
   "Download enclosure with youtube-dl."
   (interactive "P")
   (let ((entries (elfeed-search-selected)))
@@ -1166,24 +1182,63 @@ visit otherwise."
              do (ch/yt-dl-it it))
     (mapc #'elfeed-search-update-entry entries)
     (unless (use-region-p) (forward-line))))
+#+end_src
 
-;; From https://gitlab.com/protesilaos/dotfiles/-/blob/master/emacs/.emacs.d/emacs-init.org#h:c519300f-8a9a-472b-b26d-c2f49adbdb5d
+*** Simple "favorites" system
+
+One thing I think would be awesome to have built into ~elfeed~ is a "favorites" system.
+Here is a super simple implementation of said system.
+
+First, let's define a new face for our "favorite" (/starred/) entries.
+
+#+begin_src emacs-lisp
+(after! elfeed
+  (defface elfeed-search-starred-title-face
+    '((t :inherit hl-todo))
+    "starred entry face."
+    :group 'elfeed)
+
+  (push '(star elfeed-search-starred-title-face)
+        elfeed-search-face-alist))
+#+end_src
+
+Now all we have to do is add the "star" tag to an entry.
+
+#+begin_src emacs-lisp
+(map!
+ (:after elfeed
+  (:map elfeed-search-mode-map
+   :after elfeed-search
+   (:localleader
+    :desc "Toggle star on entry"
+    "s" (cmd! (apply 'elfeed-search-toggle-all '(star)))))))
+#+end_src
+
+Finally, let's create a function that will present us all the starred entries.
+
+#+begin_src emacs-lisp :tangle "autoload.el"
 ;;;###autoload
-(defun rss/elfeed-show-eww (&optional link)
-  "Browse current `elfeed' entry link in `eww'.
-Only show the readable part once the website loads.  This can
-fail on poorly-designed websites."
+(defun ch/elfeed-show-starred-entries ()
+  "Show all time starred entries in elfeed."
   (interactive)
-  (let* ((entry (if (eq major-mode 'elfeed-show-mode)
-                    elfeed-show-entry
-                  (elfeed-search-selected :ignore-region)))
-         (link (if link link (elfeed-entry-link entry))))
-    (eww link)
-    (delete-other-windows)
-    (add-hook 'eww-after-render-hook 'eww-readable nil t)))
+  ;; TODO make this work when called from a mode other than
+  ;; elfeed-search-mode.
+  (elfeed-search-clear-filter)
+  (setq elfeed-search-filter "+star")
+  (elfeed-search-update :force))
+#+end_src
+
+*** Minor enhancements
+
+#+begin_src emacs-lisp :tangle "autoload.el"
+;;;###autoload
+(defun ch/elfeed-open ()
+  (interactive)
+  (elfeed)
+  (elfeed-update))
 
 ;;;###autoload
-(defun rss/elfeed-kill-buffer-close-window-dwim ()
+(defun contrib/elfeed-kill-buffer-close-window-dwim ()
   "Do-what-I-mean way to handle `elfeed' windows and buffers.
 
 When in an entry buffer, kill the buffer and return to the Elfeed
@@ -1204,7 +1259,7 @@ the buffer."
              (delete-other-windows win))))))
 
 ;;;###autoload
-(defun rss/elfeed-search-browse-url (&optional use-generic-p)
+(defun contrib/elfeed-search-browse-url (&optional use-generic-p)
   "Visit the current entry in your browser using `browse-url',
 without marking the entry as 'read'.
 If there is a prefix argument, visit the current entry in the
@@ -1219,94 +1274,18 @@ browser defined by `browse-url-generic-program'."
     (mapc #'elfeed-search-update-entry entries)
     (unless (or elfeed-search-remain-on-entry (use-region-p))
       (forward-line))))
-
-;; Stolen from
-;; https://gitlab.com/protesilaos/dotfiles/-/blob/master/emacs/.emacs.d/emacs-init.org
-
-;;;###autoload
-(defun rss/elfeed-make-archive ()
-  "Create an archive copy of the current `elfeed' entry."
-  (interactive)
-  (let* ((entry (if (eq major-mode 'elfeed-show-mode)
-                    elfeed-show-entry
-                  (elfeed-search-selected :ignore-region)))
-         ;; TODO how to cleanly add hyphens instead of spaces?
-         (title (elfeed-entry-title entry))
-         (elfeed-show-truncate-long-urls nil)
-         (archives "~/Documents/feeds/")
-         (file (format "%s%s.txt" archives title)))
-    (unless (file-exists-p archives)
-      (make-directory archives t))
-    (when (derived-mode-p 'elfeed-show-mode)
-      ;; Refresh to expand truncated URLs
-      (elfeed-show-refresh)
-      (write-file file t)
-      (message "Saved buffer at %s" file))))
-
-;;;###autoload
-(defun rss/elfeed-show-starred-entries ()
-  "Show all time starred entries in elfeed."
-  (interactive)
-  ;; TODO make this work when called from a mode other than
-  ;; elfeed-search-mode.
-  (elfeed-search-clear-filter)
-  (setq elfeed-search-filter "+star")
-  (elfeed-search-update :force))
-#+end_src
-*** Configuration
-
-#+begin_src emacs-lisp
-(after! elfeed
-  (setq elfeed-search-filter "@2-week-ago +unread -bugs -music -reddit"
-        elfeed-show-unique-buffers t
-        elfeed-search-trailing-width 25
-        elfeed-db-directory "~/Documents/Syncthing/elfeed/db/"
-        shr-max-image-proportion 0.6)
-
-  (add-hook! 'elfeed-show-mode-hook (hide-mode-line-mode 1)))
-#+end_src
-
-Define a new face for "starred" (favorite) entries.
-
-#+begin_src emacs-lisp
-(after! elfeed
-  (defface elfeed-search-starred-title-face
-    '((t :inherit hl-todo))
-    "starred entry face."
-    :group 'elfeed)
-
-  (push '(star elfeed-search-starred-title-face)
-        elfeed-search-face-alist))
-#+end_src
-
-~elfeed-org~ is an extra package which lets us manage our feeds in an Org file.
-
-#+begin_src emacs-lisp
-(after! elfeed-org
-  (setq rmh-elfeed-org-files (list "~/Documents/Syncthing/elfeed/elfeed.org")))
-#+end_src
-
-Oh! ~evil-snipe~ is pretty much useless in ~elfeed~, so let's just disable it.
-#+begin_src emacs-lisp
-(after! evil-snipe
-  (push 'elfeed-show-mode   evil-snipe-disabled-modes)
-  (push 'elfeed-search-mode evil-snipe-disabled-modes))
 #+end_src
 
 *** Keybindings
 
-Create a new "category" for bindings, "External" that will be used to open ~elfeed~ and
-later, ~mu4e~.
+Finally, let's create some keybindings for the all the stuff above.
 
 #+begin_src emacs-lisp
 (map! :leader
       (:prefix ("e" . "External")
        (:when (featurep! :app rss)
         (:prefix ("e" . "Elfeed")
-         :desc "Open elfeed" "o" 'rss/elfeed-open))))
-#+end_src
-
-#+begin_src emacs-lisp
+         :desc "Open elfeed" "o" 'ch/elfeed-open))))
 (map!
  (:after elfeed
   (:map elfeed-show-mode-map
@@ -1314,186 +1293,24 @@ later, ~mu4e~.
    "q" 'nil
    (:localleader
     :desc "Open readable part in eww"
-    "e" 'rss/elfeed-show-eww
+    "e" 'contrib/elfeed-show-eww
     :desc "Play enclosure with mpv"
-    "m" 'rss/elfeed-play-with-mpv
-    :desc "Open with external"
-    "x" 'rss/elfeed-visit-maybe-external
+    "m" 'ch/elfeed-play-with-mpv
     :desc "Kill buffer and close window"
-    "q" 'rss/elfeed-kill-buffer-close-window-dwim
+    "q" 'contrib/elfeed-kill-buffer-close-window-dwim
     "y" #'elfeed-show-yank))
   (:map elfeed-search-mode-map
    :after elfeed-search
    "M-RET" 'nil
-   :desc "Open entry in $BROWSER"
-   "M-RET" 'rss/elfeed-search-browse-url
+   :desc "Open entry in browser."
+   "M-RET" 'contrib/elfeed-search-browse-url
    (:localleader
-    :desc "Open with eww"
-    "e" 'rss/elfeed-open-with-eww
     :desc "Fetch feeds"
     "r" 'elfeed-search-fetch
-    :desc "Toggle star on entry"
-    "s" (cmd! (apply 'elfeed-search-toggle-all '(star)))
     :desc "Download enclosure with youtube-dl"
-    "d" 'rss/elfeed-dl))))
-#+end_src
-** Mail
-
-Email in Emacs can be quite a challenge to setup, but in Doom, all you have to do is enable
-a module and you're good to go. Still, I was kinda hesitant to try it since I was (and still
-are) very satisfied with my GUI client, [[https://wiki.gnome.org/Apps/Geary][Geary]].
-
-I decided to give ~mu~ and ~mu4e~ a try, and was blown away by how powerful the search mechanism
-is. The killer-feature for me however, is the ability to link emails in org files, which is
-super useful if you use org-mode for task management, like I do.
-
-*** Generic mail settings
-
-Before we configure ~mu4e~, we must deal with our credentials.
-I have all my information stored in ~authinfo.gpg~, and use the following function to easily
-extract them:
-
-#+begin_src emacs-lisp :tangle "autoload.el"
-;;;###autoload
-(defun ch/find-auth-field (host prop)
-  "Search `auth-sources' for HOST entry."
-  (let* ((source (auth-source-search :host host))
-         (field (plist-get
-                 (flatten-list source)
-                 prop)))
-    (if source
-        field
-      (user-error "No entry found in auth-sources!"))))
+    "d" 'ch/elfeed-dl))))
 #+end_src
 
-For example, say we have the following entry in ~authinfo.gpg~, which contains a mail
-address we don't want to publicly share:
-
-#+begin_example
-machine prv login foo@mail.com
-#+end_example
-
-We can now retrieve this address using the ~ch/find-auth-field~ function like so:
-
-#+begin_src emacs-lisp :tangle no :eval no
-(user-mail-address . ,(ch/find-auth-field "prv" :user))
-#+end_src
-
-*** mu4e (Email client)
-
-*Note* that I don't use the default ~mu4e~ module that comes with Doom. Instead, I use this
-[[https://github.com/tecosaur/doom-emacs/tree/m4e4u][branch]] from tecosaur (hopefully merged in Doom soon).
-
-**** Base settings
-
-#+begin_src emacs-lisp
-(after! mu4e
-  (setq mu4e-compose-format-flowed t))
-#+end_src
-
-***** mu4e-contexts
-
-Contexts allow us to use multiple accounts.
-
-Note that I use the ~ch/find-auth-field~ function we defined in [[*Generic mail settings][Generic mail settings]]
-to avoid leaking personal information.
-
-#+begin_src emacs-lisp
-(after! mu4e
-  (setq mu4e-contexts
-        `( ,(make-mu4e-context
-             :name "Gmail"
-             :enter-func (lambda () (mu4e-message "Entering Gmail context"))
-             :leave-func (lambda () (mu4e-message "Leaving Gmail context"))
-             ;; we match based on the contact-fields of the message
-             :match-func (lambda (msg)
-                           (when msg
-                             (mu4e-message-contact-field-matches msg
-                                                                 :to (ch/find-auth-field "prv" :user))))
-             :vars `( ( user-mail-address  . ,(ch/find-auth-field "prv" :user)  )
-                      ( user-full-name     . ,(ch/find-auth-field "user" :user) )
-                      ( mu4e-drafts-folder . "/gmail/Drafts" )
-                      ( mu4e-trash-folder . "/gmail/Trash" )
-                      ( mu4e-sent-folder   . "/gmail/Sent Mail" )
-                      ( mu4e-bookmarks . (
-                                          ( :name "Unread messages"
-                                            :query "flag:unread AND NOT flag:trashed AND NOT maildir:/gmail/Trash"
-                                            :key ?u)
-                                          ( :name "Today's messages"
-                                            :query "date:today..now"
-                                            :key ?t)
-                                          ( :name "Last 7 days"
-                                            :query "date:7d..now" :hide-unread t
-                                            :key ?L)
-                                          ( :name "Arch Linux"
-                                            :query "from:arch OR to:arch"
-                                            :key ?a)
-                                          ( :name "GNOME"
-                                            :query "from:gnome OR to:gnome OR cc:gnome"
-                                            :key ?g)
-                                          ( :name "Mailing Lists"
-                                            :query "from:arch OR to:arch OR to:gnome OR cc:gnome"
-                                            :key ?l)
-                                          ( :name "WebCourses"
-                                            :query "from:webcourses OR from:eclass"
-                                            :key ?w)
-                                          ( :name "Inbox"
-                                            :query "maildir:/gmail/INBOX"
-                                            :key ?i)
-                                          ( :name "Flagged"
-                                            :query "flag:flagged"
-                                            :key ?f)
-                                          ))
-                      ))
-           ,(make-mu4e-context
-             :name "Outlook"
-             :enter-func (lambda () (mu4e-message "Entering Outlook context"))
-             :leave-func (lambda () (mu4e-message "Leaving Outlook context"))
-             ;; we match based on the contact-fields of the message
-             :match-func (lambda (msg)
-                           (when msg
-                             (mu4e-message-contact-field-matches msg
-                                                                 :to (ch/find-auth-field "uni" :user))))
-             :vars `( ( user-mail-address  . ,(ch/find-auth-field "uni" :user)  )
-                      ( user-full-name     . ,(ch/find-auth-field "user" :user) )
-                      ( mu4e-drafts-folder . "/outlook/Drafts" )
-                      ( mu4e-trash-folder  . "/outlook/Trash" )
-                      ( mu4e-sent-folder   . "/outlook/Sent Mail" )
-                      (mu4e-bookmarks . (
-                                         (:name "Unread messages"
-                                          :query "flag:unread AND NOT flag:trashed AND NOT maildir:/outlook/Trash"
-                                          :key ?u)
-                                         (:name "Today's messages"
-                                          :query "date:today..now"
-                                          :key ?t)
-                                         (:name "Last 7 days"
-                                          :query "date:7d..now"
-                                          :hide-unread t
-                                          :key ?L)
-                                         (:name "Messages with images"
-                                          :query "mime:image/*"
-                                          :key ?I)
-                                         (:name "Inbox"
-                                          :query "maildir:/outlook/Inbox"
-                                          :key ?i)
-                                         (:name "Flagged"
-                                          :query "flag:flagged"
-                                          :key ?f)
-                                         ))
-                      ))
-           )))
-#+end_src
-
-**** Keybindings
-
-#+begin_src emacs-lisp
-(map! :leader
-      (:prefix ("e" . "External")
-       (:when (featurep! :email mu4e)
-        (:prefix ("m" . "Mail")
-         :desc "Open mu4e" "o" 'mu4e
-         :desc "Show unread" "u" 'mu4e-alert-view-unread-mails))))
-#+end_src
 ** Treemacs (file explorer)
 
 [[https://github.com/Alexander-Miller/treemacs][treemacs]] is a tree layout file explorer. Admittedly, after discovering how powerful
