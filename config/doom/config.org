@@ -198,7 +198,7 @@ from purcell.
 #+end_src
 
 #+begin_src emacs-lisp
-(setq doom-theme 'modus-operandi)
+(setq doom-theme 'doom-nord)
 
 (cond
  ((equal doom-theme 'modus-operandi)
@@ -846,7 +846,7 @@ Let's add some keybindings for those.
 #+begin_src emacs-lisp
 (set-popup-rule! "*eww*" :side 'bottom :size .70 :slect t :vslot 5 :ttl 3 :quit nil)
 (set-popup-rule! "*Help.*" :side 'right :width .50 :select t :vslot 0 :ttl 3 :quit nil)
-(set-popup-rule! "*Man.*" :side 'right :width .50 :select t :slot 1 :ttl 3 :quit 'current :modeline nil)
+(set-popup-rule! "*Man.*" :side 'right :width .50 :select t :slot 1 :ttl 3 :quit 'nil :modeline nil)
 (set-popup-rule! "*ansible-doc.*" :side 'bottom :height .40 :select t :vslot 1 :ttl 3 :quit nil)
 (set-popup-rule! "*Flycheck errors*" :side 'bottom :height .2 :select nil :quit t)
 (after! imenu-list
@@ -874,10 +874,10 @@ windows, which is exactly what I want.
     (select-window win)))
 #+end_src
 
-Let's also create a mapping for it.
+Let's also create a keybinding for it.
 
 #+begin_src emacs-lisp
-(map! "s-o" 'ch/switch-to-last-window)
+(map! "M-o" 'ch/switch-to-last-window)
 #+end_src
 
 * Editing tweaks
@@ -1907,14 +1907,6 @@ Make refile work across all ~agenda-files~.
         '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 #+end_src
 
-Adjust org-latex-preview scaling. The default 1.5 makes latex previews seem kinda out of
-place.
-
-#+begin_src emacs-lisp
-(after! org
-  (plist-put org-format-latex-options :scale 1.3))
-#+end_src
-
 ** org-wild-notifier
 
 Notifications for upcoming events.
@@ -2057,7 +2049,10 @@ The idea/code is taken from https://ag91.github.io/blog/2020/11/12/write-org-roa
 
 #+begin_src emacs-lisp
 (after! org
-  (setq org-agenda-dim-blocked-tasks t
+  (setq org-agenda-files '("~/Documents/Syncthing/Org/index.org"
+                           "~/Documents/Syncthing/Org/bookmarks.org"
+                           "~/Documents/Syncthing/Org/roam/")
+        org-agenda-dim-blocked-tasks t
         org-agenda-use-time-grid t
         org-agenda-compact-blocks t
         org-agenda-follow-indirect t
