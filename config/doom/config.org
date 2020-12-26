@@ -1435,26 +1435,44 @@ Now we can provide a list of files to be ignored.
 
 * Utilities
 
-** Open tilix in CWD
+** Open external applications in current directory
 
-Function and binding to open a new ~tilix~ (my terminal emulator of choice) window in the
-current working directory.
+~vterm~ is great, but sometimes I prefer my actual terminal. Let's create a function
+that will open whatever terminal application is set as =$TERMINAL=, in the current
+working directory.
+
+While we're here, let's also create a function that will open ~nautilus~ (GNOME's file
+manager) in the current working directory.
 
 #+begin_src emacs-lisp :tangle "autoload.el"
 ;;;###autoload
-(defun ch/open-tilix-here ()
-  "Open the current dir in a new tilix window"
+(defun ch/open-ext-terminal-here ()
+  "Open external terminal in current working directory."
+  (interactive)
+  (let ((process-connection-type nil)
+        (terminal (getenv "TERMINAL")))
+    (start-process "" nil terminal
+                   (cond
+                    ((or (equal terminal "tilix") (equal terminal "alacritty"))
+                     (concat "--working-directory=" default-directory))
+                    ((equal terminal "kitty")
+                     (concat "--directory=" default-directory))))))
+
+;;;###autoload
+(defun ch/open-nautilus-here ()
+  "Open external file manager in current working directory."
   (interactive)
   (let ((process-connection-type nil))
-    (start-process "" nil "tilix"
-                   (concat "--working-directory=" default-directory))))
+    (start-process "" nil "nautilus" default-directory)))
 #+end_src
 
 #+begin_src emacs-lisp
 (map! (:leader
        (:prefix ("o" . "+open")
         :desc "Open external terminal here"
-        "x" 'ch/open-tilix-here)))
+        "x" 'ch/open-ext-terminal-here
+        :desc "Open external terminal here"
+        "n" 'ch/open-nautilus-here)))
 #+end_src
 
 ** Toggle incognito mode for Firefox
