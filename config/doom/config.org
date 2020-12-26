@@ -474,9 +474,6 @@ The following function aims to fix that.
   (add-hook 'imenu-after-jump-hook 'ch/imenu-reveal-content))
 #+end_src
 
-#+RESULTS:
-: ""
-
 *** imenu-list
 
 Having a permanently visible imenu index instead of the completion can be useful at times.
@@ -1809,22 +1806,6 @@ is not in MELPA, but we can easily install it using ~straight recipes~.
   (setq org-fontify-whole-heading-line nil
         org-highlight-latex-and-related nil
         org-hide-leading-stars nil))
-#+end_src
-
-Having flycheck active in source blocks doesn't really offer much in my opinion.
-Thanks to https://github.com/wandersoncferreira/dotfiles#configuration, I can disable it.
-
-#+begin_src emacs-lisp :tangle "autoload.el"
-;;;###autoload
-(defun contrib/disable-flycheck-in-org-src-block ()
-  (setq-local flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
-#+end_src
-
-Now all we have to do is /hook/ the above function.
-
-#+begin_src emacs-lisp
-(after! org
-  (add-hook 'org-src-mode-hook 'contrib/disable-flycheck-in-org-src-block))
 #+end_src
 
 *** Default applications for mime-types
