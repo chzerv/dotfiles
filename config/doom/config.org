@@ -611,7 +611,7 @@ I additionally want ~projectile~ to:
 * Directory and buffer management
 
 ** Directory management with dired
-*** Base settings
+*** Base dired configuration
 
 The defaults are pretty much fine, but there are few extra things I find quite nice:
 
@@ -1461,6 +1461,7 @@ current working directory.
 
 Running this function will /toggle/ the =--private-window= option for Firefox. We can then
 call ~browse-url-firefox~ and provide a URL, which will be opened in a private window.
+See [[*Custom URL handling][Custom URL handling]] for how this is actually used.
 
 #+begin_src emacs-lisp :tangle "autoload.el" :results silent
 ;;;###autoload
@@ -1552,9 +1553,10 @@ it. Let's create a function that will archive all tasks marked as "DONE" or "CAN
 *** Custom URL handling
 
 I would also like to re-define the built-in ~+org/dwim-at-point~ and ~org-open-at-point~
-functions in a way that, if the /thing at-point/ is a link, it uses my ~ch/firefox-incognito~
-function we defined in [[*Toggle incognito mode for Firefox][Toggle incognito mode for Firefox]] to open it. This way, if we call
-the function with an argument (~C-u~), the URL will be opened in an incognito window.
+functions in a way that, if the /thing at-point/ is a link, it (optionally) uses my
+~ch/firefox-incognito~ function we defined in [[*Toggle incognito mode for Firefox][Toggle incognito mode for Firefox]] to open it.
+This way, we can call the function with an argument (~C-u~), and the URL will be opened
+in an incognito window.
 
 #+begin_src emacs-lisp :tangle "autoload.el" :results silent
 ;;;###autoload
@@ -1747,7 +1749,7 @@ is not in MELPA, but we can easily install it using ~straight recipes~.
   :pin "3359ce9a2f3b48df26329adaee0c4710b1024250")
 #+end_src
 
-** Base settings
+** Base org-mode configuration
 
 #+begin_src emacs-lisp
 (after! org
