@@ -2054,9 +2054,9 @@ The idea/code is taken from https://ag91.github.io/blog/2020/11/12/write-org-roa
                            "~/Documents/Syncthing/Org/roam/")
         org-agenda-dim-blocked-tasks t
         org-agenda-use-time-grid t
-        org-agenda-compact-blocks t
+        org-agenda-compact-blocks nil
         org-agenda-follow-indirect t
-        org-agenda-block-separator ""
+        org-agenda-block-separator 61
         org-agenda-skip-scheduled-if-done t
         org-agenda-skip-deadline-if-done t
         org-enforce-todo-checkbox-dependencies nil
@@ -2111,12 +2111,11 @@ with easily defined groups.
             (alltodo ""
                      ((org-agenda-overriding-header "Lens")
                       (org-super-agenda-groups
-                       '((:name none
-                          :discard (:tag "schedule" :todo "SOMEDAY" :tag "bdays"))
-                         (:name "Must do!"
+                       '((:name "Important"
                           :and (:priority "A" :not (:tag "@uni")))
-                         (:name "Just do it.."
-                          :and (:priority<= "B" :not (:tag "@uni")))
+                         (:name "Less important"
+                          :and (:not (:priority<= "A" :tag "@uni"))
+                          :and (:priority<= "B" :not (:tag "@uni" :todo "SOMEDAY")))
                          (:name "On hold"
                           :todo "HOLD")
                          (:name none
@@ -2128,11 +2127,11 @@ with easily defined groups.
                             :tag "exam")
                            (:name "Labs"
                             :tag "lab")
-                           (:name "Course"
+                           (:name "Courses"
                             :tag "course")
                            (:name "Assignments"
                             :tag "assignment")
-                           (:name "Study"
+                           (:name "What to study"
                             :tag "study")
                            (:discard (:anything t))))))
             (todo "SOMEDAY"
@@ -2145,9 +2144,9 @@ with easily defined groups.
             (tags-todo "@personal"
                        ((org-agenda-overriding-header "Personal")
                         (org-super-agenda-groups
-                         '((:discard (:tag "bdays"))))))
-            (tags-todo "@appointment"
-                       ((org-agenda-overriding-header "Appointments")))
+                         '((:name "Appointments"
+                            :tag "@appointment")
+                           (:discard (:tag "bdays"))))))
             ))
           ("p" "Projects"
            ((todo ""
