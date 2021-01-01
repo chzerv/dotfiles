@@ -37,17 +37,25 @@
 
 (package! highlight-indent-guides :pin "cf352c85cd15dd18aa096ba9d9ab9b7ab493e8f6")
 
-(package! org-mode
-  :recipe (:host github
-           :repo "yantar92/org"
-           :branch "feature/org-fold"
-           :files ("*.el" "lisp/*.el" "contrib/lisp/*.el")
-           :build (with-temp-file (expand-file-name "org-version.el" (straight--repos-dir "org"))
-                    (insert "(fset 'org-release (lambda () \"9.5\"))\n"
-                            "(fset 'org-git-version #'ignore)\n"
-                            "(provide 'org-version)\n")))
-  :pin "b0ad4095f1d65224642439822d30b88f566efb92"
-  :shadow 'org)
+;; (package! magit-delta :pin "b8526f890415374822514e488341d2b706d6bc2f")
+
+(package! systemd)
+
+(package! pkgbuild-mode)
+
+;; (package! org-mode
+;;   :recipe (:host github
+;;            :repo "yantar92/org"
+;;            :branch "feature/org-fold"
+;;            :files ("*.el" "lisp/*.el" "contrib/lisp/*.el")
+;;            :build (with-temp-file (expand-file-name "org-version.el" (straight--repos-dir "org"))
+;;                     (insert "(fset 'org-release (lambda () \"9.5\"))\n"
+;;                             "(fset 'org-git-version #'ignore)\n"
+;;                             "(provide 'org-version)\n")))
+;;   :pin "ac4874e39e7b2239857410a279e24ae3dcf482ea"
+;;   :shadow 'org)
+
+(package! org-superstar :pin "7f83636db215bf5a10edbfdf11d12a132864a914")
 
 (package! org-protocol-capture-html
   :recipe (:host github :repo "alphapapa/org-protocol-capture-html")
@@ -55,14 +63,8 @@
 
 (package! org-wild-notifier)
 
-;; (package! org-roam-server)
-
 (package! org-super-agenda)
 
-(package! org-superstar :pin "7f83636db215bf5a10edbfdf11d12a132864a914")
+;; (package! org-roam-server)
 
 (package! olivetti)
-
-(package! pkgbuild-mode)
-
-(package! systemd)

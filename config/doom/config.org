@@ -4,6 +4,7 @@
 #+DESCRIPTION: Personal configuration for Doom Emacs.
 #+STARTUP: overview
 #+PROPERTY: header-args :results silent
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 * Overview
 
@@ -13,7 +14,9 @@ This is my personal [[https://en.wikipedia.org/wiki/Literate_programming][litera
 
 ** Why is there an =;;;###autoload= on top of =defun= calls?
 
-You can read more information on this on [[https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#autoloadel-or-autoloadel][Doom's Getting Started page]].
+You can read more information on this on [[https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#autoloadel-or-autoloadel][Doom's Getting Started page]]. *Note* that the
+source blocks which contain these functions are tangled into a different file,
+=autoload.el=.
 
 ** Symbol name prefixes
 
@@ -32,26 +35,68 @@ To use this configuration, there are a couple of things that should be installed
 system (other than the [[https://github.com/hlissner/doom-emacs#prerequisites][Doom prerequisites]]). ~doom doctor~ will catch most of them, if not
 all, but I'll mention them anyway:
 
-;; TODO: List all the requirements.
-
-+ ~Source Code Pro~, ~Fira Code~ and ~Hack~ fonts.
++ =Source Code Pro=, =Fira Code= and =Hack= fonts.
 + A LaTeX compiler for rendering math.
 + ~sqlite3~ for org-roam.
 + ~jsbeautify~ for formatting JS/CSS/HTML code.
 + ~python-black~ for formatting Python code.
 + ~python-isort~ for sorting Python imports.
++ Maybe I'm forgetting something.. Will try to update!
 
-* Better system defaults
+* Package management
 
-Doom comes with very sane defaults, but there are some things I would like to work a
-bit differently.
+Doom's packaging system dictates that package management should be done in the
+=$DOOMDIR/packages.el= file, using the ~package!~ macro.
 
-Before continuing, let's enable ~lexical binding~ for the resulting ~config.el~.
+
+#+begin_comment
+*Note* that every source block with a ~(package! ...)~, ~pin!~ or ~unpin!~ call is tangled
+to the =packages.el= file!
+#+end_comment
+
+First of all, let's ensure that =byte-compile= is disabled for the =packages.el= file.
+
+#+begin_src emacs-lisp :tangle "packages.el"
+;; -*- no-byte-compile: t; -*-
+#+end_src
+
+Doom pins every package to a specific commit, but there are some packages I would like to
+always be updated:
+
+#+begin_src emacs-lisp :tangle "packages.el"
+(unpin! doom-modeline)
+(unpin! doom-themes)
+(unpin! vterm)
+#+end_src
+
+On the other hand, there are some packages I have no use for, so let's just disable them.
+
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! evil-escape :disable t)
+(package! evil-quick-diff :disable t)
+(package! evil-traces :disable t)
+(package! cuda-mode :disable t)
+(package! demangle-mode :disable t)
+(package! disaster :disable t)
+(package! overseer :disable t)
+(package! buttercup :disable t)
+(package! opencl-mode :disable t)
+(package! glsl-mode :disable t)
+(package! company-glsl :disable t)
+(package! flyspell-lazy :disable t)
+#+end_src
+
+* General configuration
+
+Before going any further, let's enable =lexical binding= for the resulting =config.el=.
+See this [[https://nullprogram.com/blog/2016/12/22/][blog post]] for more information on why =lexical binding= is used.
 
 #+begin_src emacs-lisp
 ;;; config.el -*- lexical-binding: t; -*-
 #+end_src
 
+Doom comes with very sane defaults, but there are some things I would like to work a
+bit differently.
 
 ** Start on fullscreen
 
@@ -72,124 +117,11 @@ to the top or bottom of the viewport.
               scroll-margin 0)
 #+end_src
 
-** Enable disabled functions
-
-Doom by default disables the ~narrow-to-region~ function. I find it quite useful.
-
-#+begin_src emacs-lisp
-(put 'narrow-to-region 'disabled nil)
-#+end_src
-
-** Evil-mode
-
-A couple of things I would to change from the default configuration.
-
-For some reason, when exiting insert mode, the cursor moves one position backwards.
-Setting ~evil-move-cursor-back~ to ~nil~ "fixes" that.
-
-I would also like to split a window and automatically move to it.
-
-Finally, I prefer using Emacs keybindings in ~dired~.
-
-#+begin_src emacs-lisp
-(after! evil
-  (setq
-   evil-move-cursor-back nil
-   evil-split-window-below t
-   evil-vsplit-window-right t)
-  (add-to-list 'evil-emacs-state-modes 'dired-mode))
-#+end_src
-
-*** Evil-mode keybindings
-
-Easier window navigation.
-
-#+begin_src emacs-lisp
-(map! (:after evil
-       "M-h" 'nil
-       "M-j" 'nil
-       "M-k" 'nil
-       "M-l" 'nil
-       "M-q" 'nil
-       :enm "M-h" #'evil-window-left
-       :enm "M-j" #'evil-window-down
-       :enm "M-k" #'evil-window-up
-       :enm "M-l" #'evil-window-right
-       :enm "M-q" #'evil-quit))
-#+end_src
-
-Use ~vim-surround~ operator keys for ~evil-surround~'s change & delete functionality.
-
-#+begin_src emacs-lisp
-(map! (:after evil
-       (:map evil-operator-state-map
-        "r" 'evil-surround-change
-        "d" 'evil-surround-delete)))
-#+end_src
-
-Use j/k instead of gj/gk to move between visual lines.
-#+begin_src emacs-lisp
-(map! (:after evil
-       (:map evil-normal-state-map
-        "j" 'evil-next-visual-line
-        "k" 'evil-previous-visual-line)))
-#+end_src
-
-* Package management
-
-Doom's packaging system dictates that package management should be done in the
-~$DOOMDIR/packages.el~ file, using the ~package!~ macro.
-
-First of all, let's ensure that ~byte-compile~ is disabled for the =packages.el= file.
-
-#+begin_src emacs-lisp :tangle "packages.el"
-;; -*- no-byte-compile: t; -*-
-#+end_src
-
-Doom pins every package to a specific commit (for many reasons), but there are some
-packages I would like to always be updated:
-
-#+begin_src emacs-lisp :tangle "packages.el"
-(unpin! doom-modeline)
-(unpin! doom-themes)
-(unpin! vterm)
-#+end_src
-
-On the other hand, there are some packages I have no use for. Thankfully we can
-easily disable them.
-
-#+begin_src emacs-lisp :tangle "packages.el"
-(package! evil-escape :disable t)
-(package! evil-quick-diff :disable t)
-(package! evil-traces :disable t)
-(package! cuda-mode :disable t)
-(package! demangle-mode :disable t)
-(package! disaster :disable t)
-(package! overseer :disable t)
-(package! buttercup :disable t)
-(package! opencl-mode :disable t)
-(package! glsl-mode :disable t)
-(package! company-glsl :disable t)
-(package! flyspell-lazy :disable t)
-#+end_src
-
-* Visual settings
-
-** Fonts
-
-I'm a big fan of the =Source Code Pro=, =Fira Code= and =Hack= fonts, so I might change between them regularly.
-
-#+begin_src emacs-lisp
-(setq doom-font (font-spec :family "Hack" :size 15)
-      doom-big-font (font-spec :family "Hack" :size 18)
-      doom-variable-pitch-font (font-spec :family "Hack" :size 17))
-(setq doom-unicode-font (font-spec :name "DejaVu Sans Mono"))
-#+end_src
-
 ** Theme
 
-Protesilaos Stavrou's [[https://protesilaos.com/modus-themes/][modus-themes]] are honestly amazing. Also, I sometimes use the [[https://github.com/purcell/color-theme-sanityinc-tomorrow][tomorrow themes]]
-from purcell.
+I switch between themes more frequently than I would like to. Some of my favorites are:
+Protesilaos Stavrou's [[https://protesilaos.com/modus-themes/][modus-themes]], all the [[https://github.com/purcell/color-theme-sanityinc-tomorrow][Tomorrow themes]] from Steve Purcell, =doom-nord=,
+=doom-one= and =doom-gruvbox= (also their light variants).
 
 #+begin_src emacs-lisp :tangle "packages.el"
 (package! modus-operandi-theme)
@@ -200,6 +132,7 @@ from purcell.
 #+begin_src emacs-lisp
 (setq doom-theme 'doom-nord)
 
+;; Simple tweaks to modus-themes.
 (cond
  ((equal doom-theme 'modus-operandi)
   (setq modus-operandi-theme-distinct-org-blocks t
@@ -213,16 +146,47 @@ from purcell.
         modus-vivendi-theme-visible-fringes 'subtle)))
 #+end_src
 
+** Fonts
+
+I'm a big fan of the =Source Code Pro=, =Fira Code= and =Hack= fonts.
+
+#+begin_src emacs-lisp
+(setq doom-font (font-spec :family "Hack" :size 15)
+      doom-big-font (font-spec :family "Hack" :size 18)
+      doom-variable-pitch-font (font-spec :family "Hack" :size 17))
+(setq doom-unicode-font (font-spec :name "DejaVu Sans Mono"))
+#+end_src
+
 ** Modeline
 
-I normally use the "light" variant of the modeline which is included in Doom, instead of
+I usually use the "light" variant of the modeline which is included in Doom, instead of
 ~doom-modeline~. I would like it to be a bit smaller, and stop showing
 information about buffer encoding.
 
 #+begin_src emacs-lisp
 (when (featurep! :ui modeline +light)
-  (setq +modeline-height 20
+  (setq +modeline-height 15
         +modeline-encoding nil))
+#+end_src
+
+Let's also make the same changes to =doom-modeline=, for the times I do use it.
+Moreover, there is an issue which causes the right side of the modeline to cut off.
+According to Doom's documentation, to fix it we can either:
+1. Tweak ~all-the-icons-scale-factor~,
+2. Add some padding to the modeline definition,
+3. Use another font for the modeline, with a lower =:height=.
+
+
+I choose the second option.
+
+#+begin_src emacs-lisp
+(after! doom-modeline
+  (setq doom-modeline-height 15
+        doom-modeline-buffer-encoding nil)
+
+  (doom-modeline-def-modeline 'main
+    '(bar matches buffer-info remote-host buffer-position parrot selection-info)
+    '(misc-info minor-modes checker input-method buffer-encoding major-mode process vcs "  ")))
 #+end_src
 
 I also like having the time displayed in the modeline, but not the load average.
@@ -265,13 +229,79 @@ Finally, I would like to use the buffer's name as the frame title.
 (setq frame-title-format '("%b"))
 #+end_src
 
+** Enable disabled functions
+
+Doom by default disables the ~narrow-to-region~ function. I find it quite useful.
+
+#+begin_src emacs-lisp
+(put 'narrow-to-region 'disabled nil)
+#+end_src
+
+** Evil-mode
+
+A couple of things I would to change from the default configuration.
+
++ When exiting /insert mode/, the cursor moves one position backwards. Setting
+  ~evil-move-cursor-back~ to ~nil~ "fixes" that.
+
++ When I split a window, I usually want to move to that new split.
+
++ While in /insert mode/, all changes are considered one big blog. Be more granular.
+
++ Use Emacs keybindings in ~dired~.
+
+#+begin_src emacs-lisp
+(after! evil
+  (setq
+   evil-move-cursor-back nil
+   evil-split-window-below t
+   evil-vsplit-window-right t
+   evil-want-fine-undo t)
+  (add-to-list 'evil-emacs-state-modes 'dired-mode))
+#+end_src
+
+Having to press 3 buttons (=C-w h=, =C-w l= etc.) to move between windows is a bit much, so
+let's create some shorter keybindings, using the Meta key (=Alt=).
+
+#+begin_src emacs-lisp
+(map! (:after evil
+       "M-h" 'nil
+       "M-j" 'nil
+       "M-k" 'nil
+       "M-l" 'nil
+       "M-q" 'nil
+       :enm "M-h" #'evil-window-left
+       :enm "M-j" #'evil-window-down
+       :enm "M-k" #'evil-window-up
+       :enm "M-l" #'evil-window-right
+       :enm "M-q" #'evil-quit))
+#+end_src
+
+Use ~vim-surround~ operator keys for ~evil-surround~'s change & delete functionality.
+
+#+begin_src emacs-lisp
+(map! (:after evil
+       (:map evil-operator-state-map
+        "r" 'evil-surround-change
+        "d" 'evil-surround-delete)))
+#+end_src
+
+Finally, use =j/k= instead of =gj/gk= to move between visual lines.
+
+#+begin_src emacs-lisp
+(map! (:after evil
+       (:map evil-normal-state-map
+        "j" 'evil-next-visual-line
+        "k" 'evil-previous-visual-line)))
+#+end_src
+
 * Completion and searching
 
-** Word completion with company
+** Text completion with company
 
 #+begin_src emacs-lisp
 (after! company
-  (setq company-idle-delay 0.6
+  (setq company-idle-delay 0.3
         company-global-modes '(not shell-mode)
         company-minimum-prefix-length 1
         company-tooltip-align-annotations t
@@ -341,68 +371,6 @@ Finally, here is my configuration. Some things to note:
         ivy-read-action-function #'ivy-hydra-read-action))
 #+end_src
 
-*** Custom ivy actions
-
-~ivy~ makes it easy to define custom actions for its commands. In my case, I have defined
-some actions for ~counsel-fzf~, ~counsel-rg~ and ~counsel-recentf~.
-
-These are all stolen from [[https://www.youtube.com/watch?v=IDkx48JwDco][a video from Protesilaos Stavrou]]
-
-#+begin_src emacs-lisp :tangle "autoload.el"
-;;;###autoload
-(defun contrib/counsel-fzf-rg-files (&optional input dir)
-  "Run `fzf' in tandem with `ripgrep' to find files in the
-present directory.  If invoked from inside a version-controlled
-repository, then the corresponding root is used instead."
-  (interactive)
-  (let* ((process-environment
-          (cons (concat "FZF_DEFAULT_COMMAND=rg -Sn --color never --files --no-follow --hidden")
-                process-environment))
-         (vc (vc-root-dir)))
-    (if dir
-        (counsel-fzf input dir)
-      (if (eq vc nil)
-          (counsel-fzf input default-directory)
-        (counsel-fzf input vc)))))
-
-;;;###autoload
-(defun contrib/counsel-fzf-dir (arg)
-  "Specify root directory for `counsel-fzf'."
-  (contrib/counsel-fzf-rg-files ivy-text
-                                (read-directory-name
-                                 (concat (car (split-string counsel-fzf-cmd))
-                                         " in directory: "))))
-
-;;;###autoload
-(defun contrib/counsel-rg-dir (arg)
-  "Specify root directory for `counsel-rg'."
-  (let ((current-prefix-arg '(4)))
-    (counsel-rg ivy-text nil "")))
-#+end_src
-
-#+begin_src emacs-lisp
-(after! counsel
-  (ivy-add-actions
-   'counsel-fzf
-   '(("r" contrib/counsel-fzf-dir "change root directory")
-     ("g" contrib/counsel-rg-dir "use ripgrep in root directory")
-     ("a" contrib/counsel-fzf-ace-window "ace-window switch")))
-
-  (ivy-add-actions
-   'counsel-rg
-   '(("r" contrib/counsel-rg-dir "change root directory")
-     ("z" contrib/counsel-fzf-dir "find file with fzf in root directory")))
-
-  (ivy-add-actions
-   'counsel-find-file
-   '(("g" contrib/counsel-rg-dir "use ripgrep in root directory")
-     ("z" contrib/counsel-fzf-dir "find file with fzf in root directory")))
-
-  (ivy-set-actions
-   'counsel-recentf
-   '(("a" contrib/counsel-fzf-ace-window "ace-window switch"))))
-   #+end_src
-
 *** Counsel configuration
 
 The defaults are mostly fine, except two things.
@@ -450,13 +418,13 @@ Kinda odd that these don't exist by default.
 
 ~imenu~ comes built-in with Emacs and offers completion-based buffer navigation. It builds
 an "index" of positions and then displays the list using a completion interface (in our case,
-ivy).
+~ivy~).
 
 ~imenu~ integrates very nicely with org-mode, making it easy to navigate around large
-org-files, But there is an issue. When the content of the Org file is folded, jumping to a
+org-files, but there is an issue. When the content of an Org file is folded, jumping to a
 heading using ~imenu~ will not unfold the heading.
 
-The following function aims to fix that.
+Let's create a function and a hook to fix this issue.
 
 #+begin_src emacs-lisp :tangle "autoload.el"
 ;;;###autoload
@@ -513,7 +481,20 @@ With \\[universal-argument] toggle the display of the window."
 
 ** isearch
 
-The built-in ~isearch~ command is honestly top notch, but it needs some tweaks.
+The built-in ~isearch~ command is honestly top notch. Below is a "cheat-sheet" for the
+~isearch~ keybindings I find most useful.
+
+| Key bind | Description                  |
+|----------+------------------------------|
+| C-s C-w  | Search char or word at point |
+| M-s o    | Run 'occur' on regexp        |
+| M-s h r  | Highlight regexp             |
+| M-s h u  | Undo the highlighting        |
+| C-s M-r  | Toggle regexp search         |
+| M-%      | Query replace                |
+| C-M-%    | Query replace regexp         |
+
+However, some tweaks are needed.
 
 #+begin_src emacs-lisp
 (after! isearch
@@ -526,8 +507,10 @@ The built-in ~isearch~ command is honestly top notch, but it needs some tweaks.
         isearch-allow-scroll 'unlimited))
 #+end_src
 
-Also, wanting to replace the symbol at point is pretty common, but it requires two steps.
-Let's define a function that makes this operation faster.
+** Search enhancements
+
+Replacing the symbol at point is a pretty common task, but by default, it requires two
+steps. Let's define a function to make this task faster.
 
 #+begin_src emacs-lisp :tangle "autoload.el"
 ;;;###autoload
@@ -546,20 +529,6 @@ Now let's bind it to a key for easier access.
        "M-s %" 'ch/isearch-query-replace-symbol-at-point))
 #+end_src
 
-
-Below is a "cheat-sheet" for the ~isearch~ keybindings I find most useful.
-
-| Key bind | Description                  |
-|----------+------------------------------|
-| C-s C-w  | Search char or word at point |
-| M-s o    | Run 'occur' on regexp        |
-| M-s h r  | Highlight regexp             |
-| M-s h u  | Undo the highlighting        |
-| C-s M-r  | Toggle regexp search         |
-| M-%      | Query replace                |
-| C-M-%    | Query replace regexp         |
-
-** General enhancements
 
 #+begin_src emacs-lisp :tangle "autoload.el"
 ;;;###autoload
@@ -584,7 +553,7 @@ Let's also bind ~ch/find-in-dotfiles~.
        "f t" #'ch/find-in-dotfiles))
 #+end_src
 
-* Project management with projectile
+* Project navigation & management with projectile
 
 I additionally want ~projectile~ to:
 
@@ -605,10 +574,9 @@ I additionally want ~projectile~ to:
    projectile-ignored-project-function #'ch/projectile-ignore-project-p))
 #+end_src
 
-* Directory and buffer management
+* File management with dired
 
-** Directory management with dired
-*** Base dired configuration
+** Base dired configuration
 
 The defaults are pretty much fine, but there are few extra things I find quite nice:
 
@@ -628,24 +596,9 @@ The defaults are pretty much fine, but there are few extra things I find quite n
                                (dired-hide-details-mode 1)
                                (hl-line-mode))))
 #+end_src
-*** Key bindings
 
-#+begin_src emacs-lisp
-(map! :after dired
-      (:map dired-mode-map
-       :enm "M-h" #'evil-window-left
-       :enm "M-j" #'evil-window-bottom
-       :enm "M-k" #'evil-window-up
-       :enm "M-l" #'evil-window-right
-       :enm "M-q" #'evil-quit
-       "j" 'dired-next-line
-       "k" 'dired-previous-line
-       "h" 'dired-up-directory
-       "l" 'dired-open-file)
-      "s-j" 'dired-jump
-      "s-J" 'dired-jump-other-window
-      "M-RET" 'dired-display-file)
-#+end_src
+** Extra functionality
+
 *** dired-x
 
 #+begin_src emacs-lisp
@@ -762,9 +715,28 @@ Check directory size, inside dired.
   :after dired
   :commands dired-du-mode)
 #+end_src
-** Buffer management
 
-*** ibuffer (dired-like buffer management tool)
+** Key bindings
+
+#+begin_src emacs-lisp
+(map! :after dired
+      (:map dired-mode-map
+       :enm "M-h" #'evil-window-left
+       :enm "M-j" #'evil-window-bottom
+       :enm "M-k" #'evil-window-up
+       :enm "M-l" #'evil-window-right
+       :enm "M-q" #'evil-quit
+       "j" 'dired-next-line
+       "k" 'dired-previous-line
+       "h" 'dired-up-directory
+       "l" 'dired-open-file)
+      "s-j" 'dired-jump
+      "s-J" 'dired-jump-other-window
+      "M-RET" 'dired-display-file)
+#+end_src
+* Buffer management
+
+** ibuffer (dired-like buffer management tool)
 
 ;; TODO: Try out ~buffler~.
 
@@ -781,7 +753,8 @@ Check directory size, inside dired.
                 (name 16 -1)
                 " " filename))))
 #+end_src
-*** Buffer cleanup
+
+** Buffer cleanup
 
 Here are some functions that can be used to:
 
@@ -855,7 +828,7 @@ Let's add some keybindings for those.
 (set-popup-rule! "*helpful.*" :side 'bottom :height .30 :select t :vslot 0 :ttl 3 :quit 'other)
 #+end_src
 
-** General enhancements
+** Window related enhancements
 
 There are times when I have multiple windows open at the same time, and I constantly want
 to switch between the same /two/. ~other-window~ (~C-x o~) will cycle between every window, so
@@ -880,7 +853,7 @@ Let's also create a keybinding for it.
 (map! "M-o" 'ch/switch-to-last-window)
 #+end_src
 
-* Editing tweaks
+* Editing configuration
 
 ** Buffer formatting
 
@@ -1086,6 +1059,21 @@ Show a ~diff~ for the current buffer, in a split.
         "g d" 'ch/magit-split-and-diff-buffer)))
 #+end_src
 
+By defaults, diffs in ~magit~ don't have any syntax-highlighting, which is sad. Thankfully,
+[[https://github.com/dandavison/magit-delta][magit-delta]] exists.
+
+#+begin_src emacs-lisp :tangle "packages.el"
+;; (package! magit-delta :pin "b8526f890415374822514e488341d2b706d6bc2f")
+#+end_src
+
+#+begin_src emacs-lisp
+;; (add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1)))
+#+end_src
+
+#+begin_comment
+Unfortunately, the package makes ~magit~ super slow, so it's not an option (yet).
+#+end_comment
+
 ** authinfo
 
 I have all my information stored in ~authinfo.gpg~, and use the following function to easily
@@ -1115,6 +1103,38 @@ We can now retrieve this address using the ~ch/find-auth-field~ function like so
 
 #+begin_src emacs-lisp :tangle no :eval no
 (user-mail-address . ,(ch/find-auth-field "prv" :user))
+#+end_src
+
+** Docker
+
+The default Dockerfile template is a bit outdated.
+
+#+begin_src emacs-lisp
+(after! dockerfile-mode
+  (set-file-template! 'dockerfile-mode
+    :trigger "dockerfile-template"))
+#+end_src
+
+** Writing systemd files
+
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! systemd)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! systemd
+  :mode "\\.service|\\.timer|\\.slice")
+#+end_src
+
+** Writing Archlinux PKGBUILDs
+
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! pkgbuild-mode)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! pkgbuild-mode
+  :mode "\\PKGBUILD")
 #+end_src
 
 * Applications
@@ -1355,7 +1375,7 @@ Finally, let's create some keybindings for the all the stuff above.
 For the times I do use it though, let's configure a couple of things.
 
 + Decrease the ~treemacs~ buffer's width (default value is =35=).
-+ In [[*Evil-mode keybindings][Evil-mode keybindings]], I've set =M-h=, =M-l= etc., to move between windows. This
++ In [[*Evil-mode][Evil-mode]], I've set =M-h=, =M-l= etc., to move between windows. This
   won't work in ~treemacs~ unless we create some new bindings for ~evil-treemacs-state~.
 
 #+begin_src emacs-lisp
@@ -1494,6 +1514,28 @@ See [[*Custom URL handling][Custom URL handling]] for how this is actually used.
 
 * Org-mode
 
+** System configuration
+
+Org mode isn't recognized as a =mime= type by default, but that's easy to fix.
+Creating a file with the following code either in =~/.local/share/mime/packages/org.xml=
+(user installation) or =/usr/share/mime/packages/org.xml= (system-wide installation).
+
+#+begin_src conf :tangle no
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+  <mime-type type="text/org">
+    <comment>Emacs Org-mode File</comment>
+    <glob pattern="*.org"/>
+    <alias type="text/org"/>
+  </mime-type>
+</mime-info>
+#+end_src
+
+Now, let's make Emacs the default application to handle Org files.
+#+begin_src shell :eval no :async yes :tangle no
+xdg-mime default emacs.desktop text/org
+#+end_src
+
 ** Functions
 
 #+begin_src emacs-lisp :tangle "autoload.el"
@@ -1565,13 +1607,302 @@ it. Let's create a function that will archive all tasks marked as "DONE" or "CAN
   (save-buffer))
 #+end_src
 
+** Experimental org-mode branch
+
+As you may have experienced, working with large Org files can be a painful experience.
+There is [[https://github.com/yantar92/org][this experimental branch]] for org-mode that aims to improve performance in large
+files. According to this [[https://www.reddit.com/r/orgmode/comments/k6f5fx/ann_experimental_orgmode_branch_improving/][Reddit thread]], it seems to do a pretty good job.
+
+Let's give it a shot. Both the Reddit thread and the Github repository contain a snippet
+to easily install this branch on Doom Emacs.
+
+#+begin_src emacs-lisp :tangle "packages.el"
+;; (package! org-mode
+;;   :recipe (:host github
+;;            :repo "yantar92/org"
+;;            :branch "feature/org-fold"
+;;            :files ("*.el" "lisp/*.el" "contrib/lisp/*.el")
+;;            :build (with-temp-file (expand-file-name "org-version.el" (straight--repos-dir "org"))
+;;                     (insert "(fset 'org-release (lambda () \"9.5\"))\n"
+;;                             "(fset 'org-git-version #'ignore)\n"
+;;                             "(provide 'org-version)\n")))
+;;   :pin "ac4874e39e7b2239857410a279e24ae3dcf482ea"
+;;   :shadow 'org)
+#+end_src
+
+#+begin_comment
+While this branch does actually offer an improvement, there are some frustrating bugs with
+org-fold and invisible edit. Till those are ironed out, stick to the regular branch.
+#+end_comment
+
+
+** Base org-mode configuration
+
+The locations for the following directories must be specified as early as possible,
+otherwise a bunch of errors popup.
+
+#+begin_src emacs-lisp
+(setq-default org-directory "~/Documents/Syncthing/Org/")
+
+(setq org-roam-directory "~/Documents/Syncthing/Org/roam/")
+
+(setq org-archive-location
+      (concat (ch/org-file-path "archive.org") "::* From %s"))
+#+end_src
+
+These are way too many to explain them all, so let Emacs do it's magic (=C-h v=).
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-list-allow-alphabetical t
+        org-use-property-inheritance t)
+
+  ;; Place a blank line before a new heading or list item.
+  org-blank-before-new-entry (quote ((heading) (plain-list-item)))
+
+  (setq org-startup-indented t
+        org-startup-with-latex-preview t
+        org-startup-with-inline-images nil
+        org-startup-folded 'content)
+
+  (setq org-modules '(org-crypt org-habit))
+
+  (setq org-crypt-disable-auto-save t
+        org-crypt-key "368B9A157C040EEC885FFFB1DB7099D407ECC1B7")
+
+  (setq org-fontify-whole-heading-line nil
+        org-highlight-latex-and-related nil
+        org-hide-leading-stars nil))
+#+end_src
+
+When evaluating/exporting code blocks, I usually prefer the following header-arguments.
+Make sure to read the official [[https://orgmode.org/manual/Working-with-Source-Code.html#Working-with-Source-Code][Working with Source Code]] documentation for explanations.
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-babel-default-header-args
+        '((:session . "none")
+          (:results . "output verbatim replace")
+          (:exports . "code")
+          (:cache . "no")
+          (:noweb . "no")
+          (:hlines . "no")
+          (:tangle . "no")
+          (:comments . "no")))
+#+end_src
+
+These options can be easily overwritten for a whole file by adding a
+=#+PROPERTY: header-args :<option> <value>= in the document's preamble.
+
+#+begin_example
+#+PROPERTY: header-args :results silent
+#+end_example
+
+
+*** "TODO" keywords
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n!)" "WIP(w)" "SOMEDAY(s)" "HOLD(h!)" "|" "DONE(d!)" "CANCELLLED(c@/!)")))
+  (setq org-todo-keyword-faces
+        '(("TODO" :foreground "OrangeRed" :weight bold :underline t :overline t)
+          ("NEXT" :foreground "spring green" :weight bold :underline t :overline t)
+          ("SOMEDAY" :foreground "coral" :weight bold)
+          ("HOLD" :foreground "DeepPink" :weight bold)
+          ("WIP" :foreground "DarkCyan" :weight bold)
+          ("DONE" :foreground "slategrey" :weight bold :strike-through t)
+          ("CANCELLED" :foreground "red2" :weight bold :strike-through t))))
+#+end_src
+
+*** Logging and drawers
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-log-into-drawer t
+        org-log-done 'time
+        org-log-repeat 'time
+        org-log-redeadline 'note
+        org-log-reschedule 'note))
+#+end_src
+
+*** Tags
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-tag-alist
+        '(("@uni"         . ?u)
+          ("study"            )
+          ("lab"              )
+          ("course"           )
+          ("assignment"       )
+          ("exam"             )
+          ("@personal"    . ?p)
+          ("health"           )
+          ("coding"           )
+          ("brainstorming"    )
+          ("goal"             )
+          ("learn"            )
+          ("@read"        . ?r)
+          ("@appointment" . ?i)
+          ("@project"     . ?P)
+          ("@note"        . ?n))))
+#+end_src
+
+*** Refiling
+
+Make refile work across all ~agenda-files~.
+#+begin_src emacs-lisp
+(after! org
+  (setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                   (org-agenda-files :maxlevel . 9)))
+        org-refile-use-outline-path t
+        org-outline-path-complete-in-steps t
+        org-refile-allow-creating-parent-nodes 'confirm))
+#+end_src
+
+*** Handling mime types
+
+#+begin_src emacs-lisp
+(after! org
+  (add-hook 'org-mode-hook
+            '(lambda ()
+               (setq org-file-apps
+                     '((auto-mode . emacs)
+                       ("\\.mm\\'"      . default)
+                       ("\\.png\\'"     . "eog %s")
+                       ("\\.jpg\\'"     . "eog %s")
+                       ("\\.jpeg\\'"    . "eog %s")
+                       ("\\.mp4\\'"     . "mpv %s")
+                       ("\\.x?html?\\'" . firefox))))))
+#+end_src
+
+** Look and feel
+
+#+begin_src emacs-lisp
+(after! org
+  ;; Cooler ellipsis
+  (setq org-ellipsis " ▼"
+        org-hide-emphasis-markers t))
+#+end_src
+
+*** Fancier Org bullets with org-superstar
+
+[[https://github.com/integral-dw/org-superstar-mode][org-superstar-mode]] makes org-mode heading stars and list items appear nice and modern.
+Once again, Doom provides a module for this (=org +pretty=), but it also enables
+~org-fancy-priorities~, which I do not want. Instead of disabling packages etc., let's
+install ~org-superstar~ from scratch.
+
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! org-superstar :pin "7f83636db215bf5a10edbfdf11d12a132864a914")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! org-superstar
+  :after org
+  :hook (org-mode . org-superstar-mode)
+  :init
+  :config
+  ;; Make leading stars truly invisible, by rendering them as spaces!
+  (setq org-superstar-leading-bullet ?\s
+        org-superstar-leading-fallback ?\s
+        org-superstar-remove-leading-stars nil
+        org-superstar-todo-bullet-alist
+        '(("TODO" . 9744)
+          ("[ ]"  . 9744)
+          ("DONE" . 9745)
+          ("[X]"  . 9745))))
+#+end_src
+
+*** Custom faces for Org headings
+
+I would like headings to be a little bigger, and use a different font that the rest of
+the text.
+
+#+begin_src emacs-lisp
+(after! org
+  (custom-set-faces!
+    '(org-document-title :height 1.5))
+  (dolist (face '((org-level-1 . 1.2)
+                  (org-level-2 . 1.1)
+                  (org-level-3 . 1.05)
+                  (org-level-4 . 1.0)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.1)
+                  (org-level-7 . 1.1)
+                  (org-level-8 . 1.1)))
+    (set-face-attribute (car face) nil :font "Hack" :weight 'bold :height (cdr face))))
+#+end_src
+** Extra functionality
+
+*** org-protocol
+
+[[https://github.com/alphapapa/org-protocol-capture-html][org-protocol-capture-html]] allows us to easily capture HTML from the browser. The package
+is not in MELPA, but we can easily install it using =straight recipes=.
+
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! org-protocol-capture-html
+  :recipe (:host github :repo "alphapapa/org-protocol-capture-html")
+  :pin "3359ce9a2f3b48df26329adaee0c4710b1024250")
+#+end_src
+
+Now, let's also /register/ org-protocol. The recommended method of doing that is to create
+a desktop file.
+
+#+begin_src conf :tangle no
+[Desktop Entry]
+Name=Org-Protocol
+Exec=emacsclient %u
+Icon=emacs-icon
+Type=Application
+Terminal=false
+MimeType=x-scheme-handler/org-protocol
+#+end_src
+
+Finally, to associate =org-protocol://= links with the above desktop file:
+
+#+begin_src shell :eval no :async yes :tangle no
+xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
+#+end_src
+
+*** org-wild-notifier
+
+Notifications for upcoming events.
+*TODO*: Try [[https://github.com/legalnonsense/org-timed-alerts][org-timed-alerts.]]
+
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! org-wild-notifier)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! org-wild-notifier
+  :after org
+  :config
+  (setq org-wild-notifier-alert-time 15
+        org-wild-notifier-keyword-whitelist '("TODO", "WIP")
+        alert-default-style 'libnotify)
+  (add-hook 'org-mode-hook #'org-wild-notifier-mode))
+#+end_src
+
+*** deft
+
+#+begin_src emacs-lisp
+(after! deft
+  (setq deft-directory "~/Documents/Syncthing/Org/roam/"
+        deft-auto-save-interval 0
+        deft-recursive t
+        deft-current-sort-method 'title
+        deft-extensions '("md" "txt" "org")
+        deft-use-filename-as-title nil))
+#+end_src
+
 *** Custom URL handling
 
 I would also like to re-define the built-in ~+org/dwim-at-point~ and ~org-open-at-point~
 functions in a way that, if the /thing at-point/ is a link, it (optionally) uses my
 ~ch/firefox-incognito~ function we defined in [[*Toggle incognito mode for Firefox][Toggle incognito mode for Firefox]] to open it.
-This way, we can call the function with an argument (~C-u~), and the URL will be opened
-in an incognito window.
+This way, we can call the function with the universal-argument (~C-u~), and the URL will
+be opened in an incognito window.
 
 #+begin_src emacs-lisp :tangle "autoload.el" :results silent
 ;;;###autoload
@@ -1715,342 +2046,13 @@ If on a:
           (org-element-property :end context)))))))
 #+end_src
 
-** Use experimental org-mode branch for large files
-
-As you may have experienced, working with large Org files can be a painful experience.
-There is [[https://github.com/yantar92/org][this experimental branch]] for org-mode that aims to improve performance in large
-files. According to this [[https://www.reddit.com/r/orgmode/comments/k6f5fx/ann_experimental_orgmode_branch_improving/][Reddit thread]], it seems to do a pretty good job.
-
-Let's give it a shot. Both the Reddit thread and the Github repository contain a snippet
-to easily install this branch on Doom Emacs.
-
-#+begin_src emacs-lisp :tangle "packages.el"
-(package! org-mode
-  :recipe (:host github
-           :repo "yantar92/org"
-           :branch "feature/org-fold"
-           :files ("*.el" "lisp/*.el" "contrib/lisp/*.el")
-           :build (with-temp-file (expand-file-name "org-version.el" (straight--repos-dir "org"))
-                    (insert "(fset 'org-release (lambda () \"9.5\"))\n"
-                            "(fset 'org-git-version #'ignore)\n"
-                            "(provide 'org-version)\n")))
-  :pin "b0ad4095f1d65224642439822d30b88f566efb92"
-  :shadow 'org)
-#+end_src
-
-** File locations
-
-Don't forget! File locations must be set as early as possible, otherwise, a bunch of errors
-pop up.
-
-#+begin_src emacs-lisp
-(setq-default org-directory "~/Documents/Syncthing/Org/")
-
-(when (featurep! :lang org +roam)
-  (setq org-roam-directory "~/Documents/Syncthing/Org/roam/"))
-
-(setq org-archive-location
-      (concat (ch/org-file-path "archive.org") "::* From %s"))
-#+end_src
-
-** org-protocol
-
-[[https://github.com/alphapapa/org-protocol-capture-html][org-protocol-capture-html]] allows us to easily capture HTML from the browser. The package
-is not in MELPA, but we can easily install it using ~straight recipes~.
-
-#+begin_src emacs-lisp :tangle "packages.el"
-(package! org-protocol-capture-html
-  :recipe (:host github :repo "alphapapa/org-protocol-capture-html")
-  :pin "3359ce9a2f3b48df26329adaee0c4710b1024250")
-#+end_src
-
-** Base org-mode configuration
-
-#+begin_src emacs-lisp
-(after! org
-  ;; Place a blank line before a new heading or list item.
-  org-blank-before-new-entry (quote ((heading) (plain-list-item)))
-
-  ;; Default arguments to use when evaluating a code block.
-  (setq org-babel-default-header-args
-        (cons '(:results . "output verbatim replace")
-              (assq-delete-all :results org-babel-default-header-args))))
-#+end_src
-
-*** Startup
-
-#+begin_src emacs-lisp
-(after! org
-  (setq org-startup-indented t
-        org-startup-with-latex-preview t
-        org-startup-with-inline-images nil
-        org-startup-folded 'content))
-#+end_src
-
-*** Org modules
-
-#+begin_src emacs-lisp
-(after! org
-  (setq org-modules
-        '(org-crypt
-          org-habit))
-
-  (setq org-crypt-disable-auto-save t
-        org-crypt-key "368B9A157C040EEC885FFFB1DB7099D407ECC1B7"))
-#+end_src
-
-*** Improving org-mode's performance
-
-#+begin_src emacs-lisp
-(after! org
-  (setq org-fontify-whole-heading-line nil
-        org-highlight-latex-and-related nil
-        org-hide-leading-stars nil))
-#+end_src
-
-*** Default applications for mime-types
-
-#+begin_src emacs-lisp
-(after! org
-  (add-hook 'org-mode-hook
-            '(lambda ()
-               (setq org-file-apps
-                     '((auto-mode . emacs)
-                       ("\\.mm\\'"      . default)
-                       ("\\.png\\'"     . "eog %s")
-                       ("\\.jpg\\'"     . "eog %s")
-                       ("\\.jpeg\\'"    . "eog %s")
-                       ("\\.mp4\\'"     . "mpv %s")
-                       ("\\.x?html?\\'" . firefox))))))
-#+end_src
-
-*** "TODO" keywords
-
-#+begin_src emacs-lisp
-(after! org
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n!)" "WIP(w)" "SOMEDAY(s)" "HOLD(h!)" "|" "DONE(d!)" "CANCELLLED(c@/!)")))
-  (setq org-todo-keyword-faces
-        '(("TODO" :foreground "OrangeRed" :weight bold :underline t :overline t)
-          ("NEXT" :foreground "spring green" :weight bold :underline t :overline t)
-          ("SOMEDAY" :foreground "coral" :weight bold)
-          ("HOLD" :foreground "DeepPink" :weight bold)
-          ("WIP" :foreground "DarkCyan" :weight bold)
-          ("DONE" :foreground "slategrey" :weight bold :strike-through t)
-          ("CANCELLED" :foreground "red2" :weight bold :strike-through t))))
-#+end_src
-
-*** Logging and drawers
-
-#+begin_src emacs-lisp
-(after! org
-  (setq org-log-into-drawer t
-        org-log-done 'time
-        org-log-repeat 'time
-        org-log-redeadline 'note
-        org-log-reschedule 'note))
-#+end_src
-
-*** Tags
-
-#+begin_src emacs-lisp
-(after! org
-  (setq org-tag-alist
-        '(("@uni"         . ?u)
-          ("study"            )
-          ("lab"              )
-          ("course"           )
-          ("assignment"       )
-          ("exam"             )
-          ("@personal"    . ?p)
-          ("health"           )
-          ("coding"           )
-          ("brainstorming"    )
-          ("goal"             )
-          ("learn"            )
-          ("@read"        . ?r)
-          ("@appointment" . ?i)
-          ("@project"     . ?P)
-          ("@note"        . ?n))))
-#+end_src
-
-*** Refiling
-
-Make refile work across all ~agenda-files~.
-#+begin_src emacs-lisp
-(after! org
-  (setq org-refile-targets (quote ((nil :maxlevel . 9)
-                                   (org-agenda-files :maxlevel . 9)))
-        org-refile-use-outline-path t
-        org-outline-path-complete-in-steps t
-        org-refile-allow-creating-parent-nodes 'confirm))
-#+end_src
-
-*** Exports using LaTeX
-
-~minted~ (~pygments~) allows us to have beautiful syntax highlighting in LaTeX exports.
-~cancel~ is nice to have when writing math equations.
-
-#+begin_src emacs-lisp
-(after! org
-  (add-to-list 'org-latex-packages-alist '("minted" "cancel"))
-  (setq org-latex-listings 'minted
-        org-latex-minted-options
-        '(("mathescape" "true")
-          ("linenos" "true")
-          ("numbersep" "5pt")
-          ("breaklines" "true")
-          ("breakanywhere" "true")
-          ("frame" "lines")))
-  ;; ("framesep" "2mm")))
-  (setq org-latex-pdf-process
-        '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-#+end_src
-
-** org-wild-notifier
-
-Notifications for upcoming events.
-*TODO*: Try [[https://github.com/legalnonsense/org-timed-alerts][org-timed-alerts.]]
-
-#+begin_src emacs-lisp :tangle "packages.el"
-(package! org-wild-notifier)
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! org-wild-notifier
-  :after org
-  :config
-  (setq org-wild-notifier-alert-time 15
-        org-wild-notifier-keyword-whitelist '("TODO", "WIP")
-        alert-default-style 'libnotify)
-  (add-hook 'org-mode-hook #'org-wild-notifier-mode))
-#+end_src
-
-** org-roam
-
-#+begin_src emacs-lisp
-(after! org-roam
-  (add-hook 'org-roam-backlinks-mode-hook #'flyspell-mode-off)
-  (setq +org-roam-open-buffer-on-find-file nil
-        org-roam-tag-sources '(prop all-directories))
-
-  ;; Change the default "daily" org-roam-dailies-capture-template
-  ;; so it: includes the name of the day in the filename and the title.
-  (setq org-roam-dailies-capture-templates
-        '(("d" "daily" plain (function org-roam-capture--get-point) ""
-           :immediate-finish t
-           :file-name "Dailies/%<%A-%Y-%m-%d>"
-           :head "#+TITLE: %<%A %Y-%m-%d>\n#+STARTUP: content\n\n")))
-
-  (setq org-roam-capture-templates
-        '(("f" "Fleeting" plain #'org-roam--capture-get-point "%?"
-           :file-name "Fleeting/%<%Y%m%d>---${slug}"
-           :head "#+title: ${title}\n#+roam_tags:\n\n"
-           :unnarrowed t)
-
-          ("d" "Default" plain #'org-roam-capture--get-point "%?"
-           :file-name "%<%Y%m%d>---${slug}"
-           :head "#+title: ${title}\n#+roam_tags:\n\n"
-           :unnarrowed t)
-
-          ("p" "Project" plain #'org-roam-capture--get-point "%?"
-           :file-name "Projects/%<%Y%m%d>---${slug}"
-           :head "#+title: ${title}\n#+roam_tags:\n\n")))
-  )
-#+end_src
-
-Below is a set of functions that let us create an org-roam note from an org heading.
-The idea/code is taken from https://ag91.github.io/blog/2020/11/12/write-org-roam-notes-via-elisp/.
-
-#+begin_src emacs-lisp :tangle "autoload.el" :results silent
-;;;###autoload
-(defun contrib/make-filepath (title now &optional zone)
-  "Make filename from note TITLE and NOW time (assumed in the current time ZONE)."
-  (concat
-   org-roam-directory
-   (format-time-string "%Y%m%d%H%M%S_" now (or zone (current-time-zone)))
-   (org-roam--title-to-slug title)
-   ".org"))
-
-;;;###autoload
-(defun contrib/insert-org-roam-file (file-path title &optional links sources text quote)
-  "Insert org roam file in FILE-PATH with TITLE, LINKS, SOURCES, TEXT, QUOTE."
-  (with-temp-file file-path
-    (insert
-     "#+TITLE: " title "\n"
-     "\n"
-     "- tags :: " (--reduce (concat acc ", " it) links) "\n"
-     (if sources (concat "- source :: " (--reduce (concat acc ", " it) sources) "\n") "")
-     "\n"
-     (if text text "")
-     "\n"
-     "\n"
-     (if quote
-         (concat "#+begin_src text \n"
-                 quote "\n"
-                 "#+end_src")
-       ""))))
-
-;;;###autoload
-(defun contrib/convert-task-to-org-note ()
-  "Convert a task in a `org-roam' note."
-  (interactive)
-  (let* ((heading (org-get-heading t t t t))
-         (body (org-get-entry))
-         (link (format "[[id:%s][%s]]" (org-id-get-create) heading))
-         (filepath (contrib/make-filepath heading (current-time))))
-    (contrib/insert-org-roam-file
-     filepath
-     heading
-     nil
-     (list link)
-     (format "* Note stored from tasks\n%s" body)
-     nil)
-    (find-file filepath)))
-#+end_src
-
-*** org-roam-server
-
-*Note*: Disabled, for now!
-
-#+begin_src emacs-lisp :tangle "packages.el"
-;; (package! org-roam-server)
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! org-roam-server
-  :disabled t
-  :after org-roam
-  :config
-  (setq org-roam-server-host "127.0.0.1"
-        org-roam-server-port 8088
-        org-roam-server-export-inline-images t
-        org-roam-server-authenticate nil
-        org-roam-server-network-label-truncate t
-        org-roam-server-network-label-truncate-length 60
-        org-roam-server-network-label-wrap-length 20
-        org-roam-server-network-poll t
-        org-roam-server-network-arrows 'from))
-#+end_src
-
-** deft
-
-#+begin_src emacs-lisp
-(after! deft
-  (setq deft-directory "~/Documents/Syncthing/Org/roam/"
-        deft-auto-save-interval 0
-        deft-recursive t
-        deft-current-sort-method 'title
-        deft-extensions '("md" "txt" "org")
-        deft-use-filename-as-title nil))
-#+end_src
-
-** Agenda settings
+** Agenda configuration
 
 #+begin_src emacs-lisp
 (after! org
   (setq org-agenda-files '("~/Documents/Syncthing/Org/index.org"
                            "~/Documents/Syncthing/Org/bookmarks.org"
+                           "~/Documents/Syncthing/Org/projects.org"
                            "~/Documents/Syncthing/Org/roam/")
         org-agenda-dim-blocked-tasks t
         org-agenda-use-time-grid t
@@ -2080,8 +2082,6 @@ The idea/code is taken from https://ag91.github.io/blog/2020/11/12/write-org-roa
         ))
 #+end_src
 
-*** org-super-agenda
-
 The default agenda is nice and all, but [[https://github.com/alphapapa/org-super-agenda][org-super-agenda]] provides a much cleaner agenda,
 with easily defined groups.
 
@@ -2099,7 +2099,7 @@ with easily defined groups.
          "k" 'org-agenda-previous-line)))
 #+end_src
 
-*** Agenda groups
+*** Super agenda groups
 
 #+begin_src emacs-lisp
 (after! org
@@ -2107,7 +2107,9 @@ with easily defined groups.
         '(("o" "Task Overview"
            ((agenda ""
                     ((org-agenda-span 3)
-                     (org-agenda-files (directory-files-recursively org-directory "org$"))))
+                     (org-agenda-files '("~/Documents/Syncthing/Org/index.org"
+                                         "~/Documents/Syncthing/Org/projects.org"
+                                         "~/Documents/Syncthing/Org/roam"))))
             (alltodo ""
                      ((org-agenda-overriding-header "Lens")
                       (org-super-agenda-groups
@@ -2151,7 +2153,8 @@ with easily defined groups.
           ("p" "Projects"
            ((todo ""
                   ((org-agenda-overriding-header "Projects")
-                   (org-agenda-files '("~/Documents/Syncthing/Org/projects.org"))
+                   (org-agenda-files '("~/Documents/Syncthing/Org/projects.org"
+                                       "~/Documents/Syncthing/Org/roam/Projects/"))
                    (org-super-agenda-groups
                     '((:auto-group t)))))
             ))
@@ -2249,6 +2252,159 @@ with easily defined groups.
            :prepend t))))
 #+end_src
 
+** Roam
+
+#+begin_src emacs-lisp
+(after! org-roam
+  (add-hook 'org-roam-backlinks-mode-hook #'flyspell-mode-off)
+  (setq +org-roam-open-buffer-on-find-file t
+        org-roam-tag-sources '(prop all-directories))
+
+  ;; Change the default "daily" org-roam-dailies-capture-template
+  ;; so it: includes the name of the day in the filename and the title.
+  (setq org-roam-dailies-capture-templates
+        '(("d" "daily" plain (function org-roam-capture--get-point) ""
+           :immediate-finish t
+           :file-name "Dailies/%<%A-%Y-%m-%d>"
+           :head "#+TITLE: %<%A %Y-%m-%d>\n#+STARTUP: content\n\n")))
+
+  (setq org-roam-capture-templates
+        '(("f" "Fleeting" plain #'org-roam--capture-get-point "%?"
+           :file-name "Fleeting/%<%Y%m%d>---${slug}"
+           :head "#+title: ${title}\n#+roam_tags:\n\n"
+           :unnarrowed t)
+
+          ("d" "Default" plain #'org-roam-capture--get-point "%?"
+           :file-name "%<%Y%m%d>---${slug}"
+           :head "#+title: ${title}\n#+roam_tags:\n\n"
+           :unnarrowed t)
+
+          ("p" "Project" plain #'org-roam-capture--get-point "%?"
+           :file-name "Projects/%<%Y%m%d>---${slug}"
+           :head "#+title: ${title}\n#+roam_tags:\n\n")))
+  )
+#+end_src
+
+Below is a set of functions that let us create an org-roam note from an org heading.
+The idea/code is taken from https://ag91.github.io/blog/2020/11/12/write-org-roam-notes-via-elisp/.
+
+#+begin_src emacs-lisp :tangle "autoload.el" :results silent
+;;;###autoload
+(defun contrib/make-filepath (title now &optional zone)
+  "Make filename from note TITLE and NOW time (assumed in the current time ZONE)."
+  (concat
+   org-roam-directory
+   (format-time-string "%Y%m%d%H%M%S_" now (or zone (current-time-zone)))
+   (org-roam--title-to-slug title)
+   ".org"))
+
+;;;###autoload
+(defun contrib/insert-org-roam-file (file-path title &optional links sources text quote)
+  "Insert org roam file in FILE-PATH with TITLE, LINKS, SOURCES, TEXT, QUOTE."
+  (with-temp-file file-path
+    (insert
+     "#+TITLE: " title "\n"
+     "\n"
+     "- tags :: " (--reduce (concat acc ", " it) links) "\n"
+     (if sources (concat "- source :: " (--reduce (concat acc ", " it) sources) "\n") "")
+     "\n"
+     (if text text "")
+     "\n"
+     "\n"
+     (if quote
+         (concat "#+begin_src text \n"
+                 quote "\n"
+                 "#+end_src")
+       ""))))
+
+;;;###autoload
+(defun contrib/convert-task-to-org-note ()
+  "Convert a task in a `org-roam' note."
+  (interactive)
+  (let* ((heading (org-get-heading t t t t))
+         (body (org-get-entry))
+         (link (format "[[id:%s][%s]]" (org-id-get-create) heading))
+         (filepath (contrib/make-filepath heading (current-time))))
+    (contrib/insert-org-roam-file
+     filepath
+     heading
+     nil
+     (list link)
+     (format "* Note stored from tasks\n%s" body)
+     nil)
+    (find-file filepath)))
+#+end_src
+
+#+begin_src emacs-lisp :tangle "packages.el"
+;; (package! org-roam-server)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! org-roam-server
+  :disabled t
+  :after org-roam
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 8088
+        org-roam-server-export-inline-images t
+        org-roam-server-authenticate nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows 'from))
+#+end_src
+
+** org-export
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-export-in-background t
+        org-export-headline-levels 5))
+#+end_src
+
+*** Exporting to LaTeX
+
+~minted~ (~pygments~) allows us to have beautiful syntax highlighting in LaTeX exports.
+~cancel~ is nice to have when writing math equations.
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-export-in-background t)
+  (add-to-list 'org-latex-packages-alist '("minted" "cancel"))
+  (setq org-latex-listings 'minted
+        org-latex-minted-options
+        '(("mathescape" "true")
+          ("linenos" "true")
+          ("numbersep" "5pt")
+          ("breaklines" "true")
+          ("breakanywhere" "true")
+          ("tabsize" "4")
+          ("frame" "lines")))
+  (setq org-latex-pdf-process
+        '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")))
+#+end_src
+
+*** Exporting to HTML
+
+***** Make verbatim and code different
+
+Org provides both ~code~ and =verbatim=, so let's use them!
+
+~code~ seems more appropriate for stuff like commands, e.g., ~(message "Hello")~ while
+=verbatim= is more suitable when mentioning keybindings or file system paths, e.g.,
+=$DOOMDIR/config.el=.
+
+#+begin_src emacs-lisp
+(setq org-html-text-markup-alist
+      '((bold . "<b>%s</b>")
+        (code . "<code>%s</code>")
+        (italic . "<i>%s</i>")
+        (strike-through . "<del>%s</del>")
+        (underline . "<span class=\"underline\">%s</span>")
+        (verbatim . "<kbd>%s</kbd>")))
+#+end_src
+
 ** Keybindings
 
 #+begin_src emacs-lisp
@@ -2279,55 +2435,7 @@ with easily defined groups.
         :n "RET" #'ch/org-dwim-at-point)))
 #+end_src
 
-** Custom faces for Org headings
-
-I would like headings to be a little bigger, and use a different font that the rest of
-the text.
-
-#+begin_src emacs-lisp
-(after! org
-  (custom-set-faces!
-    '(org-document-title :height 1.5))
-  (dolist (face '((org-level-1 . 1.2)
-                  (org-level-2 . 1.1)
-                  (org-level-3 . 1.05)
-                  (org-level-4 . 1.0)
-                  (org-level-5 . 1.1)
-                  (org-level-6 . 1.1)
-                  (org-level-7 . 1.1)
-                  (org-level-8 . 1.1)))
-    (set-face-attribute (car face) nil :font "Hack" :weight 'bold :height (cdr face))))
-#+end_src
-** Fancier Org bullets with org-superstar
-
-[[https://github.com/integral-dw/org-superstar-mode][org-superstar-mode]] makes org-mode heading stars and list items appear nice and modern.
-Once again, Doom provides a module for this (=org +pretty=), but it also enables
-~org-fancy-priorities~, which I do not want. Instead of disabling packages etc., let's
-install ~org-superstar~ from scratch.
-
-#+begin_src emacs-lisp :tangle "packages.el"
-(package! org-superstar :pin "7f83636db215bf5a10edbfdf11d12a132864a914")
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! org-superstar
-  :after org
-  :hook (org-mode . org-superstar-mode)
-  :init
-  :config
-  ;; Make leading stars truly invisible, by rendering them as spaces!
-  (setq org-superstar-leading-bullet ?\s
-        org-superstar-leading-fallback ?\s
-        org-hide-leading-stars nil
-        org-superstar-remove-leading-stars nil
-        org-superstar-todo-bullet-alist
-        '(("TODO" . 9744)
-          ("[ ]"  . 9744)
-          ("DONE" . 9745)
-          ("[X]"  . 9745))))
-#+end_src
-
-* Writing prose
+* Prose
 
 ** Distraction-free writing with ~olivetti-mode~
 
@@ -2380,10 +2488,12 @@ compile LaTeX source). Also, some keybindings..
 
 #+begin_src emacs-lisp
 (setq +latex-viewers '(pdf-tools evince zathura)
-      TeX-engine 'xetex)
+      TeX-engine 'xetex
+      TeX-command-extra-options "-shell-escape"
+      TeX-save-query nil)
 
 (after! latex
-  (setq TeX-save-query nil))
+  (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t)))
 
 (map! (:after latex
        (:map LaTeX-mode-map
@@ -2431,7 +2541,7 @@ Then run FUN with ARGS."
 #+end_src
 
 *** Configuration
-* Writing code
+* Code
 
 ** Rust
 
@@ -2455,28 +2565,6 @@ Then run FUN with ARGS."
         flycheck-python-flake8-executable "flake8"))
 #+end_src
 
-** Archlinux PKGBUILDs
-
-#+begin_src emacs-lisp :tangle "packages.el"
-(package! pkgbuild-mode)
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! pkgbuild-mode
-  :mode "\\PKGBUILD")
-#+end_src
-
-** Systemd files
-
-#+begin_src emacs-lisp :tangle "packages.el"
-(package! systemd)
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! systemd
-  :mode "\\.service|\\.timer|\\.slice")
-#+end_src
-
 ** Ansible
 
 Enable ~ansible-mode~ on every YAML file. Whenever I edit a YAML file, its usually for
@@ -2496,27 +2584,59 @@ Let's also enable =evil-mode= and =visual-line-mode= for =ansible-doc-mode=.
   (add-hook 'ansible-doc-module-mode-hook #'visual-line-mode))
 #+end_src
 
-** Docker
+* Misc
 
-The default Dockerfile template is a bit outdated.
+** Emacs daemon mode, via systemd
 
-#+begin_src emacs-lisp
-(after! dockerfile-mode
-  (set-file-template! 'dockerfile-mode
-    :trigger "dockerfile-template"))
+I think managing Emacs server via systemd is much simpler and faster. However, I'd like to
+modify the provided systemd service file.
+
+#+begin_src systemd :tangle no
+[Unit]
+Description=Emacs as a service
+Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/emacs --daemon
+ExecStop=/usr/bin/emacsclient --no-wait --eval "(progn (setq kill-emacs-hook nil) (kill emacs))"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
 #+end_src
 
-* Misc
+** Desktop file for emacsclient
+
+If we want to use ~emacsclient~ as a default application for opening files, we have to
+create a [[https://wiki.archlinux.org/index.php/Desktop_entries][desktop entry]] for it. Emacs28+ comes with a desktop entry for ~emacsclient~, but
+that's not true for previous versions. Let's create one!
+
+#+begin_src conf :tangle no
+[Desktop Entry]
+Name=Emacs (Client)
+GenericName=Text Editor
+Comment=A flexible platform for end-user applications
+MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
+Exec=emacsclient -create-frame --alternate-editor="" --no-wait %F
+Icon=emacs
+Type=Application
+Terminal=false
+Categories=TextEditor;Utility;
+StartupWMClass=Emacs
+Keywords=Text;Editor;
+X-KDE-StartupNotify=false
+#+end_src
 
 ** Emacs startup
 
-Doom defers the loading of many packages, causing some delays when first opening a file,
-or calling a function etc. The reason for this is to speed up the startup (and it works,
-amazingly). However, I think sacrificing a little startup time for a smoother first-use
-experience is preferred.
+I think sacrificing a little startup time for a smoother first-use experience is preferred.
 
 #+begin_src emacs-lisp
-;; (run-hooks 'doom-first-input-hook)
+(when (daemonp)
+  (run-hooks 'doom-first-input-hook
+             'doom-first-buffer-hook
+             'doom-first-file-hook))
 #+end_src
 
 *** Daemon startup
@@ -2527,15 +2647,17 @@ for them later.
 #+begin_src emacs-lisp
 (defun greedy-daemon-startup ()
   (require 'org)
-  (when (require 'mu4e nil t)
-    (setq mu4e-confirm-quit t)
-    (setq +mu4e-lock-greedy t)
-    (setq +mu4e-lock-relaxed t)
-    (+mu4e-lock-add-watcher)
-    (when (+mu4e-lock-available t)
-      (mu4e~start)))
-  (when (require 'elfeed nil t)
-    (run-at-time nil (* 8 60 60) #'elfeed-update)))
+  (require 'org-super-agenda)
+  ;; (when (require 'mu4e nil t)
+  ;;   (setq mu4e-confirm-quit t)
+  ;;   (setq +mu4e-lock-greedy t)
+  ;;   (setq +mu4e-lock-relaxed t)
+  ;;   (+mu4e-lock-add-watcher)
+  ;;   (when (+mu4e-lock-available t)
+  ;;     (mu4e~start)))
+  ;; (when (require 'elfeed nil t)
+  ;;   (run-at-time nil (* 8 60 60) #'elfeed-update))
+  )
 
 (when (daemonp)
   (add-hook 'emacs-startup-hook #'greedy-daemon-startup))
