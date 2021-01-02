@@ -1449,6 +1449,113 @@ Now we can provide a list of files to be ignored.
           "*/_region_.log"
           "*/_region_.tex")))
 #+end_src
+** Eshell
+
+~eshell~ is a shell written in Emacs Lisp. Since ~eshell~ is a shell, and not a terminal emulator,
+it *cannot* run programs that produce a graphical output (e.g., ~htop~). What ~eshell~ offers
+that other shells don't, is seamless integration with the rest of Emacs' capabilities.
+Moreover, since its written in Elisp, it is heavily extensible.
+
+Doom provides a very nice out of the box configuration for ~eshell~, but as per usual, there
+are a couple of things I'd like to change.
+
+*** Base eshell configuration
+
+#+begin_src emacs-lisp
+(after! eshell
+  (setq eshell-cmpl-ignore-case t
+        eshell-glob-case-insensitive t
+        eshell-error-if-no-glob t
+        eshell-scroll-to-bottom-on-input 'all
+        eshell-scroll-to-bottom-on-output 'all
+        eshell-kill-processes-on-exit t
+        eshell-hist-ignoredups t
+        eshell-history-size 10000
+        eshell-buffer-maximum-lines 10000
+        comint-input-ignoredups t))
+#+end_src
+
+*** Eshell enhancements
+
+What got me to try ~eshell~ in the first place, is [[https://www.youtube.com/watch?v=L1f2tulD9N8][this video]] from Protesilaos Stavrou. He
+makes a great showcase about ~eshell~ and also describes his own additions, some of which
+I've stolen.
+
++ ~eshell~ lets you easily redirect a command's output to a buffer by using the syntax:
+   =>>> #<buffer_name>=. Finding and typing the buffer's name is kinda tedious
+   ~contrib/eshell-redirect-to-buffer~ lets you complete the buffer's name a buffer via
+   completion.
+
++ In ~eshell~, you can press =C-c C-r= to go to the first line of the last command's output.
+  =C-u C-c C-r= lets you "narrow" the buffer to that output. This can be very handy when
+  working with large files like logs. Protesilaos has gone a step further and created
+  the ~contrib/eshell-narrow-output-highlight-regexp~ function, that not only narrows the
+  buffer to the last command's output, but also asks for a regexp to be highlighted!
+
++ ~contrib/eshell-complete-history~ lets you pick a command from your history using completion.
+
++ In ~eshell~, typing =cd == will produce a numbered list of the recent visited directories.
+  You can then navigate to a directories by typing =cd -N=, where =N= is the number of the
+  directory in the list. This is nice and all, but what if we used completion?
+  ~contrib/eshell-complete-recent-dirs~ does just that. Also, if this function iss called
+  with the universal argument (=C-u=), the selected directory will be opened in ~dired~.
+
+
+#+begin_src emacs-lisp :tangle "autoload.el"
+;;;###autoload
+(defun contrib/eshell-redirect-to-buffer (buffer)
+  "Complete the syntax for appending Eshell output to BUFFER."
+  (interactive
+   (list (read-buffer "Redirect to buffer: ")))
+  (insert
+   (format " >>> #<%s>" buffer)))
+
+;;;###autoload
+(defun contrib/eshell-narrow-output-highlight-regexp (regexp)
+  "Narrow to last command output and highlight REGEXP."
+  (interactive
+   (list (read-regexp "Regexp to highlight")))
+  (narrow-to-region (eshell-beginning-of-output)
+                    (eshell-end-of-output))
+  (goto-char (point-min))
+  (highlight-regexp regexp 'hi-yellow)
+  (message "Narrowed to last output and highlighted < %s >" regexp))
+
+;;;###autoload
+(defun contrib/eshell-complete-history ()
+  "Insert element from Eshell history using completion."
+  (interactive)
+  (let ((hist (ring-elements eshell-history-ring)))
+    (insert
+     (completing-read "Input from history: " hist nil t))))
+
+(declare-function cl-remove-if-not "cl-seq")
+
+;;;###autoload
+(defun contrib/eshell-complete-recent-dir (&optional arg)
+  "Switch to a recent Eshell directory using completion.
+With optional ARG prefix argument (\\[universal-argument]) also
+open the directory in a `dired' buffer."
+  (interactive "P")
+  (let* ((dirs (ring-elements eshell-last-dir-ring))
+         (dir (completing-read "Switch to recent dir: " dirs nil t)))
+    (insert dir)
+    (eshell-send-input)
+    (when arg
+      (dired dir))))
+#+end_src
+
+*** Keybindings
+
+#+begin_src emacs-lisp
+(after! esh-mode
+  (map! :map eshell-mode-map
+        "C-s" 'isearch-forward
+        :ni "M-r" 'contrib/eshell-complete-history
+        :ni "C-c C->" 'contrib/eshell-redirect-to-buffer
+        :ni "C-c =" 'contrib/eshell-complete-recent-dir
+        :ni "C-c h" 'contrib/eshell-narrow-output-highlight-regexp))
+#+end_src
 
 * Utilities
 
