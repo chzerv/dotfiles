@@ -171,8 +171,8 @@
         +lsp)
 
        :email
-       ;; (mu4e +gmail)
-       notmuch
+       ;;(mu4e +gmail)
+       ;;notmuch
        ;;(wanderlust +gmail)
 
        :app
@@ -183,4 +183,8 @@
 
        :config
        literate
-       (default +bindings +smartparens))
+       (default +bindings +smartparens)
+
+       :private
+       transparency
+       tree-sitter)
