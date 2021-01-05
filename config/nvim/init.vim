@@ -13,7 +13,7 @@
 " | --- 2.6.1  Command Line Auto Completion             |
 " | -- 2.7  Line Specific                               |
 " | -- 2.8  Listchars                                   |
-" | -- 2.9 Netrw                                       |
+" | -- 2.9 Netrw                                        |
 " | -- 2.10 Folding                                     |
 " | -- 2.11 General                                     |
 " | - 3.  Commands                                      |
@@ -70,7 +70,7 @@ if exists(':MatchupReload')
 endif
 
  let g:lightline = {
-            \ 'colorscheme': 'gruvbox',
+            \ 'colorscheme': 'nord',
             \ 'active': {
              \   'left': [ ['mode', 'paste'],
             \             [ 'readonly', 'filename', 'modified' ]],
@@ -97,7 +97,7 @@ let g:nord_italic_comments = 1
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 " set background=dark
-colorscheme gruvbox
+colorscheme nord
 set shortmess+=c    " Suppress messages when reaching end of pummenu.
 set shortmess+=I    " Disable vim intro.
 set cmdheight=2     " Cmd window height.
