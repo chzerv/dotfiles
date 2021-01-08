@@ -18,3 +18,4 @@ elfeed.org
 **/*.sug
 **/lsp.lua
 **/diff-so-fancy
+**/plugins/
