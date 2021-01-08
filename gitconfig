@@ -1,6 +1,6 @@
 [user]
 	email = xrist.zerv@protonmail.com
-	name = Christos Zervakis
+	name = Chris Zervakis
 [alias]
 	co = checkout
 	br = branch
@@ -9,4 +9,12 @@
 [merge]
 	tool = vimdiff
 [core]
-	pager = diff-so-fancy | less --tabs=4 -RFX
+        pager = delta
+
+[delta]
+        plus-color = "#012800"
+        minus-color = "#340001"
+        syntax-theme = Nord
+
+[interactive]
+        diffFilter = delta --color-only
