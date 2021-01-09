@@ -1888,7 +1888,8 @@ Make refile work across all ~agenda-files~.
 (after! org
   ;; Cooler ellipsis
   (setq org-ellipsis " ▼"
-        org-hide-emphasis-markers nil))
+        org-hide-emphasis-markers nil
+        org-pretty-entities-include-sub-superscripts nil))
 #+end_src
 
 *** Fancier Org bullets with org-superstar
