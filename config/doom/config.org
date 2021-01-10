@@ -392,12 +392,9 @@ Finally, some keybindings for easier access to commonly used functions.
 #+begin_src emacs-lisp
 (map! (:after counsel
        (:leader
-        "s R" 'counsel-rg)
-       "s-f" 'counsel-find-file
-       "s-F" 'find-file-other-window
-       "s-d" 'counsel-dired
-       "s-D" 'dired-other-window
-       "s-p" 'counsel-fzf))
+        :desc "Ripgrep"
+        "s R" 'counsel-rg
+        "s-p" 'counsel-fzf)))
 #+end_src
 
 *** Swiper keybindings
@@ -504,6 +501,10 @@ However, some tweaks are needed.
         lazy-count-suffix-format " (%s/%s)"
         isearch-yank-on-move 'shift
         isearch-allow-scroll 'unlimited))
+
+(map! "C-S-s" 'isearch-backward
+      :map isearch-mode-map
+      "C-S-s" 'isearch-repeat-backward)
 #+end_src
 
 ** Search enhancements
@@ -1626,7 +1627,7 @@ Org mode isn't recognized as a =mime= type by default, but that's easy to fix.
 Creating a file with the following code either in =~/.local/share/mime/packages/org.xml=
 (user installation) or =/usr/share/mime/packages/org.xml= (system-wide installation).
 
-#+begin_src conf :tangle no
+#+begin_src conf :tangle no :mkdirp yes
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
   <mime-type type="text/org">
@@ -1955,7 +1956,7 @@ is not in MELPA, but we can easily install it using =straight recipes=.
 Now, let's also /register/ org-protocol. The recommended method of doing that is to create
 a desktop file.
 
-#+begin_src conf :tangle no
+#+begin_src conf :tangle no :mkdirp yes
 [Desktop Entry]
 Name=Org-Protocol
 Exec=emacsclient %u
@@ -2692,12 +2693,31 @@ Let's also enable =evil-mode= and =visual-line-mode= for =ansible-doc-mode=.
 
 * Misc
 
+** Keybindings
+
+This section contains keybindings that I always want active and are independent of any
+packages.
+
+#+begin_src emacs-lisp
+(map! "s-f" 'find-file
+      "s-F" 'find-file-other-window
+      "s-d" 'dired
+      "s-D" 'dired-other-window)
+
+(map! :v [tab] (cmds! (and (bound-and-true-p yas-minor-mode)
+                           (or (eq evil-visual-selection 'line)
+                               (not (memq (char-after) (list ?\( ?\[ ?\{ ?\} ?\] ?\))))))
+                      #'yas-insert-snippet
+                      (fboundp 'evil-jump-item)
+                      #'evil-jump-item))
+#+end_src
+
 ** Emacs daemon mode, via systemd
 
 I think managing Emacs server via systemd is much simpler and faster. However, I'd like to
 modify the provided systemd service file.
 
-#+begin_src systemd :tangle no
+#+begin_src systemd :tangle no :mkdirp yes
 [Unit]
 Description=Emacs as a service
 Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
@@ -2718,7 +2738,7 @@ If we want to use ~emacsclient~ as a default application for opening files, we h
 create a [[https://wiki.archlinux.org/index.php/Desktop_entries][desktop entry]] for it. Emacs28+ comes with a desktop entry for ~emacsclient~, but
 that's not true for previous versions. Let's create one!
 
-#+begin_src conf :tangle no
+#+begin_src conf :tangle no :mkdirp yes
 [Desktop Entry]
 Name=Emacs (Client)
 GenericName=Text Editor
