@@ -1,6 +1,4 @@
 #+TITLE: Doom Emacs Configuration
-#+AUTHOR: 
-#+DATE: 
 #+DESCRIPTION: Personal configuration for Doom Emacs.
 #+STARTUP: overview
 #+PROPERTY: header-args :results silent
@@ -443,7 +441,7 @@ Let's create a function and a hook to fix this issue.
 Having a permanently visible imenu index instead of the completion can be useful at times.
 [[https://github.com/bmag/imenu-list][imenu-list]] provides a nice sidebar with the contents of ~imenu~'s index.
 
-#+begin_src emacs-lisp :tangle "packages.el" 
+#+begin_src emacs-lisp :tangle "packages.el"
 (package! imenu-list)
 #+end_src
 
@@ -1135,6 +1133,17 @@ The default Dockerfile template is a bit outdated.
 #+begin_src emacs-lisp
 (use-package! pkgbuild-mode
   :mode "\\PKGBUILD")
+#+end_src
+
+** Colored man pages
+
+Reading man pages inside emacs can be extremely handy, but I'd like to add some color to
+them. [[https://emacs.stackexchange.com/questions/14245/is-there-a-way-to-view-the-man-pages-in-color-in-emacs][StackExchange]] to the rescue.
+
+#+begin_src emacs-lisp
+(after! man
+  (set-face-attribute 'Man-overstrike nil :inherit font-lock-type-face :bold t)
+  (set-face-attribute 'Man-underline nil :inherit font-lock-keyword-face :underline t))
 #+end_src
 
 * Applications
