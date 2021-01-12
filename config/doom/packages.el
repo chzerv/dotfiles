@@ -29,10 +29,6 @@
 
 (package! dired-narrow)
 
-(package! peep-dired)
-
-(package! dired-du)
-
 (package! ace-window)
 
 (package! highlight-indent-guides :pin "cf352c85cd15dd18aa096ba9d9ab9b7ab493e8f6")
@@ -42,18 +38,6 @@
 (package! systemd)
 
 (package! pkgbuild-mode)
-
-;; (package! org-mode
-;;   :recipe (:host github
-;;            :repo "yantar92/org"
-;;            :branch "feature/org-fold"
-;;            :files ("*.el" "lisp/*.el" "contrib/lisp/*.el")
-;;            :build (with-temp-file (expand-file-name "org-version.el" (straight--repos-dir "org"))
-;;                     (insert "(fset 'org-release (lambda () \"9.5\"))\n"
-;;                             "(fset 'org-git-version #'ignore)\n"
-;;                             "(provide 'org-version)\n")))
-;;   :pin "ac4874e39e7b2239857410a279e24ae3dcf482ea"
-;;   :shadow 'org)
 
 (package! org-superstar :pin "7f83636db215bf5a10edbfdf11d12a132864a914")
 

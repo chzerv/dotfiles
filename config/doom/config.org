@@ -104,17 +104,6 @@ I usually maximize the frame right after opening Emacs. Let's have that happen b
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
-** Scrolling
-
-Page scrolling should keep the point at the same visual position, rather than force it
-to the top or bottom of the viewport.
-
-#+begin_src emacs-lisp
-(setq-default scroll-preserve-screen-position t
-              scroll-conservatively 1
-              scroll-margin 0)
-#+end_src
-
 ** Theme
 
 I switch between themes more frequently than I would like to. Some of my favorites are:
@@ -243,8 +232,6 @@ A couple of things I would to change from the default configuration.
   ~evil-move-cursor-back~ to ~nil~ "fixes" that.
 
 + When I split a window, I usually want to move to that new split.
-
-+ While in /insert mode/, all changes are considered one big blog. Be more granular.
 
 + Use Emacs keybindings in ~dired~.
 
@@ -623,7 +610,6 @@ mime-types, when opening them from inside ~dired~.
 (package! dired-open)
 #+end_src
 
-
 #+begin_src emacs-lisp
 (use-package! dired-open
   :after (dired)
@@ -680,40 +666,6 @@ when browsing large directories.
         "C-c /" 'dired-narrow-regexp))
 #+end_src
 
-*** peep-dired
-
-~peep-dired~ provides file previews
-
-#+begin_src emacs-lisp :tangle "packages.el"
-(package! peep-dired)
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! peep-dired
-  :after dired
-  :config
-  (setq peep-dired-cleanup-on-disable t
-        peep-dired-cleanup-eagerly t
-        peep-dired-enable-on-directories nil
-        peep-dired-ignored-extensions
-        '("mkv" "webm" "mp4" "mp3" "ogg" "iso"))
-  (map! :map dired-mode-map
-        "P" 'peep-dired))
-#+end_src
-*** dired-du
-
-Check directory size, inside dired.
-
-#+begin_src emacs-lisp :tangle "packages.el"
-(package! dired-du)
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! dired-du
-  :after dired
-  :commands dired-du-mode)
-#+end_src
-
 ** Key bindings
 
 #+begin_src emacs-lisp
@@ -733,24 +685,6 @@ Check directory size, inside dired.
       "M-RET" 'dired-display-file)
 #+end_src
 * Buffer management
-
-** ibuffer (dired-like buffer management tool)
-
-;; TODO: Try out ~buffler~.
-
-#+begin_src emacs-lisp
-(after! ibuffer
-  (setq ibuffer-display-summary nil)
-  (setq ibuffer-formats
-        '((mark modified read-only locked " "
-                (name 30 30 :left :elide)
-                " "
-                (mode 16 16 :left :elide)
-                " " filename-and-process)
-          (mark " "
-                (name 16 -1)
-                " " filename))))
-#+end_src
 
 ** Buffer cleanup
 
@@ -876,28 +810,6 @@ There is this [[https://dougie.io/emacs/indentation/#functions-for-enablingdisab
               tab-width 4)                ;; Use 4 spaces/TAB
 #+end_src
 
-*** Identify Spaces and TABs
-
-As per the article, having a way to identify spaces and tabs is important.
-
-#+begin_src emacs-lisp
-(setq whitespace-style '(face tabs tab-mark trailing))
-
-(custom-set-faces
- '(whitespace-tab ((t (:foreground "#636363")))))
-
-(setq whitespace-display-mappings
-      '((tab-mark 9 [124 9] [92 9])))
-
-(setq whitespace-display-mappings
-      ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
-      '(
-        (space-mark 32 [183] [46])    ;; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
-        (newline-mark 10 [182 10])    ;; LINE FEED,
-        (tab-mark 9 [9655 9] [92 9])  ;; tab
-        ))
-#+end_src
-
 *** Untabifying behavior
 
 By default, when deleting a TAB, Emacs will first turn the TAB to many spaces and then
@@ -970,7 +882,7 @@ and Greek, so this functionality is just perfect.
 #+begin_src emacs-lisp
 (after! ispell
   (setq ispell-program-name "hunspell"
-        ispell-dictionary "en_US,el_GR")
+        ispell-dictionary "en_US")
   (ispell-set-spellchecker-params)
   (ispell-hunspell-add-multi-dic "en_US,el_GR"))
 #+end_src
@@ -1724,34 +1636,6 @@ it. Let's create a function that will archive all tasks marked as "DONE" or "CAN
   (save-buffer))
 #+end_src
 
-** Experimental org-mode branch
-
-As you may have experienced, working with large Org files can be a painful experience.
-There is [[https://github.com/yantar92/org][this experimental branch]] for org-mode that aims to improve performance in large
-files. According to this [[https://www.reddit.com/r/orgmode/comments/k6f5fx/ann_experimental_orgmode_branch_improving/][Reddit thread]], it seems to do a pretty good job.
-
-Let's give it a shot. Both the Reddit thread and the Github repository contain a snippet
-to easily install this branch on Doom Emacs.
-
-#+begin_src emacs-lisp :tangle "packages.el"
-;; (package! org-mode
-;;   :recipe (:host github
-;;            :repo "yantar92/org"
-;;            :branch "feature/org-fold"
-;;            :files ("*.el" "lisp/*.el" "contrib/lisp/*.el")
-;;            :build (with-temp-file (expand-file-name "org-version.el" (straight--repos-dir "org"))
-;;                     (insert "(fset 'org-release (lambda () \"9.5\"))\n"
-;;                             "(fset 'org-git-version #'ignore)\n"
-;;                             "(provide 'org-version)\n")))
-;;   :pin "ac4874e39e7b2239857410a279e24ae3dcf482ea"
-;;   :shadow 'org)
-#+end_src
-
-#+begin_comment
-While this branch does actually offer an improvement, there are some frustrating bugs with
-org-fold and invisible edit. Till those are ironed out, stick to the regular branch.
-#+end_comment
-
 ** Base org-mode configuration
 
 The locations for the following directories must be specified as early as possible,
@@ -1773,9 +1657,6 @@ These are way too many to explain them all, so let Emacs do it's magic (=C-h v=)
   (setq org-list-allow-alphabetical t
         org-use-property-inheritance t)
 
-  ;; Place a blank line before a new heading or list item.
-  org-blank-before-new-entry (quote ((heading) (plain-list-item)))
-
   (setq org-startup-indented t
         org-startup-with-latex-preview t
         org-startup-with-inline-images nil
@@ -1784,11 +1665,7 @@ These are way too many to explain them all, so let Emacs do it's magic (=C-h v=)
   (setq org-modules '(org-crypt org-habit))
 
   (setq org-crypt-disable-auto-save t
-        org-crypt-key "368B9A157C040EEC885FFFB1DB7099D407ECC1B7")
-
-  (setq org-fontify-whole-heading-line nil
-        org-highlight-latex-and-related nil
-        org-hide-leading-stars t))
+        org-crypt-key "368B9A157C040EEC885FFFB1DB7099D407ECC1B7"))
 #+end_src
 
 When evaluating/exporting code blocks, I usually prefer the following header-arguments.
@@ -1881,16 +1758,14 @@ Make refile work across all ~agenda-files~.
 
 #+begin_src emacs-lisp
 (after! org
-  (add-hook 'org-mode-hook
-            '(lambda ()
-               (setq org-file-apps
-                     '((auto-mode . emacs)
-                       ("\\.mm\\'"      . default)
-                       ("\\.png\\'"     . "eog %s")
-                       ("\\.jpg\\'"     . "eog %s")
-                       ("\\.jpeg\\'"    . "eog %s")
-                       ("\\.mp4\\'"     . "mpv %s")
-                       ("\\.x?html?\\'" . firefox))))))
+  (setq org-file-apps
+        '((auto-mode . emacs)
+          ("\\.mm\\'"      . default)
+          ("\\.png\\'"     . "eog %s")
+          ("\\.jpg\\'"     . "eog %s")
+          ("\\.jpeg\\'"    . "eog %s")
+          ("\\.mp4\\'"     . "mpv %s")
+          ("\\.x?html?\\'" . firefox))))
 #+end_src
 
 ** Look and feel
@@ -1931,24 +1806,6 @@ install ~org-superstar~ from scratch.
           ("[X]"  . 9745))))
 #+end_src
 
-*** Custom faces for Org headings
-
-I would like headings to be a little bigger, and use a different font that the rest of
-the text.
-
-#+begin_src emacs-lisp
-(after! org
-  (dolist (face '((org-document-title . 1.6)
-                  (org-level-1        . 1.25)
-                  (org-level-2        . 1.15)
-                  (org-level-3        . 1.10)
-                  (org-level-4        . 1.05)
-                  (org-level-5        . 1.05)
-                  (org-level-6        . 1.05)
-                  (org-level-7        . 1.05)
-                  (org-level-8        . 1.05)))
-    (set-face-attribute (car face) nil :font "Hack" :weight 'bold :height (cdr face))))
-#+end_src
 ** Extra functionality
 
 *** org-protocol
@@ -2368,7 +2225,7 @@ with easily defined groups.
            :prepend t))))
 #+end_src
 
-** Roam
+** Org-roam
 
 #+begin_src emacs-lisp
 (after! org-roam
