@@ -1938,16 +1938,15 @@ the text.
 
 #+begin_src emacs-lisp
 (after! org
-  (custom-set-faces!
-    '(org-document-title :height 1.5))
-  (dolist (face '((org-level-1 . 1.2)
-                  (org-level-2 . 1.1)
-                  (org-level-3 . 1.05)
-                  (org-level-4 . 1.0)
-                  (org-level-5 . 1.1)
-                  (org-level-6 . 1.1)
-                  (org-level-7 . 1.1)
-                  (org-level-8 . 1.1)))
+  (dolist (face '((org-document-title . 1.6)
+                  (org-level-1        . 1.25)
+                  (org-level-2        . 1.15)
+                  (org-level-3        . 1.10)
+                  (org-level-4        . 1.05)
+                  (org-level-5        . 1.05)
+                  (org-level-6        . 1.05)
+                  (org-level-7        . 1.05)
+                  (org-level-8        . 1.05)))
     (set-face-attribute (car face) nil :font "Hack" :weight 'bold :height (cdr face))))
 #+end_src
 ** Extra functionality
