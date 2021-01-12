@@ -298,7 +298,7 @@ Finally, use =j/k= instead of =gj/gk= to move between visual lines.
 
 #+begin_src emacs-lisp
 (after! company
-  (setq company-idle-delay 0.3
+  (setq company-idle-delay 0.5
         company-global-modes '(not shell-mode)
         company-minimum-prefix-length 1
         company-tooltip-align-annotations t
@@ -2226,7 +2226,7 @@ with easily defined groups.
                     ((org-agenda-span 3)
                      (org-agenda-files '("~/Documents/Syncthing/Org/index.org"
                                          "~/Documents/Syncthing/Org/projects.org"
-                                         "~/Documents/Syncthing/Org/roam"))))
+                                         "~/Documents/Syncthing/Org/roam/"))))
             (alltodo ""
                      ((org-agenda-overriding-header "Lens")
                       (org-super-agenda-groups

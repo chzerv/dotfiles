@@ -2,7 +2,7 @@
 # name: Dockerfile template
 # key: dockerfile-template
 # --
-FROM ${1:image}/${2:latest}
+FROM ${1:image}:${2:latest}
 LABEL maintainer "Xristos Zervakis"
 
 $0
