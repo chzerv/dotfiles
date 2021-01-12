@@ -943,6 +943,7 @@ I stole the terminal part from Doom).
 #+begin_src emacs-lisp
 (add-to-list 'auto-mode-alist '("\\.cheat\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\zshenv" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.hook$" . conf-mode))
 #+end_src
 
 * Productivity enhancements
