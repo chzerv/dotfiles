@@ -1478,6 +1478,35 @@ open the directory in a `dired' buffer."
         :ni "C-c =" 'contrib/eshell-complete-recent-dir
         :ni "C-c h" 'contrib/eshell-narrow-output-highlight-regexp))
 #+end_src
+** vterm
+
+[[https://github.com/akermu/emacs-libvterm][emacs-libvterm]] is a fully fledged terminal emulator inside Emacs, based on ~libvterm~.
+In contrast to ~eshell~, it can handle graphical output.
+
+Doom comes with a very nice out of the box configuration, so there is not much to be added,
+except this one small function.
+
+~ch/vterm-in-project~ opens a ~vterm~ buffer with the current project's root as the working
+directory.
+
+#+begin_src emacs-lisp :tangle "autoload.el"
+;;;###autoload
+(defun ch/vterm-in-project ()
+  (interactive)
+  (let ((buffer-name (concat "*vterm-" (projectile-project-name) "*")))
+    (if (get-buffer buffer-name)
+        (switch-to-buffer buffer-name)
+      (let ((default-directory (projectile-project-root)))
+        (vterm buffer-name)))))
+#+end_src
+
+Of course, a binding is necessary.
+
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Open vterm"
+      "p v" 'ch/vterm-in-project)
+#+end_src
 
 * Utilities
 
