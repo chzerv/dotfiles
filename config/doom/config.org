@@ -1614,7 +1614,9 @@ xdg-mime default emacs.desktop text/org
 (defun ch/org-search-and-narrow-buffer-headlines ()
   "Goto org headling and narrow it."
   (interactive)
-  (counsel-org-goto)
+  (if (featurep! +ivy)
+      (counsel-org-goto)
+    (consult-outline))
   (org-narrow-to-subtree)
   (org-show-entry))
 
