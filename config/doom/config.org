@@ -382,7 +382,7 @@ Finally, some keybindings for easier access to commonly used functions.
         "s-p" 'counsel-fzf)))
 #+end_src
 
-*** Swiper keybindings
+*** Keybindings for swiper
 
 Kinda odd that these don't exist by default.
 
@@ -666,7 +666,7 @@ when browsing large directories.
         "C-c /" 'dired-narrow-regexp))
 #+end_src
 
-** Key bindings
+** Keybindings for dired
 
 #+begin_src emacs-lisp
 (map! :after dired
@@ -1254,7 +1254,7 @@ browser defined by `browse-url-generic-program'."
       (forward-line))))
 #+end_src
 
-*** Keybindings
+*** Keybindings for elfeed
 
 Finally, let's create some keybindings for the all the stuff above.
 
@@ -1467,7 +1467,7 @@ open the directory in a `dired' buffer."
       (dired dir))))
 #+end_src
 
-*** Keybindings
+*** Keybindings for eshell
 
 #+begin_src emacs-lisp
 (after! esh-mode
@@ -2409,7 +2409,7 @@ Org provides both ~code~ and =verbatim=, so let's use them!
         (verbatim . "<kbd>%s</kbd>")))
 #+end_src
 
-** Keybindings
+** Keybindings for org-mode
 
 #+begin_src emacs-lisp
 (map! (:after org
@@ -2590,7 +2590,7 @@ Let's also enable =evil-mode= and =visual-line-mode= for =ansible-doc-mode=.
 
 * Misc
 
-** Keybindings
+** Generic keybindings
 
 This section contains keybindings that I always want active and are independent of any
 packages.
