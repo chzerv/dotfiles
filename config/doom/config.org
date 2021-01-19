@@ -279,6 +279,22 @@ Finally, use =j/k= instead of =gj/gk= to move between visual lines.
         "k" 'evil-previous-visual-line)))
 #+end_src
 
+** Generic advices
+
+When jumping between org-mode headings and git hunks, I would like the buffer to recenter.
+This can be easily done with an =advice=.
+
+#+begin_src emacs-lisp
+(defadvice! ch--recenter-after-jump (&rest _args)
+  "Recenter after jumps"
+  :after '(org-next-visible-heading
+           org-previous-visible-heading
+           git-gutter:next-hunk
+           git-gutter:previous-hunk)
+  (when (get-buffer-window)
+    (recenter)))
+#+end_src
+
 * Completion and searching
 
 ** Text completion with company
