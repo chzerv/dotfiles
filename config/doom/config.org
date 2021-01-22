@@ -12,9 +12,12 @@ This is my personal [[https://en.wikipedia.org/wiki/Literate_programming][litera
 
 ** Why is there an =;;;###autoload= on top of =defun= calls?
 
-You can read more information on this on [[https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#autoloadel-or-autoloadel][Doom's Getting Started page]]. *Note* that the
-source blocks which contain these functions are tangled into a different file,
-=autoload.el=.
+You can find more information on this on [[https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#autoloadel-or-autoloadel][Doom's Getting Started page]].
+
+#+begin_quote
+*Note* that the source blocks which contain these functions are tangled into a different
+file, =autoload.el=.
+#+end_quote
 
 ** Symbol name prefixes
 
@@ -46,11 +49,10 @@ all, but I'll mention them anyway:
 Doom's packaging system dictates that package management should be done in the
 =$DOOMDIR/packages.el= file, using the ~package!~ macro.
 
-
-#+begin_comment
+#+begin_quote
 *Note* that every source block with a ~(package! ...)~, ~pin!~ or ~unpin!~ call is tangled
 to the =packages.el= file!
-#+end_comment
+#+end_quote
 
 First of all, let's ensure that =byte-compile= is disabled for the =packages.el= file.
 
@@ -210,7 +212,7 @@ line I'm currently on, and the impact on performance is quite noticeable.
 
 ** Frame title
 
-Finally, I would like to use the buffer's name as the frame title.
+Use the buffer's name as the frame title.
 
 #+begin_src emacs-lisp
 (setq frame-title-format '("%b"))
@@ -218,15 +220,13 @@ Finally, I would like to use the buffer's name as the frame title.
 
 ** Enable disabled functions
 
-Doom by default disables the ~narrow-to-region~ function. I find it quite useful.
+Doom by default disables the ~narrow-to-region~ function, but it is kinda useful.
 
 #+begin_src emacs-lisp
 (put 'narrow-to-region 'disabled nil)
 #+end_src
 
 ** Evil-mode
-
-A couple of things I would to change from the default configuration.
 
 + When exiting /insert mode/, the cursor moves one position backwards. Setting
   ~evil-move-cursor-back~ to ~nil~ "fixes" that.
@@ -297,7 +297,7 @@ This can be easily done with an =advice=.
 
 * Completion and searching
 
-** Text completion with company
+** Word completion with company
 
 #+begin_src emacs-lisp
 (after! company
@@ -372,8 +372,6 @@ Finally, here is my configuration. Some things to note:
 #+end_src
 
 *** Counsel configuration
-
-The defaults are mostly fine, except two things.
 
 + I would like a nicer separator when browsing the kill-ring (~counsel-yank-pop~).
 
@@ -513,6 +511,12 @@ However, some tweaks are needed.
 Replacing the symbol at point is a pretty common task, but by default, it requires two
 steps. Let's define a function to make this task faster.
 
+Some functions that help perform some common tasks faster. Those tasks are:
+
++ replace the symbol at point,
++ search in my dotfiles directory,
++ Create an =occur= buffer with all the URLs found in the current buffer.
+
 #+begin_src emacs-lisp :tangle "autoload.el"
 ;;;###autoload
 (defun ch/isearch-query-replace-symbol-at-point ()
@@ -520,18 +524,7 @@ steps. Let's define a function to make this task faster.
   (interactive)
   (isearch-forward-symbol-at-point)
   (isearch-query-replace-regexp))
-#+end_src
 
-Now let's bind it to a key for easier access.
-
-#+begin_src emacs-lisp
-(map! (:after isearch
-       :desc "QUery replace symbol at point"
-       "M-s %" 'ch/isearch-query-replace-symbol-at-point))
-#+end_src
-
-
-#+begin_src emacs-lisp :tangle "autoload.el"
 ;;;###autoload
 (defun ch/find-in-dotfiles ()
   "Open a file somewhere in ~/git/dotfiles via a fuzzy filename search."
@@ -546,21 +539,22 @@ Now let's bind it to a key for easier access.
     (occur urls "\\&")))
 #+end_src
 
-Let's also bind ~ch/find-in-dotfiles~.
+Keybindings for easier access.
 
 #+begin_src emacs-lisp
-(map! (:leader
+(map! (:after isearch
+       :desc "QUery replace symbol at point"
+       "M-s %" 'ch/isearch-query-replace-symbol-at-point)
+      (:leader
        :desc "Find file in dotfiles"
        "f t" #'ch/find-in-dotfiles))
 #+end_src
 
 * Project navigation & management with projectile
 
-I additionally want ~projectile~ to:
-
-1. Not require a project in order to work.
-2. Have faster indexing.
-3. Not create projects in ignored directories.
++ Don't require a project in order to work.
++ Use external tools for faster indexing.
++ Don't treat ignored directories as projects.
 
 #+begin_src emacs-lisp
 (after! projectile
@@ -700,6 +694,7 @@ when browsing large directories.
       "s-J" 'dired-jump-other-window
       "M-RET" 'dired-display-file)
 #+end_src
+
 * Buffer management
 
 ** Buffer cleanup
@@ -762,6 +757,7 @@ Let's add some keybindings for those.
       (:prefix ("w" . "+window")
        :desc "Ace window" "a" 'ace-window))
 #+end_src
+
 ** Popup rules
 
 #+begin_src emacs-lisp
