@@ -5,7 +5,7 @@
   :hook (doom-first-input . selectrum-mode)
   :config
   (setq selectrum-extend-current-candidate-highlight t
-        selectrum-fix-minibuffer-height t)
+        selectrum-fix-vertical-window-height t)
 
   ;; Use a different background for the current candidate.
   (set-face-attribute 'selectrum-current-candidate nil :background "#3a3f5a" :weight 'bold)
@@ -74,12 +74,10 @@
         consult-widen-key ">"
         completion-in-region-function #'consult-completion-in-region)
 
-  (setq consult-ripgrep-command '("rg" "--null" "--line-buffered" "--color=always"
-                                  "--hidden" "-g" "!.git" "--max-columns=500"
-                                  "--no-heading" "--line-number" "." "-e"))
+  (setq consult-ripgrep-command "rg --null --line-buffered --color=always --hidden -g !.git --max-columns=500 --no-heading --line-number . -e ARG OPTS")
 
   ;; Use `fd' for `consult-find', with the following arguments.
-  (setq consult-find-command '("fd" "-i" "-H" "-a" "-c" "never"))
+  (setq consult-find-command "fd -i -H -a -c never OPTS ARG")
 
   (autoload 'projectile-project-root "projectile")
   (setq consult-project-root-function #'projectile-project-root)
@@ -148,8 +146,7 @@
          :desc "Open vterm"
          "v" '+embark-vterm
          :desc "Magit status"
-         "m" '+embark-magit-status
-         "o" 'switch-to-buffer-other-window)
+         "m" '+embark-magit-status)
 
         (:map embark-file-map
          :desc "Open project vterm."
