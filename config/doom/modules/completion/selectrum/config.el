@@ -5,7 +5,8 @@
   :hook (doom-first-input . selectrum-mode)
   :config
   (setq selectrum-extend-current-candidate-highlight t
-        selectrum-fix-vertical-window-height t)
+        selectrum-fix-vertical-window-height t
+        selectrum-count-style 'current/matches)
 
   ;; Use a different background for the current candidate.
   (set-face-attribute 'selectrum-current-candidate nil :background "#3a3f5a" :weight 'bold)
@@ -14,7 +15,8 @@
   (setq projectile-completion-system 'default)
 
   (map! :leader
-        "f p" '+selectrum/find-file-in-private-config)
+        "f p" '+selectrum/find-file-in-private-config
+        "'" 'selectrum-repeat)
 
   (unless (featurep! +orderless)
     (setq completion-styles '(basic partial-completion emacs22))))
@@ -23,8 +25,6 @@
 (use-package! selectrum-prescient
   :when (featurep! +prescient)
   :after selectrum
-  ;; :hook ((selectrum-mode . selectrum-prescient-mode)
-  ;;        (selectrum-mode . prescient-persist-mode))
   :config
   (setq prescient-history-length 1000)
   (selectrum-prescient-mode +1)
@@ -33,6 +33,7 @@
 ;;; `orderless'
 (use-package! orderless
   :when (featurep! +orderless)
+  :defer t
   :config
   (setq completion-styles '(orderless)
         selectrum-refine-candidates-function #'orderless-filter

@@ -527,9 +527,9 @@ Some functions that help perform some common tasks faster. Those tasks are:
 
 ;;;###autoload
 (defun ch/find-in-dotfiles ()
-  "Open a file somewhere in ~/git/dotfiles via a fuzzy filename search."
+  "Open a file from my dotfiles via a fuzzy filename search."
   (interactive)
-  (doom-project-find-file (expand-file-name "~/git/dotfiles/")))
+  (doom-project-find-file (expand-file-name "~/Projects/dotfiles/")))
 
 ;;;###autoload
 (defun ch/occur-urls ()
@@ -1821,6 +1821,22 @@ Make refile work across all ~agenda-files~.
         org-pretty-entities-include-sub-superscripts nil))
 #+end_src
 
+Let's also make the headings a little bigger, just so they stand out more.
+
+#+begin_src emacs-lisp
+(after! org
+  (dolist (face '((org-document-title . 1.6)
+                  (org-level-1        . 1.20)
+                  (org-level-2        . 1.15)
+                  (org-level-3        . 1.10)
+                  (org-level-4        . 1.05)
+                  (org-level-5        . 1.05)
+                  (org-level-6        . 1.05)
+                  (org-level-7        . 1.05)
+                  (org-level-8        . 1.05)))
+    (set-face-attribute (car face) nil :weight 'bold :height (cdr face))))
+#+end_src
+
 *** Fancier Org bullets with org-superstar
 
 [[https://github.com/integral-dw/org-superstar-mode][org-superstar-mode]] makes org-mode heading stars and list items appear nice and modern.
@@ -1904,7 +1920,7 @@ Notifications for upcoming events.
 
 #+begin_src emacs-lisp
 (after! deft
-  (setq deft-directory "~/Documents/Syncthing/Org/roam/"
+  (setq deft-directory "~/Documents/Syncthing/Org/"
         deft-auto-save-interval 0
         deft-recursive t
         deft-current-sort-method 'title
@@ -2068,8 +2084,7 @@ If on a:
 (after! org
   (setq org-agenda-files '("~/Documents/Syncthing/Org/index.org"
                            "~/Documents/Syncthing/Org/bookmarks.org"
-                           "~/Documents/Syncthing/Org/projects.org"
-                           "~/Documents/Syncthing/Org/roam/")
+                           "~/Documents/Syncthing/Org/projects.org")
         org-agenda-dim-blocked-tasks t
         org-agenda-use-time-grid t
         org-agenda-compact-blocks nil
@@ -2124,8 +2139,7 @@ with easily defined groups.
            ((agenda ""
                     ((org-agenda-span 3)
                      (org-agenda-files '("~/Documents/Syncthing/Org/index.org"
-                                         "~/Documents/Syncthing/Org/projects.org"
-                                         "~/Documents/Syncthing/Org/roam/"))))
+                                         "~/Documents/Syncthing/Org/projects.org"))))
             (alltodo ""
                      ((org-agenda-overriding-header "Lens")
                       (org-super-agenda-groups
@@ -2282,7 +2296,7 @@ with easily defined groups.
         '(("d" "daily" plain (function org-roam-capture--get-point) ""
            :immediate-finish t
            :file-name "Dailies/%<%A-%Y-%m-%d>"
-           :head "#+TITLE: %<%A %Y-%m-%d>\n#+STARTUP: content\n\n")))
+           :head "#+title: %<%A %Y-%m-%d>\n#+startup: content\n\n")))
 
   (setq org-roam-capture-templates
         '(("f" "Fleeting" plain #'org-roam--capture-get-point "%?"
@@ -2682,17 +2696,7 @@ for them later.
 #+begin_src emacs-lisp
 (defun greedy-daemon-startup ()
   (require 'org)
-  (require 'org-super-agenda)
-  ;; (when (require 'mu4e nil t)
-  ;;   (setq mu4e-confirm-quit t)
-  ;;   (setq +mu4e-lock-greedy t)
-  ;;   (setq +mu4e-lock-relaxed t)
-  ;;   (+mu4e-lock-add-watcher)
-  ;;   (when (+mu4e-lock-available t)
-  ;;     (mu4e~start)))
-  ;; (when (require 'elfeed nil t)
-  ;;   (run-at-time nil (* 8 60 60) #'elfeed-update))
-  )
+  (require 'org-super-agenda))
 
 (when (daemonp)
   (add-hook 'emacs-startup-hook #'greedy-daemon-startup))

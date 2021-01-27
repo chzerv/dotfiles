@@ -188,5 +188,5 @@
        (default +bindings +smartparens)
 
        :private
-       transparency
-       tree-sitter)
+       transparency)
+       ;; tree-sitter
