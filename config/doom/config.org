@@ -1073,234 +1073,6 @@ them. [[https://emacs.stackexchange.com/questions/14245/is-there-a-way-to-view-t
 
 * Applications
 
-** Elfeed (RSS feed reader)
-
-[[https://github.com/skeeto/elfeed][elfeed]] is a feed reader that treats the feeds as a list, which can be narrowed using tags.
-[[https://github.com/remyhonig/elfeed-org][elfeed-org]] further enhances this tagging system by providing the ability to manage our
-feeds in =org-mode.= This means we can use =org-mode= tags to tag our feeds.
-
-*** Base elfeed configuration
-
-I'm pretty happy with what the package offers by default, but there are a few things I
-would like to customize.
-
-#+begin_src emacs-lisp
-(after! elfeed
-  (setq elfeed-search-filter "@2-week-ago +unread -bugs -reddit"
-        elfeed-show-unique-buffers t
-        elfeed-search-trailing-width 25
-        elfeed-db-directory "~/Documents/Syncthing/elfeed/db/"
-        shr-max-image-proportion 0.6)
-
-  (add-hook! 'elfeed-show-mode-hook (hide-mode-line-mode 1)))
-
-(after! elfeed-org
-  (setq rmh-elfeed-org-files (list "~/Documents/Syncthing/elfeed/elfeed.org")))
-#+end_src
-
-Oh! ~evil-snipe~ is pretty much useless in ~elfeed~, so let's just disable it.
-#+begin_src emacs-lisp
-(after! evil-snipe
-  (push 'elfeed-show-mode   evil-snipe-disabled-modes)
-  (push 'elfeed-search-mode evil-snipe-disabled-modes))
-#+end_src
-
-What follows is a bunch of functions that extend ~elfeed~'s functionality.
-
-*** Open feeds with eww
-
-#+begin_comment
-A lot of the code in the next two sections has been taken from [[https://github.com/wandersoncferreira/dotfiles#rss-feed][wandersoncferreira's]] and
-[[https://gitlab.com/protesilaos/dotfiles][Protesilaos']] dotfiles, with small modifications.
-#+end_comment
-
-There are some sites who only provide a preview of the article as the feed, and not the
-entire article. To actually read the article, the feed must be opened in a browser. This
-can be annoying at times, so I would rather open it inside Emacs, using ~eww~. ~eww~ also
-has the ability to strip down a site and only show us the "readable" part.
-
-#+begin_src emacs-lisp :tangle "autoload.el"
-;;;###autoload
-(defun contrib/elfeed-show-eww (&optional link)
-  "Browse current `elfeed' entry link in `eww'.
-Only show the readable part once the website loads.  This can
-fail on poorly-designed websites."
-  (interactive)
-  (let* ((entry (if (eq major-mode 'elfeed-show-mode)
-                    elfeed-show-entry
-                  (elfeed-search-selected :ignore-region)))
-         (link (if link link (elfeed-entry-link entry))))
-    (eww link)
-    (delete-other-windows)
-    (add-hook 'eww-after-render-hook 'eww-readable nil t)))
-#+end_src
-
-*** Handling visual and audio feeds
-
-I also have some feeds that provide visual or audio content (e.g., youtube videos and
-podcasts). I would like to either "play" this content~, or download it.
-To achieve this, we'll use [[https://github.com/mpv-player/mpv][mpv]] and [[https://github.com/ytdl-org/youtube-dl][youtube-dl]].
-
-#+begin_src emacs-lisp :tangle "autoload.el"
-;;;###autoload
-(defun ch/elfeed-play-with-mpv ()
-  "Play entry link with mpv."
-  (interactive)
-  (let ((entry (if (eq major-mode 'elfeed-show-mode) elfeed-show-entry (elfeed-search-selected :single)))
-        (quality-arg "")
-        (quality-val (completing-read "Max height resolution (0 for unlimited): " '("0" "480" "720") nil nil)))
-    (setq quality-val (string-to-number quality-val))
-    (message "Opening %s with height≤%s with mpv..." (elfeed-entry-link entry) quality-val)
-    (when (< 0 quality-val)
-      (setq quality-arg (format "--ytdl-format=[height<=?%s]" quality-val)))
-    (start-process "elfeed-mpv" nil "mpv" quality-arg (elfeed-entry-link entry))))
-
-;;;###autoload
-(defun ch/yt-dl-it (url)
-  "Downloads the URL in an async shell"
-  (let ((default-directory "~/Downloads/yt-dl"))
-    (async-shell-command (format "youtube-dl %s" url))))
-
-;;;###autoload
-(defun ch/elfeed-dl (&optional use-generic-p)
-  "Download enclosure with youtube-dl."
-  (interactive "P")
-  (let ((entries (elfeed-search-selected)))
-    (cl-loop for entry in entries
-             do (elfeed-untag entry 'unread)
-             when (elfeed-entry-link entry)
-             do (ch/yt-dl-it it))
-    (mapc #'elfeed-search-update-entry entries)
-    (unless (use-region-p) (forward-line))))
-#+end_src
-
-*** Simple "favorites" system
-
-One thing I think would be awesome to have built into ~elfeed~ is a "favorites" system.
-Here is a super simple implementation of said system.
-
-First, let's define a new face for our "favorite" (/starred/) entries.
-
-#+begin_src emacs-lisp
-(after! elfeed
-  (defface elfeed-search-starred-title-face
-    '((t :inherit hl-todo))
-    "starred entry face."
-    :group 'elfeed)
-
-  (push '(star elfeed-search-starred-title-face)
-        elfeed-search-face-alist))
-#+end_src
-
-Now all we have to do is add the "star" tag to an entry.
-
-#+begin_src emacs-lisp
-(map!
- (:after elfeed
-  (:map elfeed-search-mode-map
-   :after elfeed-search
-   (:localleader
-    :desc "Toggle star on entry"
-    "s" (cmd! (apply 'elfeed-search-toggle-all '(star)))))))
-#+end_src
-
-Finally, let's create a function that will present us all the starred entries.
-
-#+begin_src emacs-lisp :tangle "autoload.el"
-;;;###autoload
-(defun ch/elfeed-show-starred-entries ()
-  "Show all time starred entries in elfeed."
-  (interactive)
-  ;; TODO make this work when called from a mode other than
-  ;; elfeed-search-mode.
-  (elfeed-search-clear-filter)
-  (setq elfeed-search-filter "+star")
-  (elfeed-search-update :force))
-#+end_src
-
-*** Minor enhancements
-
-#+begin_src emacs-lisp :tangle "autoload.el"
-;;;###autoload
-(defun ch/elfeed-open ()
-  (interactive)
-  (elfeed)
-  (elfeed-update))
-
-;;;###autoload
-(defun contrib/elfeed-kill-buffer-close-window-dwim ()
-  "Do-what-I-mean way to handle `elfeed' windows and buffers.
-
-When in an entry buffer, kill the buffer and return to the Elfeed
-Search view.  If the entry is in its own window, delete it as
-well.
-
-When in the search view, close all other windows.  Else just kill
-the buffer."
-  (interactive)
-  (let ((win (selected-window)))
-    (cond ((eq major-mode 'elfeed-show-mode)
-           (elfeed-kill-buffer)
-           (unless (one-window-p) (delete-window win))
-           (switch-to-buffer "*elfeed-search*"))
-          ((eq major-mode 'elfeed-search-mode)
-           (if (one-window-p)
-               (elfeed-search-quit-window)
-             (delete-other-windows win))))))
-
-;;;###autoload
-(defun contrib/elfeed-search-browse-url (&optional use-generic-p)
-  "Visit the current entry in your browser using `browse-url',
-without marking the entry as 'read'.
-If there is a prefix argument, visit the current entry in the
-browser defined by `browse-url-generic-program'."
-  (interactive "P")
-  (let ((entries (elfeed-search-selected)))
-    (cl-loop for entry in entries
-             do (elfeed-entry-link entry)
-             do (if use-generic-p
-                    (browse-url-generic (elfeed-entry-link entry))
-                  (browse-url (elfeed-entry-link entry))))
-    (mapc #'elfeed-search-update-entry entries)
-    (unless (or elfeed-search-remain-on-entry (use-region-p))
-      (forward-line))))
-#+end_src
-
-*** Keybindings for elfeed
-
-Finally, let's create some keybindings for the all the stuff above.
-
-#+begin_src emacs-lisp
-(map! :leader
-      (:prefix ("e" . "External")
-       (:when (featurep! :app rss)
-        (:prefix ("e" . "Elfeed")
-         :desc "Open elfeed" "o" 'ch/elfeed-open))))
-(map!
- (:after elfeed
-  (:map elfeed-show-mode-map
-   :after elfeed-show
-   "q" 'nil
-   (:localleader
-    :desc "Open readable part in eww"
-    "e" 'contrib/elfeed-show-eww
-    :desc "Play enclosure with mpv"
-    "m" 'ch/elfeed-play-with-mpv
-    :desc "Kill buffer and close window"
-    "q" 'contrib/elfeed-kill-buffer-close-window-dwim
-    "y" #'elfeed-show-yank))
-  (:map elfeed-search-mode-map
-   :after elfeed-search
-   "M-RET" 'nil
-   :desc "Open entry in browser."
-   "M-RET" 'contrib/elfeed-search-browse-url
-   (:localleader
-    :desc "Fetch feeds"
-    "r" 'elfeed-search-fetch
-    :desc "Download enclosure with youtube-dl"
-    "d" 'ch/elfeed-dl))))
-#+end_src
-
 ** Treemacs (file explorer)
 
 [[https://github.com/Alexander-Miller/treemacs][treemacs]] is a tree layout file explorer. Admittedly, after discovering how powerful
@@ -2700,4 +2472,234 @@ for them later.
 
 (when (daemonp)
   (add-hook 'emacs-startup-hook #'greedy-daemon-startup))
+#+end_src
+
+* Archive
+
+** Elfeed (RSS feed reader)
+
+[[https://github.com/skeeto/elfeed][elfeed]] is a feed reader that treats the feeds as a list, which can be narrowed using tags.
+[[https://github.com/remyhonig/elfeed-org][elfeed-org]] further enhances this tagging system by providing the ability to manage our
+feeds in =org-mode.= This means we can use =org-mode= tags to tag our feeds.
+
+*** Base elfeed configuration
+
+I'm pretty happy with what the package offers by default, but there are a few things I
+would like to customize.
+
+#+begin_src emacs-lisp :tangle no
+(after! elfeed
+  (setq elfeed-search-filter "@2-week-ago +unread -bugs -reddit"
+        elfeed-show-unique-buffers t
+        elfeed-search-trailing-width 25
+        elfeed-db-directory "~/Documents/Syncthing/elfeed/db/"
+        shr-max-image-proportion 0.6)
+
+  (add-hook! 'elfeed-show-mode-hook (hide-mode-line-mode 1)))
+
+(after! elfeed-org
+  (setq rmh-elfeed-org-files (list "~/Documents/Syncthing/elfeed/elfeed.org")))
+#+end_src
+
+Oh! ~evil-snipe~ is pretty much useless in ~elfeed~, so let's just disable it.
+#+begin_src emacs-lisp :tangle no
+(after! evil-snipe
+  (push 'elfeed-show-mode   evil-snipe-disabled-modes)
+  (push 'elfeed-search-mode evil-snipe-disabled-modes))
+#+end_src
+
+What follows is a bunch of functions that extend ~elfeed~'s functionality.
+
+*** Open feeds with eww
+
+#+begin_comment
+A lot of the code in the next two sections has been taken from [[https://github.com/wandersoncferreira/dotfiles#rss-feed][wandersoncferreira's]] and
+[[https://gitlab.com/protesilaos/dotfiles][Protesilaos']] dotfiles, with small modifications.
+#+end_comment
+
+There are some sites who only provide a preview of the article as the feed, and not the
+entire article. To actually read the article, the feed must be opened in a browser. This
+can be annoying at times, so I would rather open it inside Emacs, using ~eww~. ~eww~ also
+has the ability to strip down a site and only show us the "readable" part.
+
+#+begin_src emacs-lisp :tangle no
+;;;###autoload
+(defun contrib/elfeed-show-eww (&optional link)
+  "Browse current `elfeed' entry link in `eww'.
+Only show the readable part once the website loads.  This can
+fail on poorly-designed websites."
+  (interactive)
+  (let* ((entry (if (eq major-mode 'elfeed-show-mode)
+                    elfeed-show-entry
+                  (elfeed-search-selected :ignore-region)))
+         (link (if link link (elfeed-entry-link entry))))
+    (eww link)
+    (delete-other-windows)
+    (add-hook 'eww-after-render-hook 'eww-readable nil t)))
+#+end_src
+
+*** Handling visual and audio feeds
+
+I also have some feeds that provide visual or audio content (e.g., youtube videos and
+podcasts). I would like to either "play" this content~, or download it.
+To achieve this, we'll use [[https://github.com/mpv-player/mpv][mpv]] and [[https://github.com/ytdl-org/youtube-dl][youtube-dl]].
+
+#+begin_src emacs-lisp :tangle no
+;;;###autoload
+(defun ch/elfeed-play-with-mpv ()
+  "Play entry link with mpv."
+  (interactive)
+  (let ((entry (if (eq major-mode 'elfeed-show-mode) elfeed-show-entry (elfeed-search-selected :single)))
+        (quality-arg "")
+        (quality-val (completing-read "Max height resolution (0 for unlimited): " '("0" "480" "720") nil nil)))
+    (setq quality-val (string-to-number quality-val))
+    (message "Opening %s with height≤%s with mpv..." (elfeed-entry-link entry) quality-val)
+    (when (< 0 quality-val)
+      (setq quality-arg (format "--ytdl-format=[height<=?%s]" quality-val)))
+    (start-process "elfeed-mpv" nil "mpv" quality-arg (elfeed-entry-link entry))))
+
+;;;###autoload
+(defun ch/yt-dl-it (url)
+  "Downloads the URL in an async shell"
+  (let ((default-directory "~/Downloads/yt-dl"))
+    (async-shell-command (format "youtube-dl %s" url))))
+
+;;;###autoload
+(defun ch/elfeed-dl (&optional use-generic-p)
+  "Download enclosure with youtube-dl."
+  (interactive "P")
+  (let ((entries (elfeed-search-selected)))
+    (cl-loop for entry in entries
+             do (elfeed-untag entry 'unread)
+             when (elfeed-entry-link entry)
+             do (ch/yt-dl-it it))
+    (mapc #'elfeed-search-update-entry entries)
+    (unless (use-region-p) (forward-line))))
+#+end_src
+
+*** Simple "favorites" system
+
+One thing I think would be awesome to have built into ~elfeed~ is a "favorites" system.
+Here is a super simple implementation of said system.
+
+First, let's define a new face for our "favorite" (/starred/) entries.
+
+#+begin_src emacs-lisp :tangle no
+(after! elfeed
+  (defface elfeed-search-starred-title-face
+    '((t :inherit hl-todo))
+    "starred entry face."
+    :group 'elfeed)
+
+  (push '(star elfeed-search-starred-title-face)
+        elfeed-search-face-alist))
+#+end_src
+
+Now all we have to do is add the "star" tag to an entry.
+
+#+begin_src emacs-lisp :tangle no
+(map!
+ (:after elfeed
+  (:map elfeed-search-mode-map
+   :after elfeed-search
+   (:localleader
+    :desc "Toggle star on entry"
+    "s" (cmd! (apply 'elfeed-search-toggle-all '(star)))))))
+#+end_src
+
+Finally, let's create a function that will present us all the starred entries.
+
+#+begin_src emacs-lisp :tangle no
+;;;###autoload
+(defun ch/elfeed-show-starred-entries ()
+  "Show all time starred entries in elfeed."
+  (interactive)
+  ;; TODO make this work when called from a mode other than
+  ;; elfeed-search-mode.
+  (elfeed-search-clear-filter)
+  (setq elfeed-search-filter "+star")
+  (elfeed-search-update :force))
+#+end_src
+
+*** Minor enhancements
+
+#+begin_src emacs-lisp :tangle no
+;;;###autoload
+(defun ch/elfeed-open ()
+  (interactive)
+  (elfeed)
+  (elfeed-update))
+
+;;;###autoload
+(defun contrib/elfeed-kill-buffer-close-window-dwim ()
+  "Do-what-I-mean way to handle `elfeed' windows and buffers.
+
+When in an entry buffer, kill the buffer and return to the Elfeed
+Search view.  If the entry is in its own window, delete it as
+well.
+
+When in the search view, close all other windows.  Else just kill
+the buffer."
+  (interactive)
+  (let ((win (selected-window)))
+    (cond ((eq major-mode 'elfeed-show-mode)
+           (elfeed-kill-buffer)
+           (unless (one-window-p) (delete-window win))
+           (switch-to-buffer "*elfeed-search*"))
+          ((eq major-mode 'elfeed-search-mode)
+           (if (one-window-p)
+               (elfeed-search-quit-window)
+             (delete-other-windows win))))))
+
+;;;###autoload
+(defun contrib/elfeed-search-browse-url (&optional use-generic-p)
+  "Visit the current entry in your browser using `browse-url',
+without marking the entry as 'read'.
+If there is a prefix argument, visit the current entry in the
+browser defined by `browse-url-generic-program'."
+  (interactive "P")
+  (let ((entries (elfeed-search-selected)))
+    (cl-loop for entry in entries
+             do (elfeed-entry-link entry)
+             do (if use-generic-p
+                    (browse-url-generic (elfeed-entry-link entry))
+                  (browse-url (elfeed-entry-link entry))))
+    (mapc #'elfeed-search-update-entry entries)
+    (unless (or elfeed-search-remain-on-entry (use-region-p))
+      (forward-line))))
+#+end_src
+
+*** Keybindings for elfeed
+
+Finally, let's create some keybindings for the all the stuff above.
+
+#+begin_src emacs-lisp :tangle no
+(map! :leader
+      (:prefix ("e" . "External")
+       (:when (featurep! :app rss)
+        (:prefix ("e" . "Elfeed")
+         :desc "Open elfeed" "o" 'ch/elfeed-open))))
+(map!
+ (:after elfeed
+  (:map elfeed-show-mode-map
+   :after elfeed-show
+   "q" 'nil
+   (:localleader
+    :desc "Open readable part in eww"
+    "e" 'contrib/elfeed-show-eww
+    :desc "Play enclosure with mpv"
+    "m" 'ch/elfeed-play-with-mpv
+    :desc "Kill buffer and close window"
+    "q" 'contrib/elfeed-kill-buffer-close-window-dwim
+    "y" #'elfeed-show-yank))
+  (:map elfeed-search-mode-map
+   :after elfeed-search
+   "M-RET" 'nil
+   :desc "Open entry in browser."
+   "M-RET" 'contrib/elfeed-search-browse-url
+   (:localleader
+    :desc "Fetch feeds"
+    "r" 'elfeed-search-fetch
+    :desc "Download enclosure with youtube-dl"
+    "d" 'ch/elfeed-dl))))
 #+end_src
