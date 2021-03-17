@@ -112,8 +112,8 @@ zstyle ':completion:*' rehash true
 
 #  History Settings {{{{
 HISTFILE="$ZDOTDIR/.zhistory"
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=50000
+SAVEHIST=50000
 setopt appendhistory notify
 unsetopt beep nomatch
 # Treat the '!' character specially during expansion.
