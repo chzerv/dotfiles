@@ -18,16 +18,16 @@ HISTORY_SUBSTRING_SEARCH_FUZZY=set
 # ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=25
 
 # Autosuggestions ignore history entries longer than 50 characters
-# ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c50,)"
+ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c50,)"
 
 # Enable async mode
-# ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 # }}}
 
 # Runtime env vars {{{
 export EDITOR="nvim"
-export VISUAL="emacsclient"
-export TERMINAL="tilix"
+export VISUAL="nvim"
+export TERMINAL="gnome-terminal"
 export BROWSER="firefox"
 export READER="evince"
 export MANPAGER="nvim -c 'set ft=man' -"

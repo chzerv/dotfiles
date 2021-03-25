@@ -17,16 +17,16 @@ zinit ice wait lucid
 zinit load 'wfxr/forgit'
 
 # zsh-autopair - https://github.com/hlissner/zsh-autopair
-zinit ice wait lucid
-zinit load hlissner/zsh-autopair
+#zinit ice wait lucid
+#zinit load hlissner/zsh-autopair
 
 # zsh-bd - https://github.com/Tarrasch/zsh-bd
 zinit ice wait lucid
 zinit light tarrasch/zsh-bd
 
 # zsh-k - https://github.com/supercrabtree/k
-zinit ice wait lucid
-zinit light supercrabtree/k
+#zinit ice wait lucid
+#zinit light supercrabtree/k
 
 # powerlevel10k - https://github.com/romkatv/powerlevel10k
 zinit ice depth'1'

@@ -8,7 +8,7 @@ alias egrep='egrep --colour=auto'
 alias shutdown='systemctl poweroff'
 alias reboot='systemctl reboot'
 alias sleep='systemctl suspend'
-alias hard_sleep='systemctl hibernate'
+alias hibernate='systemctl hibernate'
 alias vi="nvim"
 alias :q="exit"
 alias open="xdg-open"
@@ -19,7 +19,6 @@ alias szrc=" source $ZDOTDIR/.zshrc"
 alias oo="hohup xdg-open . > /dev/null &"
 alias tmux="tmux -2"
 alias rg="rg -i"
-alias em="emacsclient -a ''"
 alias emt="emacsclient -a '' -t"
 alias cp="cp -r"
 alias trash="trash-put"
@@ -31,14 +30,8 @@ alias yta="youtube-dl --add-metadata --extract-audio --audio-format mp3"
 
 # Pretty ls {{{
 alias ls=' ls --color=always'
-# alias lla=' ls -alF --group-directories-first --color=always'
-# alias ll=' ls -l --group-directories-first --color=always'
 alias la=' ls -A --group-directories-first --color=always'
 alias l=' ls -C --group-directories-first --color=always'
-# alias llg=' ls -alF --group-directories-first --color=always|grep'
-# alias ls=' lsd'
-# alias l=' lsd'
-# alias la=' lsd -a'
 alias ll="exa -lF"
 alias lla=" exa -alF"
 alias llg="exa -alF|ag"
