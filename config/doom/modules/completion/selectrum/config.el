@@ -8,9 +8,6 @@
         selectrum-fix-vertical-window-height t
         selectrum-count-style 'current/matches)
 
-  ;; Use a different background for the current candidate.
-  (set-face-attribute 'selectrum-current-candidate nil :background "#3a3f5a" :weight 'bold)
-
   (setq flyspell-correct-interface #'flyspell-correct-dummy)
   (setq projectile-completion-system 'default)
 

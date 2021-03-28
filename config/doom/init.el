@@ -6,7 +6,8 @@
        ;; layout           ; auie,ctsrnm is the superior home row
 
        :completion
-       company           ; the ultimate code completion backend
+       (company           ; the ultimate code completion backend
+        +childframe)
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;; (ivy               ; a search engine for love and life
@@ -134,8 +135,8 @@
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        (latex             ; writing papers in Emacs has never been so fun
-        +cdlatex
-        +lsp)
+        +latexmk
+        +cdlatex)
        ;;lean
        ;;factor
        ;;ledger            ; an accounting system in Emacs
