@@ -1,4 +1,4 @@
-;;; editor/tree-sitter/config.el -*- lexical-binding: t; -*-
+;;; ui/tree-sitter/config.el -*- lexical-binding: t; -*-
 
 (use-package! tree-sitter
   :when (bound-and-true-p module-file-suffix)
@@ -15,5 +15,5 @@
        (unless (string-match-p (concat "^Cannot find shared library\\|"
                                        "^No language registered\\|"
                                        "cannot open shared object file")
-                               (error-message-string e))
-         (signal (car e) (cadr e)))))))
+                            (error-message-string e))
+            (signal (car e) (cadr e)))))))

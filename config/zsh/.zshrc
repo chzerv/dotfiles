@@ -1,9 +1,4 @@
 ###########################################################{{{
-# INIT
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # # Load and initialize the completion system ignoring insecure directories with a
 # # cache time of 20 hours, so it should almost always regenerate the first time a
 # # shell is opened each day.
@@ -173,9 +168,6 @@ source /usr/bin/virtualenvwrapper_lazy.sh
 eval "$(fasd --init auto)"
 [ -f "$ZDOTDIR/clrs.zsh" ] && source "$ZDOTDIR/clrs.zsh"
 source <(echo "$(navi widget zsh)")
-
-# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
 ###########################################################
 

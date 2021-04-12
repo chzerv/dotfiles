@@ -28,9 +28,9 @@ zinit light tarrasch/zsh-bd
 #zinit ice wait lucid
 #zinit light supercrabtree/k
 
-# powerlevel10k - https://github.com/romkatv/powerlevel10k
 zinit ice depth'1'
-zinit light romkatv/powerlevel10k
+# zinit light romkatv/powerlevel10k
+zinit light https://github.com/sindresorhus/pure
 
 # zsh-history-substring-search - https://github.com/zsh-users/zsh-history-substring-search
 zinit wait lucid atload"bindkey '^[[A' history-substring-search-up;

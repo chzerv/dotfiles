@@ -2407,26 +2407,6 @@ packages.
                       #'evil-jump-item))
 #+end_src
 
-** Emacs daemon mode, via systemd
-
-I think managing Emacs server via systemd is much simpler and faster. However, I'd like to
-modify the provided systemd service file.
-
-#+begin_src systemd :tangle no :mkdirp yes
-[Unit]
-Description=Emacs as a service
-Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
-
-[Service]
-Type=forking
-ExecStart=/usr/bin/emacs --daemon
-ExecStop=/usr/bin/emacsclient --no-wait --eval "(progn (setq kill-emacs-hook nil) (kill emacs))"
-Restart=on-failure
-
-[Install]
-WantedBy=default.target
-#+end_src
-
 ** Desktop file for emacsclient
 
 If we want to use ~emacsclient~ as a default application for opening files, we have to
@@ -2449,7 +2429,7 @@ Keywords=Text;Editor;
 X-KDE-StartupNotify=false
 #+end_src
 
-** Emacs startup
+** Emacs daemon startup
 
 I think sacrificing a little startup time for a smoother first-use experience is preferred.
 
@@ -2460,9 +2440,7 @@ I think sacrificing a little startup time for a smoother first-use experience is
              'doom-first-file-hook))
 #+end_src
 
-*** Daemon startup
-
-Let's load all the "heavy" packages during the daemon startup, so we don't have to wait
+Also, let's load all the "heavy" packages during the daemon startup, so we don't have to wait
 for them later.
 
 #+begin_src emacs-lisp

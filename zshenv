@@ -24,6 +24,8 @@ ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c50,)"
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 # }}}
 
+PURE_PROMPT_SYMBOL="➞"
+
 # Runtime env vars {{{
 export EDITOR="nvim"
 export VISUAL="nvim"

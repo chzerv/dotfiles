@@ -1,5 +1,5 @@
 ;; -*- no-byte-compile: t; -*-
-;;; editor/tree-sitter/packages.el
+;;; ui/tree-sitter/packages.el
 
 (package! tree-sitter
   :ignore (null (bound-and-true-p module-file-suffix)))

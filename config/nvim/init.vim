@@ -48,13 +48,9 @@ if has('vim_starting')
      Plug 'jiangmiao/auto-pairs'
      Plug 'christoomey/vim-tmux-navigator'
      Plug 'neoclide/coc.nvim', {'branch': 'release'}
-     " Plug 'neovim/nvim-lsp'
-     " Plug 'maxboisvert/vim-simple-complete'
      Plug 'justinmk/vim-sneak'
      Plug 'plasticboy/vim-markdown'
      Plug 'itchyny/lightline.vim'
-     Plug 'vimwiki/vimwiki'
-     Plug 'mattn/calendar-vim'
      Plug 'scrooloose/nerdtree'
      Plug 'tpope/vim-fugitive'
      Plug 'joshdick/onedark.vim'
@@ -80,13 +76,7 @@ endif
             \ },
             \ }
 
-let g:vimwiki_list = [{'path': '~/Documents/Syncthing/vimwiki/'}]
-
-let g:vim_markdown_conceal = 1
-let g:nord_bold_vertical_split_line = 1
-let g:nord_cursor_line_number_background = 1
-let g:nord_uniform_diff_background = 1
-let g:nord_italic_comments = 1
+let g:vim_markdown_conceal = 0
 " }}}
 
 "========================================================
@@ -96,8 +86,12 @@ let g:nord_italic_comments = 1
 " 2.1 Eye Candy {{{
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
-" set background=dark
 colorscheme nord
+let g:nord_bold_vertical_split_line = 1
+let g:nord_cursor_line_number_background = 1
+let g:nord_uniform_diff_background = 1
+let g:nord_italic_comments = 1
+
 set shortmess+=c    " Suppress messages when reaching end of pummenu.
 set shortmess+=I    " Disable vim intro.
 set cmdheight=2     " Cmd window height.
