@@ -1,19 +1,23 @@
 ;; -*- no-byte-compile: t; -*-
 ;;; private/selectrum/packages.el
 
-(package! prescient)
-
 (package! selectrum)
-(package! selectrum-prescient)
+
+(when (featurep! +prescient)
+  (package! prescient)
+  (package! selectrum-prescient))
+
+(when (featurep! +orderless)
+  (package! orderless))
 
 (package! consult)
-(package! consult-flycheck)
+
+(when (featurep! :checkers syntax)
+  (package! consult-flycheck))
 
 (package! embark)
 (package! embark-consult)
 
 (package! marginalia)
-
-(package! orderless)
 
 (package! wgrep)

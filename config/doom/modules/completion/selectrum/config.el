@@ -3,56 +3,73 @@
 ;;; `selectrum'
 (use-package! selectrum
   :hook (doom-first-input . selectrum-mode)
-  :config
-  (setq selectrum-extend-current-candidate-highlight t
-        selectrum-fix-vertical-window-height t
+  :init
+  (setq selectrum-display-action nil
+        selectrum-extend-current-candidate-highlight t
         selectrum-count-style 'current/matches)
+  (unless (featurep! +orderless)
+    (setq completion-styles '(substring partial-completion)))
 
-  (setq flyspell-correct-interface #'flyspell-correct-dummy)
-  (setq projectile-completion-system 'default)
+  :config
+  (setq selectrum-fix-vertical-window-height t)
+
+  ;; (setq flyspell-correct-interface #'flyspell-correct-dummy)
+  ;; (setq projectile-completion-system 'default)
 
   (map! :leader
         "f p" '+selectrum/find-file-in-private-config
-        "'" 'selectrum-repeat)
+        "'" 'selectrum-repeat))
 
-  (unless (featurep! +orderless)
-    (setq completion-styles '(basic partial-completion emacs22))))
-
-;;; `prescient' and `selectrum-prescient'
+;;; `selectrum-prescient'
 (use-package! selectrum-prescient
   :when (featurep! +prescient)
-  :after selectrum
+  :hook (selectrum-mode . selectrum-prescient-mode)
+  :hook (selectrum-mode . prescient-persist-mode)
   :config
-  (setq prescient-history-length 1000)
-  (selectrum-prescient-mode +1)
-  (prescient-persist-mode +1))
+  (setq selectrum-preprocess-candidates-function #'selectrum-prescient--preprocess)
+  (add-hook 'selectrum-candidate-selected-hook #'selectrum-prescient--remember)
+  (add-hook 'selectrum-candidate-inserted-hook #'selectrum-prescient--remember))
 
 ;;; `orderless'
+(defun flex-if-twiddle (pattern _index _total)
+  (when (string-suffix-p "~" pattern)
+    `(orderless-flex . ,(substring pattern 0 -1))))
+
+(defun first-initialism (pattern index _total)
+  (if (= index 0) 'orderless-initialism))
+
+(defun without-if-bang (pattern _index _total)
+  "Define a '!not' exclusion prefix for literal strings."
+  (when (string-prefix-p "!" pattern)
+    `(orderless-without-literal . ,(substring pattern 1))))
+
 (use-package! orderless
   :when (featurep! +orderless)
   :defer t
+  :init
+  (setq orderless-component-separator "[ &]"
+        orderless-matching-styles '(orderless-prefixes
+                                    orderless-initialism
+                                    orderless-regexp))
   :config
-  (setq completion-styles '(orderless)
-        selectrum-refine-candidates-function #'orderless-filter
-        selectrum-highlight-candidates-function #'orderless-highlight-matches)
-
-  ;; Integration with `company'
-  (setq orderless-component-separator "[ &]")
-  (defun just-one-face (fn &rest args)
-    (let ((orderless-match-faces [completions-common-part]))
-      (apply fn args)))
-
-  (advice-add 'company-capf--candidates :around #'just-one-face))
+  (setq completion-styles '(orderless))
+  (setq orderless-skip-highlighting (lambda () selectrum-active-p))
+  (setq selectrum-highlight-candidates-function #'orderless-highlight-matches)
+  (setq orderless-matching-styles '(orderless-regexp)
+        orderless-style-dispatchers '(flex-if-twiddle
+                                      without-if-bang)))
 
 ;;; `consult'
 (use-package consult
+  :defer t
   :init
   ;; Replace `multi-occur' with `consult-multi-occur', which is a drop-in replacement.
   (fset 'multi-occur #'consult-multi-occur)
   (define-key!
     [remap switch-to-buffer]              #'consult-buffer
     [remap switch-to-buffer-other-window] #'consult-buffer-other-window
-    [remap evil-show-marks]               #'+selectrum/evil-marks
+    [remap switch-to-buffer-other-frame]  #'consult-buffer-other-frame
+    [remap evil-show-marks]               #'consult-mark
     [remap apropos]                       #'consult-apropos
     [remap goto-line]                     #'consult-goto-line
     [remap bookmark-jump]                 #'consult-bookmark
@@ -65,20 +82,23 @@
     [remap man]                           #'consult-man
     [remap yank-pop]                      #'consult-yank-pop)
   :config
-  (setq consult-line-numbers-widen t
-        ;; Previews are way to "heavy".
-        consult-preview-key nil
+  (setq consult-project-root-function #'doom-project-root
+        completion-in-region-function #'consult-completion-in-region
+        consult-line-numbers-widen t
+        consult-async-input-debounce 0.5
+        consult-async-input-throttle 0.8
         consult-narrow-key "<"
         consult-widen-key ">"
-        completion-in-region-function #'consult-completion-in-region)
+        ;; Previews are way to "heavy", disable them.
+        consult-preview-key nil)
 
   (setq consult-ripgrep-command "rg --null --line-buffered --color=always --hidden -g !.git --max-columns=500 --no-heading --line-number . -e ARG OPTS")
 
   ;; Use `fd' for `consult-find', with the following arguments.
   (setq consult-find-command "fd -i -H -a -c never OPTS ARG")
 
-  (autoload 'projectile-project-root "projectile")
-  (setq consult-project-root-function #'projectile-project-root)
+  ;; (autoload 'projectile-project-root "projectile")
+  ;; (setq consult-project-root-function #'projectile-project-root)
 
   (map! (:leader
          "s s" 'nil
@@ -90,11 +110,11 @@
          :desc "Yank pop"
          "i y" 'consult-yank-pop
          :desc "Search in project"
-         "s p" 'consult-ripgrep
+         "s p" '+selectrum/project-search
+         :desc "Search project from cwd"
+         "s c" '+selectrum/project-search-from-cwd
          :desc "Ripgrep"
          "/" 'consult-ripgrep
-         :desc "Ripgrep"
-         "s R" 'consult-ripgrep
          :desc "Locate file"
          "s F" 'consult-locate
          :desc "Find file"
@@ -117,26 +137,20 @@
 
 ;;; `embark'
 (use-package embark
+  ;;:defer t
   :bind
-  ("C-," . embark-act)
-  ("C-b" . embark-become)
-  ("C->" . embark-act-noexit)
-  :config
-
-  ;; which-key integration for embark actions.
-  (setq embark-action-indicator
-        (lambda (map)
-          (which-key--show-keymap "Embark" map nil nil 'no-paging)
-          #'which-key--hide-popup-ignore-command)
+  ("C-,"   . embark-act)
+  :init
+  (setq embark-action-indicator #'+embark-which-key-action-indicator
         embark-become-indicator embark-action-indicator)
 
   ;; No unnecessary computation delay after injection.
   (add-hook 'embark-setup-hook 'selectrum-set-selected-candidate)
 
-  (embark-define-keymap embark-become-general-map
-    "Embark become keymap for files and buffers."
-    ("f" consult-find)
-    ("r" consult-ripgrep))
+  ; (embark-define-keymap embark-become-general-map
+  ;   "Embark become keymap for files and buffers."
+  ;   ("f" consult-find)
+  ;   ("r" consult-ripgrep))
 
   (setq embark-become-keymaps '(embark-become-help-map embark-become-file+buffer-map embark-become-shell-command-map embark-become-match-map embark-become-general-map))
 
@@ -170,10 +184,12 @@
 (use-package marginalia
   :config
   (marginalia-mode)
+  ;; When using Selectrum, ensure that Selectrum is refreshed when cycling annotations.
   (advice-add #'marginalia-cycle :after
-              (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit))))
+              (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit 'keep-selected))))
 
-  (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light)))
+  (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light))
+  (add-to-list 'marginalia-command-categories '(persp-switch-to-buffer . buffer)))
 
 ;;; `wgrep'
 (use-package! wgrep
@@ -185,8 +201,8 @@
 (after! imenu
   (add-hook 'consult-after-jump-hook 'ch/imenu-reveal-content))
 
+;; FIXME Why is this broken when ivy is disabled?
 (after! projectile
-  ;; FIXME Why is this broken when ivy is disabled?
   (setq projectile-switch-project-action (lambda ()
                                            (+workspaces-set-project-action-fn)
                                            (+workspaces-switch-to-project-h))))
