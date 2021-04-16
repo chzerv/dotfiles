@@ -3,17 +3,17 @@
 (doom! :input
        ;;chinese
        ;;japanese
-       ;; layout           ; auie,ctsrnm is the superior home row
+       ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
        (company           ; the ultimate code completion backend
         +childframe)
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       ;; (ivy               ; a search engine for love and life
-       ;;  +prescient)
+       ;;ivy               ; a search engine for love and life
        (selectrum
-        +prescient)
+        +prescient
+        +orderless)
 
        :ui
        deft              ; notational velocity for Emacs
@@ -27,12 +27,13 @@
        ;;indent-guides     ; highlighted indent columns
        ;;ligatures         ; ligatures and symbols to make your code pretty again
        ;;minimap           ; show a map of the code on the side
-       modeline          ; snazzy, Atom-inspired modeline, plus API
+       (modeline          ; snazzy, Atom-inspired modeline, plus API
+        +light)
        ;;nav-flash         ; blink cursor line after big motions
        ;;neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
-       ;;tabs              ; an tab bar for Emacs
+       ;;tabs              ; a tab bar for Emacs
        treemacs          ; a project drawer, like neotree but cooler
        tree-sitter
        ;;unicode           ; extended unicode support for various languages
@@ -52,7 +53,7 @@
        multiple-cursors  ; editing in many places at once
        ;;objed             ; text object editing for the innocent
        ;;parinfer          ; turn lisp into python, sort of
-       rotate-text       ; cycle region at point between text candidates
+       ;;rotate-text       ; cycle region at point between text candidates
        snippets          ; my elves. They type so I don't have to
        ;;word-wrap         ; soft wrapping with language-aware indent
 
@@ -70,7 +71,7 @@
        vterm             ; the best terminal emulation in Emacs
 
        :checkers
-       (syntax              ; tasing you for every semicolon you forget
+       (syntax            ; tasing you for every semicolon you forget
         +childframe)
        (spell             ; tasing you for misspelling mispelling
         +flyspell
@@ -87,8 +88,7 @@
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
        (lookup              ; navigate your code and its documentation
-        +dictionary
-        +docsets)
+        +dictionary)
        lsp
        magit             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
@@ -103,11 +103,12 @@
 
        :os
        (:if IS-MAC macos)  ; improve compatibility with macOS
-       tty                 ; improve the terminal emacs experience.
+       tty               ; improve the terminal Emacs experience
 
        :lang
        ;;agda              ; types of types of types of types...
-       (cc                ; C/C++/Obj-C madness
+       ;;beancount         ; mind the GAAP
+       (cc                ; C > C++ == 1
         +lsp)
        ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
@@ -121,14 +122,15 @@
        emacs-lisp        ; drown in parentheses
        ;;erlang            ; an elegant language for a more civilized age
        ;;ess               ; emacs speaks statistics
+       ;;factor
        ;;faust             ; dsp, but you get to keep your soul
-       ;;fsharp           ; ML stands for Microsoft's Language
+       ;;fsharp            ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
        ;;(go +lsp)         ; the hipster dialect
        ;;(haskell +dante)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
-       ;;idris             ;
+       ;;idris             ; a language you can depend on
        ;;json              ; At least it ain't XML
        ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
        (javascript        ; all(hope(abandon(ye(who(enter(here))))))
@@ -138,9 +140,8 @@
        (latex             ; writing papers in Emacs has never been so fun
         +latexmk
         +cdlatex)
-       ;;lean
-       ;;factor
-       ;;ledger            ; an accounting system in Emacs
+       ;;lean              ; for folks with too much to prove
+       ;;ledger            ; be audit you can be
        ;;lua               ; one-based indices? one-based indices
        markdown          ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
@@ -164,7 +165,7 @@
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
-       ;;scheme            ; a fully conniving family of lisps
+       ;;(scheme +guile)   ; a fully conniving family of lisps
        sh                ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
@@ -173,6 +174,7 @@
        web               ; the tubes
        (yaml              ; JSON, but readable
         +lsp)
+       ;;zig               ; C, but simpler
 
        :email
        ;;(mu4e +gmail)
@@ -181,6 +183,8 @@
 
        :app
        ;;calendar
+       ;;emms
+       ;;everywhere        ; *leave* Emacs!? You must be joking
        ;;irc               ; how neckbeards socialize
        ;;(rss +org)        ; emacs as an RSS reader
        ;;twitter           ; twitter client https://twitter.com/vnought
