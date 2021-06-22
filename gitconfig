@@ -6,15 +6,6 @@
 	br = branch
 	cm = commit -v
 	st = status
+        graph  = log --oneline --graph --all --decorate
 [merge]
 	tool = vimdiff
-[core]
-        pager = delta
-
-[delta]
-        plus-color = "#012800"
-        minus-color = "#340001"
-        syntax-theme = Nord
-
-[interactive]
-        diffFilter = delta --color-only
