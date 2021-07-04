@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Bash wrappers for Docker/Podman commands, just to make
+# life a little bit easier.
+
+# Change this to 'docker', if you are using that.
+engine=podman
+
+# Remove stopped containers
+rm_stopped() {
+    local containers
+    while IFS= read -r container; do
+        containers+=("$container")
+    done < <("$engine" ps -aq 2>/dev/null)
+
+    if [ ! ${#containers[@]} -eq 0 ]; then
+        for container in "${containers[@]}"; do
+            state=$("$engine" inspect --format "{{.State.Running}}" "$container" 2>/dev/null)
+            if [[ "$state" == "false" ]]; then
+                "$engine" container rm "$container"
+            fi
+        done
+    fi
+}
+
+# Remove stopped containers, dangling volumes and images.
+ccleanup() {
+    rm_stopped
+
+    local volumes
+    while IFS= read -r volume; do
+        volumes+=("$volume")
+    done < <("$engine" volume ls -q --filter dangling=true 2>/dev/null)
+
+    local images
+    while IFS= read -r image; do
+        images+=("$image")
+    done < <("$engine" image ls -q --filter dangling=true 2>/dev/null)
+
+    if [ ${#volumes[@]} -eq 0 ]; then
+        echo "No dangling volumes found!"
+    else
+        for volume in "${volumes[@]}"; do
+            "$engine" volume rm "$volume"
+        done
+    fi
+
+    if [ ${#images[@]} -eq 0 ]; then
+        echo "No dangling images found!"
+    else
+        for image in "${images[@]}"; do
+            "$engine" image rm "$image"
+        done
+    fi
+}
