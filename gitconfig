@@ -1,0 +1,13 @@
+[user]
+	email = xrist.zerv@protonmail.com
+	name = Chris Zervakis
+[alias]
+	co = checkout
+	br = branch
+	cm = commit -v
+	st = status
+        graph  = log --oneline --graph --all --decorate
+[merge]
+	tool = vimdiff
+[init]
+	defaultBranch = main
