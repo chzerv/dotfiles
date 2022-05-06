@@ -230,18 +230,14 @@ nnoremap Q @:
 " Execute current line in command mode
 nnoremap <leader>: ^"zyg_:<C-R>z<CR>
 
+" Delete current buffer
+nnoremap <silent> <leader>bd :bdelete<CR>
+
 " Faster split switching
 nnoremap <A-h> <C-w>h
 nnoremap <A-l> <C-w>l
 nnoremap <A-k> <C-w>k
 nnoremap <A-j> <C-w>j
-
-" Vimwiki toggle todo
-nnoremap <localleader><Space> :<C-U>VimwikiToggleListItem<CR>
-
-"NERDTree toggle
-nnoremap <localleader>e :NERDTreeToggle<CR>
-" }}}
 
 " 4.1 Neovim Terminal {{{
 tnoremap <silent> <A-t> <C-\><C-n>:call archzer#toggle_terminal#ToggleTerminal(10)<CR>
@@ -272,57 +268,6 @@ cnoremap <C-h> <BS>
 cnoremap <C-d> <Del>
 " }}}
 
-" {{{ autocompletion config
-" function! CtrlSpace()
-"     let l:lastchar = matchstr(getline('.'), '.\%' . col('.') . 'c')
-"     let l:curline = strpart(getline('.'), 0, col('.')-1)
-"     complete if line until cursor is something like this:
-"     'a bunch of stuff ../path/to/file'
-"     but not if like this:
-"     '<tag>content</'
-"     if l:curline =~ ".*\\(<\\)\\@<!\/\\f*$"
-"         return "\<C-x>\<C-f>"
-"     else, call omnicompletion if omnifunc exists
-"     elseif len(&omnifunc) > 0
-"         if one a line which seems like a function, call signature help
-"         if l:curline =~ ".*(\\w\\{-}" && IsLspClient()
-"             lua vim.lsp.buf.signature_help()
-"             return ""
-"         else just do omnicompletion
-"         else
-"             return "\<C-x>\<C-o>"
-"         endif
-"     otherwise call word completion
-"     else
-"         return "\<C-n>"
-"     endif
-" endfunction
-" 
-" inoremap <silent> <C-Space> <C-R>=CtrlSpace()<CR>
-" 
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-" 
-" lsp {{{
-" luafile /home/cofefe/.config/nvim/lsp.lua
-" 
-" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-" 
-" nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-" 
-" nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-" 
-" nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-" 
-" nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-" 
-" nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-" 
-" nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-" 
-" nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-" }}}
 " line text objects
 " -----------------
 " il al
