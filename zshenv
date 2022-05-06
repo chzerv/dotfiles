@@ -1,6 +1,5 @@
 path=(
   $HOME/.local/bin/scripts
-  $HOME/.local/bin/scripts/fzf_scripts
   /var/lib/flatpak/exports/bin
   $HOME/.cargo/bin
   $HOME/.node_modules/bin
@@ -35,8 +34,6 @@ ZSH_AUTOSUGGEST_HISTORY_IGNORE="?(#c50,)"
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 # }}}
 
-PURE_PROMPT_SYMBOL="➞"
-
 # Runtime env vars {{{
 export EDITOR="nvim"
 export VISUAL="nvim"
@@ -45,8 +42,6 @@ export BROWSER="firefox"
 export READER="evince"
 export MANPAGER='nvim +Man!'
 export BAT_CONFIG_PATH="$HOME/.config/bat/bat.conf"
-export npm_config_prefix=~/.node_modules
-export WORKON_HOME=~/.virtualenvs
 export CHROOT=/media/General/Builds
 export STARSHIP_CONFIG=~/.config/zsh/starship.toml
 # }}}
