@@ -5,15 +5,29 @@
 local ts = require('telescope')
 local builtin = require("telescope.builtin")
 
--- Mappings {{{
--- Make <C-u> clear the prompt
+-- Change defaults {{{
 ts.setup {
+    picker = {
+        hidden = false,
+    },
     defaults = {
         mappings = {
+            -- Make <C-u> clear the prompt
             i = {
                 ["<C-u>"] = false
             },
         },
+        vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--hidden',
+        },
+        selection_strategy = "reset",
     }
 }
 
@@ -59,4 +73,5 @@ map('n', '<localleader>g', [[<Cmd>Telescope live_grep<CR>]], opts) -- Live searc
 map('n', '<localleader>h', [[<Cmd>Telescope help_tags<CR>]], opts) -- :help
 map('n', '<localleader>:', [[<Cmd>Telescope command_history<CR>]], opts) -- Cmdline history
 map('n', '<localleader>/', [[<Cmd>Telescope search_history<CR>]], opts) -- Search history
+map('n', '<localleader>k', [[<Cmd>Telescope keymaps<CR>]], opts) -- Show set keymaps
 -- }}}
