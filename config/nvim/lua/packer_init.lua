@@ -116,6 +116,9 @@ return require('packer').startup(function()
   -- Improve navigation inside tmux
   use 'christoomey/vim-tmux-navigator'
 
+  -- Git integration
+  use 'lewis6991/gitsigns.nvim'
+
   if packer_bootstrap then
     require('packer').sync()
   end
