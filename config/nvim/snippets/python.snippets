@@ -1,0 +1,32 @@
+snippet shebang
+    #!/usr/bin/env python
+
+    $0
+
+snippet try/except
+	try:
+		${1:${VISUAL}}
+	except ${2:Exception} as ${3:e}:
+		${0:raise $3}
+
+snippet with
+	with ${1:expr} as ${2:var}:
+		${0:${VISUAL}}
+
+# Ifs
+snippet if
+	if ${1:condition}:
+		${0:${VISUAL}}
+
+snippet ei
+	elif ${1:condition}:
+		${0:${VISUAL}}
+
+snippet el
+	else:
+		${0:${VISUAL}}
+
+# For
+snippet for
+	for ${1:item} in ${2:items}:
+		${0}

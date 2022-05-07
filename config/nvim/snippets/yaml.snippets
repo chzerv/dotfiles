@@ -1,0 +1,35 @@
+snippet template
+	- name: ${1:task_description}
+	  template:
+	    src: ${2:src}
+	    dest: ${3:dest}
+	    user: ${4:user}
+	    group: ${5:group}
+	    mode: ${6:'0644'}
+	    backup: ${7:yes}
+
+snippet systemd
+	- name: ${1:task_description}
+	  systemd:
+	    name: ${2:service name}
+	    state: ${3:state}
+	    enabled: ${4:true}
+	    daemon_reload: ${5:false}
+	    scope: ${6:system}
+
+snippet package
+	- name: ${1:task_description}
+	  package:
+	    name: ${2:package name}
+	    state: ${3:present}
+
+snippet apt_cache
+	- name: ${1:task_description}
+	  apt:
+	    update_cache: true
+	    cache_valid_time: 3600
+
+snippet debug
+	- name: ${1:debug}
+	  debug:
+	    msg: ${2:msg}

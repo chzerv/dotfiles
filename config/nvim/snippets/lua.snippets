@@ -1,0 +1,17 @@
+snippet fun
+    function ${1:name} (${2:params})
+        ${0:$VISUAL}
+    end
+
+snippet date
+    `strftime('%c')`
+
+# Neovim specific
+snippet vim.fn
+    local fn = vim.fn
+
+snippet nvim_config_path
+    local nvim_config = vim.fn.stdpath('config')
+
+snippet nvim_data_path
+    local nvim_config = vim.fn.stdpath('data')
