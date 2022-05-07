@@ -21,7 +21,7 @@ cmp.setup({
     },
 
   -- Key mapping
-  mapping = {
+  mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
@@ -55,10 +55,27 @@ cmp.setup({
   },
 
   -- Load sources, see: https://github.com/topics/nvim-cmp
-  sources = cmp.config.sources({
+  sources = {
     { name = 'nvim_lsp' },
     { name = 'snippy' },
     { name = 'path' },
     { name = 'buffer' },
-  }),
+    { name = 'cmdline' },
+  },
 })
+
+cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+        { name = 'buffer' },
+        { name = 'cmdline' }
+    }
+})
+
+-- cmp.setup.cmdline(':', {
+--     mapping = cmp.mapping.preset.cmdline(),
+--     sources = {
+--         { name = 'path' },
+--         { name = 'cmdline' }
+--     }
+-- })
