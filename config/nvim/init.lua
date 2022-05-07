@@ -48,5 +48,5 @@ opt.backspace:append "start"
 require('plugins/nvim-cmp')
 require('plugins/nvim-lsp')
 require('plugins/nvim-telescope')
-require('plugins/nvim-luasnip')
+require('plugins/nvim-snippy')
 require('plugins/nvim-gitsigns')

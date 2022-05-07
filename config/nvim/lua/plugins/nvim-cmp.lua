@@ -3,13 +3,13 @@
 --------------------------------
 
 local cmp = require('cmp')
-local luasnip = require('luasnip')
+local snippy = require('snippy')
 
 cmp.setup({
   -- Specify a snippet engine
   snippet = {
     expand = function(args)
-      luasnip.lsp_expand(args.body)
+        snippy.expand_snippet(args.body)
     end,
   },
 
@@ -37,8 +37,8 @@ cmp.setup({
     ['<Tab>'] = function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
+      elseif snippy.can_expand_or_advance() then
+        snippy.expand_or_advance()
       else
         fallback()
       end
@@ -46,8 +46,8 @@ cmp.setup({
     ['<S-Tab>'] = function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+      elseif snippy.can_jump(-1) then
+          snippy.snippy.previous()
       else
         fallback()
       end
@@ -57,7 +57,7 @@ cmp.setup({
   -- Load sources, see: https://github.com/topics/nvim-cmp
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'luasnip' },
+    { name = 'snippy' },
     { name = 'path' },
     { name = 'buffer' },
   }),
