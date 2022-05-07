@@ -142,7 +142,9 @@ nnoremap <silent> <Bslash>c :cclose<CR>
 
 " Cycle through buffers {{{
 nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> <leader>bp :bprevious<CR>
 nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> <leader>bn :bprevious<CR>
 " }}}
 
 " Cycle through location list items {{{
