@@ -116,6 +116,9 @@ return require('packer').startup(function()
   -- Improve navigation inside tmux
   use 'christoomey/vim-tmux-navigator'
 
+  -- Delete/add/change parentheses, tags etc
+  use 'tpope/vim-surround'
+
   -- Git integration
   use 'lewis6991/gitsigns.nvim'
 
