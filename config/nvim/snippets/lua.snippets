@@ -15,3 +15,13 @@ snippet nvim_config_path
 
 snippet nvim_data_path
     local nvim_config = vim.fn.stdpath('data')
+
+snippet map
+	map('${1:mode}', '${2:bindings}', '${3:function}', opts)
+
+snippet pcall
+	local status_ok, ${1:variable} = pcall(require, '${2:require}')
+	if not ok then
+		return
+	end
+	${0}
