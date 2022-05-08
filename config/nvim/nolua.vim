@@ -49,3 +49,21 @@ xnoremap il g_o^
 onoremap il :<C-u>normal vil<CR>
 xnoremap al $o0
 onoremap al :<C-u>normal val<CR>
+
+" Command Line {{{
+cnoremap <expr> <C-p>
+            \ pumvisible() ? "<C-p>" :
+            \ "<Up>"
+cnoremap <expr> <Right>
+            \ pumvisible() ? "<Space><BS>" :
+            \ "<Right>"
+cnoremap <expr> <C-n>
+            \ pumvisible() ? "<C-n>" :
+            \ "<Down>"
+cnoremap <C-b> <S-Left>
+cnoremap <C-f> <S-Right>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-h> <BS>
+cnoremap <C-d> <Del>
+" }}}

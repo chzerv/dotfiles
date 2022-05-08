@@ -96,7 +96,7 @@ map('n', 'sD', "<cmd>ShowDeclaration 1<CR>", { noremap = true })
 -- map('n', '<leader>e', ":e **/*<C-z><S-Tab>", { noremap = true })
 -- map('n', '<leader>f', ":find **/*<C-z><S-Tab>", { noremap = true })
 
--- 4.1 Neovim Terminal {{{
+-- Neovim Terminal {{{
 map('t', '<A-t>', "<C-\\><C-n><cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)
 map('n', '<A-t>', "<cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)
 map('t', '<A-[>', '<C-\\><C-n>', { noremap = true })
@@ -104,21 +104,4 @@ map('t', '<A-k>', '<C-\\><C-n><C-w>k', { noremap = true })
 map('t', '<A-j>', '<C-\\><C-n><C-w>j', { noremap = true })
 map('t', '<A-h>', '<C-\\><C-n><C-w>h', { noremap = true })
 map('t', '<A-l>', '<C-\\><C-n><C-w>l', { noremap = true })
--- }}}
-
--- 4.2 Command Line {{{
-map('c', '<C-p>', function ()
-    return vim.fn.pumvisible() == 1 and '<C-p>' or '<Up>' 
-end, { noremap = true, expr = true })
-
-map('c', '<Space><BS>', function ()
-    return vim.fn.pumvisible() == 1 and '<Space><BS>' or '<Right>' 
-end, { noremap = true, expr = true })
-
-map('c', '<C-n>', function ()
-    return vim.fn.pumvisible() == 1 and '<C-n>' or '<Down>' 
-end, { noremap = true, expr = true })
-
-map('c', '<C-a>', '<Home>', { noremap = true })
-map('c', '<C-e>', '<End>', { noremap = true })
 -- }}}
