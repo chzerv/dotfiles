@@ -1,18 +1,18 @@
---------------------------------------
+--------------------------------------------------------
 -- Configuration for telescope.nvim
---------------------------------------
+-- https://github.com/nvim-telescope/telescope.nvim
+--------------------------------------------------------
 
-local ts = require('telescope')
-local builtin = require("telescope.builtin")
+local ok, ts = pcall(require, "telescope")
+if not ok then
+    return
+end
 
--- Change defaults {{{
+local actions = require("telescope.actions")
+
 ts.setup {
-    picker = {
-        hidden = false,
-    },
     defaults = {
         mappings = {
-            -- Make <C-u> clear the prompt
             i = {
                 ["<C-u>"] = false
             },
@@ -26,8 +26,21 @@ ts.setup {
             '--column',
             '--smart-case',
             '--hidden',
+            '--trim',
+            '--glob=!.git/'
         },
-        selection_strategy = "reset",
+    },
+    pickers = {
+        find_files = {
+            find_command = {
+                'fd',
+                '--type',
+                'f',
+                '--hidden',
+                '--smart-case',
+                '--strip-cwd-prefix'
+            }
+        }
     }
 }
 
@@ -55,20 +68,19 @@ local new_maker = function(filepath, bufnr, opts)
   }):sync()
 end
 
-require("telescope").setup {
+ts.setup {
   defaults = {
     buffer_previewer_maker = new_maker,
   }
 }
-
--- }}}
 
 -- Keybindings to call specific telescope functions {{{
 local opts = { noremap = true, silent = true }
 local map = vim.api.nvim_set_keymap
 
 map('n', '<localleader>b', [[<Cmd>Telescope buffers<CR>]], opts) -- Search open buffers
-map('n', '<localleader>f', [[<Cmd>Telescope git_files<CR>]], opts) -- Search for files
+map('n', '<localleader>f', [[<Cmd>Telescope git_files<CR>]], opts) -- Search for files in git repo
+map('n', '<localleader>F', [[<Cmd>Telescope find_files<CR>]], opts) -- Search for files
 map('n', '<localleader>g', [[<Cmd>Telescope live_grep<CR>]], opts) -- Live search in cwd
 map('n', '<localleader>h', [[<Cmd>Telescope help_tags<CR>]], opts) -- :help
 map('n', '<localleader>:', [[<Cmd>Telescope command_history<CR>]], opts) -- Cmdline history
