@@ -32,13 +32,13 @@ opt.listchars = {
     tab = '▸ ', -- '» '
 }
 -- Don't show trailing whitespaces in insert mode
--- vim.cmd([[
---     augroup ListcharsTrail
---         autocmd!
---         autocmd InsertEnter * opt.listchars.trail = "•"
---         autocmd InsertLeave * opt.listchars.trail = ""
---     augroup END
--- ]])
+vim.cmd([[
+    augroup ListcharsTrail
+        autocmd!
+        autocmd InsertEnter * :set listchars-=trail:•
+        autocmd InsertLeave * :set listchars+=trail:•
+    augroup END
+]])
 
 -- Folding
 opt.foldlevelstart = 99

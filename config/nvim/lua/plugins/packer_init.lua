@@ -69,6 +69,7 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-buffer' -- Source for buffer words
   use 'hrsh7th/cmp-path' -- Source for paths
   use 'hrsh7th/cmp-cmdline' -- Source for VIM's cmdline
+  use 'hrsh7th/cmp-nvim-lsp-signature-help'
   use 'dcampos/nvim-snippy' -- Snippets plugin
   use 'dcampos/cmp-snippy' -- Snippets source for nvim-cmp
 
