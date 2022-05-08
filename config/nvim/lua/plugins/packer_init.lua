@@ -1,6 +1,7 @@
-------------------------------------
--- Configuration for packer.nvim
-------------------------------------
+-----------------------------------------------
+-- Initialize packer.nvim
+-- https://github.com/wbthomason/packer.nvim
+-----------------------------------------------
 
 -- Automatically install packer
 local fn = vim.fn
@@ -30,32 +31,17 @@ return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
   -- Smart comments
-  use {
-    'numToStr/Comment.nvim',
-    config = function()
-        require('Comment').setup()
-    end
-  }
+  use 'numToStr/Comment.nvim'
 
   -- Better % functionality
   use 'andymass/vim-matchup'
 
   -- Autopairs
-  use {
-    'windwp/nvim-autopairs',
-    config = function()
-      require('nvim-autopairs').setup({
-        enable_check_bracket_line = true
-    })
-    end
-  }
+  use 'windwp/nvim-autopairs'
 
   -- Indent guides
   -- Only needed for specific filetypes
-  use {
-    'lukas-reineke/indent-blankline.nvim',
-    ft = {'py', 'yaml', 'yml', 'json'}
-  }
+  use 'lukas-reineke/indent-blankline.nvim'
 
   -- Tree sitter
   -- Enable vim-matchup support for tree-sitter
@@ -63,20 +49,6 @@ return require('packer').startup(function()
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
-    config = function()
-      require('nvim-treesitter').setup({
-        matchup = {
-          enable = true,
-        },
-	ensure_installed = {
-	  'bash', 'c', 'dockerfile', 'go', 'javascript', 'python', 'json', 'rust', 'yaml', 'vim', 'lua', 'html'
-	},
-	sync_install = false,
-        highlight = {
-	  enable = true
-	}
-      })
-    end
   }
 
   -- LSP
