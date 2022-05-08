@@ -1,6 +1,8 @@
-----------------------------
--- Key bindings
-----------------------------
+--------------------------------------------------
+--            Core key bindings
+-- Plugin specific key bindings are found in
+-- the lua/plugins/$plugin_name directory.
+--------------------------------------------------
 
 local g = vim.g       -- Global variables
 local opt = vim.opt   -- Set options (global/buffer/windows-scoped)
@@ -13,9 +15,8 @@ local opts = { noremap = true, silent = true }
 g.mapleader = " "
 g.maplocalleader = "\\"
 
--- Clear search highlight
-map({'n', 'x'}, '<C-s>', [[<Cmd>nohlsearch<CR>]], opts) 
-map('x', '<C-s>', [[<Cmd>nohlsearch<CR>]], opts) 
+-- Use double ESC to turn off search highlighting
+map("n", "<Esc><Esc>", "<cmd> :noh <CR>")
 
 -- Cycle through tabs
 map('n', '[t', [[<Cmd>tabprevious<CR>]], opts)
@@ -38,11 +39,21 @@ map('n', '[l', [[<Cmd>lprevious<CR>]], opts)
 map('n', ']l', [[<Cmd>lnext<CR>]], opts)
 map('n', '<Bslash>l', [[<Cmd>lclose<CR>]], opts)
 
--- Linewise movement
-map('n', 'k', [[gk]], opts)
-map('n', 'j', [[gj]], opts)
-map('n', 'gk', [[k]], opts)
-map('n', 'gj', [[j]], opts)
+-- Allow moving through wrapped lines
+-- map('n', 'k', [[gk]], opts)
+-- map('n', 'j', [[gj]], opts)
+-- map('n', 'gk', [[k]], opts)
+-- map('n', 'gj', [[j]], opts)
+
+-- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
+-- http<cmd> ://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
+-- empty mode is same as using <cmd> :map
+-- also don't use g[j|k] when in operator pending mode, so it doesn't alter d, y or c behaviour
+-- Stolen from https://github.com/NvChad/NvChad
+map({ "n", "x", "o" }, "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
+map({ "n", "x", "o" }, "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
+map("", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
+map("", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
 
 -- Put blank lines below/above current line
 map('n', ']<Space>', '<Plug>(PutBlankLinesBelow)', opts)
