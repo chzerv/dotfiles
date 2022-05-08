@@ -44,7 +44,7 @@ end
 -- }}}
 
 -- Auto-completion {{{
-opt.completeopt:append "longest"
+opt.completeopt:append "noinsert"
 opt.completeopt:append "menuone"
 opt.completeopt:append "preview"
 opt.complete = ".,w,b,i,u,t"
