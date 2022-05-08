@@ -118,6 +118,7 @@ return require('packer').startup(function()
 
   -- Delete/add/change parentheses, tags etc
   use 'tpope/vim-surround'
+  use 'tpope/vim-fugitive'
 
   -- Git integration
   use 'lewis6991/gitsigns.nvim'
