@@ -37,7 +37,6 @@ ts.setup {
                 '--type',
                 'f',
                 '--hidden',
-                '--smart-case',
                 '--strip-cwd-prefix'
             }
         }
@@ -78,12 +77,14 @@ ts.setup {
 local opts = { noremap = true, silent = true }
 local map = vim.api.nvim_set_keymap
 
+map('n', '<localleader>t', [[<Cmd>Telescope<CR>]], opts) -- Show set keymaps
+map('n', '<localleader>r', [[<Cmd>Telescope oldfiles<CR>]], opts) -- Show set keymaps
 map('n', '<localleader>b', [[<Cmd>Telescope buffers<CR>]], opts) -- Search open buffers
-map('n', '<localleader>f', [[<Cmd>Telescope git_files<CR>]], opts) -- Search for files in git repo
-map('n', '<localleader>F', [[<Cmd>Telescope find_files<CR>]], opts) -- Search for files
+map('n', '<localleader>f', [[<Cmd>lua require'plugins.utils'.project_files()<CR>]], opts) -- Search for files
 map('n', '<localleader>g', [[<Cmd>Telescope live_grep<CR>]], opts) -- Live search in cwd
 map('n', '<localleader>h', [[<Cmd>Telescope help_tags<CR>]], opts) -- :help
 map('n', '<localleader>:', [[<Cmd>Telescope command_history<CR>]], opts) -- Cmdline history
 map('n', '<localleader>/', [[<Cmd>Telescope search_history<CR>]], opts) -- Search history
 map('n', '<localleader>k', [[<Cmd>Telescope keymaps<CR>]], opts) -- Show set keymaps
+map('n', '<localleader>n', [[<Cmd>lua require'plugins.utils'.find_notes()<CR>]], opts) -- Search for files
 -- }}}
