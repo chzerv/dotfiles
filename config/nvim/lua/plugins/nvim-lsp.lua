@@ -46,7 +46,7 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
 
 -- Setup LSP servers
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'bashls', 'yamlls', 'ansiblels' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'bashls', 'yamlls', 'ansiblels', 'sumneko_lua'}
 
 -- Automatically install LSP servers using nvim-lsp-installer
 -- https://github.com/williamboman/nvim-lsp-installer
