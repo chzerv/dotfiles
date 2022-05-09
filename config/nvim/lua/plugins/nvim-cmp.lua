@@ -14,18 +14,11 @@ if not snippy_ok then
 end
 
 cmp.setup({
-    -- Specify a snippet engine
+  -- Specify a snippet engine
     snippet = {
         expand = function(args)
             snippy.expand_snippet(args.body)
         end,
-    },
-
-    -- Completion options
-    completion = {
-        completeopt = "menu,menuone,noinsert",
-        keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
-        keyword_length = 1,
     },
 
     -- Key mapping
@@ -37,7 +30,7 @@ cmp.setup({
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.close(),
         ['<CR>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
+            -- behavior = cmp.ConfirmBehavior.Replace,
             select = true,
         },
 
