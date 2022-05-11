@@ -59,7 +59,8 @@ cmp.setup({
         { name = 'nvim_lsp_signature_help' },
         { name = 'snippy' },
         { name = 'path' },
-        { name = 'buffer' }
+        { name = 'buffer' },
+        { name = 'nvim_lua'}
     }
 })
 

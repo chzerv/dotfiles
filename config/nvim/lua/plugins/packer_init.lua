@@ -66,6 +66,7 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-nvim-lsp-signature-help'
   use 'dcampos/nvim-snippy' -- Snippets plugin
   use 'dcampos/cmp-snippy' -- Snippets source for nvim-cmp
+  use 'hrsh7th/cmp-nvim-lua' -- Source for the neovim Lua API
 
   -- telescope.nvim
   use {
