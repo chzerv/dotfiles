@@ -34,9 +34,6 @@ xnoremap mj :move'>+<CR>gv=gv
 xnoremap mk :move-2<CR>gv=gv
 " }}}
 
-nnoremap <leader>e :e **/*<C-z><S-Tab>
-nnoremap <leader>f :find **/*<C-z><S-Tab>
-
 " Another one from 'romainl', found here (https://stackoverflow.com/questions/30873668/how-can-i-change-in-number-or-change-in-digits-in-vim/30874254).
 xnoremap in  :<C-u>call archzer#settings#Numbers()<CR>
 onoremap in :normal vin<CR>

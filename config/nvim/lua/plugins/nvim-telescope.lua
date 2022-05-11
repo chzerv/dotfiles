@@ -40,12 +40,12 @@ ts.setup {
         layout_config = {
             horizontal = {
                 prompt_position = "bottom",
-                preview_width = 0.60,
-                results_width = 0.8,
+                preview_width = 0.50,
+                results_width = 0.80,
             },
             width = 0.80,
             height = 0.80,
-            preview_cutoff = 120,
+            preview_cutoff = 100,
         },
         buffer_previewer_maker = new_maker,
         vimgrep_arguments = {

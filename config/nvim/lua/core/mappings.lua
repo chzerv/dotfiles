@@ -93,11 +93,8 @@ map('n', 'Q', '@:', opts)
 -- Switch to the directory of the open buffer
 map('n', '<leader>wd', "<cmd>lcd %:p:h<CR>:pwd<CR>", opts)
 
-map('n', 'sd', "<cmd>ShowDeclaration 0<CR>", { noremap = true })
-map('n', 'sD', "<cmd>ShowDeclaration 1<CR>", { noremap = true })
-
--- map('n', '<leader>e', ":e **/*<C-z><S-Tab>", { noremap = true })
--- map('n', '<leader>f', ":find **/*<C-z><S-Tab>", { noremap = true })
+map('n', '<leader>e', ":e **/*<C-z><S-Tab>", { noremap = true })
+map('n', '<leader>f', ":find **/*<C-z><S-Tab>", { noremap = true })
 
 -- Neovim Terminal {{{
 map('t', '<A-t>', "<C-\\><C-n><cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)

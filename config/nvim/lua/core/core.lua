@@ -56,7 +56,7 @@ opt.wildignorecase = true
 opt.wildcharm = vim.fn.char2nr('^Z') -- wildcharm expects a number, so we convert <C-z> to a number
 opt.wildoptions = "pum"
 opt.path:remove("/usr/include")
-opt.wildignore = '*/node_modules/*,*/autoload/*,*/cache/*'
+opt.wildignore:append "*/node_modules/*,*/autoload/*,*/cache/*,*.o,*~,*pycache*"
 -- }}}
 
 -- Line movement, wrap etc {{{
