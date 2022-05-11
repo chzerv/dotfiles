@@ -83,6 +83,9 @@ map('n', '<leader>z', '<Plug>(ToggleZoom)', opts)
 -- Execute current line in command mode
 map('n', '<leader>:', '^"zyg_:<C-R>z<CR>', opts)
 
+-- Search for help for the word under the cursor
+map('n', '<leader>h', 'viW"zy:help <C-R>z<CR>', opts)
+
 -- Repeat the last command-line command
 -- (Ex mode still accesible via gQ)
 map('n', 'Q', '@:', opts)
