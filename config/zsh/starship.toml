@@ -1,3 +1,46 @@
 # Replace the "❯" symbol in the prompt with "➜"
 [character]
 success_symbol = "[➜](green)"
+error_symbol = "[✗](bold red) "
+
+[directory]
+read_only = " "
+truncation_length = 3
+truncate_to_repo = true
+
+[jobs]
+symbol = ""
+
+[c]
+symbol = " "
+
+[docker_context]
+symbol = " "
+
+[git_branch]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[lua]
+format = "via [ $version](bold blue) "
+
+[memory_usage]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[package]
+symbol = " "
+
+[python]
+symbol = " "
+
+[rust]
+symbol = " "
+
