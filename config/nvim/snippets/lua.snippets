@@ -21,7 +21,7 @@ snippet map
 
 snippet pcall
 	local status_ok, ${1:variable} = pcall(require, '${2:require}')
-	if not ok then
+	if not status_ok then
 		return
 	end
 	${0}

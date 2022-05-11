@@ -44,7 +44,7 @@ ts.setup {
                 results_width = 0.8,
             },
             width = 0.80,
-            height = 0.60,
+            height = 0.80,
             preview_cutoff = 120,
         },
         buffer_previewer_maker = new_maker,
