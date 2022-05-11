@@ -10,13 +10,6 @@ function! archzer#settings#toggle_zoom() abort
         let t:zoomed = 1
     endif
 endfunction
-" }
-
-" Show cursor line whenever I'm out of insert mode {
-function! archzer#settings#show_cursorline() abort
-    set cursorline
-    hi cursorline cterm=none ctermbg=darkblue ctermfg=white
-endfunction
 
 " Fix spelling errors
 function! archzer#settings#fix_spelling() abort
