@@ -81,10 +81,19 @@ ts.setup {
                     end
                 }
             }
+        },
+    },
+    extensions = {
+        fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = "smart_case",
         }
-
     }
 }
+
+require('telescope').load_extension('fzf')
 
 -- Keybindings to call specific telescope functions {{{
 local opts = { noremap = true, silent = true }
@@ -97,6 +106,7 @@ map('n', '<localleader>f', [[<Cmd>lua require'plugins.utils'.project_files()<CR>
 map('n', '<localleader>gs', [[<Cmd>Telescope git_status<CR>]], opts) -- Git status
 map('n', '<localleader>gl', [[<Cmd>lua require'plugins.utils'.git_log()<CR>]], opts) -- Git log
 map('n', '<localleader>s', [[<Cmd>Telescope live_grep<CR>]], opts) -- Live search in cwd
+map('n', '<localleader>S', [[<Cmd>lua require'plugins.utils'.prompt_grep_string()<CR>]], opts) -- Live search in cwd
 map('n', '<localleader>h', [[<Cmd>Telescope help_tags<CR>]], opts) -- :help
 map('n', '<localleader>:', [[<Cmd>Telescope command_history<CR>]], opts) -- cmd history
 map('n', '<localleader>/', [[<Cmd>Telescope search_history<CR>]], opts) -- Search history

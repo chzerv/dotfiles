@@ -8,8 +8,21 @@ M.project_files = function()
     if not ok then require"telescope.builtin".find_files(opts) end
 end
 
+-- Find files inside my notes directory
 M.find_notes = function()
-    require('telescope.builtin').find_files(vim.tbl_deep_extend("force", { cwd = "~/Documents/Syncthing/Notes", prompt_title = "Search Notes.." }, opts or {}))
+    require('telescope.builtin').find_files(vim.tbl_deep_extend("force", {
+        cwd = "~/Documents/Syncthing/Notes",
+        prompt_title = "~  Search Notes  ~"
+    },
+    opts or {}))
+end
+
+-- Prompt user for a string, and run 'Telescope grep_string search=<string>'
+M.prompt_grep_string = function()
+    require("telescope.builtin").grep_string {
+        path_display = { "shorten" },
+        search = vim.fn.input "Grep String > ",
+    }
 end
 
 -- Stolen from LunarVim
@@ -33,7 +46,7 @@ local copy_to_clipboard_action = function(prompt_bufnr)
 end
 
 M.git_log = function()
-    local opts = themes
+    local opts = themes.get_ivy()
     opts.entry_maker = make_entry.gen_from_git_commits(opts)
 
     pickers.new(opts, {
@@ -49,7 +62,7 @@ M.git_log = function()
         opts
         ),
         previewer = {
-            previewers.git_commit_diff_as_was.new(opts),
+            previewers.git_commit_diff_as_was.new(opts)
         },
 
         --TODO: consider opening a diff view when pressing enter

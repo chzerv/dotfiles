@@ -73,6 +73,10 @@ return require('packer').startup(function()
     'nvim-telescope/telescope.nvim',
       requires = { {'nvim-lua/plenary.nvim'} }
   }
+  use {
+      'nvim-telescope/telescope-fzf-native.nvim',
+      run = 'make'
+  }
 
   -- Appearance
   use 'navarasu/onedark.nvim'
