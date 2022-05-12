@@ -23,6 +23,7 @@ opt.laststatus = 2 -- Always show the statusline
 opt.showcmd = true
 opt.ruler = false
 -- opt.pumblend = 15 -- Add some transparency to the pummenu
+opt.pumheight = 12 -- Limit how many completion candidates can appear in the pummenu
 
 -- Visualize tabs, spaces, unwrapped text and non-breaking spaces {{{
 opt.list = true
