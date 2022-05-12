@@ -26,5 +26,6 @@ require('plugins/nvim-gitsigns')
 require('plugins/nvim-comment')
 require('plugins/nvim-autopairs')
 require('plugins/nvim-indent-blankline')
+require('plugins/appearance')
 require('plugins/others')
 -- }}}
