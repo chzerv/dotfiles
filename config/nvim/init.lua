@@ -6,26 +6,31 @@
 -- Initialize packer
 require('plugins/packer_init')
 
--- Core configuration {{{
-require('core/core')
-require('core/mappings')
-require('core/appearance')
-require('core/commands')
--- }}}
+local modules = {
+    'core/core',
+    'core/mappings',
+    'core/appearance',
+    'core/commands',
+    'plugins/nvim-cmp',
+    'plugins/nvim-lsp',
+    'plugins/nvim-treesitter',
+    'plugins//nvim-telescope',
+    'plugins/nvim-snippy',
+    'plugins/nvim-gitsigns',
+    'plugins/nvim-comment',
+    'plugins/nvim-autopairs',
+    'plugins/nvim-indent-blankline',
+    'plugins/appearance',
+    'plugins/others'
+}
+
+for _, module in ipairs(modules) do
+    local ok, err = pcall(require, module)
+    if not ok then
+        vim.notify("Module [" .. module .. "] failed to load." .. "\n\n" .. err)
+    end
+end
 
 -- Load remaining vimscript configuration
 vim.cmd(':so $HOME/.config/nvim/nolua.vim')
 
--- Plugins {{{
-require('plugins/nvim-cmp')
-require('plugins/nvim-lsp')
-require('plugins/nvim-treesitter')
-require('plugins/nvim-telescope')
-require('plugins/nvim-snippy')
-require('plugins/nvim-gitsigns')
-require('plugins/nvim-comment')
-require('plugins/nvim-autopairs')
-require('plugins/nvim-indent-blankline')
-require('plugins/appearance')
-require('plugins/others')
--- }}}
