@@ -8,20 +8,18 @@ M.project_files = function()
     if not ok then require"telescope.builtin".find_files(opts) end
 end
 
--- Find files inside my notes directory
-M.find_notes = function()
-    require('telescope.builtin').find_files(vim.tbl_deep_extend("force", {
-        cwd = "~/Documents/Syncthing/Notes",
-        prompt_title = "~  Search Notes  ~"
-    },
-    opts or {}))
-end
-
 -- Prompt user for a string, and run 'Telescope grep_string search=<string>'
 M.prompt_grep_string = function()
     require("telescope.builtin").grep_string {
         path_display = { "shorten" },
         search = vim.fn.input "Grep String > ",
+    }
+end
+
+M.prompt_find_files = function()
+    require("telescope.builtin").find_files {
+        path_display = { "shorten" },
+        cwd = vim.fn.input "Grep String > ",
     }
 end
 
@@ -73,6 +71,37 @@ M.git_log = function()
         end,
         sorter = sorters.generic_sorter,
     }):find()
+end
+
+-- Find files inside specific directories
+M.edit_nvim = function()
+    local opts = {
+        prompt_title = "~  Neovim  ~",
+        cwd = "~/.config/nvim",
+        find_command = { 'fd' }
+    }
+
+    require("telescope.builtin").find_files(opts)
+end
+
+M.edit_notes = function()
+    local opts = {
+        prompt_title = "~  Notes  ~",
+        cwd = "~/Documents/Syncthing/Notes",
+        find_command = { 'fd' }
+    }
+
+    require("telescope.builtin").find_files(opts)
+end
+
+M.edit_dotfiles = function()
+    local opts = {
+        prompt_title = "~  dotfiles  ~",
+        cwd = "~/Projects/dotfiles",
+        find_command = { 'fd' }
+    }
+
+    require("telescope.builtin").find_files(opts)
 end
 
 return M

@@ -32,20 +32,19 @@ local new_maker = function(filepath, bufnr, opts)
     }):sync()
 end
 
+actions = require("telescope.actions")
+actions_layout = require("telescope.actions.layout")
+
 ts.setup {
     defaults = {
         -- prompt_prefix = '▸ ',
         -- selection_caret = '▸ ',
         layout_strategy = "horizontal",
         layout_config = {
-            horizontal = {
-                prompt_position = "bottom",
-                preview_width = 0.50,
-                results_width = 0.80,
-            },
             width = 0.80,
             height = 0.80,
             preview_cutoff = 100,
+            prompt_position = "bottom",
         },
         buffer_previewer_maker = new_maker,
         vimgrep_arguments = {
@@ -60,6 +59,13 @@ ts.setup {
             '--trim',
             '--glob=!.git/'
         },
+        mappings = {
+            i = {
+                ["<C-x>"] = false,
+                ["<C-s>"] = actions.select_horizontal,
+                ["<M-p>"] = actions_layout.toggle_preview,
+            }
+        }
     },
     pickers = {
         find_files = {
@@ -93,6 +99,7 @@ ts.setup {
     }
 }
 
+-- Extensions
 require('telescope').load_extension('fzf')
 
 -- Keybindings to call specific telescope functions {{{
@@ -103,6 +110,7 @@ map('n', '<localleader>t', [[<Cmd>Telescope<CR>]], opts)
 map('n', '<localleader>r', [[<Cmd>Telescope oldfiles<CR>]], opts) -- MRU (sort of)
 map('n', '<localleader>b', [[<Cmd>Telescope buffers<CR>]], opts) -- Search open buffers
 map('n', '<localleader>f', [[<Cmd>lua require'plugins.utils'.project_files()<CR>]], opts) -- Search for files
+map('n', '<localleader>F', [[<Cmd>lua require'plugins.utils'.prompt_find_files()<CR>]], opts) -- Live search in cwd
 map('n', '<localleader>gs', [[<Cmd>Telescope git_status<CR>]], opts) -- Git status
 map('n', '<localleader>gl', [[<Cmd>lua require'plugins.utils'.git_log()<CR>]], opts) -- Git log
 map('n', '<localleader>s', [[<Cmd>Telescope live_grep<CR>]], opts) -- Live search in cwd
@@ -111,6 +119,8 @@ map('n', '<localleader>h', [[<Cmd>Telescope help_tags<CR>]], opts) -- :help
 map('n', '<localleader>:', [[<Cmd>Telescope command_history<CR>]], opts) -- cmd history
 map('n', '<localleader>/', [[<Cmd>Telescope search_history<CR>]], opts) -- Search history
 map('n', '<localleader>k', [[<Cmd>Telescope keymaps<CR>]], opts) -- Show set keymaps
-map('n', '<localleader>n', [[<Cmd>lua require'plugins.utils'.find_notes()<CR>]], opts) -- Search for files in my notes dir
+map('n', '<localleader>en', [[<Cmd>lua require'plugins.utils'.edit_notes()<CR>]], opts) -- Search for files in my notes dir
+map('n', '<localleader>ev', [[<Cmd>lua require'plugins.utils'.edit_nvim()<CR>]], opts) -- Search for files in my notes dir
+map('n', '<localleader>ed', [[<Cmd>lua require'plugins.utils'.edit_dotfiles()<CR>]], opts) -- Search for files in my notes dir
 -- }}}
 
