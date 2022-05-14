@@ -3,81 +3,61 @@
 -- https://github.com/hrsh7th/nvim-cmp
 -----------------------------------------
 
-local cmp_ok, cmp = pcall(require, 'cmp')
+local cmp_ok, cmp = pcall(require, "cmp")
 if not cmp_ok then
     return
 end
 
-local snippy_ok, snippy = pcall(require, 'snippy')
+local snippy_ok, snippy = pcall(require, "snippy")
 if not snippy_ok then
     return
 end
 
+local lspkind_ok, lspkind = pcall(require, "lspkind")
+if not lspkind_ok then
+  return
+end
+
+
 cmp.setup({
-  -- Specify a snippet engine
     snippet = {
         expand = function(args)
             snippy.expand_snippet(args.body)
         end,
     },
-
-    -- Key mapping
-    mapping = cmp.mapping.preset.insert {
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.close(),
-        ['<CR>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-        },
-
-        -- Tab mapping
-        ['<Tab>'] = function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif snippy.can_expand_or_advance() then
-                snippy.expand_or_advance()
-            else
-                fallback()
-            end
-        end,
-        ['<S-Tab>'] = function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif snippy.can_jump(-1) then
-                snippy.snippy.previous()
-            else
-                fallback()
-            end
-        end
+    mapping = {
+        ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+        ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-e>"] = cmp.mapping.abort(),
+        ["<C-y>"] = cmp.mapping(
+            cmp.mapping.confirm {
+                behavior = cmp.ConfirmBehavior.Insert,
+                select = true
+            },
+            { "i", "c" }
+        ),
     },
     sources = {
-        { name = 'nvim_lsp' },
-        { name = 'nvim_lsp_signature_help' },
-        { name = 'snippy' },
-        { name = 'path' },
-        { name = 'buffer' },
-        { name = 'nvim_lua'}
-    }
+        { name = "nvim_lsp" },
+        { name = "nvim_lsp_signature_help" },
+        { name = "snippy" },
+        { name = "path" },
+        { name = "buffer" },
+        { name = "nvim_lua" }
+    },
+    -- formatting = {
+    --     format = lspkind.cmp_format {
+    --         with_text = true,
+    --         menu = {
+    --             buffer = "[buf]",
+    --             nvim_lsp = "[LSP]",
+    --             nvim_lua = "[api]",
+    --             path = "[path]",
+    --             snippy = "[snip]"
+    --         },
+    --     },
+    -- },
 })
 
--- Use buffer source for `/`
-cmp.setup.cmdline('/', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-        { name = 'buffer' }
-    }
-})
-
--- Use cmdline & path source for ':'
-cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-        { name = 'path' }
-    }, {
-        { name = 'cmdline' }
-    })
-})

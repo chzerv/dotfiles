@@ -54,7 +54,7 @@ return require('packer').startup(function()
   -- LSP
   use {
     "williamboman/nvim-lsp-installer",
-    "neovim/nvim-lspconfig"
+    "neovim/nvim-lspconfig",
   }
 
   -- Autocompletion
@@ -62,11 +62,11 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
   use 'hrsh7th/cmp-buffer' -- Source for buffer words
   use 'hrsh7th/cmp-path' -- Source for paths
-  use 'hrsh7th/cmp-cmdline' -- Source for VIM's cmdline
   use 'hrsh7th/cmp-nvim-lsp-signature-help'
   use 'dcampos/nvim-snippy' -- Snippets plugin
   use 'dcampos/cmp-snippy' -- Snippets source for nvim-cmp
   use 'hrsh7th/cmp-nvim-lua' -- Source for the neovim Lua API
+  use 'onsails/lspkind.nvim'
 
   -- telescope.nvim
   use {
