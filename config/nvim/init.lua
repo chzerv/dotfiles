@@ -10,7 +10,7 @@ local modules = {
     'core/core',
     'core/mappings',
     'core/appearance',
-    'core/commands',
+    'core/autocommands',
     'plugins/nvim-cmp',
     'plugins/nvim-lsp',
     'plugins/nvim-treesitter',
