@@ -20,15 +20,15 @@ command! FixSpelling call archzer#settings#fix_spelling()
 command! -nargs=1 -complete=command Redir silent call archzer#redir#Redir(<q-args>)
 command! -nargs=1 Trans Redir !trans :el <f-args>
 command! Date :put =strftime(\"%a, %d %b %Y\")
-" command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update('',
-"             \ {'do': 'call minpac#status()'})
-" command! PackClean packadd minpac | source $MYVIMRC |  call minpac#clean()
-" command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
 " }}}
 
 "========================================================
 "                       Key bindings
 "========================================================
+
+noremap <leader>e :edit **/*<C-z><S-Tab>
+noremap <leader>f :find **/*<C-z><S-Tab>
+
 " Drag visual selected line(s) vertically and auto-indent {{{
 xnoremap mj :move'>+<CR>gv=gv
 xnoremap mk :move-2<CR>gv=gv
@@ -48,15 +48,6 @@ xnoremap al $o0
 onoremap al :<C-u>normal val<CR>
 
 " Command Line {{{
-cnoremap <expr> <C-p>
-            \ pumvisible() ? "<C-p>" :
-            \ "<Up>"
-cnoremap <expr> <Right>
-            \ pumvisible() ? "<Space><BS>" :
-            \ "<Right>"
-cnoremap <expr> <C-n>
-            \ pumvisible() ? "<C-n>" :
-            \ "<Down>"
 cnoremap <C-b> <S-Left>
 cnoremap <C-f> <S-Right>
 cnoremap <C-a> <Home>

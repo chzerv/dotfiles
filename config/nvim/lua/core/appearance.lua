@@ -7,7 +7,6 @@ local opt = vim.opt   -- Set options (global/buffer/windows-scoped)
 
 opt.shortmess:append 'c' -- Supress messages when reaching end of pummenu
 opt.shortmess:append 'I' -- Disable VIM intro
-opt.cmdheight = 2 -- cmd window height
 opt.laststatus = 2 -- Always show the statusline
 opt.showcmd = true
 opt.ruler = false

@@ -83,18 +83,12 @@ map('n', '<leader>z', '<Plug>(ToggleZoom)', opts)
 -- Execute current line in command mode
 map('n', '<leader>:', '^"zyg_:<C-R>z<CR>', opts)
 
--- Search for help for the word under the cursor
-map('n', '<leader>h', 'viW"zy:help <C-R>z<CR>', opts)
-
 -- Repeat the last command-line command
 -- (Ex mode still accesible via gQ)
 map('n', 'Q', '@:', opts)
 
 -- Switch to the directory of the open buffer
 map('n', '<leader>wd', "<cmd>lcd %:p:h<CR>:pwd<CR>", opts)
-
-map('n', '<leader>e', ":e **/*<C-z><S-Tab>", { noremap = true })
-map('n', '<leader>f', ":find **/*<C-z><S-Tab>", { noremap = true })
 
 -- Neovim Terminal {{{
 map('t', '<A-t>', "<C-\\><C-n><cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)
