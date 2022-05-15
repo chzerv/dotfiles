@@ -81,7 +81,11 @@ return require('packer').startup(function()
 
   -- Appearance
   -- use 'navarasu/onedark.nvim'
-  use 'shaunsingh/nord.nvim'
+  -- use 'shaunsingh/nord.nvim'
+  use{
+    "catppuccin/nvim",
+    as = "catppuccin"
+  }
   use {
     'nvim-lualine/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true }
