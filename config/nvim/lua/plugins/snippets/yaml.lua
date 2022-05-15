@@ -22,26 +22,26 @@ ls.add_snippets("yaml", {
     s(
         "template",
         fmt([[
-            - name: {}
-              template:
-                src: {}
-                dest: {}
-                user: {}
-                group: {}
-                mode: {}
-                backup: {}
+        - name: {}
+          template:
+            src: {}
+            dest: {}
+            user: {}
+            group: {}
+            mode: {}
+            backup: {}
         ]], { i(1), i(2), i(3), i(4), i(5), i(6), i(7) })
     ),
     s(
         "systemd",
         fmt([[
-            - name: {}
-              systemd:
-                name: {}
-                state: {}
-                enabled: {}
-                daemon_reload: {}
-                scope: {}
+        - name: {}
+          systemd:
+            name: {}
+            state: {}
+            enabled: {}
+            daemon_reload: {}
+            scope: {}
 
             {}
         ]], { i(1), i(2), c(3, { t"started", t"stopped", t"restarted" }), c(4, { t"true", t"false" }), c(5, { t"false", t"true" }), c(6, { t"system", t"user", t"global"}), i(7) })
@@ -49,10 +49,10 @@ ls.add_snippets("yaml", {
     s(
         "package",
         fmt([[
-            - name: {}
-              package:
-                name: {}
-                state: {}
+        - name: {}
+          package:
+            name: {}
+            state: {}
 
             {}
         ]], { i(1), i(2), c(3, { t"present", t"absent", t"latest" }), i(4) })
@@ -60,10 +60,10 @@ ls.add_snippets("yaml", {
     s(
         "apt_cache",
         fmt([[
-            - name: {}
-              apt:
-                update_cache: true
-                cache_valid_time: 3600
+        - name: {}
+          apt:
+            update_cache: true
+            cache_valid_time: 3600
 
             {}
         ]], { i(1), i(2) })
@@ -71,9 +71,9 @@ ls.add_snippets("yaml", {
     s(
         "debug",
         fmt([[
-            - name: {}
-              debug:
-                msg: {}
+        - name: {}
+          debug:
+            msg: {}
 
             {}
         ]], { i(1), i(2), i(3) })
