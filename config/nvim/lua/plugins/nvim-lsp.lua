@@ -43,7 +43,7 @@ local on_attach = function()
         vim.keymap.set("n", "<leader>cdl", "<cmd>Telescope diagnostics<CR>", opts)
         vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, opts)
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-        vim.keymap.set({"n", "i"}, "<C-k>", vim.lsp.buf.signature_help, opts)
+        vim.keymap.set({"n", "i"}, "<C-s>", vim.lsp.buf.signature_help, opts)
     end
 
 for _, server in ipairs(servers) do

@@ -8,11 +8,6 @@ if not cmp_ok then
     return
 end
 
-local snippy_ok, snippy = pcall(require, "snippy")
-if not snippy_ok then
-    return
-end
-
 local lspkind_ok, lspkind = pcall(require, "lspkind")
 if not lspkind_ok then
   return
@@ -22,7 +17,7 @@ end
 cmp.setup({
     snippet = {
         expand = function(args)
-            snippy.expand_snippet(args.body)
+            require('luasnip').lsp_expand(args.body)
         end,
     },
     mapping = {
@@ -42,22 +37,22 @@ cmp.setup({
     sources = {
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
-        { name = "snippy" },
+        { name = "luasnip" },
         { name = "path" },
         { name = "buffer" },
         { name = "nvim_lua" }
     },
-    -- formatting = {
-    --     format = lspkind.cmp_format {
-    --         with_text = true,
-    --         menu = {
-    --             buffer = "[buf]",
-    --             nvim_lsp = "[LSP]",
-    --             nvim_lua = "[api]",
-    --             path = "[path]",
-    --             snippy = "[snip]"
-    --         },
-    --     },
-    -- },
+    formatting = {
+        format = lspkind.cmp_format {
+            with_text = true,
+            menu = {
+                buffer = "[buf]",
+                nvim_lsp = "[LSP]",
+                nvim_lua = "[api]",
+                path = "[path]",
+                luasnip = "[snip]"
+            },
+        },
+    },
 })
 

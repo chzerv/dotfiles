@@ -63,10 +63,11 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-buffer' -- Source for buffer words
   use 'hrsh7th/cmp-path' -- Source for paths
   use 'hrsh7th/cmp-nvim-lsp-signature-help'
-  use 'dcampos/nvim-snippy' -- Snippets plugin
-  use 'dcampos/cmp-snippy' -- Snippets source for nvim-cmp
   use 'hrsh7th/cmp-nvim-lua' -- Source for the neovim Lua API
   use 'onsails/lspkind.nvim'
+
+  use 'L3MON4D3/LuaSnip'
+  use 'saadparwaiz1/cmp_luasnip'
 
   -- telescope.nvim
   use {
@@ -100,5 +101,3 @@ return require('packer').startup(function()
     require('packer').sync()
   end
 end)
-
-
