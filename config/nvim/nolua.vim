@@ -15,11 +15,7 @@ endif
 
 " Commands {{{
 command! Maketags !ctags -R .
-command! -nargs=1 ShowDeclaration call archzer#show_declaration#ShowDecl(<f-args>)
 command! FixSpelling call archzer#settings#fix_spelling()
-command! -nargs=1 -complete=command Redir silent call archzer#redir#Redir(<q-args>)
-command! -nargs=1 Trans Redir !trans :el <f-args>
-command! Date :put =strftime(\"%a, %d %b %Y\")
 " }}}
 
 "========================================================
