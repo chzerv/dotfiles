@@ -16,13 +16,10 @@ local modules = {
     'plugins/nvim-treesitter',
     'plugins/nvim-telescope',
     'plugins/nvim-luasnip',
-    'plugins/nvim-gitsigns',
-    'plugins/nvim-comment',
-    'plugins/nvim-autopairs',
+--    'plugins/nvim-gitsigns',
     'plugins/nvim-indent-blankline',
     'plugins/appearance',
     'plugins/others',
-    'plugins/vimtex'
 }
 
 for _, module in ipairs(modules) do
