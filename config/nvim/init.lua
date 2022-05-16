@@ -21,7 +21,8 @@ local modules = {
     'plugins/nvim-autopairs',
     'plugins/nvim-indent-blankline',
     'plugins/appearance',
-    'plugins/others'
+    'plugins/others',
+    'plugins/vimtex'
 }
 
 for _, module in ipairs(modules) do
