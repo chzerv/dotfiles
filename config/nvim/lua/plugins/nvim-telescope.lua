@@ -99,9 +99,6 @@ ts.setup {
     }
 }
 
--- Extensions
-require('telescope').load_extension('fzf')
-
 -- Keybindings to call specific telescope functions {{{
 local opts = { noremap = true, silent = true }
 local map = vim.api.nvim_set_keymap

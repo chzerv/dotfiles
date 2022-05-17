@@ -3,6 +3,8 @@
 -- Used to load other configs found in lua/
 -----------------------------------------------
 
+require('impatient')
+
 -- Initialize packer
 require('plugins/packer_init')
 
@@ -13,11 +15,9 @@ local modules = {
     'core/autocommands',
     'plugins/nvim-cmp',
     'plugins/nvim-lsp',
-    'plugins/nvim-treesitter',
     'plugins/nvim-telescope',
     'plugins/nvim-luasnip',
 --    'plugins/nvim-gitsigns',
-    'plugins/nvim-indent-blankline',
     'plugins/appearance',
     'plugins/others',
 }

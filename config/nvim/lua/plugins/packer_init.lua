@@ -22,7 +22,7 @@ end
 vim.api.nvim_create_autocmd('BufWritePost', {
     group = vim.api.nvim_create_augroup('PackerConfig', { clear = true }),
     pattern = 'packer_init.lua',
-    command = 'source <afile> | PackerSync',
+    command = 'source <afile> | PackerCompile',
 })
 
 return require('packer').startup({
@@ -30,10 +30,12 @@ return require('packer').startup({
         -- Let packer manage itself
         use 'wbthomason/packer.nvim'
 
+        -- Improve startup time with caching
+        use 'lewis6991/impatient.nvim'
+
         -- Smart comments
         use {
             'numToStr/Comment.nvim',
-            event = 'BufRead',
             config = function()
                 require('plugins/nvim-comment')
             end
@@ -63,6 +65,9 @@ return require('packer').startup({
         use {
             'nvim-treesitter/nvim-treesitter',
             run = ':TSUpdate',
+            config = function()
+                require("plugins/nvim-treesitter")
+            end
         }
 
         -- LSP
@@ -92,16 +97,15 @@ return require('packer').startup({
         }
         use {
             'nvim-telescope/telescope-fzf-native.nvim',
-            run = 'make'
+            run = 'make',
+            after = 'telescope.nvim',
+            config = function()
+                require('telescope').load_extension('fzf')
+            end
         }
 
         -- Appearance
-        -- use 'navarasu/onedark.nvim'
-        -- use 'shaunsingh/nord.nvim'
-        use{
-            "catppuccin/nvim",
-            as = "catppuccin"
-        }
+        use 'shaunsingh/nord.nvim'
 
         use {
             'nvim-lualine/lualine.nvim',
@@ -115,14 +119,7 @@ return require('packer').startup({
         use 'tpope/vim-surround'
 
         -- Git integration
-        -- use 'tpope/vim-fugitive'
-        use {
-            'TimUntersberger/neogit',
-            event = 'BufRead',
-            config = function()
-                require 'plugins/nvim-neogit'
-            end
-        }
+        use 'tpope/vim-fugitive'
 
         -- LaTeX
         use {

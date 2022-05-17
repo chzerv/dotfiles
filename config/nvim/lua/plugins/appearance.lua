@@ -7,14 +7,14 @@
 -- }
 -- require('onedark').load()
 
--- require('nord').set()
+require('nord').set()
 
-vim.cmd[[colorscheme catppuccin]]
+-- vim.cmd[[colorscheme catppuccin]]
 
 require('lualine').setup {
   options = {
-    -- theme = 'nord',
-    theme = "catppuccin",
+    theme = 'nord',
+    -- theme = "catppuccin",
     icons_enabled = false,
     section_separators = '',
     component_separators = ''
