@@ -14,7 +14,7 @@ opt.ignorecase = true
 opt.smartcase = true
 opt.incsearch = true
 opt.hlsearch = true
-opt.clipboard = "unnamedplus" -- Use the primary clipboard for yank/paste
+-- opt.clipboard = "unnamedplus" -- Use the primary clipboard for yank/paste
 opt.mouse = "a"
 -- Make substitutions (:s///) interactive. "split" creates a preview window
 -- with any out-of-screen changes

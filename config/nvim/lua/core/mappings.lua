@@ -93,9 +93,20 @@ map('n', '<leader>wd', "<cmd>lcd %:p:h<CR>:pwd<CR>", opts)
 -- Neovim Terminal {{{
 map('t', '<A-t>', "<C-\\><C-n><cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)
 map('n', '<A-t>', "<cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)
+map('n', '<A-T>', "<cmd>tabnew | terminal<CR>", opts)
 map('t', '<A-[>', '<C-\\><C-n>', { noremap = true })
 map('t', '<A-k>', '<C-\\><C-n><C-w>k', { noremap = true })
 map('t', '<A-j>', '<C-\\><C-n><C-w>j', { noremap = true })
 map('t', '<A-h>', '<C-\\><C-n><C-w>h', { noremap = true })
 map('t', '<A-l>', '<C-\\><C-n><C-w>l', { noremap = true })
 -- }}}
+
+-- Clipboard
+-- You can also `vim.opt.clipboard = "unnamedplus"` to have the yank/paste use the system
+-- clipboard, but I find that annoying.
+map('n', '<leader>y', [["+y"]], opts)
+map('n', '<leader>Y', [["+Y"]], opts)
+map('x', '<leader>y', [["+y"]], opts)
+map('n', '<leader>p', [["+p"]], opts)
+map('n', '<leader>P', [["+P"]], opts)
+map('x', '<leader>p', [["+p"]], opts)
