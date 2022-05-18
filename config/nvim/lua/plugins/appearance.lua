@@ -2,19 +2,11 @@
 -- Theme and statusline
 --------------------------
 
--- require('onedark').setup {
---     style = 'darker'
--- }
--- require('onedark').load()
-
 require('nord').set()
-
--- vim.cmd[[colorscheme catppuccin]]
 
 require('lualine').setup {
   options = {
-    theme = 'nord',
-    -- theme = "catppuccin",
+    theme = "nord",
     icons_enabled = false,
     section_separators = '',
     component_separators = ''
