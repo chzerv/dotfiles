@@ -27,13 +27,62 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 
 return require('packer').startup({
     function(use)
+
         -- Let packer manage itself
         use 'wbthomason/packer.nvim'
+
+        use 'nvim-lua/plenary.nvim'
 
         -- Improve startup time with caching
         use 'lewis6991/impatient.nvim'
 
-        -- Smart comments
+    -- Telescope {{{
+
+        use ({
+            {
+                'nvim-telescope/telescope.nvim',
+                config = function()
+                    require('plugins/nvim-telescope')
+                end,
+            },
+            {
+                'nvim-telescope/telescope-fzf-native.nvim',
+                run = 'make',
+                after = 'telescope.nvim',
+                config = function()
+                    require('telescope').load_extension('fzf')
+                end,
+            },
+            {
+                'crispgm/telescope-heading.nvim',
+                ft = { 'tex', 'markdown' },
+                config = function()
+                    require('telescope').load_extension('heading')
+                    vim.api.nvim_set_keymap('n', '<localleader>H', [[<Cmd>Telescope heading<CR>]], { noremap = true, silent = true })
+                end,
+            }
+        })
+
+    -- }}}
+
+    -- Editing {{{
+
+        use 'andymass/vim-matchup'
+
+        use 'tpope/vim-surround'
+
+        use {
+            'tpope/vim-fugitive',
+            config = function()
+                vim.keymap.set('n', '<leader>gg', function()
+                vim.cmd([[
+                    :tabnew | Git
+                    wincmd o
+                ]])
+                end, { noremap = true, silent = true })
+            end
+        }
+
         use {
             'numToStr/Comment.nvim',
             config = function()
@@ -41,92 +90,97 @@ return require('packer').startup({
             end
         }
 
-        -- Autopairs
         use {
             'windwp/nvim-autopairs',
             after = 'nvim-cmp',
             config = function()
-                require("plugins/nvim-autopairs")
+                require('plugins/nvim-autopairs')
             end
         }
 
-        -- Indent guides
-        -- Only needed for specific filetypes
         use {
             'lukas-reineke/indent-blankline.nvim',
             ft = { 'yaml', 'python', 'json' },
             config = function()
-                require("plugins/nvim-indent-blankline")
+                require('plugins/nvim-indent-blankline')
             end
         }
 
-        -- Tree sitter
-        -- Also run ':TsInstall bash c dockerfile go javascript python json rust yaml'
+    -- }}}
+
+    -- Tree sitter {{{
+
+        use ({
+            {
+                'nvim-treesitter/nvim-treesitter',
+                run = ':TSUpdate',
+                config = function()
+                    require('plugins/nvim-treesitter')
+                end,
+            },
+            { 'nvim-treesitter/nvim-treesitter-textobjects', after = 'nvim-treesitter' },
+            { 'JoosepAlviste/nvim-ts-context-commentstring', after = 'nvim-treesitter' },
+        })
+
+    -- }}}
+
+    -- Completion, LSP and snippets {{{
+
         use {
-            'nvim-treesitter/nvim-treesitter',
-            run = ':TSUpdate',
+            'williamboman/nvim-lsp-installer',
+            {
+                'neovim/nvim-lspconfig',
+                config = function()
+                    require('plugins/nvim-lsp')
+                end,
+            }
+        }
+
+        use {
+            'hrsh7th/nvim-cmp',
             config = function()
-                require("plugins/nvim-treesitter")
+                require('plugins/nvim-cmp')
             end
         }
-
-        -- LSP
-        use {
-            "williamboman/nvim-lsp-installer",
-            "neovim/nvim-lspconfig",
-        }
-
-        -- Autocompletion
-        use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
         use 'hrsh7th/cmp-nvim-lsp'
-
         use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' }
         use { 'hrsh7th/cmp-path', after = 'nvim-cmp' }
-
         use 'hrsh7th/cmp-nvim-lsp-signature-help'
         use 'hrsh7th/cmp-nvim-lua'
         use 'onsails/lspkind.nvim'
-
-        use 'L3MON4D3/LuaSnip'
-        use 'saadparwaiz1/cmp_luasnip'
-
-        -- telescope.nvim
-        use {
-            'nvim-telescope/telescope.nvim',
-            requires = { {'nvim-lua/plenary.nvim'} }
-        }
-        use {
-            'nvim-telescope/telescope-fzf-native.nvim',
-            run = 'make',
-            after = 'telescope.nvim',
+        use { 
+            'L3MON4D3/LuaSnip',
             config = function()
-                require('telescope').load_extension('fzf')
+                require('plugins/nvim-luasnip')
             end
         }
+        use 'saadparwaiz1/cmp_luasnip'
 
-        -- Appearance
+    -- }}}
+
+    -- Appearance {{{
         use 'shaunsingh/nord.nvim'
 
         use {
             'nvim-lualine/lualine.nvim',
             requires = { 'kyazdani42/nvim-web-devicons', opt = true }
         }
+    -- }}}
 
         -- Improve navigation inside tmux
-        use 'christoomey/vim-tmux-navigator'
-
-        -- Delete/add/change parentheses, tags etc
-        use 'tpope/vim-surround'
-
-        -- Git integration
-        use 'tpope/vim-fugitive'
+        use { 
+            'christoomey/vim-tmux-navigator',
+            config = function()
+                vim.g.tmux_navigator_no_mappings = 1
+            end
+        }
 
         -- LaTeX
         use {
             'lervag/vimtex',
-            ft = { "tex" },
+            ft = { 'tex' },
             config = function()
-                require "plugins/vimtex"
+                require 'plugins/vimtex'
             end
         }
 
