@@ -26,7 +26,7 @@ rec_ls = function()
             -- important!! Having the sn(...) as the first choice will cause infinite recursion.
             t({""}),
             -- The same dynamicNode as in the snippet (also note: self reference).
-            sn(nil, {t({"", "\t\\item "}), i(1), d(2, rec_ls, {})}),
+            sn(nil, {t({"", "  \\item "}), i(1), d(2, rec_ls, {})}),
         }),
     });
 end
@@ -35,7 +35,7 @@ ls.add_snippets("tex", {
     s(
         "list", fmt([[
         \begin{{{}}}
-            \item {} {}
+          \item {} {}
         \end{{{}}}
         {}
         ]], { c(1, { t"itemize", t"enumerate" }), i(2), d(3, rec_ls, {}), rep(1), i(4) })
@@ -45,14 +45,16 @@ ls.add_snippets("tex", {
         "sec", fmt([[
         \section{{{}}}
         \label{{sec-{}}}
-        ]], { i(1, "section"), i(2, "label") })
+        {}
+        ]], { i(1, "section"), i(2, "label"), i(3) })
     ),
 
     s(
         "subsec", fmt([[
         \subsection{{{}}}
         \label{{sub-{}}}
-        ]], { i(1, "subsection"), i(2, "label") })
+        {}
+        ]], { i(1, "subsection"), i(2, "label"), i(3) })
     ),
 
     ls.parser.parse_snippet("lim", "\\lim_{${1:n} \\to ${2:\\infty}} $0"),
@@ -90,4 +92,9 @@ ls.add_snippets("tex", {
     ]]),
 
     ls.parser.parse_snippet("underbrace", "\\$\\underbrace{${1:actual stuff}}_\\text{${2:description}}\\$ $0"),
+
+    ls.parser.parse_snippet("tt", "\\texttt{${1:text}} $0"),
+    ls.parser.parse_snippet("bf", "\\textbf{${1:text}} $0"),
+    ls.parser.parse_snippet("em", "\\emph{${1:text}} $0"),
+
 })
