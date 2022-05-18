@@ -9,9 +9,9 @@ require('impatient')
 require('plugins/packer_init')
 
 local modules = {
-    'core/core',
+    'core/options',
+    'core/disable_builtins',
     'core/mappings',
-    'core/appearance',
     'core/autocommands',
 --    'plugins/nvim-gitsigns',
     'plugins/appearance',
@@ -23,7 +23,3 @@ for _, module in ipairs(modules) do
         vim.notify("Module [" .. module .. "] failed to load." .. "\n\n" .. err)
     end
 end
-
--- Load remaining vimscript configuration
-vim.cmd(':so $HOME/.config/nvim/nolua.vim')
-

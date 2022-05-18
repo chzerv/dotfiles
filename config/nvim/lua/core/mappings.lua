@@ -63,6 +63,10 @@ map('n', '[<Space>', '<Plug>(PutBlankLinesAbove)', opts)
 map('x', '<', '<gv', opts)
 map('x', '>', '>gv', opts)
 
+-- Drag visual selected line(s) vertically and auto-indent {{{
+map("x", "mj", ":move'>+<CR>gv=gv", { noremap = true })
+map("x", "mk", ":move-2<CR>gv=gv", { noremap = true })
+
 -- Toggle spellcheck
 -- The blank string in the mode indicates that this is a 'map' mapping
 map('', '<F6>', "<Cmd>setlocal spell! spelllang=en_us<CR>")
@@ -101,8 +105,20 @@ map('t', '<A-h>', '<C-\\><C-n><C-w>h', { noremap = true })
 map('t', '<A-l>', '<C-\\><C-n><C-w>l', { noremap = true })
 -- }}}
 
--- Clipboard
--- You can also `vim.opt.clipboard = "unnamedplus"` to have the yank/paste use the system
+-- Command Line Bindings {{{
+map('c', '<C-a>', '<Home>', { noremap = true })
+map('c', '<C-e>', '<End>', { noremap = true })
+-- }}}
+
+-- Line text objects {{{
+map('x', 'il', 'g_o^', { noremap = true} )
+map('o', 'il', '<cmd>normal vil<CR>', { noremap = true} )
+map('x', 'al', '$o0', { noremap = true} )
+map('o', 'al', '<cmd>normal val<CR>', { noremap = true} )
+-- }}}
+
+-- Clipboard {{{
+-- You can also set `vim.opt.clipboard = "unnamedplus"` to have the yank/paste use the system
 -- clipboard, but I find that annoying.
 map('n', '<leader>y', [["+y"]], opts)
 map('n', '<leader>Y', [["+Y"]], opts)
@@ -110,3 +126,4 @@ map('x', '<leader>y', [["+y"]], opts)
 map('n', '<leader>p', [["+p"]], opts)
 map('n', '<leader>P', [["+P"]], opts)
 map('x', '<leader>p', [["+p"]], opts)
+-- }}}
