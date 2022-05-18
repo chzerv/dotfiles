@@ -10,7 +10,7 @@ end
 
 require"nvim-treesitter.configs".setup({
     ensure_installed = {
-        'bash', 'c', 'dockerfile', 'go', 'javascript', 'python', 'json', 'rust', 'yaml', 'vim', 'lua', 'html'
+        'bash', 'c', 'dockerfile', 'go', 'javascript', 'python', 'json', 'rust', 'yaml', 'vim', 'lua'
     },
     sync_install = false,
     highlight = {
@@ -44,6 +44,7 @@ require"nvim-treesitter.configs".setup({
             lookahead = true,
         },
     },
+    context_commentstring = {
+        enable = true
+    },
 })
-
-
