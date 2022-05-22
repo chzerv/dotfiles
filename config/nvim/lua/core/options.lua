@@ -27,7 +27,6 @@ opt.pumheight = 12 -- Only show 12 completion candidates
 -- opt.pumblend = 15 -- Add some transparency to the pummenu
 opt.completeopt = { "menu", "menuone", "noselect" }
 
-
 -- Command Line Completion
 opt.wildmenu = true
 opt.wildignorecase = true
@@ -94,4 +93,53 @@ vim.cmd([[
         autocmd InsertLeave * :set listchars+=trail:•
     augroup END
 ]])
+-- }}}
+
+-- Use 'rg' for vimgrep
+if vim.fn.executable("rg") then
+  vim.opt.grepprg = "rg --vimgrep --no-heading --hidden --smart-case --no-ignore-vcs --ignore-file ~/.config/.ignore"
+  vim.opt.grepformat = {
+    '%f:%l:%c:%m', '%f:%l:%m'
+  }
+end
+
+-- Disable builtin plugins {{{
+local builtins = {
+    loaded_gzip              = 1,
+    loaded_zip               = 1,
+    loaded_zipPlugin         = 1,
+    loaded_tar               = 1,
+    loaded_tarPlugin         = 1,
+    loaded_getscript         = 1,
+    loaded_getscriptPlugin   = 1,
+    loaded_vimball           = 1,
+    loaded_vimballPlugin     = 1,
+    loaded_2html_plugin      = 1,
+    loaded_matchit           = 1,
+    loaded_matchparen        = 1,
+    loaded_logiPat           = 1,
+    loaded_rrhelper          = 1,
+    loaded_netrw             = 1,
+    loaded_netrwPlugin       = 1,
+    loaded_netrwSettings     = 1,
+    loaded_remote_plugins    = 1,
+    loaded_shada_plugin      = 1,
+    loaded_tutor_mode_plugin = 1,
+    loaded_python3_provider  = 1,
+    loaded_python_provider   = 1,
+    loaded_node_provider     = 1,
+    loaded_ruby_provider     = 1,
+    loaded_perl_provider     = 1,
+    loaded_rplugin           = 1,
+    loaded_syntax            = 1,
+    loaded_synmenu           = 1,
+    loaded_optwin            = 1,
+    loaded_compiler          = 1,
+    loaded_bugreport         = 1,
+    did_indent_on            = 1,
+}
+
+for k, v in pairs(builtins) do
+    vim.g[k] = v
+end
 -- }}}

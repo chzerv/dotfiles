@@ -10,7 +10,6 @@ require('plugins/packer_init')
 
 local modules = {
     'core/options',
-    'core/disable_builtins',
     'core/mappings',
     'core/autocommands',
 --    'plugins/nvim-gitsigns',
