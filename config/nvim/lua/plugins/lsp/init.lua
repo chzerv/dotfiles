@@ -4,26 +4,33 @@
 ---------------------------------------------------------
 
 -- Install LSP servers
-local ok, lsp_installer = pcall(require, "nvim-lsp-installer")
-if not ok then
-    return
-end
 
-local servers = { "pyright", "ansiblels", "yamlls", "bashls", "dockerls", "jsonls" }
-
-lsp_installer.setup {
-    ensure_installed = servers,
-    automatic_installation = true,
+local servers = {
+    "pyright",
+    "ansiblels",
+    "yamlls",
+    "bashls",
+    "dockerls",
+    "jsonls",
+    "sumneko_lua"
 }
 
+local ok, lsp_installer = pcall(require, "nvim-lsp-installer")
+if ok then
+    lsp_installer.setup {
+        ensure_installed = servers,
+        automatic_installation = true,
+    }
+end
+
 -- Configure LSP
-local status_ok, lspconfig = pcall(require, 'lspconfig')
-if not status_ok then
+local lsp_ok, lspconfig = pcall(require, 'lspconfig')
+if not lsp_ok then
     return
 end
 
-local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-if not status_ok then
+local cmp_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+if not cmp_ok then
     return
 end
 
@@ -46,9 +53,19 @@ local on_attach = function()
         vim.keymap.set({"n", "i"}, "<C-s>", vim.lsp.buf.signature_help, opts)
     end
 
+-- https://stackoverflow.com/questions/9145432/load-lua-files-by-relative-path
+local folderOfThisFile = (...):match("(.-)[^%.]+$")
+
 for _, server in ipairs(servers) do
-    lspconfig[server].setup {
+    -- Standard opts
+    local opts = {
         on_attach = on_attach,
         capabilities =capabilities
     }
+    -- Look for server specific opts in ./options/<server name>
+    local has_custom_opts, server_custom_opts = pcall(require, folderOfThisFile .. "options." .. server)
+    if has_custom_opts then
+        opts = vim.tbl_deep_extend("force", server_custom_opts, opts)
+    end
+    lspconfig[server].setup(opts)
 end
