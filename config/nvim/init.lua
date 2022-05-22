@@ -9,9 +9,9 @@ require('impatient')
 require('plugins/packer_init')
 
 local modules = {
-    'core/options',
-    'core/mappings',
-    'core/autocommands',
+    'options',
+    'mappings',
+    'autocommands',
 --    'plugins/nvim-gitsigns',
 }
 
