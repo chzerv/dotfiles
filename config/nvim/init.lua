@@ -13,7 +13,6 @@ local modules = {
     'core/mappings',
     'core/autocommands',
 --    'plugins/nvim-gitsigns',
-    'plugins/appearance',
 }
 
 for _, module in ipairs(modules) do
