@@ -5,7 +5,12 @@
 
 local g = vim.g
 
-g.vimtex_view_general_viewer = 'okular'
+if vim.fn.executable("evince") then
+    g.vimtex_view_general_viewer = "evince"
+elseif vim.fn.executable("okular") then
+    g.vimtex_view_general_viewer = "okular"
+end
+
 
 g.vimtex_quickfix_ignore_filters = {
     "Command terminated with space",

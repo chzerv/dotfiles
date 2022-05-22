@@ -57,6 +57,15 @@ ls.add_snippets("tex", {
         ]], { i(1, "subsection"), i(2, "label"), i(3) })
     ),
 
+    s(
+        "fbox-d", fmt([[
+        \begin{{center}}
+        \fbox{{\fbox{{\parbox{{5.5in}}{{\centering
+          {}
+        \end{{center}}
+        ]], { i(1, "body") })
+    ),
+
     ls.parser.parse_snippet("lim", "\\lim_{${1:n} \\to ${2:\\infty}} $0"),
 
     ls.parser.parse_snippet("sum", "\\sum_{${1:lower}}^{${2:upper}} $0"),
