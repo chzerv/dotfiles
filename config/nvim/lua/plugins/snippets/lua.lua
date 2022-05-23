@@ -31,4 +31,42 @@ ls.add_snippets("lua", {
             i(1),
         })
     ),
+    s(
+        "if",
+        fmt([[
+        if {} then
+            {}
+        end
+        {}
+        ]], { i(1, "condition"), i(2, "body"), i(3) })
+    ),
+    s(
+        "pcall",
+        fmt([[
+        local ok, {} = pcall(require, "{}")
+        ]], {
+                f(function(args)
+                    local pairs = vim.split(args[1][1], ".", true)
+                    return pairs[#pairs] or ""
+                end, { 1}),
+                i(1),
+            })
+    ),
+    s(
+        "aucmd",
+        fmt([[
+        local group = vim.api.nvim_create_augroup("{}", {{ clear = true }})
+        vim.api.nvim_create_autocmd("{}", {{
+           group = group,
+           {} = {}
+        }})
+        {}
+        ]], {
+            i(1, "group name"),
+            i(2, "event"),
+            c(3, { t"command", t"callback"} ),
+            i(4, "body"),
+            i(5)
+            })
+    ),
 })
