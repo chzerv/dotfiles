@@ -180,6 +180,10 @@ return require('packer').startup({
             'christoomey/vim-tmux-navigator',
             config = function()
                 vim.g.tmux_navigator_no_mappings = 1
+                vim.keymap.set('n', '<A-h>', "<cmd>TmuxNavigateLeft<CR>", { noremap = true, silent = true})
+                vim.keymap.set('n', '<A-l>', "<cmd>TmuxNavigateRight<CR>", { noremap = true, silent = true})
+                vim.keymap.set('n', '<A-j>', "<cmd>TmuxNavigateDown<CR>", { noremap = true, silent = true})
+                vim.keymap.set('n', '<A-k>', "<cmd>TmuxNavigateUp<CR>", { noremap = true, silent = true})
             end
         }
 
