@@ -1,11 +1,13 @@
 # Dotfiles
 
-This is a collection of my personal Linux dotfiles.
+This is a collection of my personal Linux dotfiles. Have a look around and hopefully you'll find something useful :)
 
-- Configs that reside in `~/.config` are found in `config`.
-- Configs that reside in `~/.local/share` are found in `share`.
-- Configs that reside in `~/` are found in the root of the repository.
-- Scripts are found in `scripts`
+Most notably, you'll find my configs for:
+
++ [neovim](https://neovim.io/)
++ tmux
++ zsh
++ The [foot](https://codeberg.org/dnkl/foot) terminal emulator
 
 ## Notes
 
