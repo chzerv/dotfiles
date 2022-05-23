@@ -70,7 +70,7 @@ return require("packer").startup(function(use)
             end,
         },
         { 'nvim-treesitter/nvim-treesitter-textobjects', after = 'nvim-treesitter' },
-        { 'JoosepAlviste/nvim-ts-context-commentstring', after = 'nvim-treesitter' },
+        -- { 'JoosepAlviste/nvim-ts-context-commentstring', after = 'nvim-treesitter' },
     })
 
     -- Completion, LSP and Snippets
@@ -113,7 +113,6 @@ return require("packer").startup(function(use)
     -- Editing
     use {
         'andymass/vim-matchup',
-        opt = true,
     }
 
     use 'tpope/vim-surround'
