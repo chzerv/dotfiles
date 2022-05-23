@@ -2,11 +2,14 @@
 -- Autocommands
 -----------------
 
+local augroup = vim.api.nvim_create_augroup
+local aucmd = vim.api.nvim_create_autocmd
+
 -- Highlight yanked text.
 -- Replacement for https://github.com/machakann/vim-highlightedyank
-local yank_group = vim.api.nvim_create_augroup("TextYankGroup", { clear = true })
+local yank_group = augroup("TextYankGroup", { clear = true })
 
-vim.api.nvim_create_autocmd("TextYankPost", {
+aucmd("TextYankPost", {
     group = yank_group,
     callback = function()
         vim.highlight.on_yank({
@@ -17,12 +20,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     desc = "Highlight yanked text"
 })
 
--- Disable numbers in terminal
--- Enter insert mode upon starting a NEW terminal. If you want this to apply to existing
--- terminals, use the "TerminalEnter" event.
-local terminal_group = vim.api.nvim_create_augroup("TerminalGroup", { clear = true })
+-- Disable numbers in terminal and nter insert mode.
+-- This works upon starting a NEW terminal. If you want it to also apply to existing terminals, use the "TerminalEnter" event.
+local terminal_group = augroup("TerminalGroup", { clear = true })
 
-vim.api.nvim_create_autocmd("TermOpen", {
+aucmd("TermOpen", {
     group = terminal_group,
     callback = function()
         vim.opt_local.relativenumber = false
@@ -30,4 +32,18 @@ vim.api.nvim_create_autocmd("TermOpen", {
         vim.cmd([[startinsert]])
     end,
     desc = "Disable numbers and enter insert mode in the terminal"
+})
+
+local cursor_group = augroup("CursorGroup", { clear = true })
+
+aucmd("BufReadPost", {
+    group = cursor_group,
+    callback = function()
+        vim.cmd([[
+           if line("'\"") > 1 && line("'\"") <= line("$") |
+               execute "normal g`\"" |
+           endif
+        ]])
+    end,
+    desc = "Restore cursor to its last position in a file"
 })
