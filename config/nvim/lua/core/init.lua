@@ -1,7 +1,13 @@
 --------------------------------
 -- Core Options
 --------------------------------
+
 local opt = vim.opt
+local g = vim.g
+
+-- Decrease update time
+opt.timeoutlen = 500
+opt.updatetime = 200
 
 -- UI
 opt.number = true
@@ -9,10 +15,11 @@ opt.relativenumber = true
 opt.shortmess:append "c" -- Supress pummenu messages
 opt.termguicolors = true -- Enable 24-bit RGB color
 opt.fillchars = { eob = " " }
-opt.laststatus = 3       -- Global status line
 opt.showmode = false  -- Don't show the active mode
 opt.showcmd = true
-opt.cmdheight = 1     -- Height of the command line
+opt.cmdheight = 1      -- Height of the command line
+opt.laststatus = 3     -- Global status line
+opt.winbar = "=%=%m %t" -- (Requires nvim nightly)
 
 -- Indent and Tab Behavior
 opt.autoindent = true -- Use indentation of current line on the next one
@@ -112,4 +119,38 @@ if vim.fn.executable("rg") then
   vim.opt.grepformat = {
     '%f:%l:%c:%m', '%f:%l:%m'
   }
+end
+
+-- [Test] Use filetype.lua instead of filetype.vim for performance
+vim.g.did_load_filetypes = 0
+vim.g.do_filetype_lua = 1
+
+-- Disable builtin plugins
+local builtin_plugins = {
+    loaded_gzip              = 1,
+    loaded_zip               = 1,
+    loaded_zipPlugin         = 1,
+    loaded_tar               = 1,
+    loaded_tarPlugin         = 1,
+    loaded_getscript         = 1,
+    loaded_getscriptPlugin   = 1,
+    loaded_vimball           = 1,
+    loaded_vimballPlugin     = 1,
+    loaded_2html_plugin      = 1,
+    loaded_matchit           = 1,
+    loaded_matchparen        = 1,
+    loaded_logiPat           = 1,
+    loaded_rrhelper          = 1,
+    loaded_netrw             = 1,
+    loaded_netrwPlugin       = 1,
+    loaded_netrwSettings     = 1,
+    loaded_tutor_mode_plugin = 1,
+    loaded_rplugin           = 1,
+    loaded_bugreport         = 1,
+    loaded_syntax            = 1,
+    loaded_spellfile_plugin  = 1,
+}
+
+for k, v in pairs(builtin_plugins) do
+    vim.g[k] = v
 end

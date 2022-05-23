@@ -3,20 +3,11 @@
 -- Used to load other configs found in lua/
 -----------------------------------------------
 
-require('impatient')
-
--- Initialize packer
-require('plugins/packer_init')
-
-local modules = {
-    'globals',
-    'options',
-    'mappings',
-}
-
-for _, module in ipairs(modules) do
-    local ok, err = pcall(require, module)
-    if not ok then
-        vim.notify("Module [" .. module .. "] failed to load." .. "\n\n" .. err)
-    end
+local ok, impatient = pcall(require, "impatient")
+if ok then
+    impatient.enable_profile()
 end
+
+require "core"
+require "core.mappings"
+require "plugins"

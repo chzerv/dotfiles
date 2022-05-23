@@ -10,6 +10,7 @@ require('lualine').setup {
         section_separators = "",
         component_separators = "",
         always_divide_middle = true,
+        globalstatus = true
     },
     sections = {
         lualine_a = { 'mode' },
@@ -17,6 +18,6 @@ require('lualine').setup {
         lualine_c = { 'filename' },
         lualine_x = { 'filetype' },
         lualine_y = { 'progress' },
-        lualine_z = { 'location' }
+        lualine_z = { 'location' },
     },
 }
