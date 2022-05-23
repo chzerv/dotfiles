@@ -1,50 +1,73 @@
--------------------------------------------------------------
--- Configuration for nvim-treesitter
+----------------------------------------------
+-- Configuration for treesitter
 -- https://github.com/nvim-treesitter/nvim-treesitter
--------------------------------------------------------------
+----------------------------------------------
 
-local ok, ts = pcall(require, 'nvim-treesitter')
+local ok, ts = pcall(require, "nvim-treesitter.configs")
 if not ok then
     return
 end
 
-require"nvim-treesitter.configs".setup({
-    ensure_installed = {
-        'bash', 'c', 'dockerfile', 'go', 'javascript', 'python', 'json', 'rust', 'yaml', 'vim', 'lua'
-    },
+ts.setup {
+    ensure_installed = { "c", "lua", "rust", "bash", "dockerfile", "go", "javascript", "json", "latex", "python", "yaml" },
+
     sync_install = false,
+
+    -- List of parsers to ignore installing (for "all")
+    ignore_install = { },
+
     highlight = {
+        -- `false` will disable the whole extension
         enable = true,
-        disable = {
-            "help",
-        },
+        disable = { },
+        additional_vim_regex_highlighting = false,
     },
     indent = {
-        enable = true,
+        enable = true
     },
+    -- nvim-treesitter/nvim-treesitter-textobjects
     textobjects = {
+        select = {
+            enable = true,
+            -- Automatically jump forward to textobj, similar to targets.vim
+            lookahead = true,
+            keymaps = {
+                ['af'] = '@function.outer',
+                ['if'] = '@function.inner',
+                ['ac'] = '@class.outer',
+                ['ic'] = '@class.inner',
+                ['al'] = '@loop.outer',
+                ['il'] = '@loop.inner',
+                ['aa'] = '@parameter.outer',
+                ['ia'] = '@parameter.inner',
+                ['uc'] = '@comment.outer',
+            },
+        },
         move = {
             enable = true,
             set_jumps = true, -- Set jumps in the jumplist
             goto_next_start = {
-                ["]m"] = "@function.outer",
+                [']f'] = '@function.outer',
+                [']]'] = '@class.outer',
             },
             goto_next_end = {
-                ["]M"] = "@function.outer",
+                [']F'] = '@function.outer',
+                [']['] = '@class.outer',
             },
             goto_previous_start = {
-                ["[m"] = "@function.outer",
+                ['[f'] = '@function.outer',
+                ['[['] = '@class.outer',
             },
             goto_previous_end = {
-                ["[M"] = "@function.outer"
+                ['[F'] = '@function.outer',
+                ['[]'] = '@class.outer',
             },
         },
-        select = {
-            enable = true,
-            lookahead = true,
-        },
     },
+    --  JoosepAlviste/nvim-ts-context-commentstring
     context_commentstring = {
-        enable = true
+        enable = true,
+        enable_autocmd = false, -- Not needed since we are using Comment.nvim
+
     },
-})
+}

@@ -3,6 +3,8 @@
 -- Server installation is handled by lsp-installer.
 ---------------------------------------------------------
 
+require("plugins.lsp.diagnostics").setup()
+
 -- Install LSP servers
 
 local servers = {
@@ -20,6 +22,13 @@ if ok then
     lsp_installer.setup {
         ensure_installed = servers,
         automatic_installation = true,
+        ui = {
+            icons = {
+                server_installed = "✓",
+                server_pending = "➜",
+                server_uninstalled = "✗"
+            }
+        }
     }
 end
 
@@ -39,19 +48,19 @@ capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 
 local on_attach = function()
     local opts = { buffer = 0 }
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-        vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
-        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-        vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-        vim.keymap.set("n", "<leader>cdn", vim.diagnostic.goto_next, opts)
-        vim.keymap.set("n", "<leader>cdp", vim.diagnostic.goto_prev, opts)
-        vim.keymap.set("n", "<leader>cdl", "<cmd>Telescope diagnostics<CR>", opts)
-        vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, opts)
-        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-        vim.keymap.set({"n", "i"}, "<C-s>", vim.lsp.buf.signature_help, opts)
-    end
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+    vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+    vim.keymap.set("n", "<leader>cdn", vim.diagnostic.goto_next, opts)
+    vim.keymap.set("n", "<leader>cdp", vim.diagnostic.goto_prev, opts)
+    vim.keymap.set("n", "<leader>cdl", "<cmd>Telescope diagnostics<CR>", opts)
+    vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, opts)
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+    vim.keymap.set({"n", "i"}, "<C-s>", vim.lsp.buf.signature_help, opts)
+end
 
 -- https://stackoverflow.com/questions/9145432/load-lua-files-by-relative-path
 local folderOfThisFile = (...):match("(.-)[^%.]+$")
@@ -60,12 +69,15 @@ for _, server in ipairs(servers) do
     -- Standard opts
     local opts = {
         on_attach = on_attach,
-        capabilities =capabilities
+        capabilities = capabilities
     }
-    -- Look for server specific opts in ./options/<server name>
-    local has_custom_opts, server_custom_opts = pcall(require, folderOfThisFile .. "options." .. server)
+
+    -- Look for server specific opts in ./servers/<server name>
+    local has_custom_opts, server_custom_opts = pcall(require, folderOfThisFile .. "servers." .. server)
+
     if has_custom_opts then
         opts = vim.tbl_deep_extend("force", server_custom_opts, opts)
     end
+
     lspconfig[server].setup(opts)
 end
