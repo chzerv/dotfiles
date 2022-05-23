@@ -13,7 +13,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
             higroup = 'WarningMsg',
             timeout = '200'
         })
-    end
+    end,
+    desc = "Highlight yanked text"
 })
 
 -- Disable numbers in terminal
@@ -27,5 +28,6 @@ vim.api.nvim_create_autocmd("TermOpen", {
         vim.opt_local.relativenumber = false
         vim.opt_local.number = false
         vim.cmd([[startinsert]])
-    end
+    end,
+    desc = "Disable numbers and enter insert mode in the terminal"
 })

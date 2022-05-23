@@ -11,8 +11,6 @@ require('plugins/packer_init')
 local modules = {
     'options',
     'mappings',
-    'autocommands',
---    'plugins/nvim-gitsigns',
 }
 
 for _, module in ipairs(modules) do
