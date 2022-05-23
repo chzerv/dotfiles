@@ -9,6 +9,7 @@ require('impatient')
 require('plugins/packer_init')
 
 local modules = {
+    'globals',
     'options',
     'mappings',
 }
