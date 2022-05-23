@@ -159,19 +159,18 @@ return require('packer').startup({
     -- }}}
 
     -- Appearance {{{
-        use { 
-            'shaunsingh/nord.nvim',
+        use { "rebelot/kanagawa.nvim",
             config = function()
-                require('nord').set()
+                require "plugins.kanagawa"
             end
         }
 
         use {
-            'nvim-lualine/lualine.nvim',
+            "nvim-lualine/lualine.nvim",
+            after = "kanagawa.nvim",
             config = function()
-                require('plugins/lualine')
-            end,
-            requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+                require "plugins.lualine"
+            end
         }
     -- }}}
 
