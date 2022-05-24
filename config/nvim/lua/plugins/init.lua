@@ -84,6 +84,14 @@ return require("packer").startup(function(use)
         }
     }
 
+    use({
+        "jose-elias-alvarez/null-ls.nvim",
+        after = "nvim-lspconfig",
+        config = function()
+            require "plugins.lsp.null-ls"
+        end,
+    })
+
     use {
         'hrsh7th/nvim-cmp',
         config = function()
