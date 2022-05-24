@@ -23,7 +23,7 @@ ts.setup {
         additional_vim_regex_highlighting = false,
     },
     indent = {
-        enable = true
+        enable = false,
     },
     -- nvim-treesitter/nvim-treesitter-textobjects
     textobjects = {
