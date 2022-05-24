@@ -13,6 +13,7 @@ opt.updatetime = 200
 opt.number = true
 opt.relativenumber = true
 opt.shortmess:append "c" -- Supress pummenu messages
+opt.shortmess:append "I" -- Disable VIM intro
 opt.termguicolors = true -- Enable 24-bit RGB color
 opt.fillchars = { eob = " " }
 opt.showmode = false  -- Don't show the active mode

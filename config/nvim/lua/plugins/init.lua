@@ -47,7 +47,7 @@ return require("packer").startup(function(use)
    -- UI
     use { "rebelot/kanagawa.nvim",
         config = function()
-            require "plugins.kanagawa"
+            require("plugins.colors").kanagawa()
         end
     }
 
