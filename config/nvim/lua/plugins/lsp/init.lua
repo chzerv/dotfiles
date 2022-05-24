@@ -53,7 +53,10 @@ capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 local on_attach = function(client, bufnr)
     local opts = { noremap = true, silent = true, buffer = bufnr }
     local map = vim.keymap.set
+    local cmd = vim.api.nvim_buf_create_user_command
+
     map("n", "K", vim.lsp.buf.hover, opts)
+    map({"n", "i"}, "<C-s>", vim.lsp.buf.signature_help, opts)
     map("n", "gd", vim.lsp.buf.definition, opts)
     map("n", "gD", vim.lsp.buf.declaration, opts)
     map("n", "gt", vim.lsp.buf.type_definition, opts)
@@ -64,7 +67,29 @@ local on_attach = function(client, bufnr)
     map("n", "<leader>cdl", "<cmd>Telescope diagnostics<CR>", opts)
     map("n", "<leader>cr", vim.lsp.buf.rename, opts)
     map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-    map({"n", "i"}, "<C-s>", vim.lsp.buf.signature_help, opts)
+    map("x", "<leader>ca", vim.lsp.buf.range_code_action, opts)
+
+    -- If formatting is available, create a binding and a command for it.
+    -- The same config exists in the null-ls configuration.
+    -- If the server does not support formatting, we can most
+    -- likely do it through null-ls.
+    if client.server_capabilities.documentFormattingProvider then
+        -- Binding
+        map("n", "<leader>cf", vim.lsp.buf.format, opts)
+
+        -- Command
+        cmd(bufnr, "LspFormat", vim.lsp.buf.format, { range = false, desc = "LSP format" })
+    end
+
+    -- Same, but for range formatting
+    if client.server_capabilities.documentRangeFormattingProvider then
+
+        -- Binding
+        map("x", "<leader>cf", vim.lsp.buf.range_formatting, opts)
+
+        -- Command
+        cmd(bufnr, "LspFormatRange", vim.lsp.buf.range_formatting, { range = true, desc = "LSP format range" })
+    end
 
     -- Highlight symbol under cursor, if supported by the server
     -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#highlight-symbol-under-cursor=
