@@ -3,7 +3,6 @@
 --------------------------------
 
 local opt = vim.opt
-local g = vim.g
 
 -- Decrease update time
 opt.timeoutlen = 500

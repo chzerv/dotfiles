@@ -40,7 +40,7 @@ cmp.setup({
         { name = "luasnip" },
         { name = "path" },
         { name = "buffer" },
-        { name = "nvim_lua" }
+        -- { name = "nvim_lua" }
     },
     formatting = {
         format = lspkind.cmp_format {
@@ -48,7 +48,7 @@ cmp.setup({
             menu = {
                 buffer = "[buf]",
                 nvim_lsp = "[LSP]",
-                nvim_lua = "[api]",
+                -- nvim_lua = "[api]",
                 path = "[path]",
                 luasnip = "[snip]"
             },

@@ -26,5 +26,6 @@ map('n', ']g', [[<Cmd>Gitsigns next_hunk<CR>]], opts) -- Move to the next hunk
 map('n', '[g', [[<Cmd>Gitsigns prev_hunk<CR>]], opts) -- Move to the previous hunk
 map('n', '<Leader>gs', [[<Cmd>Gitsigns stage_hunk<CR>]], opts) -- Stage hunk under cursor
 map('n', '<Leader>gb', [[<Cmd>Gitsigns stage_buffer<CR>]], opts) -- Stage whole buffer
-map('n', '<Leader>gp', [[<Cmd>Gitsigns preview_hunk<CR>]], opts) -- Move to the next hunk
+map('n', '<Leader>gp', [[<Cmd>Gitsigns preview_hunk<CR>]], opts) -- Preview hunk
+map('n', '<Leader>gd', [[<Cmd>Gitsigns reset_hunk<CR>]], opts) -- Undo hunk
 
