@@ -24,23 +24,6 @@ return require("packer").startup({
         use("lewis6991/impatient.nvim")
         use("wbthomason/packer.nvim")
         use("nvim-lua/plenary.nvim")
-        use("antoinemadec/FixCursorHold.nvim") -- https://github.com/neovim/neovim/issues/12587
-
-        -- UI
-        use({
-            "rebelot/kanagawa.nvim",
-            config = function()
-                require("plugins.colors").kanagawa()
-            end,
-        })
-
-        use({
-            "nvim-lualine/lualine.nvim",
-            event = "BufEnter",
-            config = function()
-                require("plugins.lualine")
-            end,
-        })
 
         -- Telescope
         use({
@@ -105,9 +88,18 @@ return require("packer").startup({
         })
 
         use {
-            'hrsh7th/nvim-cmp',
+            "j-hui/fidget.nvim",
+            after = "nvim-lspconfig",
+            -- config = function()
+            --     require"fidget".setup{}
+            -- end
+        }
+
+
+        use({
+            "hrsh7th/nvim-cmp",
             config = function()
-                require "plugins.nvim-cmp"
+                require("plugins.nvim-cmp")
             end,
             requires = {
                 "hrsh7th/cmp-buffer",
@@ -117,18 +109,18 @@ return require("packer").startup({
                 "hrsh7th/cmp-nvim-lsp-signature-help",
                 "onsails/lspkind.nvim",
             },
-        }
-        use {
-            'L3MON4D3/LuaSnip',
+        })
+        use({
+            "L3MON4D3/LuaSnip",
             after = "nvim-cmp",
             config = function()
-                require "plugins.luasnip"
-            end
-        }
-        use {
-            'saadparwaiz1/cmp_luasnip',
-            after = "LuaSnip"
-        }
+                require("plugins.luasnip")
+            end,
+        })
+        use({
+            "saadparwaiz1/cmp_luasnip",
+            after = "LuaSnip",
+        })
 
         -- Tree-sitter
         use({
@@ -139,11 +131,32 @@ return require("packer").startup({
             end,
         })
         use({ "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" })
+        use({ "SmiteshP/nvim-gps", after = "nvim-treesitter" })
         --use { 'JoosepAlviste/nvim-ts-context-commentstring', after = 'nvim-treesitter' }
+
+        -- UI
+        use({
+            "rebelot/kanagawa.nvim",
+            config = function()
+                require("plugins.colors").kanagawa()
+            end,
+        })
+
+        use({
+            "feline-nvim/feline.nvim",
+            after = "nvim-gps",
+            config = function()
+                require("plugins.statusline")
+            end,
+            requires = {
+                "kyazdani42/nvim-web-devicons",
+                opt = true,
+            },
+        })
 
         -- Editing goodies
 
-        use "tpope/vim-surround"
+        use("tpope/vim-surround")
 
         use({
             "numToStr/Comment.nvim",
@@ -191,39 +204,39 @@ return require("packer").startup({
             end,
         })
 
-    -- Improve navigation inside tmux
-    use {
-        'christoomey/vim-tmux-navigator',
-        config = function()
-            vim.g.tmux_navigator_no_mappings = 1
-            vim.keymap.set('n', '<A-h>', "<cmd>TmuxNavigateLeft<CR>", { noremap = true, silent = true})
-            vim.keymap.set('n', '<A-l>', "<cmd>TmuxNavigateRight<CR>", { noremap = true, silent = true})
-            vim.keymap.set('n', '<A-j>', "<cmd>TmuxNavigateDown<CR>", { noremap = true, silent = true})
-            vim.keymap.set('n', '<A-k>', "<cmd>TmuxNavigateUp<CR>", { noremap = true, silent = true})
+        -- Improve navigation inside tmux
+        use({
+            "christoomey/vim-tmux-navigator",
+            config = function()
+                vim.g.tmux_navigator_no_mappings = 1
+                vim.keymap.set("n", "<A-h>", "<cmd>TmuxNavigateLeft<CR>", { noremap = true, silent = true })
+                vim.keymap.set("n", "<A-l>", "<cmd>TmuxNavigateRight<CR>", { noremap = true, silent = true })
+                vim.keymap.set("n", "<A-j>", "<cmd>TmuxNavigateDown<CR>", { noremap = true, silent = true })
+                vim.keymap.set("n", "<A-k>", "<cmd>TmuxNavigateUp<CR>", { noremap = true, silent = true })
+            end,
+        })
+
+        -- LaTeX
+        use({
+            "lervag/vimtex",
+            ft = { "tex" },
+            config = function()
+                require("plugins.vimtex")
+            end,
+        })
+
+        if packer_bootstrap then
+            require("packer").sync()
         end
-    }
-
-    -- LaTeX
-    use({
-        "lervag/vimtex",
-        ft = { "tex" },
-        config = function()
-            require("plugins.vimtex")
-        end,
-    })
-
-    if packer_bootstrap then
-        require("packer").sync()
-    end
-end,
-config = {
-    max_jobs = 50,
-    auto_clean = true,
-    compile_on_sync = true,
-    display = {
-        open_fn = function()
-            return require("packer.util").float({ border = "single" })
-        end,
+    end,
+    config = {
+        max_jobs = 50,
+        auto_clean = true,
+        compile_on_sync = true,
+        display = {
+            open_fn = function()
+                return require("packer.util").float({ border = "single" })
+            end,
+        },
     },
-},
 })

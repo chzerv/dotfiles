@@ -5,8 +5,7 @@
 local opt = vim.opt
 
 -- Decrease update time
-opt.timeoutlen = 500
-opt.updatetime = 200
+opt.updatetime = 100
 
 -- UI
 opt.number = true
@@ -18,8 +17,6 @@ opt.fillchars = { eob = " " }
 opt.showmode = false  -- Don't show the active mode
 opt.showcmd = true
 opt.cmdheight = 1      -- Height of the command line
-opt.laststatus = 3     -- Global status line
-opt.winbar = "=%=%m %t" -- (Requires nvim nightly)
 
 -- Indent and Tab Behavior
 opt.autoindent = true -- Use indentation of current line on the next one
