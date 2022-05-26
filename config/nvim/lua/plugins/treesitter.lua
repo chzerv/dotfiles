@@ -64,6 +64,15 @@ ts.setup {
             },
         },
     },
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = "<M-w>",
+            node_incremental = "<M-w>",
+            node_decremental = "<M-C-w.",
+            scope_incremental = "<M-e>",
+        }
+    }
     --  JoosepAlviste/nvim-ts-context-commentstring
     -- context_commentstring = {
     --     enable = true,
