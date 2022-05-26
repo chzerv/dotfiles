@@ -113,7 +113,7 @@ zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 
 #  History Settings {{{{
 
-HISTFILE="$HOME/.zhistory"
+HISTFILE="$HOME/.cache/zhistory"
 HISTSIZE=50000
 SAVEHIST=50000
 
