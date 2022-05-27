@@ -88,6 +88,9 @@ ts.setup {
                 }
             }
         },
+        buffers = {
+            sort_mru = true,
+        },
     },
     extensions = {
         fzf = {
