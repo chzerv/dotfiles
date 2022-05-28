@@ -5,7 +5,7 @@ local gps = require("nvim-gps")
 local opt = vim.opt
 
 opt.laststatus = 3 -- Global status line
-opt.winbar = "=%=%m %t" -- (Requires nvim nightly)
+-- opt.winbar = "=%=%m %t" -- (Requires nvim nightly)
 
 gps.setup()
 
@@ -46,6 +46,8 @@ components.active[1] = {
             opts = {
                 type = "unique",
                 colored_icon = true,
+                file_modified_icon = "± ",
+                hl = { fg = "cyan" },
             },
         },
         right_sep = " ",
@@ -54,17 +56,6 @@ components.active[1] = {
     {
         provider = "> ",
         hl = { fg = "bg" },
-    },
-    {
-        enabled = function()
-            return gps.is_available()
-        end,
-        provider = function()
-            return gps.get_location()
-        end,
-        hl = {
-            fg = "cyan",
-        },
     },
 }
 
@@ -152,13 +143,28 @@ require("feline").setup({
 local winbar_components = {
     active = {
         {
+            -- {
+            --     provider = {
+            --         name = "file_info",
+            --         opts = {
+            --             -- type = "unique",
+            --             -- filetype_icon = false,
+            --             -- colored_icon = true,
+            --             hl = { fg = "cyan" },
+            --         },
+            --     },
+            --     right_sep = " ",
+            --     left_sep = " ",
+            -- },
+
             {
-                provider = "file_info",
-                hl = {
-                    fg = "skyblue",
-                    bg = "NONE",
-                    style = "bold",
-                },
+                enabled = function()
+                    return gps.is_available()
+                end,
+                provider = function()
+                    return gps.get_location()
+                end,
+                hl = { fg = "cyan" },
             },
         },
     },
@@ -166,6 +172,19 @@ local winbar_components = {
 
 -- Setup feline.nvim winbar
 require("feline").winbar.setup({
+    theme = {
+        bg = "#16161D",
+        fg = "#C8C093",
+        lightgray = "#363646",
+        gray = "#2A2A37",
+        blue = "#7E9CD8",
+        green = "#76946A",
+        red = "#C34043",
+        cyan = "#6A9589",
+        purple = "#957FB8",
+        darkpurple = "#54546D",
+        yellow = "#DCA561",
+    },
     components = winbar_components,
 })
 
