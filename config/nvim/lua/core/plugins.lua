@@ -87,14 +87,13 @@ return require("packer").startup({
             end,
         })
 
-        use {
+        use({
             "j-hui/fidget.nvim",
             after = "nvim-lspconfig",
-            -- config = function()
-            --     require"fidget".setup{}
-            -- end
-        }
-
+            config = function()
+                require("fidget").setup({})
+            end,
+        })
 
         use({
             "hrsh7th/nvim-cmp",
@@ -186,6 +185,8 @@ return require("packer").startup({
         -- Git integration
         use({
             "tpope/vim-fugitive",
+            cmd = { "Git", "Gdiffsplit", "Gclog" },
+            keys = { "n", "<leader>gg" },
             config = function()
                 vim.keymap.set("n", "<leader>gg", function()
                     vim.cmd([[
@@ -214,6 +215,18 @@ return require("packer").startup({
                 vim.keymap.set("n", "<A-j>", "<cmd>TmuxNavigateDown<CR>", { noremap = true, silent = true })
                 vim.keymap.set("n", "<A-k>", "<cmd>TmuxNavigateUp<CR>", { noremap = true, silent = true })
             end,
+        })
+
+        -- Improvements to the quickfix/location windows
+        -- TODO: https://github.com/kevinhwang91/nvim-bqf
+        use "romainl/vim-qf"
+
+        -- Delete buffers without messing up the window layout
+        use ({
+            "famiu/bufdelete.nvim",
+            config = function()
+                require "plugins.bufdelete"
+            end
         })
 
         -- LaTeX

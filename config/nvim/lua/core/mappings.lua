@@ -27,7 +27,7 @@ map('n', '[b', [[<Cmd>bprevious<CR>]], opts)
 map('n', '<leader>bp', [[<Cmd>bprevious<CR>]], opts)
 map('n', ']b', [[<Cmd>bnext<CR>]], opts)
 map('n', '<leader>bn', [[<Cmd>bnext<CR>]], opts)
-map('n', '<leader>bd', "<Cmd>bdelete<CR>", opts)
+-- map('n', '<leader>bd', "<Cmd>bdelete<CR>", opts)
 
 -- Cycle through quickfix items
 map('n', '[c', [[<Cmd>cprevious<CR>]], opts)
