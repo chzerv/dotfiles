@@ -83,23 +83,23 @@ components.active[2] = {
         right_sep = { str = " ", always_visible = true },
     },
     {
-        enabled = function()
-            return vim.bo.filetype ~= ""
-        end,
-        provider = {
-            name = "file_type",
-            opts = {
-                case = "titlecase",
-                filetype_icon = true,
-                colored_icon = true,
-            },
-        },
+        provider = "git_branch",
         left_sep = " ",
         right_sep = " ",
     },
     {
-        provider = "git_branch",
-        left_sep = " ",
+        provider = "git_diff_added",
+        hl = { fg = "green" },
+        right_sep = " ",
+    },
+    {
+        provider = "git_diff_changed",
+        hl = { fg = "orange" },
+        right_sep = " ",
+    },
+    {
+        provider = "git_diff_removed",
+        hl = { fg = "red" },
         right_sep = " ",
     },
     -- { provider = "line_percentage" },
