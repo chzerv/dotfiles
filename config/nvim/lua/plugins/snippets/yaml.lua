@@ -26,7 +26,7 @@ ls.add_snippets("yaml", {
           ansible.builtin.template:
             src: {}
             dest: {}
-            user: {}
+            owner: {}
             group: {}
             mode: {}
             backup: {}

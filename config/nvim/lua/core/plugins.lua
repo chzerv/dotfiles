@@ -176,7 +176,7 @@ return require("packer").startup({
 
         use({
             "lukas-reineke/indent-blankline.nvim",
-            ft = { "yaml", "python", "json" },
+            ft = { "yaml", "python", "json", "yaml.ansible" },
             config = function()
                 require("plugins.indentline")
             end,
