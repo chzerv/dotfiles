@@ -23,7 +23,7 @@ ls.add_snippets("yaml", {
         "template",
         fmt([[
         - name: {}
-          template:
+          ansible.builtin.template:
             src: {}
             dest: {}
             user: {}
@@ -36,7 +36,7 @@ ls.add_snippets("yaml", {
         "systemd",
         fmt([[
         - name: {}
-          systemd:
+          ansible.builtin.systemd:
             name: {}
             state: {}
             enabled: {}
@@ -50,7 +50,7 @@ ls.add_snippets("yaml", {
         "package",
         fmt([[
         - name: {}
-          package:
+          ansible.builtin.package:
             name: {}
             state: {}
 
@@ -61,7 +61,7 @@ ls.add_snippets("yaml", {
         "apt_cache",
         fmt([[
         - name: {}
-          apt:
+          ansible.builtin.apt:
             update_cache: true
             cache_valid_time: 3600
 

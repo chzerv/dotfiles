@@ -31,6 +31,7 @@ local sources = {
     }),
     -- yamllint for YAML
     null_ls.builtins.diagnostics.yamllint,
+    null_ls.builtins.diagnostics.ansiblelint,
 }
 
 local on_attach = function(client, bufnr)
