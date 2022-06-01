@@ -16,6 +16,7 @@ local servers = {
     "dockerls",
     "jsonls",
     "sumneko_lua",
+    "rust_analyzer",
 }
 
 local ok, lsp_installer = pcall(require, "nvim-lsp-installer")
