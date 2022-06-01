@@ -258,6 +258,13 @@ return require("packer").startup({
             end,
         })
 
+        use({
+            "numToStr/FTerm.nvim",
+            config = function()
+                require("plugins.fterm")
+            end,
+        })
+
         if packer_bootstrap then
             require("packer").sync()
         end
