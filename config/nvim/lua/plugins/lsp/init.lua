@@ -4,6 +4,7 @@
 ---------------------------------------------------------
 
 require("plugins.lsp.diagnostics").setup()
+local utils = require'plugins.lsp.utils'
 
 -- Install LSP servers
 
@@ -108,6 +109,8 @@ local on_attach = function(client, bufnr)
             desc = "Clear LSP document highlight",
         })
     end
+
+    utils.fmt_on_save(client, bufnr)
 
     -- Show diagnostics on a float window when you hover over a symbol
     vim.api.nvim_create_autocmd("CursorHold", {

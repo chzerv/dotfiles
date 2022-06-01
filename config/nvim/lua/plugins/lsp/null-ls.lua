@@ -8,6 +8,8 @@ if not ok then
     return
 end
 
+local utils = require'plugins.lsp.utils'
+
 -- The following programs must be in your $PATH:
 -- yamllint, ansiblelint, black, isort, stylua, prettier
 local sources = {
@@ -60,6 +62,8 @@ local on_attach = function(client, bufnr)
         -- Command
         cmd(bufnr, "LspFormatRange", vim.lsp.buf.range_formatting, { range = true, desc = "LSP format range" })
     end
+
+    utils.fmt_on_save(client, bufnr)
 end
 
 null_ls.setup({
