@@ -12,6 +12,16 @@ if fn.empty(fn.glob(install_path)) > 0 then
     })
 end
 
+-- NvChad
+_G.lazy_load = function(plugin, timer)
+    if plugin then
+        timer = timer or 0
+        vim.defer_fn(function()
+            require("packer").loader(plugin)
+        end, timer)
+    end
+end
+
 -- Automatically run :PackerCompile whenever this file is updated
 vim.api.nvim_create_autocmd("BufWritePost", {
     group = vim.api.nvim_create_augroup("PackerConfig", { clear = true }),
@@ -77,6 +87,9 @@ return require("packer").startup({
             config = function()
                 require("plugins.lsp")
             end,
+            setup = function()
+                lazy_load("nvim-lspconfig")
+            end,
         })
 
         use({
@@ -97,18 +110,20 @@ return require("packer").startup({
 
         use({
             "hrsh7th/nvim-cmp",
+            event = "InsertEnter",
             config = function()
                 require("plugins.nvim-cmp")
             end,
             requires = {
-                "hrsh7th/cmp-buffer",
-                "hrsh7th/cmp-path",
-                "hrsh7th/cmp-nvim-lua",
-                "hrsh7th/cmp-nvim-lsp",
-                "hrsh7th/cmp-nvim-lsp-signature-help",
+                { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
+                { "hrsh7th/cmp-path", after = "nvim-cmp" },
+                -- { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
+                { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" },
                 "onsails/lspkind.nvim",
+                "hrsh7th/cmp-nvim-lsp",
             },
         })
+
         use({
             "L3MON4D3/LuaSnip",
             after = "nvim-cmp",
@@ -116,6 +131,7 @@ return require("packer").startup({
                 require("plugins.luasnip")
             end,
         })
+
         use({
             "saadparwaiz1/cmp_luasnip",
             after = "LuaSnip",
@@ -159,7 +175,8 @@ return require("packer").startup({
 
         use({
             "numToStr/Comment.nvim",
-            event = "BufRead",
+            module = "Comment",
+            keys = { "gc", "gb" },
             config = function()
                 require("plugins.comment")
             end,
@@ -219,14 +236,17 @@ return require("packer").startup({
 
         -- Improvements to the quickfix/location windows
         -- TODO: https://github.com/kevinhwang91/nvim-bqf
-        use "romainl/vim-qf"
+        use("romainl/vim-qf")
 
         -- Delete buffers without messing up the window layout
-        use ({
+        use({
             "famiu/bufdelete.nvim",
+            setup = function()
+                lazy_load("bufdelete.nvim")
+            end,
             config = function()
-                require "plugins.bufdelete"
-            end
+                require("plugins.bufdelete")
+            end,
         })
 
         -- LaTeX
