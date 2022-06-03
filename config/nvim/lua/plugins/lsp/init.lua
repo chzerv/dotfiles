@@ -4,7 +4,7 @@
 ---------------------------------------------------------
 
 require("plugins.lsp.diagnostics").setup()
-local utils = require'plugins.lsp.utils'
+local utils = require("plugins.lsp.utils")
 
 -- Install LSP servers
 
@@ -21,17 +21,17 @@ local servers = {
 
 local ok, lsp_installer = pcall(require, "nvim-lsp-installer")
 if ok then
-    lsp_installer.setup {
+    lsp_installer.setup({
         ensure_installed = servers,
         automatic_installation = true,
         ui = {
             icons = {
                 server_installed = "✓",
                 server_pending = "➜",
-                server_uninstalled = "✗"
-            }
-        }
-    }
+                server_uninstalled = "✗",
+            },
+        },
+    })
 end
 
 local ok, lspconfig = pcall(require, "lspconfig")
@@ -39,14 +39,20 @@ if not ok then
     return
 end
 
-local cmp_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+local cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not cmp_ok then
     return
 end
 
 -- Override handlers
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded', silent = true, max_height = 10 })
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded', silent = true, max_height = 10 })
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+    vim.lsp.handlers.hover,
+    { border = "rounded", silent = true, max_height = 10 }
+)
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+    vim.lsp.handlers.signature_help,
+    { border = "rounded", silent = true, max_height = 10 }
+)
 
 -- Capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -58,7 +64,7 @@ local on_attach = function(client, bufnr)
     local cmd = vim.api.nvim_buf_create_user_command
 
     map("n", "K", vim.lsp.buf.hover, opts)
-    map({"n", "i"}, "<C-s>", vim.lsp.buf.signature_help, opts)
+    map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help, opts)
     map("n", "gd", vim.lsp.buf.definition, opts)
     map("n", "gD", vim.lsp.buf.declaration, opts)
     map("n", "gt", vim.lsp.buf.type_definition, opts)
@@ -66,7 +72,8 @@ local on_attach = function(client, bufnr)
     map("n", "gr", vim.lsp.buf.references, opts)
     map("n", "<leader>cdn", vim.diagnostic.goto_next, opts)
     map("n", "<leader>cdp", vim.diagnostic.goto_prev, opts)
-    map("n", "<leader>cdl", "<cmd>Telescope diagnostics<CR>", opts)
+    -- map("n", "<leader>cdl", "<cmd>Telescope diagnostics<CR>", opts)
+    map("n", "<leader>cdl", "<cmd>lua require'plugins.telescope.utils'.diagnostics()<CR>", opts)
     map("n", "<leader>cr", vim.lsp.buf.rename, opts)
     map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
     map("x", "<leader>ca", vim.lsp.buf.range_code_action, opts)
@@ -85,7 +92,6 @@ local on_attach = function(client, bufnr)
 
     -- Same, but for range formatting
     if client.server_capabilities.documentRangeFormattingProvider then
-
         -- Binding
         map("x", "<leader>cf", vim.lsp.buf.range_formatting, opts)
 
@@ -120,15 +126,14 @@ local on_attach = function(client, bufnr)
             local opts = {
                 focusable = false,
                 close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-                border = 'rounded',
-                source = 'always',
-                prefix = ' ',
-                scope = 'cursor',
+                border = "rounded",
+                source = "always",
+                prefix = " ",
+                scope = "cursor",
             }
             vim.diagnostic.open_float(nil, opts)
-        end
+        end,
     })
-
 end
 
 -- https://github.com/rebelot/dotfiles/blob/master/nvim/lua/lsp/lsp-config.lua
