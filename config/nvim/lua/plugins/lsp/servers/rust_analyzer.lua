@@ -7,6 +7,7 @@ return {
             },
             cargo = {
                 loadOutDirsFromCheck = true,
+                autoreload = true,
             },
             procMacro = {
                 enable = true,
