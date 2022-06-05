@@ -44,6 +44,7 @@ export MANPAGER='nvim +Man!'
 export BAT_CONFIG_PATH="$HOME/.config/bat/bat.conf"
 export CHROOT=/media/General/Builds
 export STARSHIP_CONFIG=~/.config/zsh/starship.toml
+export npm_config_prefix="$HOME/.node_modules/"
 # }}}
 
 # FZF Setup {{{
