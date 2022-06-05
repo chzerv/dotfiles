@@ -2,3 +2,5 @@
 **/.zcompdump
 **/.zcompdump.zwc
 **/tmux/plugins
+**/spell/**
+**/*.bak
