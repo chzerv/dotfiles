@@ -143,20 +143,6 @@ require("feline").setup({
 local winbar_components = {
     active = {
         {
-            -- {
-            --     provider = {
-            --         name = "file_info",
-            --         opts = {
-            --             -- type = "unique",
-            --             -- filetype_icon = false,
-            --             -- colored_icon = true,
-            --             hl = { fg = "cyan" },
-            --         },
-            --     },
-            --     right_sep = " ",
-            --     left_sep = " ",
-            -- },
-
             {
                 enabled = function()
                     return gps.is_available()
@@ -165,6 +151,23 @@ local winbar_components = {
                     return gps.get_location()
                 end,
                 hl = { fg = "cyan" },
+            },
+        },
+    },
+    inactive = {
+        {
+            {
+                provider = {
+                    name = "file_info",
+                    opts = {
+                        -- type = "unique",
+                        -- filetype_icon = false,
+                        -- colored_icon = true,
+                        hl = { fg = "cyan" },
+                    },
+                },
+                right_sep = " ",
+                left_sep = " ",
             },
         },
     },
