@@ -8,7 +8,9 @@ vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSig
 M.setup = function()
     vim.diagnostic.config({
         -- Don't show diagnostics at the end of the line
-        virtual_text = false,
+        virtual_text = {
+            severity = "Error",
+        },
         signs = true,
         underline = true,
         update_in_insert = false,
