@@ -37,7 +37,14 @@ telescope.setup({
             height = 0.8,
             preview_cutoff = 100,
         },
-        file_ignore_patterns = { "node_modules", "pycache" },
+        file_ignore_patterns = {
+            "node_modules",
+            "pycache",
+            ".git/*",
+            ".venv/*",
+            ".png",
+            ".jpg",
+        },
         path_display = {
             truncate = 1,
         },
