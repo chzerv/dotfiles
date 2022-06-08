@@ -1,7 +1,6 @@
-###########################################################{{{
-# # Load and initialize the completion system ignoring insecure directories with a
-# # cache time of 20 hours, so it should almost always regenerate the first time a
-# # shell is opened each day.
+# Load and initialize the completion system {{{
+# Ignore insecure directories with a cache time of 20 hours, so it should almost 
+# always regenerate the first time a shell is opened each day.
 autoload -Uz compinit promptinit
 _comp_files=(${ZDOTDIR:-$HOME}/.zcompdump(Nm-20))
 if (( $#_comp_files )); then
@@ -10,15 +9,13 @@ else
     compinit -i
 fi
 unset _comp_files
+# }}}
 
+# Prompt {{{
 eval "$(starship init zsh)"
+# }}}
 
-# promptinit
-# setopt prompt_subst
-###########################################################}}}
-
-###########################################################
-# Set options
+# Core options {{{
 
 # Use case-insensitive globbing.
 unsetopt case_glob
@@ -90,26 +87,34 @@ setopt auto_param_slash
 autoload -U select-word-style
 select-word-style bash
 
-#  Zstyle {{{{
-zstyle ':completion:*:*:*:*' menu select
-zstyle ':completion:*' auto-description 'specify %d'
-zstyle ':completion:*:' completer _expand _complete
-zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
+# }}}
+
+# Completion options {{{
+# https://thevaluable.dev/zsh-completion-guide-examples/
+zstyle ':completion:*' menu select
+
+# Enable caching
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$HOME/.cache/.zcompcache"
+
+ # Group results
 zstyle ':completion:*' group-name ''
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*:default' list-prompt '%S%M matches%s'
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-zstyle ':completion:*' rehash true
-zstyle ':completion:*' use-compctl false
-zstyle ':completion:*' verbose true
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-zstyle ':completion::complete:*' use-cache on
-zstyle ':completion::complete:*' cache-path "$HOME/.zcompcache"
-zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
+
+# Approximate completions in case you mis-type
+zstyle ':completion:*' completer _complete _match _approximate
+
+# Formatting
+zstyle ':completion:*' format ' %F{blue}-- %d --%f'
 zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
 zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
-# }}}}
+zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
+
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# When doing kill <TAB>, list more options about the processes
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,cputime,cmd'
+# }}}
 
 #  History Settings {{{{
 
@@ -143,32 +148,35 @@ setopt hist_verify
 setopt extended_history
 # }}}}
 
-# Set keybindings
+# Keybindings {{{
 bindkey -e
 bindkey "^A" vi-beginning-of-line  # C-A
 bindkey "^E"        vi-end-of-line # C-E
+# }}}
 
-# Allow command line editing in $EDITOR
+# Edit in $EDITOR {{{
 autoload edit-command-line
 zle -N edit-command-line
 bindkey '^X^E' edit-command-line
+# }}}
 
-# Source zsh functions.
+# Source stuff {{{
+
+# Functions
 for f in $ZDOTDIR/functions/*
 do
     [ -f "$f" ] && source "$f"
 done
 
-# Source zsh aliases.
+# Aliases
 for f in $ZDOTDIR/aliases/*
 do
     [ -f "$f" ] && source "$f"
 done
 
-# Source fzf
+# FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Fzf key-bindings are found in different places in Arch vs Fedora
 if [[ -d /usr/share/fzf ]]; then
     if (( $+commands[pacman] )); then
         source /usr/share/fzf/key-bindings.zsh
@@ -177,14 +185,12 @@ if [[ -d /usr/share/fzf ]]; then
     fi
 fi
 
+# command-not-found utility
 if [ -f /usr/share/doc/pkgfile/command-not-found.zsh ]; then
     source /usr/share/doc/pkgfile/command-not-found.zsh
 fi
+# }}}
 
-###########################################################
-
-# ZINIT
-
-###########################################################
-
+# Zinit {{{
 [ -f "$ZDOTDIR/zinit.zsh" ] && source "$ZDOTDIR/zinit.zsh"
+# }}}
