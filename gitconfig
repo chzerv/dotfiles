@@ -6,8 +6,14 @@
 	br = branch
 	cm = commit -v
 	st = status
-        graph  = log --oneline --graph --all --decorate
+    graph  = log --oneline --graph --all --decorate
 [merge]
 	tool = vimdiff
 [init]
 	defaultBranch = main
+[core]
+    pager = delta --theme='OneHalfDark'
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    line-numbers = true
