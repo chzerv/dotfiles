@@ -3,12 +3,12 @@ local M = {}
 M.kanagawa = function()
     require('kanagawa').setup({
         undercurl = true,
-        commentStyle = "italic",
-        functionStyle = "NONE",
-        keywordStyle = "italic",
-        statementStyle = "bold",
-        typeStyle = "NONE",
-        variablebuiltinStyle = "italic",
+        commentStyle = { italic = true },
+        functionStyle = {},
+        keywordStyle = { italic = true },
+        statementStyle = { bold = true },
+        typeStyle = {},
+        variablebuiltinStyle = { italic = true },
         specialReturn = true,
         specialException = true,
         transparent = false,
