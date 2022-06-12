@@ -38,7 +38,9 @@ opt.splitright = true -- Split new windoes right of the current one
 
 opt.inccommand = "split" -- Show offscreen results in a preview window during :substitute
 opt.foldlevelstart = 99
-opt.foldmethod = "marker"
+-- opt.foldmethod = "marker"
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- Searching
 opt.ignorecase = true -- Ignore case when searching ..
