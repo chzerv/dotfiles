@@ -102,8 +102,7 @@ components.active[2] = {
         hl = { fg = "red" },
         right_sep = " ",
     },
-    -- { provider = "line_percentage" },
-    { provider = "lines_cols_pos" },
+    { provider = "position" },
     {
         provider = "scroll_bar",
         left_sep = " ",
@@ -130,14 +129,6 @@ require("feline").setup({
     },
     components = components,
     vi_mode_colors = vi_mode_colors,
-    custom_providers = {
-        lines_cols_pos = function()
-            local line, col = unpack(api.nvim_win_get_cursor(0))
-            col = vim.str_utfindex(api.nvim_get_current_line(), col) + 1
-
-            return string.format("%d:%d", line, col)
-        end,
-    },
 })
 
 local winbar_components = {
