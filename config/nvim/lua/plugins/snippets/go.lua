@@ -46,4 +46,21 @@ ls.add_snippets("go", {
     ),
     s("prln", { t("fmt.Println("), i(1), t(")") }),
     s("prf", { t("fmt.Printf("), i(1), t(")") }),
+    s(
+        "forn",
+        fmt(
+            [[
+        for i := 0; i {} {}; i++ {{
+            {}
+        }}
+        {}
+        ]],
+            {
+                c(1, { t("<"), t("<="), t(">"), t(">=") }),
+                i(2, "n"),
+                i(3, "body"),
+                i(4),
+            }
+        )
+    ),
 })
