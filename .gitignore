@@ -4,3 +4,4 @@
 **/tmux/plugins
 **/spell/**
 **/*.bak
+**/plugin/packer_compiled.lua
