@@ -1,7 +1,7 @@
 local M = {}
 
 M.kanagawa = function()
-    require('kanagawa').setup({
+    require("kanagawa").setup({
         undercurl = true,
         commentStyle = { italic = true },
         functionStyle = {},
@@ -11,7 +11,7 @@ M.kanagawa = function()
         variablebuiltinStyle = { italic = true },
         specialReturn = true,
         specialException = true,
-        transparent = false,
+        transparent = true,
         -- Works really nice with laststatus = 3
         dimInactive = true,
         globalStatus = true,
