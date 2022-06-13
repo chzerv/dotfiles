@@ -94,6 +94,14 @@ map("n", "Q", "@:", opts)
 -- Switch to the directory of the open buffer
 map("n", "<leader>wd", "<cmd>lcd %:p:h<CR>:pwd<CR>", opts)
 
+-- Since we disable netrw, create a binding to replicate "gx"
+-- Credits to kutsan
+map("n", "gx", function()
+    local url = vim.fn.expand("<cfile>")
+    local escaped_url = vim.fn.escape(url, "#%!")
+    cmd(('silent !xdg-open "%s"'):format(escaped_url))
+end, { silent = true })
+
 -- Neovim Terminal {{{
 map("t", "<A-t>", "<C-\\><C-n><cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)
 map("n", "<A-t>", "<cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)
