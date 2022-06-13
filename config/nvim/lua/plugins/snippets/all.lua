@@ -4,7 +4,8 @@ local sn = ls.snippet_node
 local t = ls.text_node
 local i = ls.insert_node
 local f = ls.function_node
-local c = ls.choice_node local d = ls.dynamic_node
+local c = ls.choice_node
+local d = ls.dynamic_node
 local r = ls.restore_node
 local l = require("luasnip.extras").lambda
 local rep = require("luasnip.extras").rep
@@ -17,12 +18,25 @@ local fmta = require("luasnip.extras.fmt").fmta
 local types = require("luasnip.util.types")
 local conds = require("luasnip.extras.expand_conditions")
 
+local function fd_cmt_string(cmt)
+    return string.format(vim.bo.commentstring, " " .. cmt)
+end
+
 -- Simple placeholders
 ls.add_snippets("all", {
     s(
         "date",
         f(function()
-            return os.date "%D - %H:%M"
+            return os.date("%D - %H:%M")
         end)
+    ),
+    s(
+        "td",
+        c(1, {
+            t(fd_cmt_string("TODO: ")),
+            t(fd_cmt_string("FIXME: ")),
+            t(fd_cmt_string("BUG: ")),
+        }),
+        i(0)
     ),
 })
