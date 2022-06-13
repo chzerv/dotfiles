@@ -64,7 +64,9 @@ local on_attach = function(client, bufnr)
     local map = vim.keymap.set
     local cmd = vim.api.nvim_buf_create_user_command
 
-    map("n", "K", vim.lsp.buf.hover, opts)
+    map("n", "K", function()
+        return require("plugins.lsp.utils").fix_buf_hover()
+    end, opts)
     map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help, opts)
     map("n", "gd", vim.lsp.buf.definition, opts)
     map("n", "gD", vim.lsp.buf.declaration, opts)
