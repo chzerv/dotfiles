@@ -4,8 +4,8 @@
 -- the lua/plugins/$plugin_name directory.
 --------------------------------------------------
 
-local g = vim.g       -- Global variables
-local opt = vim.opt   -- Set options (global/buffer/windows-scoped)
+local g = vim.g -- Global variables
+local opt = vim.opt -- Set options (global/buffer/windows-scoped)
 local cmd = vim.cmd
 -- local map = vim.api.nvim_set_keymap
 local map = vim.keymap.set
@@ -19,25 +19,25 @@ g.maplocalleader = "\\"
 map("n", "<Esc><Esc>", "<cmd> :noh <CR>")
 
 -- Cycle through tabs
-map('n', '[t', [[<Cmd>tabprevious<CR>]], opts)
-map('n', ']t', [[<Cmd>tabnext<CR>]], opts)
+map("n", "[t", [[<Cmd>tabprevious<CR>]], opts)
+map("n", "]t", [[<Cmd>tabnext<CR>]], opts)
 
 -- Buffer navigation
-map('n', '[b', [[<Cmd>bprevious<CR>]], opts)
-map('n', '<leader>bp', [[<Cmd>bprevious<CR>]], opts)
-map('n', ']b', [[<Cmd>bnext<CR>]], opts)
-map('n', '<leader>bn', [[<Cmd>bnext<CR>]], opts)
+map("n", "[b", [[<Cmd>bprevious<CR>]], opts)
+map("n", "<leader>bp", [[<Cmd>bprevious<CR>]], opts)
+map("n", "]b", [[<Cmd>bnext<CR>]], opts)
+map("n", "<leader>bn", [[<Cmd>bnext<CR>]], opts)
 -- map('n', '<leader>bd', "<Cmd>bdelete<CR>", opts)
 
 -- Cycle through quickfix items
-map('n', '[c', [[<Cmd>cprevious<CR>]], opts)
-map('n', ']c', [[<Cmd>cnext<CR>]], opts)
-map('n', '<Bslash>c', [[<Cmd>cclose<CR>]], opts)
+map("n", "[c", [[<Cmd>cprevious<CR>]], opts)
+map("n", "]c", [[<Cmd>cnext<CR>]], opts)
+map("n", "<Bslash>c", [[<Cmd>cclose<CR>]], opts)
 
 -- Cycle through location list items
-map('n', '[l', [[<Cmd>lprevious<CR>]], opts)
-map('n', ']l', [[<Cmd>lnext<CR>]], opts)
-map('n', '<Bslash>l', [[<Cmd>lclose<CR>]], opts)
+map("n", "[l", [[<Cmd>lprevious<CR>]], opts)
+map("n", "]l", [[<Cmd>lnext<CR>]], opts)
+map("n", "<Bslash>l", [[<Cmd>lclose<CR>]], opts)
 
 -- Allow moving through wrapped lines
 -- map('n', 'k', [[gk]], opts)
@@ -56,12 +56,12 @@ map("", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true 
 map("", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
 
 -- Put blank lines below/above current line
-map('n', ']<Space>', '<Plug>(PutBlankLinesBelow)', opts)
-map('n', '[<Space>', '<Plug>(PutBlankLinesAbove)', opts)
+map("n", "[<Space>", "<Cmd>put! =repeat(nr2char(10), v:count1) <Bar> ']+1<CR>", opts)
+map("n", "]<Space>", "<Cmd>put =repeat(nr2char(10), v:count1) <Bar> '[-1<CR>", opts)
 
 -- Re-select block after indenting
-map('x', '<', '<gv', opts)
-map('x', '>', '>gv', opts)
+map("x", "<", "<gv", opts)
+map("x", ">", ">gv", opts)
 
 -- Drag visual selected line(s) vertically and auto-indent {{{
 map("x", "mj", ":move'>+<CR>gv=gv", { noremap = true })
@@ -69,61 +69,61 @@ map("x", "mk", ":move-2<CR>gv=gv", { noremap = true })
 
 -- Toggle spellcheck
 -- The blank string in the mode indicates that this is a 'map' mapping
-map('', '<F6>', "<Cmd>setlocal spell! spelllang=en_us<CR>")
-map('', '<F7>', "<Cmd>setlocal spell! spelllang=el<CR>")
-map('', '<F8>', "<Cmd>setlocal spell! spelllang=en_us,el<CR>")
+map("", "<F6>", "<Cmd>setlocal spell! spelllang=en_us<CR>")
+map("", "<F7>", "<Cmd>setlocal spell! spelllang=el<CR>")
+map("", "<F8>", "<Cmd>setlocal spell! spelllang=en_us,el<CR>")
 
 -- Emacs bindings in VIM??
-map('i', '<C-a>', '<Esc>I', opts)
-map('i', '<C-e>', '<Esc>A', opts)
+map("i", "<C-a>", "<Esc>I", opts)
+map("i", "<C-e>", "<Esc>A", opts)
 
--- Open a quickfix window with all the terms I last searched for 
+-- Open a quickfix window with all the terms I last searched for
 -- credits to Steve Losh
-map('n', '<leader>/', [[<Cmd>execute 'vimgrep /'.@/.'/g %'<CR>copen<CR><CR>nohls<CR>]])
+map("n", "<leader>/", [[<Cmd>execute 'vimgrep /'.@/.'/g %'<CR>copen<CR><CR>nohls<CR>]])
 
 -- Zoom focused split, just like tmux
-map('n', '<leader>z', '<Plug>(ToggleZoom)', opts)
+map("n", "<leader>z", "<Plug>(ToggleZoom)", opts)
 
 -- Execute current line in command mode
-map('n', '<leader>:', '^"zyg_:<C-R>z<CR>', opts)
+map("n", "<leader>:", '^"zyg_:<C-R>z<CR>', opts)
 
 -- Repeat the last command-line command
 -- (Ex mode still accesible via gQ)
-map('n', 'Q', '@:', opts)
+map("n", "Q", "@:", opts)
 
 -- Switch to the directory of the open buffer
-map('n', '<leader>wd', "<cmd>lcd %:p:h<CR>:pwd<CR>", opts)
+map("n", "<leader>wd", "<cmd>lcd %:p:h<CR>:pwd<CR>", opts)
 
 -- Neovim Terminal {{{
-map('t', '<A-t>', "<C-\\><C-n><cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)
-map('n', '<A-t>', "<cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)
-map('n', '<A-T>', "<cmd>tabnew | terminal<CR>", opts)
-map('t', '<A-[>', '<C-\\><C-n>', { noremap = true })
-map('t', '<A-k>', '<C-\\><C-n><C-w>k', { noremap = true })
-map('t', '<A-j>', '<C-\\><C-n><C-w>j', { noremap = true })
-map('t', '<A-h>', '<C-\\><C-n><C-w>h', { noremap = true })
-map('t', '<A-l>', '<C-\\><C-n><C-w>l', { noremap = true })
+map("t", "<A-t>", "<C-\\><C-n><cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)
+map("n", "<A-t>", "<cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)
+map("n", "<A-T>", "<cmd>tabnew | terminal<CR>", opts)
+map("t", "<A-[>", "<C-\\><C-n>", { noremap = true })
+map("t", "<A-k>", "<C-\\><C-n><C-w>k", { noremap = true })
+map("t", "<A-j>", "<C-\\><C-n><C-w>j", { noremap = true })
+map("t", "<A-h>", "<C-\\><C-n><C-w>h", { noremap = true })
+map("t", "<A-l>", "<C-\\><C-n><C-w>l", { noremap = true })
 -- }}}
 
 -- Command Line Bindings {{{
-map('c', '<C-a>', '<Home>', { noremap = true })
-map('c', '<C-e>', '<End>', { noremap = true })
+map("c", "<C-a>", "<Home>", { noremap = true })
+map("c", "<C-e>", "<End>", { noremap = true })
 -- }}}
 
 -- Line text objects {{{
-map('x', 'il', 'g_o^', { noremap = true} )
-map('o', 'il', '<cmd>normal vil<CR>', { noremap = true} )
-map('x', 'al', '$o0', { noremap = true} )
-map('o', 'al', '<cmd>normal val<CR>', { noremap = true} )
+map("x", "il", "g_o^", { noremap = true })
+map("o", "il", "<cmd>normal vil<CR>", { noremap = true })
+map("x", "al", "$o0", { noremap = true })
+map("o", "al", "<cmd>normal val<CR>", { noremap = true })
 -- }}}
 
 -- Clipboard {{{
 -- You can also set `vim.opt.clipboard = "unnamedplus"` to have the yank/paste use the system
 -- clipboard, but I find that annoying.
-map('n', '<leader>y', [["+y"]], opts)
-map('n', '<leader>Y', [["+Y"]], opts)
-map('x', '<leader>y', [["+y"]], opts)
-map('n', '<leader>p', [["+p"]], opts)
-map('n', '<leader>P', [["+P"]], opts)
-map('x', '<leader>p', [["+p"]], opts)
+map("n", "<leader>y", [["+y"]], opts)
+map("n", "<leader>Y", [["+Y"]], opts)
+map("x", "<leader>y", [["+y"]], opts)
+map("n", "<leader>p", [["+p"]], opts)
+map("n", "<leader>P", [["+P"]], opts)
+map("x", "<leader>p", [["+p"]], opts)
 -- }}}
