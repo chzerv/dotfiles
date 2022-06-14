@@ -33,20 +33,6 @@ ls.add_snippets("go", {
         )
     ),
     s(
-        "imp",
-        fmt(
-            [[
-        import (
-            "{}"
-        )
-        {}
-        ]],
-            { i(1, "fmt"), i(2) }
-        )
-    ),
-    s("prln", { t("fmt.Println("), i(1), t(")") }),
-    s("prf", { t("fmt.Printf("), i(1), t(")") }),
-    s(
         "forn",
         fmt(
             [[
@@ -61,6 +47,30 @@ ls.add_snippets("go", {
                 i(3, "body"),
                 i(4),
             }
+        )
+    ),
+    s(
+        "fn",
+        fmt(
+            [[
+        func {}({}) {{
+            {}
+        }}
+        {}
+        ]],
+            { i(1, "name"), i(2, "args"), i(3, "body"), i(0) }
+        )
+    ),
+    s(
+        "meth",
+        fmt(
+            [[
+        func ({} {}) {}({}) {} {{
+            {}
+        }}
+        {}
+        ]],
+            { i(1, "receiver"), i(2, "type"), i(3, "name"), i(4), i(5), i(6, "body"), i(0) }
         )
     ),
 })

@@ -17,6 +17,7 @@ opt.fillchars = { eob = " " }
 opt.showmode = false -- Don't show the active mode
 opt.showcmd = true
 opt.cmdheight = 0 -- Height of the command line (A value of '0' requires neovim nightly)
+opt.scrolloff = 8
 
 -- Indent and Tab Behavior
 opt.autoindent = true -- Use indentation of current line on the next one

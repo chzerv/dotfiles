@@ -8,8 +8,8 @@ if ok then
     impatient.enable_profile()
 end
 
-require "core"
-require "core.plugins"
-require "core.autocommands"
-require "core.abbreviations"
-require "core.mappings"
+require("core")
+require("core.plugins")
+require("core.autocommands")
+require("core.abbreviations")
+require("core.mappings")

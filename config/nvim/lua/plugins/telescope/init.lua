@@ -40,7 +40,6 @@ telescope.setup({
         file_ignore_patterns = {
             "node_modules",
             "pycache",
-            ".git/*",
             ".venv/*",
             ".png",
             ".jpg",

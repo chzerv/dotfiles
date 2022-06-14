@@ -19,9 +19,3 @@
     line-numbers = true
     paging=always
     syntax-theme = TwoDark
-    zero-style = dim syntax
-    minus-style = bold red
-    plus-style = bold green
-    line-numbers-minus-style = "red dim"
-    line-numbers-plus-style = "green dim"
-    line-numbers-zero-style = "white dim"

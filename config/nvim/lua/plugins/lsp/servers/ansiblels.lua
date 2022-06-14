@@ -4,6 +4,9 @@ return {
             ansible = {
                 useFullyQualifiedCollectionNames = true,
             },
+            ansibleLint = {
+                enabled = false,
+            },
         },
     },
 }
