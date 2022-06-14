@@ -10,6 +10,7 @@ M.setup = function()
         -- Don't show diagnostics at the end of the line
         virtual_text = {
             severity = "Error",
+            spacing = 2,
         },
         signs = true,
         underline = true,
