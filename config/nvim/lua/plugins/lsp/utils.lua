@@ -24,4 +24,17 @@ function U.fix_buf_hover()
     vim.cmd([[autocmd CursorMoved <buffer> ++once set eventignore=""]])
 end
 
+-- https://github.com/neovim/nvim-lspconfig/wiki/User-contributed-tips#peek-definition
+local function preview_location_callback(_, result)
+    if result == nil or vim.tbl_isempty(result) then
+        return nil
+    end
+    vim.lsp.util.preview_location(result[1])
+end
+
+function U.peek_definition()
+    local params = vim.lsp.util.make_position_params()
+    return vim.lsp.buf_request(0, "textDocument/definition", params, preview_location_callback)
+end
+
 return U

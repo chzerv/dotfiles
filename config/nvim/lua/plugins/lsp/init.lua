@@ -48,11 +48,11 @@ end
 -- Override handlers
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
     vim.lsp.handlers.hover,
-    { border = "rounded", silent = true, max_height = 15 }
+    { border = "rounded", silent = true, max_height = 10 }
 )
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
     vim.lsp.handlers.signature_help,
-    { border = "rounded", silent = true, max_height = 15 }
+    { border = "rounded", silent = true, max_height = 10 }
 )
 
 -- Capabilities
@@ -68,6 +68,7 @@ local on_attach = function(client, bufnr)
         return require("plugins.lsp.utils").fix_buf_hover()
     end, opts)
     map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help, opts)
+    map("n", "gp", "<cmd>lua require'plugins.lsp.utils'.peek_definition()<CR>", opts)
     map("n", "gd", vim.lsp.buf.definition, opts)
     map("n", "gD", vim.lsp.buf.declaration, opts)
     map("n", "gt", vim.lsp.buf.type_definition, opts)
