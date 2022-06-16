@@ -87,57 +87,17 @@ local on_attach = function(client, bufnr)
     -- If the server does not support formatting, we can most
     -- likely do it through null-ls.
     if client.server_capabilities.documentFormattingProvider then
-        -- Binding
         map("n", "<leader>cf", vim.lsp.buf.format, opts)
-
-        -- Command
-        cmd(bufnr, "LspFormat", vim.lsp.buf.format, { range = false, desc = "LSP format" })
     end
 
     -- Same, but for range formatting
     if client.server_capabilities.documentRangeFormattingProvider then
-        -- Binding
         map("x", "<leader>cf", vim.lsp.buf.range_formatting, opts)
-
-        -- Command
-        cmd(bufnr, "LspFormatRange", vim.lsp.buf.range_formatting, { range = true, desc = "LSP format range" })
     end
 
-    -- Highlight symbol under cursor, if supported by the server
-    -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#highlight-symbol-under-cursor=
-    if client.server_capabilities.documentHighlightProvider then
-        local lsp_references_au_id = vim.api.nvim_create_augroup("LSP_references", { clear = true })
-        vim.api.nvim_create_autocmd("CursorHold", {
-            callback = vim.lsp.buf.document_highlight,
-            buffer = bufnr,
-            group = lsp_references_au_id,
-            desc = "LSP document highlight",
-        })
-        vim.api.nvim_create_autocmd("CursorMoved", {
-            callback = vim.lsp.buf.clear_references,
-            buffer = bufnr,
-            group = lsp_references_au_id,
-            desc = "Clear LSP document highlight",
-        })
-    end
-
-    utils.fmt_on_save(client, bufnr)
-
-    -- Show diagnostics on a float window when you hover over a symbol
-    vim.api.nvim_create_autocmd("CursorHold", {
-        buffer = bufnr,
-        callback = function()
-            local opts = {
-                focusable = false,
-                close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-                border = "rounded",
-                source = "always",
-                prefix = " ",
-                scope = "cursor",
-            }
-            vim.diagnostic.open_float(nil, opts)
-        end,
-    })
+    -- utils.fmt_on_save(client, bufnr)
+    utils.lsp_highlight_document(client, bufnr)
+    utils.popup_diagnostics_on_hover(bufnr)
 end
 
 -- https://github.com/rebelot/dotfiles/blob/master/nvim/lua/lsp/lsp-config.lua

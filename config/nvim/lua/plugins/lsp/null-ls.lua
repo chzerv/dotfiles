@@ -8,7 +8,7 @@ if not ok then
     return
 end
 
-local utils = require'plugins.lsp.utils'
+local utils = require("plugins.lsp.utils")
 
 -- The following programs must be in your $PATH:
 -- yamllint, ansiblelint, black, isort, stylua, prettier
@@ -22,10 +22,12 @@ local sources = {
     null_ls.builtins.formatting.stylua.with({
         -- By default, stylua uses Tabs
         args = {
-            "--indent-width", "4",
-            "--indent-type", "Spaces",
-            "-"
-        }
+            "--indent-width",
+            "4",
+            "--indent-type",
+            "Spaces",
+            "-",
+        },
     }),
     -- Prettier for HTML, CSS, YAML and JSON
     null_ls.builtins.formatting.prettier.with({
@@ -55,7 +57,6 @@ local on_attach = function(client, bufnr)
 
     -- Same, but for range formatting
     if client.server_capabilities.documentRangeFormattingProvider then
-
         -- Binding
         map("x", "<leader>cf", vim.lsp.buf.range_formatting, opts)
 
@@ -63,12 +64,11 @@ local on_attach = function(client, bufnr)
         cmd(bufnr, "LspFormatRange", vim.lsp.buf.range_formatting, { range = true, desc = "LSP format range" })
     end
 
-    utils.fmt_on_save(client, bufnr)
+    -- utils.fmt_on_save(client, bufnr)
 end
 
 null_ls.setup({
     sources = sources,
     on_attach = on_attach,
-    debug = false
+    debug = false,
 })
-
