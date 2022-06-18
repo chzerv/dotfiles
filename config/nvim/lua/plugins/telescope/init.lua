@@ -18,7 +18,7 @@ local actions_layout = require("telescope.actions.layout")
 
 telescope.setup({
     defaults = {
-        prompt_prefix = "  ",
+        prompt_prefix = "   ",
         initial_mode = "insert",
         selection_strategy = "reset",
         sorting_strategy = "descending", -- ascending
@@ -44,9 +44,7 @@ telescope.setup({
             ".png",
             ".jpg",
         },
-        path_display = {
-            truncate = 1,
-        },
+        path_display = { "truncate" },
         vimgrep_arguments = {
             "rg",
             "--color=never",
