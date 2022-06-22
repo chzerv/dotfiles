@@ -188,6 +188,12 @@ return require("packer").startup({
             end,
         })
 
+        use({
+            "folke/todo-comments.nvim",
+            config = function()
+                require("plugins.todo-comments")
+            end
+        })
         -- Git integration
         use({
             "tpope/vim-fugitive",
