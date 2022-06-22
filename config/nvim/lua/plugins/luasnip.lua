@@ -10,7 +10,7 @@ ls.config.set_config({
         [types.choiceNode] = {
             active = {
                 -- virt_text = { { " <- Current Choice", "nonTest" } }
-                virt_text = {{ "●", "rainbowcol6"}}
+                virt_text = {{ " • ", "diffChanged"}}
             },
         },
     },
