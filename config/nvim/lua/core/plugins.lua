@@ -12,16 +12,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
     })
 end
 
--- NvChad
-_G.lazy_load = function(plugin, timer)
-    if plugin then
-        timer = timer or 0
-        vim.defer_fn(function()
-            require("packer").loader(plugin)
-        end, timer)
-    end
-end
-
 -- Automatically run :PackerCompile whenever this file is updated
 vim.api.nvim_create_autocmd("BufWritePost", {
     group = vim.api.nvim_create_augroup("PackerConfig", { clear = true }),
@@ -104,7 +94,7 @@ return require("packer").startup({
             "j-hui/fidget.nvim",
             after = "nvim-lspconfig",
             config = function()
-                require("fidget").setup({})
+                require("plugins.lsp.fidget")
             end,
         })
 
