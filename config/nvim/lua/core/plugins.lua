@@ -192,7 +192,7 @@ return require("packer").startup({
             "folke/todo-comments.nvim",
             config = function()
                 require("plugins.todo-comments")
-            end
+            end,
         })
         -- Git integration
         use({

@@ -4,20 +4,18 @@
 
 local opt = vim.opt
 
--- Decrease update time
+-- General
 opt.updatetime = 100
+opt.mouse = "nv"
+opt.scrolloff = 4
 
 -- UI
 opt.number = true
 opt.relativenumber = true
-opt.shortmess:append("c") -- Supress pummenu messages
-opt.shortmess:append("I") -- Disable VIM intro
-opt.termguicolors = true -- Enable 24-bit RGB color
-opt.fillchars = { eob = " " }
+opt.shortmess:append("cs") -- Supress messages
 opt.showmode = false -- Don't show the active mode
 opt.showcmd = true
-opt.cmdheight = 0 -- Height of the command line (A value of '0' requires neovim nightly)
-opt.scrolloff = 8
+opt.cmdheight = 1 -- Height of the command line (A value of '0' requires neovim nightly)
 
 -- Indent and Tab Behavior
 opt.autoindent = true -- Use indentation of current line on the next one
@@ -36,12 +34,12 @@ opt.joinspaces = false -- Don't join lines with spaces at the end
 -- Better splitting
 opt.splitbelow = true -- Split new windows below the current one
 opt.splitright = true -- Split new windoes right of the current one
-
 opt.inccommand = "split" -- Show offscreen results in a preview window during :substitute
-opt.foldlevelstart = 99
--- opt.foldmethod = "marker"
-opt.foldmethod = "expr"
-opt.foldexpr = "nvim_treesitter#foldexpr()"
+
+-- Folding
+opt.foldmethod = "marker"
+opt.modelines = 1
+opt.foldlevel = 0
 
 -- Searching
 opt.ignorecase = true -- Ignore case when searching ..
@@ -58,28 +56,18 @@ opt.undodir = vim.fn.stdpath("data") .. "/cache/undo"
 
 -- Completion
 opt.pumheight = 12 -- Only show 12 completion candidates
-opt.pumblend = 5 -- Add transparency to the pummenu
+opt.pumblend = 15 -- Add transparency to the pummenu
 opt.completeopt = { "menu", "menuone", "noselect" }
 
 -- Command Line Completion
 opt.wildmenu = true
 opt.wildignorecase = true
-opt.wildcharm = vim.fn.char2nr("^Z") -- Trigger wildcard expansion with <C-z>
 opt.wildoptions = "pum"
 opt.path:remove("/usr/include")
 opt.wildignore:append("*/node_modules/*,*/autoload/*,*/cache/*,*.o,*~,*pycache*")
 
 -- Format Options (:help fo-table)
-opt.formatoptions = opt.formatoptions
-    - "a" -- Auto formatting is BAD.
-    - "t" -- Don't auto-wrap
-    + "c" -- Comments respect textwidth
-    + "q" -- Format comments with 'gq'
-    - "o" -- Don't continue comments with o and O,
-    + "r" -- but do continue when pressing enter.
-    + "n" -- Indent past the formatlistpat, not underneath it. Requires 'autoindent' to be set
-    + "j" -- Auto-remove comments if possible.
-    - "2" -- Must be removed for '+n'
+-- TODO: Create an autocmd for this
 
 -- Show the cursor line, but only in normal mode
 local group = vim.api.nvim_create_augroup("CursorLine", { clear = true })
@@ -122,7 +110,7 @@ if vim.fn.executable("rg") then
     }
 end
 
--- [Test] Use filetype.lua instead of filetype.vim for performance
+-- Use filetype.lua instead of filetype.vim for performance
 vim.g.did_load_filetypes = 0
 vim.g.do_filetype_lua = 1
 
