@@ -9,8 +9,10 @@ M.setup = function()
     vim.diagnostic.config({
         -- Don't show diagnostics at the end of the line
         virtual_text = {
-            severity = "Error",
-            spacing = 2,
+            severity = nil,
+            source = "if_many",
+            format = nil,
+            prefix = "",
         },
         signs = true,
         underline = true,
@@ -19,6 +21,7 @@ M.setup = function()
         float = {
             source = "always",
             border = "rounded",
+            show_header = true,
         },
     })
 end

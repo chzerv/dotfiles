@@ -1,4 +1,7 @@
 return {
+    cmd = {
+        "ansible-language-server", "--stdio"
+    },
     settings = {
         ansible = {
             ansible = {
