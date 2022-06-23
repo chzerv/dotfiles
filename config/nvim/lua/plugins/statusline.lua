@@ -1,4 +1,3 @@
-local api = vim.api
 local vi_mode = require("feline.providers.vi_mode")
 local lsp = require("feline.providers.lsp")
 local gps = require("nvim-gps")
@@ -90,12 +89,10 @@ components.active[2] = {
     {
         provider = "git_diff_added",
         hl = { fg = "green" },
-        right_sep = " ",
     },
     {
         provider = "git_diff_changed",
         hl = { fg = "orange" },
-        right_sep = " ",
     },
     {
         provider = "git_diff_removed",
@@ -129,6 +126,16 @@ require("feline").setup({
     },
     components = components,
     vi_mode_colors = vi_mode_colors,
+    custom_providers = {
+        active_lsp_client = function()
+            for _, client in ipairs(vim.lsp.get_active_clients()) do
+                if client.attached_buffers[vim.api.nvim_get_current_buf()] then
+                    return (vim.o.columns > 60 and "%#St_LspStatus#" .. "  LSP ~ " .. client.name .. " ")
+                        or "  LSP "
+                end
+            end
+        end,
+    },
 })
 
 local winbar_components = {
@@ -151,14 +158,12 @@ local winbar_components = {
                 provider = {
                     name = "file_info",
                     opts = {
-                        -- type = "unique",
-                        -- filetype_icon = false,
-                        -- colored_icon = true,
+                        type = "unique",
+                        colored_icon = true,
+                        file_modified_icon = "± ",
                         hl = { fg = "cyan" },
                     },
                 },
-                right_sep = " ",
-                left_sep = " ",
             },
         },
     },
