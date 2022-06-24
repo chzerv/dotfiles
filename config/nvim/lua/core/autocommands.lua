@@ -69,7 +69,7 @@ aucmd("BufReadPost", {
 })
 
 -- Automatically create a non-existing directory when writing a new file
-vim.api.nvim_create_autocmd("BufWritePre", {
+aucmd("BufWritePre", {
    group = augroup("MkNonExDir", { clear = true }),
    callback = function()
        local path = fn.expand("%:p:h")
@@ -80,3 +80,13 @@ vim.api.nvim_create_autocmd("BufWritePre", {
    desc = "Create non-existing dir when writing a new file"
 })
 
+-- Set formatoptions
+local formatopt_group = augroup('CustomFormatOptions', {})
+
+aucmd('BufEnter', {
+    group = formatopt_group,
+    pattern = '*',
+    callback = function()
+        vim.opt.formatoptions = vim.opt.formatoptions - 'o' + 'r' + 'c'
+    end,
+})

@@ -66,9 +66,6 @@ opt.wildoptions = "pum"
 opt.path:remove("/usr/include")
 opt.wildignore:append("*/node_modules/*,*/autoload/*,*/cache/*,*.o,*~,*pycache*")
 
--- Format Options (:help fo-table)
--- TODO: Create an autocmd for this
-
 -- Show the cursor line, but only in normal mode
 local group = vim.api.nvim_create_augroup("CursorLine", { clear = true })
 local set_cursorline = function(event, value)
