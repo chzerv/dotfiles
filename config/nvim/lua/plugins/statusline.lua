@@ -99,7 +99,10 @@ components.active[2] = {
         hl = { fg = "red" },
         right_sep = " ",
     },
-    { provider = "position" },
+    {
+        provider = "position",
+        left_sep = " ",
+    },
     {
         provider = "scroll_bar",
         left_sep = " ",
