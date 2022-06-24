@@ -112,6 +112,25 @@ telescope.setup({
         buffers = {
             sort_lastused = true,
             ignore_current_buffer = true,
+            theme = "dropdown",
+            previewer = false,
+            mappings = {
+                i = {
+                    ["<C-d>"] = require("telescope.actions").delete_buffer,
+                },
+            },
         },
+        current_buffer_fuzzy_find = {
+            layout_config = {
+                horizontal = {
+                    prompt_position = "bottom",
+                    preview_width = 0.45,
+                    results_width = 0.4,
+                },
+            },
+            -- theme = "dropdown",
+            -- previewer = false,
+        },
+        lsp_references = { path_display = { "shorten" } },
     },
 })
