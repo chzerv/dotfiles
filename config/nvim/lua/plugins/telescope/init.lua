@@ -81,6 +81,8 @@ telescope.setup({
     },
     pickers = {
         find_files = {
+            theme = "dropdown",
+            previewer = false,
             mappings = {
                 n = {
                     ["cd"] = function(prompt_bufnr)
@@ -93,6 +95,8 @@ telescope.setup({
             },
         },
         git_files = {
+            theme = "dropdown",
+            previewer = false,
             mappings = {
                 n = {
                     ["cd"] = function(prompt_bufnr)
