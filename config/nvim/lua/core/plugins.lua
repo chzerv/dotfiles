@@ -1,5 +1,6 @@
 local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+
 local packer_bootstrap
 if fn.empty(fn.glob(install_path)) > 0 then
     packer_bootstrap = fn.system({
@@ -12,7 +13,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
     })
 end
 
--- Automatically run :PackerCompile whenever this file is updated
+-- Automatically run :PackerSync whenever this file is updated
 vim.api.nvim_create_autocmd("BufWritePost", {
     group = vim.api.nvim_create_augroup("PackerConfig", { clear = true }),
     pattern = "plugins.lua",
@@ -190,6 +191,7 @@ return require("packer").startup({
 
         use({
             "folke/todo-comments.nvim",
+            event = "BufRead",
             config = function()
                 require("plugins.todo-comments")
             end,
@@ -255,6 +257,7 @@ return require("packer").startup({
 
         use({
             "numToStr/FTerm.nvim",
+            event = 'CursorHold',
             config = function()
                 require("plugins.fterm")
             end,
