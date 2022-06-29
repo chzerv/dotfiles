@@ -165,8 +165,11 @@ return require("packer").startup({
 
         use({
             "numToStr/Comment.nvim",
-            module = "Comment",
-            keys = { "gc", "gb", "gcc" },
+            keys = {
+                { "n", "gcc" },
+                { "v", "gc" },
+                { "v", "gb" },
+            },
             config = function()
                 require("plugins.comment")
             end,
