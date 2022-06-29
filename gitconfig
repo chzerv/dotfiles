@@ -6,8 +6,8 @@
 	br = branch
 	cm = commit -v
 	st = status
-    ca = commit --ammend
-    can = commit --ammend --no-edit
+    ca = commit --amend
+    can = commit --amend --no-edit
     graph  = log --oneline --graph --all --decorate
 [merge]
 	tool = vimdiff
