@@ -9,9 +9,6 @@ if ok then
 end
 
 require("core")
-require("core.autocommands")
-require("core.abbreviations")
-require("core.mappings")
 
 -- NvChad
 _G.lazy_load = function(plugin, timer)
