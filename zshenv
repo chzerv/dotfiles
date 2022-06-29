@@ -2,6 +2,7 @@ path=(
   $HOME/.local/bin/scripts
   /var/lib/flatpak/exports/bin
   $HOME/.cargo/bin
+  $HOME/go/bin
   $HOME/.node_modules/bin
   $path)
 
