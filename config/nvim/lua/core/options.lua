@@ -16,6 +16,9 @@ opt.shortmess:append("cs")
 opt.showmode = false
 opt.showcmd = true
 opt.cmdheight = 1
+opt.laststatus = 3 -- Global status line
+opt.termguicolors = true
+-- opt.winbar = "=%=%m %t"
 
 -- Indent and Tab Behavior
 opt.autoindent = true -- Use indentation of current line on the next one

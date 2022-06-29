@@ -136,8 +136,6 @@ return require("packer").startup({
             end,
         })
         use({ "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" })
-        use({ "SmiteshP/nvim-gps", after = "nvim-treesitter" })
-        --use { 'JoosepAlviste/nvim-ts-context-commentstring', after = 'nvim-treesitter' }
 
         -- UI
         use({
@@ -149,7 +147,6 @@ return require("packer").startup({
 
         use({
             "feline-nvim/feline.nvim",
-            after = "nvim-gps",
             config = function()
                 require("plugins.statusline")
             end,

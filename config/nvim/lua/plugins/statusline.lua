@@ -1,12 +1,5 @@
 local vi_mode = require("feline.providers.vi_mode")
 local lsp = require("feline.providers.lsp")
-local gps = require("nvim-gps")
-local opt = vim.opt
-
-opt.laststatus = 3 -- Global status line
--- opt.winbar = "=%=%m %t" -- (Requires nvim nightly)
-
-gps.setup()
 
 -- Change the default mode colors
 local vi_mode_colors = {
@@ -43,7 +36,6 @@ components.active[1] = {
         provider = {
             name = "file_info",
             opts = {
-                type = "unique",
                 colored_icon = true,
                 file_modified_icon = "± ",
                 hl = { fg = "cyan" },
@@ -141,21 +133,9 @@ require("feline").setup({
     },
 })
 
+
 local winbar_components = {
     active = {
-        {
-            {
-                enabled = function()
-                    return gps.is_available()
-                end,
-                provider = function()
-                    return gps.get_location()
-                end,
-                hl = { fg = "cyan" },
-            },
-        },
-    },
-    inactive = {
         {
             {
                 provider = {
