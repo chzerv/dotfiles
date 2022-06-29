@@ -49,6 +49,20 @@ cmp.setup({
         end,
     },
 
+    confirm_opts = {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = false,
+    },
+
+    experimental = {
+        ghost_text = true,
+    },
+
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+    },
+
     mapping = {
         -- If pummenu is visible, select next item. If not, trigger completion
         ["<C-n>"] = function()

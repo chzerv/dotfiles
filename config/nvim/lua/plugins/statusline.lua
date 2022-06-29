@@ -141,7 +141,6 @@ local winbar_components = {
                 provider = {
                     name = "file_info",
                     opts = {
-                        type = "unique",
                         colored_icon = true,
                         file_modified_icon = "± ",
                         hl = { fg = "cyan" },

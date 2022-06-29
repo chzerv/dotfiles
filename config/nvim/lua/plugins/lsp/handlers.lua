@@ -89,6 +89,7 @@ end
 
 -- Highlight symbol under cursor, if supported by the server
 -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#highlight-symbol-under-cursor=
+-- TODO: Checkout https://github.com/RRethy/vim-illuminate
 function M.lsp_highlight_document(client, bufnr)
     if client.server_capabilities.documentHighlightProvider then
         vim.api.nvim_create_augroup('lsp_document_highlight', {
