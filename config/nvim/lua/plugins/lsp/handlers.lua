@@ -41,6 +41,9 @@ function M.lsp_mappings(bufnr)
     map("n", "gr", vim.lsp.buf.references, opts)
     map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help, opts)
 
+    map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+    map("x", "<leader>ca", vim.lsp.buf.range_code_action, opts)
+
     -- Diagnostics
     map("n", "<leader>df", function()
         vim.diagnostic.open_float({ scope = "line" })
