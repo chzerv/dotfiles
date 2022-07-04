@@ -56,6 +56,13 @@ return require("packer").startup({
                     )
                 end,
             },
+            {
+                "nvim-telescope/telescope-ui-select.nvim",
+                after = "telescope.nvim",
+                config = function()
+                    require("telescope").load_extension("ui-select")
+                end
+            }
         })
 
         -- LSP, completion and snippets
