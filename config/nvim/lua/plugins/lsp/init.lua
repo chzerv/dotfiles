@@ -63,17 +63,21 @@ end
 lspconfig.ansiblels.setup({
     capabilities = handlers.capabilities(),
     on_attach = function(client, bufnr)
-        handlers.lsp_mappings(bufnr)
-        handlers.popup_diagnostics_on_hover(bufnr)
-        handlers.lsp_highlight_document(client, bufnr)
-        handlers.fmt_on_save(client, bufnr)
         handlers.disable_formatting(client)
+        handlers.lsp_mappings(bufnr)
+        -- handlers.popup_diagnostics_on_hover(bufnr)
+        -- handlers.lsp_highlight_document(client, bufnr)
+        -- handlers.fmt_on_save(client, bufnr)
     end,
     cmd = { "ansible-language-server", "--stdio" },
     settings = {
         ansible = {
             ansible = {
                 useFullyQualifiedCollectionNames = true,
+            },
+            -- https://github.com/ansible/ansible-language-server/issues/391
+            completion = {
+                provideRedirectModules = false,
             },
         },
         ansibleLint = {
