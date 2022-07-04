@@ -149,6 +149,21 @@ local winbar_components = {
             },
         },
     },
+
+    inactive = {
+        {
+            {
+                provider = {
+                    name = "file_info",
+                    opts = {
+                        colored_icon = true,
+                        file_modified_icon = "± ",
+                        hl = { fg = "cyan" },
+                    },
+                },
+            },
+        },
+    },
 }
 
 -- Setup feline.nvim winbar
