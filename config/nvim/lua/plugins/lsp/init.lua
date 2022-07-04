@@ -27,6 +27,16 @@ if not handlers_ok then
     return
 end
 
+-- Override handlers
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+    vim.lsp.handlers.hover,
+    { border = "rounded", silent = true, max_height = 10 }
+)
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+    vim.lsp.handlers.signature_help,
+    { border = "rounded", silent = true, max_height = 10 }
+)
+
 for _, server in ipairs(servers) do
     local opts = {
         capabilities = handlers.capabilities(),
