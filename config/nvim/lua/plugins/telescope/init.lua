@@ -97,6 +97,7 @@ telescope.setup({
         git_files = {
             theme = "dropdown",
             previewer = false,
+            show_untracked = true,
             mappings = {
                 n = {
                     ["cd"] = function(prompt_bufnr)
