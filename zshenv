@@ -1,8 +1,9 @@
 path=(
-  $HOME/.local/bin/scripts
+  $HOME/.local/bin
   /var/lib/flatpak/exports/bin
   $HOME/.cargo/bin
   $HOME/go/bin
+  /usr/local/bin/go/bin
   $HOME/.node_modules/bin
   $path)
 
@@ -41,7 +42,7 @@ export VISUAL="nvim"
 export TERMINAL="konsole"
 export BROWSER="firefox"
 export READER="evince"
-export MANPAGER='nvim +Man!'
+export MANPAGER='nvim --clean +Man!'
 export BAT_CONFIG_PATH="$HOME/.config/bat/bat.conf"
 export CHROOT=/media/General/Builds
 export STARSHIP_CONFIG=~/.config/zsh/starship.toml
