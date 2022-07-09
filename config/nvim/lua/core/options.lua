@@ -108,10 +108,6 @@ if vim.fn.executable("rg") then
     }
 end
 
--- Use filetype.lua instead of filetype.vim for performance
-vim.g.did_load_filetypes = 0
-vim.g.do_filetype_lua = 1
-
 -- Disable builtin plugins
 local builtin_plugins = {
     loaded_gzip = 1,
