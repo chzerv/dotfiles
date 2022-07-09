@@ -22,6 +22,7 @@ M.setup = function()
             source = "always",
             border = "rounded",
             show_header = true,
+            style = "minimal",
         },
     })
 end

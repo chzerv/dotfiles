@@ -52,23 +52,19 @@ function M.lsp_mappings(bufnr)
     map("n", "<leader>dq", vim.diagnostic.setqflist, opts)
 
     map("n", "]d", function()
-        vim.diagnostic.goto_next()
-        vim.diagnostic.open_float()
+        vim.diagnostic.goto_next({ float = { border = "rounded" } })
     end, opts)
 
     map("n", "<leader>dn", function()
-        vim.diagnostic.goto_next()
-        vim.diagnostic.open_float()
+        vim.diagnostic.goto_next({ float = { border = "rounded" } })
     end, opts)
 
     map("n", "[d", function()
-        vim.diagnostic.goto_prev()
-        vim.diagnostic.open_float()
+        vim.diagnostic.goto_prev({ float = { border = "rounded" } })
     end, opts)
 
     map("n", "<leader>dp", function()
-        vim.diagnostic.goto_prev()
-        vim.diagnostic.open_float()
+        vim.diagnostic.goto_prev({ float = { border = "rounded" } })
     end, opts)
 
 end

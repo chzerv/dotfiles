@@ -34,7 +34,7 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
 )
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
     vim.lsp.handlers.signature_help,
-    { border = "rounded", silent = true, max_height = 10 }
+    { border = "rounded", silent = true, max_height = 10, relative = "cursor" }
 )
 
 for _, server in ipairs(servers) do
@@ -85,6 +85,8 @@ lspconfig.ansiblels.setup({
         },
     },
 })
+
+lspconfig.bashls.setup{}
 
 -- Setup diagnostics
 require("plugins.lsp.diagnostics").setup()

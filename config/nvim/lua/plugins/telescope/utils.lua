@@ -60,8 +60,8 @@ end
 
 function M.prompt_find_files()
     require("telescope.builtin").find_files({
-        path_display = { "shorten" },
-        cwd = vim.fn.input("Grep String > "),
+        path_display = { "truncate" },
+        cwd = vim.fn.input("Search in > "),
     })
 end
 
