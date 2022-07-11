@@ -1,0 +1,113 @@
+tooltip {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid #35709d;
+}
+
+* {
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    background: #24292e;
+    color: #d1d5da;
+}
+
+#waybar {
+    background: transparent;
+    color: white;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 12px;
+}
+
+#clock,
+#mode,
+#network,
+#battery,
+#language,
+#custom-grimshot,
+#pulseaudio,
+#tray,
+#custom-power {
+  padding-left: 2px;
+  padding-right: 2px;
+  margin:4px;
+  /* border-bottom: 2px solid #35709d; */
+}
+
+
+#clock {
+}
+
+#mode {
+    background: #900000;
+    border: 1px solid #2f343a;
+}
+
+#custom-vpn {
+    color: #00ff00;
+}
+
+#custom-vpn.down {
+    color: #999999;
+}
+
+#network {
+}
+
+#network.disconnected {
+    color: orange;
+}
+
+#pulseaudio {
+}
+
+#pulseaudio.muted {
+    color: orange;
+}
+
+#tray {
+}
+
+#window {
+    font-weight: bold;
+}
+
+#workspaces button {
+    padding-left: 6px;
+    padding-right:6px;
+    margin: 4px;
+    color: #999999;
+}
+
+#workspaces button.focused {
+   border-bottom: 2px solid #56d4dd;
+}
+
+#workspaces button.urgent {
+    border-color: #c9545d;
+    color: #c9545d;
+}
+#mpd {color: #6aa3cd;}
+#mpd.disconnected,
+#mpd.paused,
+#mpd.stopped {
+    color: #999999;
+}
+
+#battery {
+    color: white;
+}
+
+#battery.charging {
+    color: orange;
+}
+
+#battery.critical:not(.charging) {
+    background: #bf616a;
+    color: white;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}

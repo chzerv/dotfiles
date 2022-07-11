@@ -1,0 +1,9 @@
+width=600
+height=300
+terminal=footclient
+mode=drun
+matching=contians
+insensitive=true
+key_down=Tab
+Key_expand=Right
+key_forward=Down

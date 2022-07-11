@@ -1,0 +1,15 @@
+network-manager-applet
+blueman
+waybar
+mako / salut
+sway
+swaylock
+swayidle
+kitty
+xdg-desktop-portal-wlr
+wofi
+wev
+brightnessctl
+xprop
+grimshot
+swappy
