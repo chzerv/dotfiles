@@ -270,6 +270,17 @@ return require("packer").startup({
             end,
         })
 
+        use({
+            "ThePrimeagen/harpoon",
+            keys = {
+                { "n", "<leader>ha" },
+                { "n", "<leader>hh" },
+            },
+            config = function()
+                require("plugins.harpoon")
+            end
+        })
+
         if packer_bootstrap then
             require("packer").sync()
         end
