@@ -1,15 +1,14 @@
 # Load and initialize the completion system {{{
-# Ignore insecure directories with a cache time of 20 hours, so it should almost 
-# always regenerate the first time a shell is opened each day.
-autoload -Uz compinit promptinit
-_comp_files=(${ZDOTDIR:-$HOME}/.zcompdump(Nm-20))
-if (( $#_comp_files )); then
-    compinit -i -C
+autoload -Uz compinit
+if [[ -n $ZDOTDIR/.zcompdump(#qN.mh+24) ]]; then
+  compinit -d $ZDOTDIR/.zcompdump;
 else
-    compinit -i
-fi
-unset _comp_files
+  compinit -C;
+fi;
+compdef -d mcd
 # }}}
+
+eval "$(navi widget zsh)"
 
 # Prompt {{{
 eval "$(starship init zsh)"
