@@ -13,3 +13,4 @@ brightnessctl
 xprop
 grimshot
 swappy
+clipman
