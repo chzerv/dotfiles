@@ -26,7 +26,7 @@ return require("packer").startup({
         use("wbthomason/packer.nvim")
         use("nvim-lua/plenary.nvim")
 
-        -- Telescope
+        -- Navigation
         use({
             {
                 "nvim-telescope/telescope.nvim",
@@ -61,8 +61,19 @@ return require("packer").startup({
                 after = "telescope.nvim",
                 config = function()
                     require("telescope").load_extension("ui-select")
-                end
-            }
+                end,
+            },
+        })
+
+        use({
+            "ThePrimeagen/harpoon",
+            keys = {
+                { "n", "<leader>ha" },
+                { "n", "<leader>hh" },
+            },
+            config = function()
+                require("plugins.harpoon")
+            end,
         })
 
         -- LSP, completion and snippets
@@ -171,6 +182,7 @@ return require("packer").startup({
             "numToStr/Comment.nvim",
             keys = {
                 { "n", "gcc" },
+                { "n", "gc" },
                 { "v", "gc" },
                 { "v", "gb" },
             },
@@ -196,13 +208,6 @@ return require("packer").startup({
             end,
         })
 
-        use({
-            "folke/todo-comments.nvim",
-            event = "BufRead",
-            config = function()
-                require("plugins.todo-comments")
-            end,
-        })
         -- Git integration
         use({
             "tpope/vim-fugitive",
@@ -264,21 +269,10 @@ return require("packer").startup({
 
         use({
             "numToStr/FTerm.nvim",
-            event = 'CursorHold',
+            event = "CursorHold",
             config = function()
                 require("plugins.fterm")
             end,
-        })
-
-        use({
-            "ThePrimeagen/harpoon",
-            keys = {
-                { "n", "<leader>ha" },
-                { "n", "<leader>hh" },
-            },
-            config = function()
-                require("plugins.harpoon")
-            end
         })
 
         if packer_bootstrap then
