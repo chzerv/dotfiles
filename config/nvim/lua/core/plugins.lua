@@ -175,8 +175,12 @@ return require("packer").startup({
         })
 
         -- Editing goodies
-
-        use("tpope/vim-surround")
+        use({
+            "kylechui/nvim-surround",
+            config = function()
+                require("plugins.nvim-surround")
+            end
+        })
 
         use({
             "numToStr/Comment.nvim",
