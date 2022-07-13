@@ -5,7 +5,6 @@ set fish_greeting
 fish_add_path "$HOME/.cargo/bin"
 fish_add_path "$HOME/.node_modules/bin"
 fish_add_path "$HOME/.local/bin/"
-fish_add_path "$HOME/.local/bin/scripts"
 
 # Envvars
 set -x EDITOR nvim
