@@ -1,3 +1,4 @@
+-- https://rust-analyzer.github.io/manual.html
 return {
     settings = {
         ["rust-analyzer"] = {
@@ -11,6 +12,13 @@ return {
             },
             procMacro = {
                 enable = true,
+            },
+            inlayHints = {
+                maxLength = 25,
+                lifetimeElisionHints = {
+                    enable = true,
+                    useParameterNames = true
+                },
             },
         },
     },
