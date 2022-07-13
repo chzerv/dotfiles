@@ -14,11 +14,6 @@ set -x STARSHIP_CONFIG "$HOME/.config/zsh/starship.toml"
 set -x npm_config_prefix "$HOME/.node_modules/"
 
 if status is-interactive
-    # starship init fish | source
-    alias vi="nvim"
-    alias :q="exit"
-    alias l="ls --color=always --group-directories-first"
-    alias ll="ls -l --color=always --group-directories-first"
-    alias la="ls -la --color=always --group-directories-first"
-    alias lg="lazygit"
+    . ~/.config/fish/aliases.fish
+    . ~/.config/fish/abbreviations.fish
 end

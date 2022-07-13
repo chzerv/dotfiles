@@ -1,0 +1,8 @@
+alias vi="nvim"
+alias :q="exit"
+alias l="ls --color=always --group-directories-first"
+alias ll="ls -l --color=always --group-directories-first"
+alias la="ls -la --color=always --group-directories-first"
+alias lg="lazygit"
+alias shutdown="systemctl poweroff"
+alias reboot="systemctl reboot"
