@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+###############################################################################################
+## Select a project and launch it in a new tmux session
+## All credits go to ThePrimeagean:
+## https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/bin/tmux-sessionizer
+###############################################################################################
+
+# Find all directories in ~/Projects
+project=$(find ~/Projects -mindepth 1 -maxdepth 1 -type d | fzf --preview-window hidden)
+
+if [[ -z $project ]]; then
+    exit 0
+else
+    project_basename=$(basename "$project")
+fi
+
+tmux_running=$(pgrep tmux)
+
+if [[ -z $TMUZ ]] && [[ -z $tmux_running ]]; then
+    tmux new-session -s "$project_basename" -c "$project"
+    exit 0
+fi
+
+if ! tmux has-session -t="$project_basename" 2> /dev/null; then
+    tmux new-session -ds "$project_basename" -c "$project"
+fi
+
+tmux switch-client -t "$project_basename"
