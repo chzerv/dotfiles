@@ -272,6 +272,12 @@ return require("packer").startup({
         })
 
         use({
+            ft = { "markdown" },
+            "iamcco/markdown-preview.nvim",
+            run = function() vim.fn["mkdp#util#install"]() end,
+        })
+
+        use({
             "numToStr/FTerm.nvim",
             event = "CursorHold",
             config = function()
