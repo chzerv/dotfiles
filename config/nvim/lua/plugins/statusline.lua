@@ -44,6 +44,7 @@ components.active[1] = {
         right_sep = " ",
         left_sep = " ",
     },
+
     {
         provider = "> ",
         hl = { fg = "bg" },
@@ -122,17 +123,18 @@ require("feline").setup({
     components = components,
     vi_mode_colors = vi_mode_colors,
     custom_providers = {
-        active_lsp_client = function()
-            for _, client in ipairs(vim.lsp.get_active_clients()) do
-                if client.attached_buffers[vim.api.nvim_get_current_buf()] then
-                    return (vim.o.columns > 60 and "%#St_LspStatus#" .. "  LSP ~ " .. client.name .. " ")
-                        or "  LSP "
-                end
+        -- https://github.com/feline-nvim/feline.nvim/blob/2962c8c4a67f41ef35c58aa367ff2afb7a9691d3/lua/feline/providers/lsp.lua#L18-L26
+        my_lsp_client_names = function()
+            local clients = {}
+
+            for _, client in pairs(vim.lsp.buf_get_clients(0)) do
+                clients[#clients + 1] = client.name
             end
+
+            return table.concat(clients, " + "), "   LSP: "
         end,
     },
 })
-
 
 local winbar_components = {
     active = {

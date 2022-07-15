@@ -1,13 +1,10 @@
---------------------------------------------------
---            Core key bindings
--- Plugin specific key bindings are found in
--- the lua/plugins/$plugin_name directory.
---------------------------------------------------
+-----------------------------------------------------
+-- Core key bindings
+-- Plugin specific key bindings are found in the
+-- lua/plugins/$plugin_name directory.
+-----------------------------------------------------
 
-local g = vim.g -- Global variables
-local opt = vim.opt -- Set options (global/buffer/windows-scoped)
-local cmd = vim.cmd
--- local map = vim.api.nvim_set_keymap
+local g = vim.g
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
@@ -24,10 +21,7 @@ map("n", "]t", [[<Cmd>tabnext<CR>]], opts)
 
 -- Buffer navigation
 map("n", "[b", [[<Cmd>bprevious<CR>]], opts)
-map("n", "<leader>bp", [[<Cmd>bprevious<CR>]], opts)
 map("n", "]b", [[<Cmd>bnext<CR>]], opts)
-map("n", "<leader>bn", [[<Cmd>bnext<CR>]], opts)
--- map('n', '<leader>bd', "<Cmd>bdelete<CR>", opts)
 
 -- Cycle through quickfix items
 map("n", "[c", [[<Cmd>cprevious<CR>]], opts)
@@ -40,20 +34,10 @@ map("n", "]l", [[<Cmd>lnext<CR>]], opts)
 map("n", "<Bslash>l", [[<Cmd>lclose<CR>]], opts)
 
 -- Allow moving through wrapped lines
--- map('n', 'k', [[gk]], opts)
--- map('n', 'j', [[gj]], opts)
--- map('n', 'gk', [[k]], opts)
--- map('n', 'gj', [[j]], opts)
-
--- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
--- http<cmd> ://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
--- empty mode is same as using <cmd> :map
--- also don't use g[j|k] when in operator pending mode, so it doesn't alter d, y or c behaviour
--- Stolen from https://github.com/NvChad/NvChad
-map({ "n", "x", "o" }, "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
-map({ "n", "x", "o" }, "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
-map("", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
-map("", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
+map("n", "k", "gk", opts)
+map("n", "j", "gj", opts)
+map("n", "gk", "k", opts)
+map("n", "gj", "j", opts)
 
 -- Put blank lines below/above current line
 map("n", "[<Space>", "<Cmd>put! =repeat(nr2char(10), v:count1) <Bar> ']+1<CR>", opts)
@@ -73,10 +57,6 @@ map("", "<F6>", "<Cmd>setlocal spell! spelllang=en_us<CR>")
 map("", "<F7>", "<Cmd>setlocal spell! spelllang=el<CR>")
 map("", "<F8>", "<Cmd>setlocal spell! spelllang=en_us,el<CR>")
 
--- Emacs bindings in VIM??
-map("i", "<C-a>", "<Esc>I", opts)
-map("i", "<C-e>", "<Esc>A", opts)
-
 -- Open a quickfix window with all the terms I last searched for
 -- credits to Steve Losh
 map("n", "<leader>/", [[<Cmd>execute 'vimgrep /'.@/.'/g %'<CR>copen<CR><CR>nohls<CR>]])
@@ -84,23 +64,30 @@ map("n", "<leader>/", [[<Cmd>execute 'vimgrep /'.@/.'/g %'<CR>copen<CR><CR>nohls
 -- Zoom focused split, just like tmux
 map("n", "<leader>z", "<Plug>(ToggleZoom)", opts)
 
--- Execute current line in command mode
-map("n", "<leader>:", '^"zyg_:<C-R>z<CR>', opts)
+-- Substitute the word under cursor
+map("n", "<leader>s", ":%s/<C-R><C-W>//g<left><left>")
 
--- Repeat the last command-line command
--- (Ex mode still accesible via gQ)
-map("n", "Q", "@:", opts)
+-- Avoid clobbering yanked content when pasting in visual mode
+-- ref: https://github.com/neovim/neovim/issues/19354
+map("x", "p", "P", opts)
+map("x", "P", "p", opts)
+
+-- You can also set `vim.opt.clipboard = "unnamedplus"` to have the yank/paste use the system clipboard, but I find that annoying.
+map({ "n", "x" }, "<leader>y", [["+y"]], opts)
+map("n", "<leader>Y", [["+Y"]], opts)
+map({ "n", "x" }, "<leader>p", [["+p"]], opts)
+map("n", "<leader>P", [["+P"]], opts)
 
 -- Switch to the directory of the open buffer
-map("n", "<leader>wd", "<cmd>lcd %:p:h<CR>:pwd<CR>", opts)
+map("n", "<leader>cd", "<cmd>lcd %:p:h<CR>:pwd<CR>", opts)
 
 -- Since we disable netrw, create a binding to replicate "gx"
 -- Credits to kutsan
-map("n", "gx", function()
-    local url = vim.fn.expand("<cfile>")
-    local escaped_url = vim.fn.escape(url, "#%!")
-    cmd(('silent !xdg-open "%s"'):format(escaped_url))
-end, { silent = true })
+-- map("n", "gx", function()
+--     local url = vim.fn.expand("<cfile>")
+--     local escaped_url = vim.fn.escape(url, "#%!")
+--     cmd(('silent !xdg-open "%s"'):format(escaped_url))
+-- end, { silent = true })
 
 -- Neovim Terminal {{{
 map("t", "<A-t>", "<C-\\><C-n><cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)
@@ -116,22 +103,4 @@ map("t", "<A-l>", "<C-\\><C-n><C-w>l", { noremap = true })
 -- Command Line Bindings {{{
 map("c", "<C-a>", "<Home>", { noremap = true })
 map("c", "<C-e>", "<End>", { noremap = true })
--- }}}
-
--- Line text objects {{{
-map("x", "il", "g_o^", { noremap = true })
-map("o", "il", "<cmd>normal vil<CR>", { noremap = true })
-map("x", "al", "$o0", { noremap = true })
-map("o", "al", "<cmd>normal val<CR>", { noremap = true })
--- }}}
-
--- Clipboard {{{
--- You can also set `vim.opt.clipboard = "unnamedplus"` to have the yank/paste use the system
--- clipboard, but I find that annoying.
-map("n", "<leader>y", [["+y"]], opts)
-map("n", "<leader>Y", [["+Y"]], opts)
-map("x", "<leader>y", [["+y"]], opts)
-map("n", "<leader>p", [["+p"]], opts)
-map("n", "<leader>P", [["+P"]], opts)
-map("x", "<leader>p", [["+p"]], opts)
 -- }}}
