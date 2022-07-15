@@ -278,10 +278,11 @@ return require("packer").startup({
         })
 
         use({
-            "numToStr/FTerm.nvim",
+            "akinsho/toggleterm.nvim",
             event = "CursorHold",
+            tag = "v2.*",
             config = function()
-                require("plugins.fterm")
+                require("plugins.toggleterm")
             end,
         })
 
