@@ -1,0 +1,19 @@
+configuration {
+modi: "drun,run,ssh";
+display-drun: "";
+cycle:  true;
+font: "CaskaydiaCove NF 11";
+show-icons: true;
+terminal: "kitty";
+ssh-client: "ssh";
+ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";
+  filebrowser {
+      directories-first: true;
+      sorting-method:    "name";
+  }
+}
+@theme "/usr/share/rofi/themes/DarkBlue.rasi"
+
+window {
+    border-radius: 5px;
+}
