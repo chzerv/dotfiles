@@ -42,6 +42,10 @@ LABELS["Power"]=""
 COMMANDS["SSH"]="rofi -show ssh"
 LABELS["SSH"]=""
 
+# surfraw
+COMMANDS["Web"]="$HOME/.config/rofi/rofi-surfraw.sh"
+LABELS["Web"]=""
+
 ################################################################################
 # do not edit below
 ################################################################################
