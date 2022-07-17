@@ -55,7 +55,7 @@ cmp.setup({
     },
 
     experimental = {
-        ghost_text = true,
+        ghost_text = false,
     },
 
     window = {
@@ -95,9 +95,11 @@ cmp.setup({
     },
 
     formatting = {
+        fields = { "abbr", "kind", "menu" },
         format = function(entry, item)
             -- Kind icons
             item.kind = string.format("%s %s", icons[item.kind], item.kind)
+
             -- Source
             item.menu = ({
                 path = "[path]",
@@ -105,6 +107,12 @@ cmp.setup({
                 buffer = "[buf]",
                 luasnip = "[snip]",
             })[entry.source.name]
+
+            -- Partly show matches longer than 15 characters
+            if #item.abbr > 25 then
+                item.abbr = item.abbr:sub(1, 25) .. "..."
+            end
+
             return item
         end,
     },
