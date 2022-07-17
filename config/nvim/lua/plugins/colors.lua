@@ -22,4 +22,18 @@ M.kanagawa = function()
     vim.cmd("colorscheme kanagawa")
 end
 
+M.kanagawa_colors = {
+    bg = "#16161D",
+    fg = "#C8C093",
+    gray = "#2A2A37",
+    blue = "#7E9CD8",
+    green = "#76946A",
+    red = "#C34043",
+    bar = "#C34043",
+    cyan = "#6A9589",
+    magenta = "#957FB8",
+    darkmagenta = "#54546D",
+    yellow = "#DCA561",
+    orange = "#D18616",
+}
 return M

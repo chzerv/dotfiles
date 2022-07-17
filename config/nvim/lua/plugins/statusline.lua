@@ -1,22 +1,23 @@
 local vi_mode = require("feline.providers.vi_mode")
 local lsp = require("feline.providers.lsp")
+local colors = require("plugins.colors").kanagawa_colors
 
 -- Change the default mode colors
 local vi_mode_colors = {
-    NORMAL = "green",
-    INSERT = "purple",
-    VISUAL = "darkpurple",
-    OP = "green",
-    BLOCK = "blue",
-    REPLACE = "purple",
-    ["V-REPLACE"] = "purple",
-    ENTER = "cyan",
-    MORE = "cyan",
-    SELECT = "orange",
-    COMMAND = "yellow",
-    SHELL = "green",
-    TERM = "green",
-    NONE = "yellow",
+    NORMAL = colors.green,
+    INSERT = colors.magenta,
+    VISUAL = colors.darkmagenta,
+    OP = colors.green,
+    BLOCK = colors.blue,
+    REPLACE = colors.magenta,
+    ["V-REPLACE"] = colors.magenta,
+    ENTER = colors.cyan,
+    MORE = colors.cyan,
+    SELECT = colors.orange,
+    COMMAND = colors.yellow,
+    SHELL = colors.yellow,
+    TERM = colors.yellow,
+    NONE = colors.red,
 }
 
 local components = { active = {}, inactive = {} }
@@ -28,7 +29,7 @@ components.active[1] = {
         hl = function()
             return {
                 fg = vi_mode.get_mode_color(),
-                bg = "bg",
+                bg = colors.bg,
             }
         end,
     },
@@ -38,7 +39,7 @@ components.active[1] = {
             opts = {
                 colored_icon = true,
                 file_modified_icon = "± ",
-                hl = { fg = "cyan" },
+                hl = { fg = colors.cyan },
             },
         },
         right_sep = " ",
@@ -54,19 +55,19 @@ components.active[1] = {
 components.active[2] = {
     {
         provider = "diagnostic_errors",
-        hl = { fg = "red" },
+        hl = { fg = colors.red },
     },
     {
         provider = "diagnostic_warnings",
-        hl = { fg = "yellow" },
+        hl = { fg = colors.yellow },
     },
     {
         provider = "diagnostic_hints",
-        hl = { fg = "cyan" },
+        hl = { fg = colors.cyan },
     },
     {
         provider = "diagnostic_info",
-        hl = { fg = "blue" },
+        hl = { fg = colors.blue },
     },
     {
         enabled = function()
@@ -81,15 +82,15 @@ components.active[2] = {
     },
     {
         provider = "git_diff_added",
-        hl = { fg = "green" },
+        hl = { fg = colors.green },
     },
     {
         provider = "git_diff_changed",
-        hl = { fg = "orange" },
+        hl = { fg = colors.orange },
     },
     {
         provider = "git_diff_removed",
-        hl = { fg = "red" },
+        hl = { fg = colors.red },
         right_sep = " ",
     },
     {
@@ -100,26 +101,13 @@ components.active[2] = {
         provider = "scroll_bar",
         left_sep = " ",
         hl = {
-            fg = "green",
+            fg = colors.green,
         },
     },
 }
 
 -- Setup feline.nvim
 require("feline").setup({
-    theme = {
-        bg = "#16161D",
-        fg = "#C8C093",
-        lightgray = "#363646",
-        gray = "#2A2A37",
-        blue = "#7E9CD8",
-        green = "#76946A",
-        red = "#C34043",
-        cyan = "#6A9589",
-        purple = "#957FB8",
-        darkpurple = "#54546D",
-        yellow = "#DCA561",
-    },
     components = components,
     vi_mode_colors = vi_mode_colors,
     custom_providers = {
@@ -145,7 +133,7 @@ local winbar_components = {
                     opts = {
                         colored_icon = true,
                         file_modified_icon = "± ",
-                        hl = { fg = "cyan" },
+                        hl = { fg = colors.cyan },
                     },
                 },
             },
@@ -160,7 +148,7 @@ local winbar_components = {
                     opts = {
                         colored_icon = true,
                         file_modified_icon = "± ",
-                        hl = { fg = "cyan" },
+                        hl = { fg = colors.cyan },
                     },
                 },
             },
@@ -170,18 +158,5 @@ local winbar_components = {
 
 -- Setup feline.nvim winbar
 require("feline").winbar.setup({
-    theme = {
-        bg = "#16161D",
-        fg = "#C8C093",
-        lightgray = "#363646",
-        gray = "#2A2A37",
-        blue = "#7E9CD8",
-        green = "#76946A",
-        red = "#C34043",
-        cyan = "#6A9589",
-        purple = "#957FB8",
-        darkpurple = "#54546D",
-        yellow = "#DCA561",
-    },
     components = winbar_components,
 })
