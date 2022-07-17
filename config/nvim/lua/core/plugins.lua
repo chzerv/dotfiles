@@ -133,16 +133,15 @@ return require("packer").startup({
         })
 
         use({
-            "L3MON4D3/LuaSnip",
+            "saadparwaiz1/cmp_luasnip",
             after = "nvim-cmp",
-            config = function()
-                require("plugins.luasnip")
-            end,
         })
 
         use({
-            "saadparwaiz1/cmp_luasnip",
-            after = "LuaSnip",
+            "L3MON4D3/LuaSnip",
+            config = function()
+                require("plugins.luasnip")
+            end,
         })
 
         -- Tree-sitter
