@@ -3,28 +3,48 @@
 -- https://github.com/lewis6991/gitsigns.nvim
 ------------------------------------------------
 
-local status_ok, gitsigns = pcall(require, "gitsigns")
-if not status_ok then
+local has_gitsigns, gitsigns = pcall(require, "gitsigns")
+if not has_gitsigns then
     return
 end
 
+local function on_attach(bufnr)
+    local function map(mode, l, r, opts)
+        opts = opts or {}
+        opts.buffer = bufnr
+        vim.keymap.set(mode, l, r, opts)
+    end
+
+    map("n", "]g", "<cmd>Gitsigns next_hunk<CR>")
+    map("n", "[g", "<cmd>Gitsigns prev_hunk<CR>")
+
+    map("n", "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>")
+    map("n", "<leader>gB", "<cmd>Gitsigns blame_line<CR>")
+
+    map("n", "<leader>gb", "<cmd>Gitsigns stage_buffer<CR>")
+    map("n", "<leader>gs", "<cmd>Gitsigns stage_hunk<CR>")
+    map("n", "<leader>gu", "<cmd>Gitsigns undo_stage_hunk<CR>")
+    map("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<CR>")
+
+    map("v", "<leader>gs", function()
+        gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end)
+
+    map("v", "<leader>gr", function()
+        gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end)
+end
+
 gitsigns.setup({
-    -- trouble = true,
     signs = {
-        add = { hl = "GitSignsAdd", text = "│", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
-        change = { hl = "GitSignsChange", text = "│", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
-        delete = { hl = "GitSignsDelete", text = "_", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
-        topdelete = { hl = "GitSignsDelete", text = "‾", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
-        changedelete = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+        add = { hl = "GitSignsAdd", text = "+", linehl = "GitSignsAddLn" },
+        change = { hl = "GitSignsChange", text = "~", linehl = "GitSignsChangeLn" },
+        delete = { hl = "GitSignsDelete", text = "-", linehl = "GitSignsDeleteLn" },
+        topdelete = { hl = "GitSignsDelete", text = "‾", linehl = "GitSignsDeleteLn" },
+        changedelete = { hl = "GitSignsChange", text = "_", linehl = "GitSignsChangeLn" },
+    },
+    on_attach = on_attach,
+    preview_config = {
+        border = "rounded",
     },
 })
-
--- Cycle through git hunks
-local opts = { noremap = true, silent = true }
-local map = vim.keymap.set
-map("n", "]g", [[<Cmd>Gitsigns next_hunk<CR>]], opts) -- Move to the next hunk
-map("n", "[g", [[<Cmd>Gitsigns prev_hunk<CR>]], opts) -- Move to the previous hunk
-map({ "n", "x" }, "<Leader>gs", [[<Cmd>Gitsigns stage_hunk<CR>]], opts) -- Stage hunk under cursor
-map("n", "<Leader>gb", [[<Cmd>Gitsigns stage_buffer<CR>]], opts) -- Stage whole buffer
-map("n", "<Leader>gp", [[<Cmd>Gitsigns preview_hunk<CR>]], opts) -- Preview hunk
-map({ "n", "x" }, "<Leader>gd", [[<Cmd>Gitsigns reset_hunk<CR>]], opts) -- Undo hunk
