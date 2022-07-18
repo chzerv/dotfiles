@@ -6,7 +6,6 @@ local opt = vim.opt
 
 -- General
 opt.updatetime = 100
-opt.mouse = "nv"
 opt.scrolloff = 4
 
 -- UI
