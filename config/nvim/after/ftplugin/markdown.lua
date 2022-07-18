@@ -20,3 +20,12 @@ if ok then
         },
     })
 end
+
+vim.g.vim_markdown_folding_disabled = true
+vim.g.vim_markdown_conceal = true
+vim.g.vim_markdown_conceal_code_blocks = false
+vim.g.vim_markdown_frontmatter = true
+vim.g.vim_markdown_toml_frontmatter = false
+vim.g.vim_markdown_json_frontmatter = false
+vim.g.vim_markdown_no_extensions_in_markdown = false
+vim.g.vim_markdown_follow_anchor = true

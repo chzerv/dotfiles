@@ -178,7 +178,7 @@ return require("packer").startup({
             "kylechui/nvim-surround",
             config = function()
                 require("plugins.nvim-surround")
-            end
+            end,
         })
 
         use({
@@ -273,7 +273,14 @@ return require("packer").startup({
         use({
             ft = { "markdown" },
             "iamcco/markdown-preview.nvim",
-            run = function() vim.fn["mkdp#util#install"]() end,
+            run = function()
+                vim.fn["mkdp#util#install"]()
+            end,
+        })
+
+        use({
+            "preservim/vim-markdown",
+            ft = { "markdown" },
         })
 
         use({
