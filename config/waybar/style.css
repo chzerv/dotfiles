@@ -6,41 +6,47 @@ tooltip {
 * {
     border: none;
     border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 12px;
     min-height: 0;
     margin: 0;
     padding: 0;
-    background: #24292e;
-    color: #d1d5da;
+    background: #1E1E2E;
+    color: #CDD6F4;
 }
 
 #waybar {
     background: transparent;
     color: white;
-    font-family: "JetBrainsMono Nerd Font";
-    font-size: 12px;
 }
 
 #clock,
 #mode,
 #network,
 #battery,
+#backlight,
 #language,
 #custom-grimshot,
 #pulseaudio,
 #tray,
-#custom-power {
+#custom-power,
+#custom-media {
   padding-left: 2px;
   padding-right: 2px;
   margin:4px;
-  /* border-bottom: 2px solid #35709d; */
+  font-weight: bold;
 }
 
+#custom-media {
+    color: #A6E3A1;
+}
 
 #clock {
 }
 
 #mode {
-    background: #900000;
+    background: #F5C2E7;
+    color: black;
     border: 1px solid #2f343a;
 }
 
@@ -56,7 +62,7 @@ tooltip {
 }
 
 #network.disconnected {
-    color: orange;
+    color: #D18616;
 }
 
 #pulseaudio {
@@ -88,12 +94,6 @@ tooltip {
     border-color: #c9545d;
     color: #c9545d;
 }
-#mpd {color: #6aa3cd;}
-#mpd.disconnected,
-#mpd.paused,
-#mpd.stopped {
-    color: #999999;
-}
 
 #battery {
     color: white;
@@ -106,8 +106,8 @@ tooltip {
 #battery.critical:not(.charging) {
     background: #bf616a;
     color: white;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+}
+
+#custom-power {
+  color: #F38BA8;
 }
