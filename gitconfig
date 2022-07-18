@@ -8,12 +8,13 @@
 	st = status
     ca = commit --amend
     can = commit --amend --no-edit
-    graph  = log --oneline --graph --all --decorate
-[merge]
+    graph = log --oneline --graph --all --decorate
+[diff]
 	tool = vimdiff
 [init]
 	defaultBranch = main
 [core]
+    editor = nvim
     pager = delta
 [interactive]
     diffFilter = delta --color-only
