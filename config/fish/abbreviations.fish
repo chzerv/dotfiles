@@ -1,6 +1,7 @@
 abbr --add btm "btm --color nord -c"
 abbr --add rsync "rsync --progress"
-abbr --add cp "cp --interactive --verbose"
+abbr --add cp "cp -i -v"
+abbr --add rm "rm -i -v"
 abbr --add dd "dd status=progress"
 
 # Git related
