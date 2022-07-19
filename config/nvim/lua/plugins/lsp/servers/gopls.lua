@@ -10,6 +10,7 @@ return {
                 unusedparams = true,
                 nilness = true,
                 shadow = true,
+                fieldalignment = true,
             },
             staticcheck = true,
         },

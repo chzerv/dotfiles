@@ -35,7 +35,7 @@ local sources = {
 
     -- Prettier for HTML, CSS, YAML and JSON
     formatting.prettier.with({
-        filetypes = { "html", "css", "yaml", "json" },
+        filetypes = { "html", "css", "yaml", "json", "yaml", "markdown", "graphql" },
     }),
 
     -- yamllint for YAML
@@ -43,6 +43,8 @@ local sources = {
 
     -- ansible-lint for Ansible
     diagnostics.ansiblelint,
+
+    formatting.gofmt,
 }
 
 local on_attach = function(client, bufnr)
