@@ -17,7 +17,6 @@ set -x npm_config_prefix "$HOME/.node_modules/"
 if status is-interactive
     starship init fish | source
     navi widget fish | source
-    . ~/.config/fish/aliases.fish
     . ~/.config/fish/abbreviations.fish
 
     # https://github.com/PatrickF1/fzf.fish
