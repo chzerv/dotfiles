@@ -12,4 +12,7 @@ vim.filetype.add({
         [".*/group_vars/.*%.y(a*)ml"] = "yaml.ansible",
         [".*/default(s*)/.*%.y(a*)ml"] = "yaml.ansible",
     },
+    filename = {
+        ["go.mod"] = "go",
+    }
 })
