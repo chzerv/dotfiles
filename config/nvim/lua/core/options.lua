@@ -17,6 +17,7 @@ opt.showcmd = true
 opt.cmdheight = 1
 opt.laststatus = 3 -- Global status line
 opt.termguicolors = true
+opt.signcolumn = "yes" -- Avoid shifting the screen whenever a diagnostic appears
 -- opt.winbar = "=%=%m %t"
 
 -- Indent and Tab Behavior

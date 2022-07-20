@@ -47,7 +47,7 @@ map("n", "]<Space>", "<Cmd>put =repeat(nr2char(10), v:count1) <Bar> '[-1<CR>", o
 map("x", "<", "<gv", opts)
 map("x", ">", ">gv", opts)
 
--- Drag visual selected line(s) vertically and auto-indent {{{
+-- Drag visual selected line(s) vertically and auto-indent
 map("x", "mj", ":move'>+<CR>gv=gv", { noremap = true })
 map("x", "mk", ":move-2<CR>gv=gv", { noremap = true })
 

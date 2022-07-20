@@ -108,9 +108,9 @@ cmp.setup({
                 luasnip = "[snip]",
             })[entry.source.name]
 
-            -- Partly show matches longer than 15 characters
-            if #item.abbr > 25 then
-                item.abbr = item.abbr:sub(1, 25) .. "..."
+            -- Partly show matches longer than 45 characters
+            if #item.abbr > 45 then
+                item.abbr = item.abbr:sub(1, 45) .. "..."
             end
 
             return item
