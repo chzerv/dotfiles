@@ -70,6 +70,10 @@ return require("packer").startup({
             keys = {
                 { "n", "<leader>ha" },
                 { "n", "<leader>hh" },
+                { "n", "<leader>1" },
+                { "n", "<leader>2" },
+                { "n", "<leader>3" },
+                { "n", "<leader>4" },
             },
             config = function()
                 require("plugins.harpoon")
