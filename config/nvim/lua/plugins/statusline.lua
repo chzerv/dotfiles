@@ -110,6 +110,10 @@ components.active[2] = {
 require("feline").setup({
     components = components,
     vi_mode_colors = vi_mode_colors,
+    theme = {
+        bg = colors.bg,
+        fg = colors.fg,
+    },
     custom_providers = {
         -- https://github.com/feline-nvim/feline.nvim/blob/2962c8c4a67f41ef35c58aa367ff2afb7a9691d3/lua/feline/providers/lsp.lua#L18-L26
         my_lsp_client_names = function()
