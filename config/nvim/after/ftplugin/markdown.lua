@@ -9,7 +9,12 @@ local ok, surround = pcall(require, "nvim-surround")
 if ok then
     surround.buffer_setup({
         delimiters = {
+            aliases = {
+                ["b"] = false,
+            },
             pairs = {
+                ["i"] = { "*", "*" },  -- Italics
+                ["b"] = { "**", "**" }, -- Bold
                 ["l"] = function()
                     return {
                         "[",
