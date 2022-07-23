@@ -13,14 +13,25 @@ if ok then
                 ["b"] = false,
             },
             pairs = {
-                ["i"] = { "*", "*" },  -- Italics
-                ["b"] = { "**", "**" }, -- Bold
+                -- Italics
+                ["i"] = { "*", "*" },
+                -- Bold
+                ["b"] = { "**", "**" },
+                -- Surround word with link from the clipboard
                 ["l"] = function()
                     return {
                         "[",
                         "](" .. vim.fn.getreg("*") .. ")",
                     }
                 end,
+                -- Surround visual selection with a code block of a user specified language
+                ["c"] = function()
+                    local lang = require("plugins.nvim-surround").get_input("Enter code block language: ") or ""
+                    return {
+                        "```" .. lang,
+                        "```"
+                    }
+                end
             },
         },
     })
