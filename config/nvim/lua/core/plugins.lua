@@ -290,7 +290,6 @@ return require("packer").startup({
         use({
             "akinsho/toggleterm.nvim",
             event = "CursorHold",
-            tag = "v2.*",
             config = function()
                 require("plugins.toggleterm")
             end,
