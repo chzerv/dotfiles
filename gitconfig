@@ -20,5 +20,10 @@
     diffFilter = delta --color-only
 [delta]
     line-numbers = true
+    decorations = true
     paging=always
     syntax-theme = TwoDark
+    file-decoration-style = yellow ul
+    hunk-header-decoration-style = yellow box
+    hunk-header-style = file line-number syntax
+    side-by-side = false
