@@ -44,7 +44,7 @@ export BROWSER="firefox"
 export READER="evince"
 export MANPAGER='nvim --clean +Man!'
 export CHROOT=/media/General/Builds
-export STARSHIP_CONFIG=~/.config/zsh/starship.toml
+export STARSHIP_CONFIG=~/.config/starship.toml
 export npm_config_prefix="$HOME/.node_modules/"
 # }}}
 

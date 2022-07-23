@@ -11,7 +11,7 @@ fish_add_path "/usr/local/bin/go/bin"
 # Envvars
 set -x EDITOR nvim
 set -x MANPAGER 'nvim --clean +Man!'
-set -x STARSHIP_CONFIG "$HOME/.config/zsh/starship.toml"
+set -x STARSHIP_CONFIG "$HOME/.config/starship.toml"
 set -x npm_config_prefix "$HOME/.node_modules/"
 
 if status is-interactive
