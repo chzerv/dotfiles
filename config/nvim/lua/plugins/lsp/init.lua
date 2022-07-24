@@ -86,7 +86,19 @@ lspconfig.ansiblels.setup({
     },
 })
 
-lspconfig.bashls.setup{}
+lspconfig.bashls.setup({
+    capabilities = handlers.capabilities(),
+    on_attach = function(client, bufnr)
+        handlers.lsp_mappings(bufnr)
+    end
+})
+
+lspconfig.hls.setup({
+    capabilities = handlers.capabilities(),
+    on_attach = function(client, bufnr)
+        handlers.lsp_mappings(bufnr)
+    end
+})
 
 -- Setup diagnostics
 require("plugins.lsp.diagnostics").setup()
