@@ -10,14 +10,23 @@ if ok then
     surround.buffer_setup {
         delimiters = {
             pairs = {
+                -- Surround with LaTeX environment. Better use it with yS or VS
+                -- so that the delimites are placed on new lines
                 ["e"] = function()
-                    local env = require("plugins.nvim-surround").get_input("Enter environment name: ")
+                    local env = require("plugins.nvim-surround").get_input("Environment > ")
                     if env then
                         return {
                             "\\begin{" .. env .. "}",
                             "\\end{" .. env .. "}"
                         }
                     end
+                end,
+                -- Surround with LaTeX command
+                ["c"] = function()
+                    local cmd = require("plugins.nvim-surround").get_input("Command >")
+                    return {
+                        "\\" .. cmd .. "{", "}"
+                    }
                 end
             },
         },
