@@ -13,6 +13,7 @@ set -x EDITOR nvim
 set -x MANPAGER 'nvim --clean +Man!'
 set -x STARSHIP_CONFIG "$HOME/.config/starship.toml"
 set -x npm_config_prefix "$HOME/.node_modules/"
+set -x RIPGREP_CONFIG_PATH "$HOME/.config/ripgrep.conf"
 
 if status is-interactive
     starship init fish | source

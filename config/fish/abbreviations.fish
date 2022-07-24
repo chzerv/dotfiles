@@ -3,7 +3,6 @@ abbr --add rsync "rsync --progress"
 abbr --add cp "cp -i -v"
 abbr --add rm "rm -i -v"
 abbr --add dd "dd status=progress"
-abbr --add rg "rg -S"
 abbr --add sshfs sshfs -o idmap=user,ServerAliveInterval=5,ServerAliveCountMax=3,reconnect
 
 # Git related
