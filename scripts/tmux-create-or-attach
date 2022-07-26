@@ -3,7 +3,7 @@
 session=$( (echo new; tmux list-sessions -F '#S') | fzf --ansi --reverse --height=25%)
 
 if [[ "new" = "${session}" ]]; then
-    tmux new -s main
+    tmux new -s "$(echo "" | fzf --print-query --prompt="Enter session name > ")"
 elif [[ -z "${session}" ]]; then
     echo "Cancel"
 else
