@@ -16,9 +16,18 @@ set -x npm_config_prefix "$HOME/.node_modules/"
 set -x RIPGREP_CONFIG_PATH "$HOME/.config/ripgrep.conf"
 
 if status is-interactive
+
+    # Starship prompt
     starship init fish | source
+
+    # Navi
     navi widget fish | source
+
+    # Source abbreviations
     . ~/.config/fish/abbreviations.fish
+
+    # Set tokyonight theme
+    . ~/.config/fish/tokyonight_night.fish
 
     # https://github.com/PatrickF1/fzf.fish
     set fzf_dir_opts --bind "ctrl-e:execute(nvim {} &> /dev/tty)"

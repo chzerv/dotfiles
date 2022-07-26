@@ -158,11 +158,10 @@ return require("packer").startup({
         })
         use({ "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" })
 
-        -- UI
         use({
-            "rebelot/kanagawa.nvim",
+            "folke/tokyonight.nvim",
             config = function()
-                require("plugins.colors").kanagawa()
+                require("plugins.colors").tokyonight()
             end,
         })
 
