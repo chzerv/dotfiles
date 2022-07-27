@@ -12,6 +12,8 @@ map("n", "<localleader>o", "<cmd>Telescope oldfiles<CR>", opts)
 
 map("n", "<localleader>b", "<cmd>Telescope buffers<CR>", opts)
 
+map("n", "<localleader>:", "<cmd>Telescope commands<CR>", opts)
+
 map("n", "<localleader>sw", "<cmd>Telescope live_grep<CR>", opts)
 
 map("n", "<localleader>sb", "<cmd>Telescope current_buffer_fuzzy_find<CR>", opts)
@@ -29,7 +31,5 @@ map("n", "<localleader>gs", "<cmd>Telescope git_status<CR>", opts)
 map("n", "<localleader>gc", "<cmd>Telescope git_commits<CR>", opts)
 
 map("n", "<localleader>h", "<cmd>Telescope help_tags<CR>", opts)
-
-map("n", "<localleader>:", "<cmd>Telescope command_history<CR>", opts)
 
 map("n", "<localleader>/", "<cmd>Telescope search_history<CR>", opts)
