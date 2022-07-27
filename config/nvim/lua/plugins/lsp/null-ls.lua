@@ -45,6 +45,7 @@ local sources = {
     diagnostics.ansiblelint,
 
     formatting.gofmt,
+    formatting.rustfmt,
 }
 
 local on_attach = function(client, bufnr)

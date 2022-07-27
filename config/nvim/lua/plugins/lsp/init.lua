@@ -1,7 +1,6 @@
 -- Install servers
 local servers = {
     "gopls",
-    -- "ansiblels",
     "rust_analyzer",
     "yamlls",
     "jsonls",
@@ -38,25 +37,30 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 )
 
 for _, server in ipairs(servers) do
-    local opts = {
-        capabilities = handlers.capabilities(),
-        on_attach = function(client, bufnr)
-            handlers.disable_formatting(client)
-            handlers.lsp_mappings(bufnr)
-            -- handlers.popup_diagnostics_on_hover(bufnr)
-            -- handlers.lsp_highlight_document(client, bufnr)
-            -- handlers.fmt_on_save(client, bufnr)
-        end,
-    }
 
-    -- If there is a custom configuration for a server...
-    local has_custom_opts, custom_opts = pcall(require, "plugins.lsp.servers." .. server)
+    -- Rust server initialization is handled by https://github.com/simrat39/rust-tools.nvim
+    -- so there is no need to explicitly call `lspconfig.rust_analyzer.setup()`.
+    if server ~= "rust_analyzer" then
+        local opts = {
+            capabilities = handlers.capabilities(),
+            on_attach = function(client, bufnr)
+                handlers.disable_formatting(client)
+                handlers.lsp_mappings(client, bufnr)
+                -- handlers.popup_diagnostics_on_hover(bufnr)
+                -- handlers.lsp_highlight_document(client, bufnr)
+                -- handlers.fmt_on_save(client, bufnr)
+            end,
+        }
 
-    if has_custom_opts then
-        opts = vim.tbl_deep_extend("force", custom_opts, opts)
+        -- If there is a custom configuration for a server...
+        local has_custom_opts, custom_opts = pcall(require, "plugins.lsp.servers." .. server)
+
+        if has_custom_opts then
+            opts = vim.tbl_deep_extend("force", custom_opts, opts)
+        end
+
+        lspconfig[server].setup(opts)
     end
-
-    lspconfig[server].setup(opts)
 end
 
 -- FIXME: ansiblels is not working if installed via lsp-installer
@@ -64,7 +68,7 @@ lspconfig.ansiblels.setup({
     capabilities = handlers.capabilities(),
     on_attach = function(client, bufnr)
         handlers.disable_formatting(client)
-        handlers.lsp_mappings(bufnr)
+        handlers.lsp_mappings(client, bufnr)
         -- handlers.popup_diagnostics_on_hover(bufnr)
         -- handlers.lsp_highlight_document(client, bufnr)
         -- handlers.fmt_on_save(client, bufnr)
@@ -89,16 +93,48 @@ lspconfig.ansiblels.setup({
 lspconfig.bashls.setup({
     capabilities = handlers.capabilities(),
     on_attach = function(client, bufnr)
-        handlers.lsp_mappings(bufnr)
+        handlers.lsp_mappings(client, bufnr)
     end
 })
 
 lspconfig.hls.setup({
     capabilities = handlers.capabilities(),
     on_attach = function(client, bufnr)
-        handlers.lsp_mappings(bufnr)
+        handlers.lsp_mappings(client, bufnr)
     end
 })
+
+local has_rust_tools, rust_tools = pcall(require, "rust-tools")
+if has_rust_tools then
+    rust_tools.setup({
+        server = {
+            on_attach = function(client, bufnr)
+                handlers.lsp_mappings(client, bufnr)
+            end,
+            settings = {
+                -- https://rust-analyzer.github.io/manual.html
+                ["rust-analyzer"] = {
+                    assist = {
+                        importEnforceGranularity = true,
+                        importPrefix = "crate",
+                    },
+                    cargo = {
+                        allFeatures = true,
+                    },
+                    checkOnSave = {
+                        command = "clippy",
+                    },
+                },
+                inlayHints = {
+                    lifetimeElisionHints = {
+                        enable = true,
+                        useParameterNames = true,
+                    },
+                },
+            }
+        }
+    })
+end
 
 -- Setup diagnostics
 require("plugins.lsp.diagnostics").setup()

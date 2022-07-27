@@ -106,6 +106,12 @@ return require("packer").startup({
         })
 
         use({
+            "simrat39/rust-tools.nvim",
+            after = "nvim-lspconfig",
+            ft = { "rust" },
+        })
+
+        use({
             "jose-elias-alvarez/null-ls.nvim",
             after = "nvim-lspconfig",
             config = function()
