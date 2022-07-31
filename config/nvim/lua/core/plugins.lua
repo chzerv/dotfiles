@@ -174,7 +174,7 @@ return require("packer").startup({
         use({
             "feline-nvim/feline.nvim",
             config = function()
-                require("plugins.statusline")
+                require("plugins.feline")
             end,
             requires = {
                 "kyazdani42/nvim-web-devicons",

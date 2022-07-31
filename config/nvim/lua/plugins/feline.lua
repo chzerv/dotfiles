@@ -32,20 +32,26 @@ components.active[1] = {
                 bg = colors.bg,
             }
         end,
+        left_sep = " ",
+        right_sep = " ",
     },
     {
-        provider = {
-            name = "file_info",
-            opts = {
-                colored_icon = true,
-                file_modified_icon = "± ",
-                hl = { fg = colors.cyan },
-            },
-        },
+        provider = "git_branch",
         right_sep = " ",
-        left_sep = " ",
     },
-
+    {
+        provider = "git_diff_added",
+        hl = { fg = colors.green },
+    },
+    {
+        provider = "git_diff_changed",
+        hl = { fg = colors.orange },
+    },
+    {
+        provider = "git_diff_removed",
+        hl = { fg = colors.red },
+        right_sep = " ",
+    },
     {
         provider = "> ",
         hl = { fg = "bg" },
@@ -53,6 +59,12 @@ components.active[1] = {
 }
 
 components.active[2] = {
+    {
+        provider = "my_lsp_client_names",
+        right_sep = " ",
+        left_sep = " ",
+    },
+
     {
         provider = "diagnostic_errors",
         hl = { fg = colors.red },
@@ -74,24 +86,6 @@ components.active[2] = {
             return lsp.diagnostics_exist()
         end,
         right_sep = { str = " ", always_visible = true },
-    },
-    {
-        provider = "git_branch",
-        left_sep = " ",
-        right_sep = " ",
-    },
-    {
-        provider = "git_diff_added",
-        hl = { fg = colors.green },
-    },
-    {
-        provider = "git_diff_changed",
-        hl = { fg = colors.orange },
-    },
-    {
-        provider = "git_diff_removed",
-        hl = { fg = colors.red },
-        right_sep = " ",
     },
     {
         provider = "position",
@@ -117,14 +111,16 @@ require("feline").setup({
     custom_providers = {
         -- https://github.com/feline-nvim/feline.nvim/blob/2962c8c4a67f41ef35c58aa367ff2afb7a9691d3/lua/feline/providers/lsp.lua#L18-L26
         my_lsp_client_names = function()
-            local clients = {}
+            local active_clients = {}
 
             for _, client in pairs(vim.lsp.buf_get_clients(0)) do
-                clients[#clients + 1] = client.name
+                if client.name ~= "null-ls" then
+                    table.insert(active_clients, client.name)
+                end
             end
 
-            return table.concat(clients, " + "), "   LSP: "
-        end,
+            return table.concat(active_clients), "   "
+        end
     },
 })
 
