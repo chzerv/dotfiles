@@ -26,16 +26,9 @@ function M.disable_formatting(client)
 end
 
 -- LSP specific mappings
-function M.lsp_mappings(client, bufnr)
+function M.lsp_mappings(bufnr)
     local opts = { noremap = true, silent = true, buffer = bufnr }
     local map = vim.keymap.set
-
-    -- These commands come from rust-tools.nvim
-    if client.name == "rust_analyzer" then
-        map("n", "<leader>rk", "<cmd>RustOpenExternalDocs<CR>", opts)
-        map("n", "<leader>rr", "<cmd>RustRunnables<CR>", opts)
-        map("n", "<leader>rc", "<cmd>RustOpenCargo<CR>", opts)
-    end
 
     map("n", "K", function()
         return require("plugins.lsp.utils").fix_buf_hover()

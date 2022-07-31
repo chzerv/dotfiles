@@ -45,7 +45,7 @@ for _, server in ipairs(servers) do
             capabilities = handlers.capabilities(),
             on_attach = function(client, bufnr)
                 handlers.disable_formatting(client)
-                handlers.lsp_mappings(client, bufnr)
+                handlers.lsp_mappings(bufnr)
                 -- handlers.popup_diagnostics_on_hover(bufnr)
                 -- handlers.lsp_highlight_document(client, bufnr)
                 -- handlers.fmt_on_save(client, bufnr)
@@ -68,7 +68,7 @@ lspconfig.ansiblels.setup({
     capabilities = handlers.capabilities(),
     on_attach = function(client, bufnr)
         handlers.disable_formatting(client)
-        handlers.lsp_mappings(client, bufnr)
+        handlers.lsp_mappings(bufnr)
         -- handlers.popup_diagnostics_on_hover(bufnr)
         -- handlers.lsp_highlight_document(client, bufnr)
         -- handlers.fmt_on_save(client, bufnr)
@@ -93,14 +93,14 @@ lspconfig.ansiblels.setup({
 lspconfig.bashls.setup({
     capabilities = handlers.capabilities(),
     on_attach = function(client, bufnr)
-        handlers.lsp_mappings(client, bufnr)
+        handlers.lsp_mappings(bufnr)
     end
 })
 
 lspconfig.hls.setup({
     capabilities = handlers.capabilities(),
     on_attach = function(client, bufnr)
-        handlers.lsp_mappings(client, bufnr)
+        handlers.lsp_mappings(bufnr)
     end
 })
 
@@ -109,7 +109,7 @@ if has_rust_tools then
     rust_tools.setup({
         server = {
             on_attach = function(client, bufnr)
-                handlers.lsp_mappings(client, bufnr)
+                handlers.lsp_mappings(bufnr)
             end,
             settings = {
                 -- https://rust-analyzer.github.io/manual.html
