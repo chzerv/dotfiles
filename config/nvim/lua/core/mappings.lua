@@ -92,7 +92,7 @@ map("n", "<leader>cd", "<cmd>lcd %:p:h<CR>:pwd<CR>", opts)
 
 -- Neovim Terminal {{{
 map("t", "<A-t>", "<C-\\><C-n><cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)
-map("n", "<A-t>", "<cmd>call archzer#toggle_terminal#ToggleTerminal(10)<CR>", opts)
+map("n", "<A-t>", "<cmd>call archzer#toggle_terminal#ToggleTerminal(20)<CR>", opts)
 map("n", "<A-T>", "<cmd>tabnew | terminal<CR>", opts)
 map("t", "<A-[>", "<C-\\><C-n>", { noremap = true })
 map("t", "<A-k>", "<C-\\><C-n><C-w>k", { noremap = true })
@@ -104,4 +104,3 @@ map("t", "<A-l>", "<C-\\><C-n><C-w>l", { noremap = true })
 -- Command Line Bindings {{{
 map("c", "<C-a>", "<Home>", { noremap = true })
 map("c", "<C-e>", "<End>", { noremap = true })
--- }}}
