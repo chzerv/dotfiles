@@ -7,6 +7,7 @@ local servers = {
     "pyright",
     "sumneko_lua",
     "dockerls",
+    "emmet_ls",
 }
 
 local installer_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
