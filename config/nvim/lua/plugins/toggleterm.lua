@@ -35,7 +35,7 @@ local Terminal = require("toggleterm.terminal").Terminal
 local lazygit = Terminal:new({
     cmd = "lazygit",
     hidden = true,
-    direction = "tab",
+    -- direction = "tab",
 })
 
 local ranger = Terminal:new({ cmd = "ranger", hidden = true })

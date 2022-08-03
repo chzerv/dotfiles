@@ -43,20 +43,6 @@ return require("packer").startup({
                 end,
             },
             {
-                "crispgm/telescope-heading.nvim",
-                ft = { "tex", "markdown" },
-                after = "telescope.nvim",
-                config = function()
-                    require("telescope").load_extension("heading")
-                    vim.api.nvim_set_keymap(
-                        "n",
-                        "<localleader>H",
-                        [[<Cmd>Telescope heading<CR>]],
-                        { noremap = true, silent = true }
-                    )
-                end,
-            },
-            {
                 "nvim-telescope/telescope-ui-select.nvim",
                 after = "telescope.nvim",
                 config = function()
@@ -258,17 +244,6 @@ return require("packer").startup({
         -- Improvements to the quickfix/location windows
         -- TODO: https://github.com/kevinhwang91/nvim-bqf
         use("romainl/vim-qf")
-
-        -- Delete buffers without messing up the window layout
-        use({
-            "famiu/bufdelete.nvim",
-            setup = function()
-                lazy_load("bufdelete.nvim")
-            end,
-            config = function()
-                require("plugins.bufdelete")
-            end,
-        })
 
         -- LaTeX
         use({
