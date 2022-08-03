@@ -1,7 +1,6 @@
 -- Install servers
 local servers = {
     "gopls",
-    "rust_analyzer",
     "yamlls",
     "jsonls",
     "pyright",
@@ -38,10 +37,6 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 )
 
 for _, server in ipairs(servers) do
-
-    -- Rust server initialization is handled by https://github.com/simrat39/rust-tools.nvim
-    -- so there is no need to explicitly call `lspconfig.rust_analyzer.setup()`.
-    if server ~= "rust_analyzer" then
         local opts = {
             capabilities = handlers.capabilities(),
             on_attach = function(client, bufnr)
@@ -61,7 +56,6 @@ for _, server in ipairs(servers) do
         end
 
         lspconfig[server].setup(opts)
-    end
 end
 
 -- FIXME: ansiblels is not working if installed via lsp-installer
@@ -105,6 +99,7 @@ if has_rust_tools then
             on_attach = function(client, bufnr)
                 handlers.lsp_mappings(bufnr)
             end,
+            cmd = { "rustup", "run", "nightly", "rust-analyzer" },
             settings = {
                 -- https://rust-analyzer.github.io/manual.html
                 ["rust-analyzer"] = {
