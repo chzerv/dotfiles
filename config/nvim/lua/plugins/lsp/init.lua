@@ -98,13 +98,6 @@ lspconfig.bashls.setup({
     end
 })
 
-lspconfig.hls.setup({
-    capabilities = handlers.capabilities(),
-    on_attach = function(client, bufnr)
-        handlers.lsp_mappings(bufnr)
-    end
-})
-
 local has_rust_tools, rust_tools = pcall(require, "rust-tools")
 if has_rust_tools then
     rust_tools.setup({
