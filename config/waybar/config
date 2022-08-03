@@ -112,7 +112,8 @@
             "car": "",
             "default": ["", ""]
         },
-        "on-click": "pavucontrol"
+        "on-click": "kitty --title kitty_float -e $HOME/Projects/code/rust/audio_switcher/target/release/audio_switcher"
+
     },
     "sway/language": {
         "format": "  {}",
