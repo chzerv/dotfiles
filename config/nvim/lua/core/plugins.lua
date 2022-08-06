@@ -276,6 +276,27 @@ return require("packer").startup({
             end,
         })
 
+        -- https://nexte.st/ must be installed for neotest-rust to work
+        use({
+           "nvim-neotest/neotest",
+            keys = {
+                { "n", "<leader>nr" },
+                { "n", "<leader>nR" },
+                { "n", "<leader>ns" },
+                { "n", "<leader>no" },
+                { "n", "]n" },
+                { "n", "[n" },
+            },
+            requires = {
+                "rouge8/neotest-rust",
+                "antoinemadec/FixCursorHold.nvim",
+                opt = true,
+            },
+            config = function()
+                require("plugins.neotest").setup()
+            end,
+        })
+
         if packer_bootstrap then
             require("packer").sync()
         end
