@@ -8,30 +8,37 @@ vim.opt_local.formatoptions:append("t")
 local ok, surround = pcall(require, "nvim-surround")
 if ok then
     surround.buffer_setup({
-        delimiters = {
+        surrounds = {
             aliases = {
                 ["b"] = false,
             },
-            pairs = {
-                -- Italics
-                ["i"] = { "*", "*" },
-                -- Bold
-                ["b"] = { "**", "**" },
-                -- Surround word with link from the clipboard
-                ["l"] = function()
+            -- Italics
+            ["i"] = {
+                add = { "*", "*" },
+            },
+            -- Bold
+            ["b"] = {
+                add = { "**", "**" },
+            },
+            -- Surround word with link from the clipboard
+            ["l"] = {
+                add = function()
+                    local clipboard = vim.fn.getreg("+"):gsub("\n", "")
                     return {
-                        "[",
-                        "](" .. vim.fn.getreg("*") .. ")",
+                        { "[" },
+                        { "](" .. clipboard .. ")" },
                     }
                 end,
-                -- Surround visual selection with a code block of a user specified language
-                ["c"] = function()
+            },
+            -- Surround visual selection with a code block of a user specified language
+            ["c"] = {
+                add = function()
                     local lang = require("plugins.nvim-surround").get_input("Enter code block language: ") or ""
                     return {
-                        "```" .. lang,
-                        "```"
+                        { "```" .. lang },
+                        { "```" },
                     }
-                end
+                end,
             },
         },
     })
