@@ -5,6 +5,11 @@ end
 
 surround.setup{}
 
+-- https://github.com/kylechui/nvim-surround/issues/109#issuecomment-1194034971
+require("nvim-surround.buffer").format_lines = function(_, _)
+    -- Do nothing
+end
+
 local M = {}
 
 M.get_input = function(prompt)
