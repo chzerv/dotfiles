@@ -5,6 +5,7 @@ mako / salut
 sway
 swaylock
 swayidle
+swaybg
 kitty
 xdg-desktop-portal-wlr
 wofi
@@ -14,3 +15,5 @@ xprop
 grimshot
 swappy
 clipman
+qt5-wayland
+wf-recorder
