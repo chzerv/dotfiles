@@ -16,11 +16,11 @@ COMMAND=${*:-bash}
 # should not be relabeled, e.g., the user's home directory.
 if command -v sestatus &> /dev/null; then
     sestatus=$(sestatus | head -n 1 | awk '{ print $3 }')
-fi
 
-if [[ "$sestatus" == "enabled" ]]; then
-    podman run -it --rm --security-opt label=disable -v "$PWD":/data -w /data "$CONTAINER" "$COMMAND"
+    if [[ "$sestatus" == "enabled" ]]; then
+        podman run -it --rm --security-opt label=disable -v "$PWD":/data -w /data "$CONTAINER" "$COMMAND"
+    fi
 else
-    podman run -it --rm -v "$PWD":/data -w /data "$CONTAINER" "$COMMAND"
+        podman run -it --rm -v "$PWD":/data -w /data "$CONTAINER" "$COMMAND"
 fi
 
