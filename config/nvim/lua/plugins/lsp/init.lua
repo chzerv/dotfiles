@@ -98,6 +98,7 @@ if has_rust_tools then
         server = {
             on_attach = function(client, bufnr)
                 handlers.lsp_mappings(bufnr)
+                handlers.codelens(client, bufnr)
             end,
             cmd = { "rustup", "run", "nightly", "rust-analyzer" },
             settings = {

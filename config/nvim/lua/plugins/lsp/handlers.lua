@@ -1,22 +1,24 @@
 local M = {}
 
 function M.capabilities()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-      "documentation",
-      "detail",
-      "additionalTextEdits",
-    },
-  }
+    -- To get a list of a server's supported capabilities:
+    -- :lua =vim.lsp.get_active_clients()[1].server_capabilities
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.completion.completionItem.resolveSupport = {
+        properties = {
+            "documentation",
+            "detail",
+            "additionalTextEdits",
+        },
+    }
 
-  local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-  if ok then
-    capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
-  end
+    local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+    if ok then
+        capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+    end
 
-  return capabilities
+    return capabilities
 end
 
 -- Let null-ls handle formatting
@@ -66,7 +68,6 @@ function M.lsp_mappings(bufnr)
     map("n", "<leader>dp", function()
         vim.diagnostic.goto_prev({ float = { border = "rounded" } })
     end, opts)
-
 end
 
 -- Format on save
@@ -91,16 +92,16 @@ end
 -- TODO: Checkout https://github.com/RRethy/vim-illuminate
 function M.lsp_highlight_document(client, bufnr)
     if client.server_capabilities.documentHighlightProvider then
-        vim.api.nvim_create_augroup('lsp_document_highlight', {
-            clear = true
+        vim.api.nvim_create_augroup("lsp_document_highlight", {
+            clear = true,
         })
-        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-            group = 'lsp_document_highlight',
+        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+            group = "lsp_document_highlight",
             buffer = bufnr,
             callback = vim.lsp.buf.document_highlight,
         })
-        vim.api.nvim_create_autocmd('CursorMoved', {
-            group = 'lsp_document_highlight',
+        vim.api.nvim_create_autocmd("CursorMoved", {
+            group = "lsp_document_highlight",
             buffer = bufnr,
             callback = vim.lsp.buf.clear_references,
         })
@@ -123,6 +124,25 @@ function M.popup_diagnostics_on_hover(bufnr)
             vim.diagnostic.open_float(nil, opts)
         end,
     })
+end
+
+function M.codelens(client, bufnr)
+    if client.server_capabilities.codeLensProvider then
+        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI", "InsertEnter" }, {
+            buffer = bufnr,
+            group = vim.api.nvim_create_augroup("CODELENS", { clear = true }),
+            callback = function()
+                vim.lsp.codelens.refresh()
+            end,
+        })
+
+        vim.keymap.set(
+            "n",
+            "<leader>cl",
+            "<cmd>lua vim.lsp.codelens.run()<CR>",
+            { noremap = true, silent = true, buffer = bufnr }
+        )
+    end
 end
 
 return M
