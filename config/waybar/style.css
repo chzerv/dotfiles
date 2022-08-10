@@ -30,6 +30,7 @@ tooltip {
 #pulseaudio,
 #tray,
 #custom-power,
+#custom-launcher,
 #custom-media {
   padding-left: 2px;
   padding-right: 2px;
@@ -110,4 +111,8 @@ tooltip {
 
 #custom-power {
   color: #F38BA8;
+}
+
+#custom-launcher {
+  color: #9ece6a;
 }

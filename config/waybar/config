@@ -3,6 +3,7 @@
     "position": "bottom",
     "height": 15,
     "modules-left": [
+        "custom/launcher",
         "sway/workspaces",
         "sway/mode",
         "custom/media"
@@ -135,5 +136,9 @@
     "custom/power":{
         "format": "⏻ ",
         "on-click": "bash /home/chzerv/.config/rofi/rofi-power.sh"
+    },
+    "custom/launcher":{
+        "format": "  ",
+        "on-click": "rofi -combi-modi window#drun -show combi"
     }
 }
