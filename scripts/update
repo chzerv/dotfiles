@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+RED='\033[0;31m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+if command -v dnf 1>/dev/null; then
+    echo -e "${CYAN}Update via dnf..${NC}"
+    sudo dnf update
+elif command -v pacman 1>/dev/null; then
+    echo -e "${CYAN}Update via pacman..${NC}"
+    sudo pacman -Syu
+elif command -v zypper 1>/dev/null; then
+    echo -e "${CYAN}Update via zypper..${NC}"
+    sudo zypper dup
+elif command -v apt 1>/dev/null; then
+    echo -e "${CYAN}Update via apt..${NC}"
+    sudo apt update; sudo apt upgrade
+fi
+
+if command -v flatpak 1>/dev/null; then
+    echo -e "\n${CYAN}Update flatpaks..${NC}"
+    flatpak --user update
+    echo -e "\n${CYAN}Cleanup unused flatpak packages..${NC}"
+    flatpak --user uninstall --unused
+fi
