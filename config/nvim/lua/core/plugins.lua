@@ -108,7 +108,7 @@ return require("packer").startup({
 
         use({
             "j-hui/fidget.nvim",
-            after = "nvim-lspconfig",
+            after = "null-ls.nvim",
             config = function()
                 require("plugins.lsp.fidget")
             end,

@@ -53,6 +53,8 @@ function M.lsp_mappings(bufnr)
 
     map("n", "<leader>dq", vim.diagnostic.setqflist, opts)
 
+    map("n", "<leader>dt", "<cmd>Telescope diagnostics theme=ivy<cr>", opts)
+
     map("n", "]d", function()
         vim.diagnostic.goto_next({ float = { border = "rounded" } })
     end, opts)
