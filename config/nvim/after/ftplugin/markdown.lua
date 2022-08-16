@@ -8,10 +8,10 @@ vim.opt_local.formatoptions:append("t")
 local ok, surround = pcall(require, "nvim-surround")
 if ok then
     surround.buffer_setup({
+        aliases = {
+            ["b"] = false,
+        },
         surrounds = {
-            aliases = {
-                ["b"] = false,
-            },
             -- Italics
             ["i"] = {
                 add = { "*", "*" },
