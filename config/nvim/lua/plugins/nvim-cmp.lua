@@ -58,11 +58,6 @@ cmp.setup({
         ghost_text = false,
     },
 
-    window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
-    },
-
     mapping = {
         -- If pummenu is visible, select next item. If not, trigger completion
         ["<C-n>"] = function()
@@ -115,5 +110,16 @@ cmp.setup({
 
             return item
         end,
+    },
+    sorting = {
+        comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+        },
     },
 })
