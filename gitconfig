@@ -9,6 +9,8 @@
     ca = commit --amend
     can = commit --amend --no-edit
     graph = log --oneline --graph --all --decorate
+[commit]
+    verbose = true
 [diff]
 	tool = vimdiff
 [init]
