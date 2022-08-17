@@ -28,13 +28,21 @@ function M.disable_formatting(client)
 end
 
 -- LSP specific mappings
-function M.lsp_mappings(bufnr)
+function M.lsp_mappings(client, bufnr)
     local opts = { noremap = true, silent = true, buffer = bufnr }
     local map = vim.keymap.set
 
-    map("n", "K", function()
-        return require("plugins.lsp.utils").fix_buf_hover()
-    end, opts)
+    if client.name == "rust_analyzer" then
+        map("n", "K", "<cmd>lua require'rust-tools'.hover_actions.hover_actions()<CR>", opts)
+        map("n", "<leader>ca", "<cmd>lua require'rust-tools'.code_action_group.code_action_group<CR>", opts)
+    else
+        map("n", "K", function()
+            return require("plugins.lsp.utils").fix_buf_hover()
+        end, opts)
+        map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+        map("x", "<leader>ca", vim.lsp.buf.range_code_action, opts)
+    end
+
     map("n", "gd", vim.lsp.buf.definition, opts)
     map("n", "gD", vim.lsp.buf.declaration, opts)
     map("n", "gt", vim.lsp.buf.type_definition, opts)
@@ -43,9 +51,6 @@ function M.lsp_mappings(bufnr)
     map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help, opts)
 
     map("n", "<leader>cr", vim.lsp.buf.rename, opts)
-    map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-    map("x", "<leader>ca", vim.lsp.buf.range_code_action, opts)
-
     -- Diagnostics
     map("n", "<leader>df", function()
         vim.diagnostic.open_float({ scope = "line" })

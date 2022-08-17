@@ -93,9 +93,11 @@ return require("packer").startup({
 
         use({
             "simrat39/rust-tools.nvim",
-            branch = "modularize_and_inlay_rewrite",
             after = "nvim-lspconfig",
             ft = { "rust" },
+            config = function()
+                require("plugins.lsp.rust-tools")
+            end
         })
 
         use({

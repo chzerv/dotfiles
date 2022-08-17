@@ -29,11 +29,11 @@ end
 -- Override handlers
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
     vim.lsp.handlers.hover,
-    { border = "rounded", silent = true, max_height = 10 }
+    { border = "rounded", silent = true, max_height = 20 }
 )
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
     vim.lsp.handlers.signature_help,
-    { border = "rounded", silent = true, max_height = 10, relative = "cursor" }
+    { border = "rounded", silent = true, max_height = 20, relative = "cursor" }
 )
 
 for _, server in ipairs(servers) do
@@ -41,7 +41,7 @@ for _, server in ipairs(servers) do
             capabilities = handlers.capabilities(),
             on_attach = function(client, bufnr)
                 handlers.disable_formatting(client)
-                handlers.lsp_mappings(bufnr)
+                handlers.lsp_mappings(client, bufnr)
                 -- handlers.popup_diagnostics_on_hover(bufnr)
                 -- handlers.lsp_highlight_document(client, bufnr)
                 -- handlers.fmt_on_save(client, bufnr)
@@ -63,7 +63,7 @@ lspconfig.ansiblels.setup({
     capabilities = handlers.capabilities(),
     on_attach = function(client, bufnr)
         handlers.disable_formatting(client)
-        handlers.lsp_mappings(bufnr)
+        handlers.lsp_mappings(client, bufnr)
         -- handlers.popup_diagnostics_on_hover(bufnr)
         -- handlers.lsp_highlight_document(client, bufnr)
         -- handlers.fmt_on_save(client, bufnr)
@@ -88,43 +88,9 @@ lspconfig.ansiblels.setup({
 lspconfig.bashls.setup({
     capabilities = handlers.capabilities(),
     on_attach = function(client, bufnr)
-        handlers.lsp_mappings(bufnr)
+        handlers.lsp_mappings(client, bufnr)
     end
 })
-
-local has_rust_tools, rust_tools = pcall(require, "rust-tools")
-if has_rust_tools then
-    rust_tools.setup({
-        server = {
-            on_attach = function(client, bufnr)
-                handlers.lsp_mappings(bufnr)
-                -- handlers.codelens(client, bufnr)
-            end,
-            cmd = { "rustup", "run", "nightly", "rust-analyzer" },
-            settings = {
-                -- https://rust-analyzer.github.io/manual.html
-                ["rust-analyzer"] = {
-                    assist = {
-                        importEnforceGranularity = true,
-                        importPrefix = "crate",
-                    },
-                    cargo = {
-                        allFeatures = true,
-                    },
-                    checkOnSave = {
-                        command = "clippy",
-                    },
-                },
-                inlayHints = {
-                    lifetimeElisionHints = {
-                        enable = true,
-                        useParameterNames = true,
-                    },
-                },
-            }
-        }
-    })
-end
 
 -- Setup diagnostics
 require("plugins.lsp.diagnostics").setup()
