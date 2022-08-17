@@ -82,6 +82,8 @@ map("n", "<leader>P", [["+P"]], opts)
 -- Switch to the directory of the open buffer
 map("n", "<leader>cd", "<cmd>lcd %:p:h<CR>:pwd<CR>", opts)
 
+map("n", "!", "<cmd>lua require'my_plugins.invert-text'.invert()<cr>", opts)
+
 -- Since we disable netrw, create a binding to replicate "gx"
 -- Credits to kutsan
 -- map("n", "gx", function()
