@@ -137,5 +137,9 @@ telescope.setup({
             -- previewer = false,
         },
         lsp_references = { path_display = { "shorten" } },
+        oldfiles = {
+            sort_lastused = true,
+            -- cwd_only = true,
+        },
     },
 })
