@@ -135,13 +135,12 @@ end
 
 function M.codelens(client, bufnr)
     if client.server_capabilities.codeLensProvider then
-        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI", "InsertEnter" }, {
+        vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
             buffer = bufnr,
             group = vim.api.nvim_create_augroup("CODELENS", { clear = true }),
-            callback = function()
-                vim.lsp.codelens.refresh()
-            end,
+            callback = vim.lsp.codelens.refresh,
         })
+        vim.lsp.codelens.refresh()
 
         vim.keymap.set(
             "n",

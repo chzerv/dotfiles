@@ -18,6 +18,7 @@ rust_tools.setup({
     server = {
         on_attach = function(client, bufnr)
             handlers.lsp_mappings(client, bufnr)
+            handlers.codelens(client, bufnr)
         end,
         cmd = { "rustup", "run", "nightly", "rust-analyzer" },
         settings = {
