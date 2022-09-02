@@ -97,7 +97,7 @@ return require("packer").startup({
             ft = { "rust" },
             config = function()
                 require("plugins.lsp.rust-tools")
-            end
+            end,
         })
 
         use({
@@ -167,7 +167,6 @@ return require("packer").startup({
             end,
             requires = {
                 "kyazdani42/nvim-web-devicons",
-                opt = true,
             },
         })
 
@@ -206,21 +205,6 @@ return require("packer").startup({
             ft = { "yaml", "python", "json", "yaml.ansible" },
             config = function()
                 require("plugins.indentline")
-            end,
-        })
-
-        -- Git integration
-        use({
-            "tpope/vim-fugitive",
-            cmd = { "Git", "Gdiffsplit", "Gclog" },
-            keys = { "n", "<leader>gg" },
-            config = function()
-                vim.keymap.set("n", "<leader>gg", function()
-                    vim.cmd([[
-                    :tabnew | Git
-                    wincmd o
-                    ]])
-                end, { noremap = true, silent = true })
             end,
         })
 
@@ -268,35 +252,6 @@ return require("packer").startup({
         use({
             "preservim/vim-markdown",
             ft = { "markdown" },
-        })
-
-        use({
-            "akinsho/toggleterm.nvim",
-            event = "CursorHold",
-            config = function()
-                require("plugins.toggleterm")
-            end,
-        })
-
-        -- https://nexte.st/ must be installed for neotest-rust to work
-        use({
-           "nvim-neotest/neotest",
-            keys = {
-                { "n", "<leader>nr" },
-                { "n", "<leader>nR" },
-                { "n", "<leader>ns" },
-                { "n", "<leader>no" },
-                { "n", "]n" },
-                { "n", "[n" },
-            },
-            requires = {
-                "rouge8/neotest-rust",
-                "antoinemadec/FixCursorHold.nvim",
-                opt = true,
-            },
-            config = function()
-                require("plugins.neotest").setup()
-            end,
         })
 
         if packer_bootstrap then
