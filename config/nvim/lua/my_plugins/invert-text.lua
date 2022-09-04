@@ -11,8 +11,6 @@ local words = vim.tbl_add_reverse_lookup({
 function M.invert()
     local cword = vim.tbl_get(words, vim.fn.expand("<cword>"))
 
-    print(cword)
-
     pcall(function()
         vim.cmd("norm! ciw" .. cword)
     end)
