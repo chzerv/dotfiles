@@ -45,12 +45,13 @@ function M.lsp_mappings(client, bufnr)
 
     map("n", "gd", vim.lsp.buf.definition, opts)
     map("n", "gD", vim.lsp.buf.declaration, opts)
-    map("n", "gt", vim.lsp.buf.type_definition, opts)
-    map("n", "gi", vim.lsp.buf.implementation, opts)
     map("n", "gr", vim.lsp.buf.references, opts)
+    map("n", "<leader>ct", vim.lsp.buf.type_definition, opts)
+    map("n", "<leader>ci", vim.lsp.buf.implementation, opts)
     map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help, opts)
 
     map("n", "<leader>cr", vim.lsp.buf.rename, opts)
+
     -- Diagnostics
     map("n", "<leader>df", function()
         vim.diagnostic.open_float({ scope = "line" })

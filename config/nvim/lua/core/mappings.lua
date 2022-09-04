@@ -47,9 +47,13 @@ map("n", "]<Space>", "<Cmd>put =repeat(nr2char(10), v:count1) <Bar> '[-1<CR>", o
 map("x", "<", "<gv", opts)
 map("x", ">", ">gv", opts)
 
--- Drag visual selected line(s) vertically and auto-indent
-map("x", "mj", ":move'>+<CR>gv=gv", { noremap = true })
-map("x", "mk", ":move-2<CR>gv=gv", { noremap = true })
+-- Drag line(s) vertically and auto-indent
+map("n", "<C-j>", ":m .+1<CR>==", opts)
+map("n", "<C-k>", ":m .-2<CR>==", opts)
+map("v", "<C-j>", ":m '>+<CR>gv=gv", opts)
+map("v", "<C-k>", ":m -2<CR>gv=gv", opts)
+map("i", "<C-j>", "<Esc>:m .+1<CR>==gi", opts)
+map("i", "<C-k>", "<Esc>:m .-2<CR>==gi", opts)
 
 -- Toggle spellcheck
 -- The blank string in the mode indicates that this is a 'map' mapping
@@ -58,15 +62,15 @@ map("", "<F7>", "<Cmd>setlocal spell! spelllang=el<CR>")
 map("", "<F8>", "<Cmd>setlocal spell! spelllang=en_us,el<CR>")
 
 -- Open a quickfix window with all the terms I last searched for
--- credits to Steve Losh
+-- (credits to Steve Losh)
 map("n", "<leader>/", [[<Cmd>execute 'vimgrep /'.@/.'/g %'<CR>copen<CR><CR>nohls<CR>]])
 
 -- Zoom focused split, just like tmux
 map("n", "<leader>z", "<Plug>(ToggleZoom)", opts)
 
 -- Substitute the word under cursor...
-map("n", "<leader>sl", ":s/<C-R><C-W>//g<left><left>")   -- line wise
-map("n", "<leader>sg", ":%s/<C-R><C-W>//g<left><left>")  -- buffer wise
+map("n", "<leader>sl", ":s/<C-R><C-W>//g<left><left>") -- line wise
+map("n", "<leader>sg", ":%s/<C-R><C-W>//g<left><left>") -- buffer wise
 
 -- Avoid clobbering yanked content when pasting in visual mode
 -- ref: https://github.com/neovim/neovim/issues/19354
@@ -82,7 +86,23 @@ map("n", "<leader>P", [["+P"]], opts)
 -- Switch to the directory of the open buffer
 map("n", "<leader>cd", "<cmd>lcd %:p:h<CR>:pwd<CR>", opts)
 
+-- "Invert" the word under cursor, e.g., true -> false
 map("n", "!", "<cmd>lua require'my_plugins.invert-text'.invert()<cr>", opts)
+
+-- Save and source the current file (credits to TJ)
+map("n", "<leader><leader>x", function()
+    if vim.bo.filetype == "vim" then
+        vim.cmd([[
+        silent! write
+        source %
+        ]])
+    elseif vim.bo.filetype == "lua" then
+        vim.cmd([[
+        silent! write
+        luafile %
+        ]])
+    end
+end, opts)
 
 -- Since we disable netrw, create a binding to replicate "gx"
 -- Credits to kutsan
@@ -93,9 +113,13 @@ map("n", "!", "<cmd>lua require'my_plugins.invert-text'.invert()<cr>", opts)
 -- end, { silent = true })
 
 -- Neovim Terminal
-map({"n", "t" }, "<leader>tv", [[<cmd>lua require'my_plugins.toggle_terminal'.toggle_term("vsplit", 75)<cr>]], opts)
-map({"n", "t" }, "<leader>ts", [[<cmd>lua require'my_plugins.toggle_terminal'.toggle_term("split", 15)<cr>]], opts)
+map("n", "<C-\\>", [[<cmd>lua require'my_plugins.toggle_terminal'.toggle_term("split", 15)<cr>]], opts)
+
+ map("t", "<C-\\>", "<C-\\><C-n><cmd>lua require'my_plugins.toggle_terminal'.toggle_term('split', 15)<cr>", opts)
+
 map("n", "<leader>tt", "<cmd>tabnew | terminal<cr>", opts)
+map("t", "[t", "<C-\\><C-n><cmd>tabprevious<CR>", opts)
+map("t", "]t", "<C-\\><C-n><cmd>tabnext<CR>", opts)
 
 map("t", "<A-[>", "<C-\\><C-n>", { noremap = true })
 map("t", "<A-k>", "<C-\\><C-n><C-w>k", { noremap = true })
@@ -103,6 +127,7 @@ map("t", "<A-j>", "<C-\\><C-n><C-w>j", { noremap = true })
 map("t", "<A-h>", "<C-\\><C-n><C-w>h", { noremap = true })
 map("t", "<A-l>", "<C-\\><C-n><C-w>l", { noremap = true })
 
--- Command Line Bindings {{{
+-- Command Line Bindings
 map("c", "<C-a>", "<Home>", { noremap = true })
+map("c", "<C-e>", "<End>", { noremap = true })
 map("c", "<C-e>", "<End>", { noremap = true })

@@ -44,7 +44,6 @@ ts.setup({
     textobjects = {
         select = {
             enable = true,
-            -- Automatically jump forward to textobj, similar to targets.vim
             lookahead = true,
             keymaps = {
                 ["af"] = "@function.outer",
@@ -62,19 +61,19 @@ ts.setup({
             enable = true,
             set_jumps = true, -- Set jumps in the jumplist
             goto_next_start = {
-                ["]f"] = "@function.outer",
+                ["]m"] = "@function.outer",
                 ["]]"] = "@class.outer",
             },
             goto_next_end = {
-                ["]F"] = "@function.outer",
+                ["]M"] = "@function.outer",
                 ["]["] = "@class.outer",
             },
             goto_previous_start = {
-                ["[f"] = "@function.outer",
+                ["[m"] = "@function.outer",
                 ["[["] = "@class.outer",
             },
             goto_previous_end = {
-                ["[F"] = "@function.outer",
+                ["[M"] = "@function.outer",
                 ["[]"] = "@class.outer",
             },
         },
