@@ -262,10 +262,5 @@ return require("packer").startup({
         max_jobs = 50,
         auto_clean = true,
         compile_on_sync = true,
-        display = {
-            open_fn = function()
-                return require("packer.util").float({ border = "single" })
-            end,
-        },
     },
 })
