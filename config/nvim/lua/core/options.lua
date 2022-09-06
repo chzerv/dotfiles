@@ -129,6 +129,10 @@ local builtin_plugins = {
     loaded_bugreport = 1,
     loaded_syntax = 1,
     loaded_spellfile_plugin = 1,
+    loaded_python3_provider = 0,
+    loaded_node_provider = 0,
+    loaded_perl_provider = 0,
+    loaded_ruby_provider = 0,
 }
 
 for k, v in pairs(builtin_plugins) do
