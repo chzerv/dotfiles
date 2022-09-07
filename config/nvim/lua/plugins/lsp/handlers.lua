@@ -32,15 +32,14 @@ function M.lsp_mappings(client, bufnr)
     local opts = { noremap = true, silent = true, buffer = bufnr }
     local map = vim.keymap.set
 
-    if client.name == "rust_analyzer" then
-        map("n", "K", "<cmd>lua require'rust-tools'.hover_actions.hover_actions()<CR>", opts)
-        map("n", "<leader>ca", "<cmd>lua require'rust-tools'.code_action_group.code_action_group<CR>", opts)
+    local has_rt, rt = pcall(require, "rust-tools")
+
+    if client.name == "rust_analyzer" and has_rt then
+        map("n", "K", rt.hover_actions.hover_actions, opts)
     else
         map("n", "K", function()
             return require("plugins.lsp.utils").fix_buf_hover()
         end, opts)
-        map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-        map("x", "<leader>ca", vim.lsp.buf.range_code_action, opts)
     end
 
     map("n", "gd", vim.lsp.buf.definition, opts)
@@ -51,6 +50,8 @@ function M.lsp_mappings(client, bufnr)
     map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help, opts)
 
     map("n", "<leader>cr", vim.lsp.buf.rename, opts)
+    map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+    map("x", "<leader>ca", vim.lsp.buf.range_code_action, opts)
 
     -- Diagnostics
     map("n", "<leader>df", function()
