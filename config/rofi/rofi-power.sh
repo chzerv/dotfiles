@@ -3,6 +3,7 @@
 power_off=' Power Off'
 reboot=' Reboot'
 lock=' Lock'
+logout=' Logout'
 suspend='鈴 Suspend'
 
 confirm() {
@@ -15,7 +16,7 @@ confirm() {
     fi
 }
 
-chosen=$(printf '%s;%s;%s;%s\n' "$power_off" "$reboot" "$lock" "$suspend" | rofi -dmenu -i -sep ';')
+chosen=$(printf '%s;%s;%s;%s;%s\n' "$power_off" "$reboot" "$lock" "$logout" "$suspend" | rofi -dmenu -i -sep ';')
 
 case "$chosen" in
     "$power_off")
@@ -36,6 +37,14 @@ case "$chosen" in
 
     "$lock")
         "$HOME/.config/sway/lock.sh"
+        ;;
+
+    "$logout")
+        if confirm; then
+            swaymsg exit
+        else
+            exit
+        fi
         ;;
 
     "$suspend")
