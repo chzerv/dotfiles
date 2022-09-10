@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Credits: https://github.com/89luca89/dotfiles/blob/master/_setup/setup-fedora-distrobox.sh
+
 set -o errexit
 set -o nounset
 
@@ -34,8 +36,8 @@ sudo dnf install -y \
 # Enable  neovim-nightly COPR
 sudo dnf copr enable -y agriffis/neovim-nightly
 
-# Install packages
-DEV_PACKAGES="
+# Packages to install
+PACKAGES="
     python3
     python3-pip
     python3-wheel
@@ -44,13 +46,11 @@ DEV_PACKAGES="
     gcc
     gcc-c++
     ShellCheck
-"
-
-UTIL_PACKAGES="
     fzf
     vgrep
     ripgrep
     fd-find
 "
 
-sudo dnf install -y ${DEV_PACKAGES} ${UTIL_PACKAGES}
+# shellcheck disable=SC2086
+sudo dnf install -y ${PACKAGES}
