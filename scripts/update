@@ -23,3 +23,8 @@ if command -v flatpak 1>/dev/null; then
     echo -e "\n${CYAN}Cleanup unused flatpak packages..${NC}"
     flatpak --user uninstall --unused
 fi
+
+if command -v rustup 1>/dev/null; then
+    echo -e "\n${CYAN}Update rust nightly..${NC}"
+    rustup update nightly
+fi
