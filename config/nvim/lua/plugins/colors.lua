@@ -5,18 +5,19 @@ M.kanagawa = function()
         undercurl = true,
         commentStyle = { italic = true },
         functionStyle = {},
-        keywordStyle = { italic = true },
-        statementStyle = { bold = true },
+        keywordStyle = { italic = false },
+        statementStyle = { bold = false },
         typeStyle = {},
-        variablebuiltinStyle = { italic = true },
+        variablebuiltinStyle = { italic = false },
         specialReturn = true,
         specialException = true,
         transparent = true,
-        -- Works really nice with laststatus = 3
-        dimInactive = true,
+        dimInactive = false,
         globalStatus = true,
+        terminalColors = true,
         colors = {},
         overrides = {},
+        theme = "default"
     })
 
     vim.cmd.colorscheme("kanagawa")
@@ -25,15 +26,15 @@ end
 M.kanagawa_colors = {
     bg = "#16161D",
     fg = "#C8C093",
-    gray = "#2A2A37",
+    gray = "#727169",
     blue = "#7E9CD8",
     green = "#76946A",
     red = "#C34043",
-    cyan = "#6A9589",
-    magenta = "#957FB8",
-    darkmagenta = "#54546D",
+    cyan = "#7FB4CA",
+    magenta = "#D27E99",
+    darkmagenta = "#957FB8",
     yellow = "#DCA561",
-    orange = "#D18616",
+    orange = "#FFA066",
 }
 
 M.tokyonight = function()
@@ -50,9 +51,11 @@ M.tokyonight = function()
             floats = "dark",
         },
         sidebars = { "qf", "help", "packer", "terminal" },
-        day_brightness = 0.3,
         hide_inactive_statusline = false,
-        dim_inactive = true,
+        dim_inactive = false,
+        on_highlights = function(hl, c)
+            hl.MsgArea = { fg = c.fg_dark, bg=c.bg }
+        end,
     })
 
     vim.cmd.colorscheme("tokyonight")

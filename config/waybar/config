@@ -1,9 +1,9 @@
 {
     "layer": "top",
-    "position": "bottom",
+    "position": "top",
     "height": 15,
     "modules-left": [
-        "custom/launcher",
+        "custom/power",
         "sway/workspaces",
         "sway/mode",
         "custom/media"
@@ -17,11 +17,9 @@
         "battery",
         "backlight",
         "clock",
-        "custom/grimshot",
         "network",
         "sway/language",
         "tray",
-        "custom/power"
     ],
     "sway/workspaces": {
         "disable-scroll": true,
@@ -61,7 +59,8 @@
     },
     "clock": {
         "tooltip-format": "{:%A %B %d %Y | %H:%M}",
-        "format": "{: %I:%M %p   %d/%m/%Y}"
+        /* "format": "{: %H:%M  %d/%m/%Y}" */
+        "format": "{: %H:%M}"
     },
     "cpu": {
         "format": "﬙ {usage}%",
@@ -83,8 +82,8 @@
     "battery": {
         "states": {
             "good": 95,
-            "warning": 30,
-            "critical": 15
+            "warning": 45,
+            "critical": 25
         },
         "format": "{icon}  {capacity}%",
         "format-charging": " {capacity}%",
@@ -92,7 +91,6 @@
         "format-icons": ["", "", "", "", ""]
     },
     "network": {
-        // "format-wifi": "  {essid}",
         "format-wifi": " ",
         "format-ethernet": " {ifname}",
         "format-disconnected": "⚠ Disconnected",
@@ -132,10 +130,13 @@
         "max-length": 40,
         "interval": 30,
         "exec": "$HOME/.config/waybar/mediaplayer.sh 2> /dev/null",
+        "on-click": "playerctl next",
+        "on-click-right": "playerctl previous",
+        "on-click-middle": "playerctl play-pause"
     },
     "custom/power":{
         "format": "⏻ ",
-        "on-click": "bash /home/chzerv/.config/rofi/rofi-power.sh"
+        "on-click": "bash $HOME/.config/rofi/rofi-power.sh"
     },
     "custom/launcher":{
         "format": "  ",

@@ -26,9 +26,6 @@ if status is-interactive
     # Source abbreviations
     . ~/.config/fish/abbreviations.fish
 
-    # Set tokyonight theme
-    . ~/.config/fish/tokyonight_night.fish
-
     # https://github.com/PatrickF1/fzf.fish
     set fzf_dir_opts --bind "ctrl-e:execute(nvim {} &> /dev/tty)"
 end
