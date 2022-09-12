@@ -17,7 +17,7 @@ M.kanagawa = function()
         terminalColors = true,
         colors = {},
         overrides = {},
-        theme = "default"
+        theme = "default",
     })
 
     vim.cmd.colorscheme("kanagawa")
@@ -54,7 +54,7 @@ M.tokyonight = function()
         hide_inactive_statusline = false,
         dim_inactive = false,
         on_highlights = function(hl, c)
-            hl.MsgArea = { fg = c.fg_dark, bg=c.bg }
+            hl.MsgArea = { fg = c.fg_dark, bg = c.bg }
         end,
     })
 
@@ -73,6 +73,34 @@ M.tokyonight_night_colors = {
     darkmagenta = "#9d7cd8",
     yellow = "#e0af68",
     orange = "#ff9e64",
+}
+
+M.gruvbox = function()
+    vim.o.background = "dark"
+    vim.g.gruvbox_material_background = "hard" -- hard, medium, soft
+    vim.g.gruvbox_material_better_performance = 1
+    vim.g.gruvbox_material_transparent_background = 1
+    vim.g.gruvbox_material_foreground = "material"
+    vim.g.gruvbox_material_disable_italic_comment = 0
+    vim.g.gruvbox_material_enable_bold = 0
+    vim.g.gruvbox_material_enable_italic = 1
+    -- vim.g.gruvbox_material_diagnostic_line_highlight = 1
+    vim.g.gruvbox_material_diagnostic_virtual_text = "colored"
+    vim.cmd.colorscheme("gruvbox-material")
+end
+
+M.gruvbox_colors = {
+    bg = "#1d2021",
+    fg = "#d4be98",
+    gray = "#7c6f64",
+    blue = "#7daea3",
+    green = "#a9b665",
+    red = "#ea6962",
+    cyan = "#89b482",
+    magenta = "#d3869b",
+    darkmagenta = "#d3869b",
+    yellow = "#d8a657",
+    orange = "#e78a4e",
 }
 
 return M

@@ -1,6 +1,6 @@
 local vi_mode = require("feline.providers.vi_mode")
 local lsp = require("feline.providers.lsp")
-local colors = require("plugins.colors").tokyonight_night_colors
+local colors = require("plugins.colors").gruvbox_colors
 
 -- Change the default mode colors
 local vi_mode_colors = {

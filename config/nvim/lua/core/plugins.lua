@@ -154,9 +154,9 @@ return require("packer").startup({
         use({ "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" })
 
         use({
-            "folke/tokyonight.nvim",
+            "sainnhe/gruvbox-material",
             config = function()
-                require("plugins.colors").tokyonight()
+                require("plugins.colors").gruvbox()
             end,
         })
 

@@ -34,7 +34,7 @@ window#waybar {
 }
 
 #workspaces button.focused {
-  color: @blue;
+  color: @orange;
 }
 
 #workspaces button.urgent {
@@ -81,7 +81,7 @@ window#waybar {
 
 #window {
   padding: 2px;
-  color: @fg;
+  color: #ddc7a1;
 }
 
 #custom-media {
@@ -101,6 +101,10 @@ window#waybar {
   color: @green;
 }
 
+#battery:not(.charging) {
+  color: @yellow;
+}
+
 #battery.warning:not(.charging) {
   color: @orange;
 }
@@ -111,7 +115,7 @@ window#waybar {
 }
 
 #custom-power {
-  color: @blue;
+  color: @orange;
   padding-left: 6px;
 }
 

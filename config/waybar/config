@@ -111,7 +111,7 @@
             "car": "",
             "default": ["", ""]
         },
-        "on-click": "kitty --title kitty_float -e $HOME/Projects/code/rust/audio_switcher/target/release/audio_switcher"
+        "on-click": "kitty --title kitty_float -e $HOME/Projects//rust/audio_switcher/target/release/audio_switcher"
 
     },
     "sway/language": {
