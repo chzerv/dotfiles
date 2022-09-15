@@ -4,27 +4,32 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 if command -v dnf 1>/dev/null; then
-    echo -e "${CYAN}Update via dnf..${NC}"
+    echo -e "\n${CYAN}>> dnf update <<${NC}\n"
     sudo dnf update
 elif command -v pacman 1>/dev/null; then
-    echo -e "${CYAN}Update via pacman..${NC}"
+    echo -e "${CYAN}>> pacman -Syu <<${NC}"
+    echo -e ""
     sudo pacman -Syu
 elif command -v zypper 1>/dev/null; then
-    echo -e "${CYAN}Update via zypper..${NC}"
+    echo -e "${CYAN}>> zypper dup <<${NC}\n"
     sudo zypper dup
 elif command -v apt 1>/dev/null; then
-    echo -e "${CYAN}Update via apt..${NC}"
-    sudo apt update; sudo apt upgrade
+    echo -e "${CYAN}>> apt update && apt upgrade <<${NC}\n"
+    sudo apt update && sudo apt upgrade
 fi
 
 if command -v flatpak 1>/dev/null; then
-    echo -e "\n${CYAN}Update flatpaks..${NC}"
+    echo -e "\n${CYAN}>> flatpak update <<${NC}\n"
     flatpak --user update
-    echo -e "\n${CYAN}Cleanup unused flatpak packages..${NC}"
+
+    echo -e "\n${CYAN}>> Cleanup unused flatpak packages <<${NC}\n"
     flatpak --user uninstall --unused
 fi
 
 if command -v rustup 1>/dev/null; then
-    echo -e "\n${CYAN}Update rust nightly..${NC}"
+    echo -e "\n${CYAN}>> rustup self update <<${NC}\n"
+    rustup self update
+
+    echo -e "\n${CYAN}>> rustup update nightly <<${NC}\n"
     rustup update nightly
 fi
