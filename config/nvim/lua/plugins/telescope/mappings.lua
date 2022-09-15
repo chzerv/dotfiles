@@ -26,6 +26,8 @@ map("n", "<localleader>ed", "<cmd>lua require'plugins.telescope.utils'.edit_dotf
 
 map("n", "<localleader>en", "<cmd>lua require'plugins.telescope.utils'.edit_notes()<CR>", opts)
 
+map("n", "<localleader>ep", "<cmd>lua require'plugins.telescope.utils'.edit_projects()<CR>", opts)
+
 map("n", "<localleader>gs", "<cmd>Telescope git_status<CR>", opts)
 
 map("n", "<localleader>gc", "<cmd>Telescope git_commits<CR>", opts)

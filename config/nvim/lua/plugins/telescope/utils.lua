@@ -35,6 +35,15 @@ function M.edit_notes()
     require("telescope.builtin").find_files(opts)
 end
 
+function M.edit_projects()
+    local opts = {
+        prompt_title = "~  Projects  ~",
+        cwd = "~/Projects",
+    }
+
+    require("telescope.builtin").find_files(opts)
+end
+
 -- Prompt user for a string, and run 'Telescope grep_string search=<string>'
 function M.grep_prompt()
     local opts = {
