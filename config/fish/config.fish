@@ -26,6 +26,9 @@ if status is-interactive
     # Source abbreviations
     . ~/.config/fish/abbreviations.fish
 
+    # Source functions
+    . ~/.config/fish/functions.fish
+
     # https://github.com/PatrickF1/fzf.fish
     set fzf_dir_opts --bind "ctrl-e:execute(nvim {} &> /dev/tty)"
 end
