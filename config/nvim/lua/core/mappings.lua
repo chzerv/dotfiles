@@ -18,6 +18,8 @@ map("n", "<Esc><Esc>", "<cmd> :noh <CR>")
 -- Cycle through tabs
 map("n", "[t", [[<Cmd>tabprevious<CR>]], opts)
 map("n", "]t", [[<Cmd>tabnext<CR>]], opts)
+map("n", "<C-w><C-t>", "<cmd>tabnew<CR>", opts)
+map("n", "<C-w><C-q>", "<cmd>tabclose<CR>", opts)
 
 -- Buffer navigation
 map("n", "[b", [[<Cmd>bprevious<CR>]], opts)
@@ -104,6 +106,9 @@ map("n", "<leader><leader>x", function()
     end
 end, opts)
 
+-- Go to help page of the word under the cursor
+map("n", "gh", "yiw:help <C-R><C-W><CR>", opts)
+
 -- Since we disable netrw, create a binding to replicate "gx"
 -- Credits to kutsan
 -- map("n", "gx", function()
@@ -115,7 +120,7 @@ end, opts)
 -- Neovim Terminal
 map("n", "<C-\\>", [[<cmd>lua require'my_plugins.toggle_terminal'.toggle_term("split", 15)<cr>]], opts)
 
- map("t", "<C-\\>", "<C-\\><C-n><cmd>lua require'my_plugins.toggle_terminal'.toggle_term('split', 15)<cr>", opts)
+map("t", "<C-\\>", "<C-\\><C-n><cmd>lua require'my_plugins.toggle_terminal'.toggle_term('split', 15)<cr>", opts)
 
 map("n", "<leader>tt", "<cmd>tabnew | terminal<cr>", opts)
 map("t", "[t", "<C-\\><C-n><cmd>tabprevious<CR>", opts)
