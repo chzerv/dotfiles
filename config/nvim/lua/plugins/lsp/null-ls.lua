@@ -35,7 +35,7 @@ local sources = {
 
     -- Prettier for HTML, CSS, YAML and JSON
     formatting.prettier.with({
-        filetypes = { "html", "css", "yaml", "json", "yaml", "markdown", "graphql" },
+        filetypes = { "html", "css", "yaml", "json", "yaml", "markdown", "graphql", "typescript", "javascript" },
     }),
 
     -- yamllint for YAML
