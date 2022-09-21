@@ -1,7 +1,7 @@
 local has_rust_tools, _ = pcall(require, "rust-tools")
 if has_rust_tools then
 
-    local opts = { noremap = true, silent = true }
+    local opts = { noremap = true, silent = true, buffer = true }
     local map = vim.keymap.set
 
     map("n", "<leader>rd", "<cmd>RustOpenExternalDocs<cr>", opts)
