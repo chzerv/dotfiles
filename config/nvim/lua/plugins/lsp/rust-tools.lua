@@ -14,6 +14,9 @@ rust_tools.setup({
             max_height = 20,
             max_width = 100,
         },
+        inlay_hints = {
+            auto = false,
+        }
     },
     server = {
         on_attach = function(client, bufnr)
