@@ -9,12 +9,21 @@ local servers = {
     "emmet_ls",
 }
 
-local installer_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
-if installer_ok then
-    lsp_installer.setup({
-        ensure_installed = servers,
-    })
+local has_mason, mason = pcall(require, "mason")
+if not has_mason then
+    return
 end
+
+mason.setup()
+
+local has_mason_lspconfig, mason_lspconfig = pcall(require, "mason-lspconfig")
+if not has_mason_lspconfig then
+    return
+end
+
+mason_lspconfig.setup({
+    ensure_installed = servers
+})
 
 local lspconfig_ok, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_ok then

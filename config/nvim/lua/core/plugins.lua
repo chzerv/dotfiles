@@ -68,17 +68,8 @@ return require("packer").startup({
 
         -- LSP, completion and snippets
         use({
-            "williamboman/nvim-lsp-installer",
-            cmd = {
-                "LspInstall",
-                "LspInstallInfo",
-                "LspPrintInstalled",
-                "LspRestart",
-                "LspStart",
-                "LspStop",
-                "LspUninstall",
-                "LspUninstallAll",
-            },
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
         })
 
         use({
