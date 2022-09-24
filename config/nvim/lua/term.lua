@@ -29,6 +29,11 @@ function M.toggle_term(direction, size)
     end
 end
 
+function M.launch_term_in_tab()
+    vim.cmd("tabnew")
+    job_id = vim.api.nvim_call_function("termopen", { "$SHELL" })
+end
+
 function M.send_line_to_term()
     if not job_id then
         vim.notify("No active terminal found", vim.log.levels.WARN)
