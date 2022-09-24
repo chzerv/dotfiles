@@ -77,9 +77,6 @@ return require("packer").startup({
             config = function()
                 require("plugins.lsp")
             end,
-            setup = function()
-                lazy_load("nvim-lspconfig")
-            end,
         })
 
         use({
