@@ -47,3 +47,7 @@ end
 function tmux --wraps=tmux --description 'alias tmux tmux -2'
     command tmux -2 $argv
 end
+
+function def --wraps=translate-shell --description 'Call translate-shell with specific arguments'
+    trans :el $argv
+end
