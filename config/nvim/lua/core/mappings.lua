@@ -119,10 +119,12 @@ map("n", "gh", "yiw:help <C-R><C-W><CR>", opts)
 
 -- Neovim Terminal
 map("n", "<C-\\>", [[<cmd>lua require'my_plugins.toggle_terminal'.toggle_term("split", 15)<cr>]], opts)
-
 map("t", "<C-\\>", "<C-\\><C-n><cmd>lua require'my_plugins.toggle_terminal'.toggle_term('split', 15)<cr>", opts)
-
 map("n", "<leader>tt", "<cmd>tabnew | terminal<cr>", opts)
+
+map("n", "<leader>ts", "<cmd>lua require'my_plugins.toggle_terminal'.send_line_to_term()<cr>", opts)
+map("v", "<leader>ts", "<cmd>lua require'my_plugins.toggle_terminal'.send_visual_to_term()<cr>", opts)
+
 map("t", "[t", "<C-\\><C-n><cmd>tabprevious<CR>", opts)
 map("t", "]t", "<C-\\><C-n><cmd>tabnext<CR>", opts)
 
