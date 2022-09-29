@@ -18,3 +18,16 @@ abbr --add gca "git commit -v --amend"
 abbr --add gcan "git commit --amend --no-edit"
 abbr --add ga "git add"
 abbr --add gd "git diff"
+
+# Use `exa` as an `ls` replacement
+if command -v exa > /dev/null
+    abbr --add l 'exa'
+    abbr --add ls 'exa'
+    abbr --add ll 'exa -l'
+    abbr --add la 'exa -la'
+else
+    abbr --add ls 'ls'
+    abbr --add l 'ls'
+    abbr --add ll 'ls -l'
+    abbr --add la 'ls -la'
+end

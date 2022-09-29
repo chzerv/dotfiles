@@ -28,16 +28,12 @@ function mpv --description "Run mpv with specific flags"
     command mpv --hwdec=vaapi --script-opts=ytdl_hook-ytdl_path=$ytdlp_path $argv
 end
 
-function l --wraps='ls --color=always --group-directories-first' --description 'alias l ls --color=always --group-directories-first'
-  ls --color=always --group-directories-first $argv;
+function ls --wraps='ls' --description 'ls with extra flags'
+    command ls --color=always --group-directories-first $argv;
 end
 
-function ll --wraps='ls -l --color=always --group-directories-first' --description 'alias ll ls -l --color=always --group-directories-first'
-  ls -l --color=always --group-directories-first $argv;
-end
-
-function la --wraps='ls -la --color=always --group-directories-first' --description 'alias la ls -la --color=always --group-directories-first'
-  ls -la --color=always --group-directories-first $argv;
+function exa --wraps='exa' --description 'exa with extra flags'
+    command exa --group-directories-first $argv;
 end
 
 function vi --wraps=nvim --description 'alias vi nvim'
