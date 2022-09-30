@@ -26,13 +26,17 @@ map("n", "[b", [[<Cmd>bprevious<CR>]], opts)
 map("n", "]b", [[<Cmd>bnext<CR>]], opts)
 
 -- Cycle through quickfix items
-map("n", "[c", [[<Cmd>cprevious<CR>]], opts)
-map("n", "]c", [[<Cmd>cnext<CR>]], opts)
-map("n", "<Bslash>c", [[<Cmd>cclose<CR>]], opts)
+map("n", "[q", "<cmd>cprevious<CR>", opts)
+map("n", "]q", "<cmd>cnext<CR>", opts)
+map("n", "]Q", "<cmd>cfirst<CR>")
+map("n", "[Q", "<cmd>clast<CR>")
+map("n", "<Bslash>q", [[<Cmd>cclose<CR>]], opts)
 
 -- Cycle through location list items
 map("n", "[l", [[<Cmd>lprevious<CR>]], opts)
 map("n", "]l", [[<Cmd>lnext<CR>]], opts)
+map("n", "]L", "<cmd>lfirst<CR>")
+map("n", "[L", "<cmd>llast<CR>")
 map("n", "<Bslash>l", [[<Cmd>lclose<CR>]], opts)
 
 -- Allow moving through wrapped lines
