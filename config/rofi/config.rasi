@@ -6,7 +6,7 @@ configuration{
     display-run: " ﬓ Run";
     display-combi: "   Combi ";
     display-ssh: "   SSH";
-    show-icons: true;
+    show-icons: false;
     terminal: "kitty";
     ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";
     drun-display-format: "{icon} {name}";

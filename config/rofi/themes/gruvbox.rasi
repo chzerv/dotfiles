@@ -40,7 +40,7 @@ inputbar {
 }
 
 prompt {
-    background-color: @green;
+    background-color: @fg-col;
     padding: 6px;
     text-color: @bg-col;
     border-radius: 3px;
@@ -70,8 +70,8 @@ element {
 }
 
 element selected {
-    background-color:  @selected-col;
-    text-color: @orange;
+    background-color: @fg-col;
+    text-color: @bg-col;
 }
 
 element-icon {
@@ -92,7 +92,7 @@ button {
 
 button selected {
   background-color: @bg-col;
-  text-color: @orange;
+  text-color: @fg-col;
 }
 
 message {
