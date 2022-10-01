@@ -53,15 +53,10 @@ local on_attach = function(client, bufnr)
     local map = vim.keymap.set
 
     map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-    map("x", "<leader>ca", vim.lsp.buf.range_code_action, opts)
 
     -- If formatting is available, create a binding and a command for it.
     if client.server_capabilities.documentFormattingProvider then
         map("n", "<leader>cf", vim.lsp.buf.format, opts)
-    end
-
-    if client.server_capabilities.documentRangeFormattingProvider then
-        map("x", "<leader>cf", vim.lsp.buf.range_formatting, opts)
     end
 end
 

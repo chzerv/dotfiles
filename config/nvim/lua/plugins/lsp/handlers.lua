@@ -24,7 +24,6 @@ end
 -- Let null-ls handle formatting
 function M.disable_formatting(client)
     client.server_capabilities.documentFormattingProvider = false
-    client.server_capabilities.documentRangeFormattingProvider = true
 end
 
 -- LSP specific mappings
@@ -51,7 +50,6 @@ function M.lsp_mappings(client, bufnr)
 
     map("n", "<leader>cr", vim.lsp.buf.rename, opts)
     map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-    map("x", "<leader>ca", vim.lsp.buf.range_code_action, opts)
 
     -- Diagnostics
     map("n", "<leader>df", function()
