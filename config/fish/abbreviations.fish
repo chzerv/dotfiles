@@ -25,6 +25,7 @@ if command -v exa > /dev/null
     abbr --add ls 'exa'
     abbr --add ll 'exa -l'
     abbr --add la 'exa -la'
+    abbr --add tree 'exa --tree'
 else
     abbr --add ls 'ls'
     abbr --add l 'ls'
