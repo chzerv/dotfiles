@@ -1,11 +1,3 @@
-function :q --wraps=exit --description 'alias :q exit'
-    exit $argv;
-end
-
-function lg --wraps=lazygit --description 'alias lg lazygit'
-  lazygit $argv;
-end
-
 function reboot --description 'alias reboot systemctl reboot'
   systemctl reboot $argv;
 end
@@ -34,10 +26,6 @@ end
 
 function exa --wraps='exa' --description 'exa with extra flags'
     command exa --group-directories-first $argv;
-end
-
-function vi --wraps=nvim --description 'alias vi nvim'
-  nvim $argv
 end
 
 function tmux --wraps=tmux --description 'alias tmux tmux -2'
