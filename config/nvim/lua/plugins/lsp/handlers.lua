@@ -50,6 +50,7 @@ function M.lsp_mappings(client, bufnr)
 
     map("n", "<leader>cr", vim.lsp.buf.rename, opts)
     map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+    map("n", "<leader>cs", "<cmd>Telescope lsp_document_symbols theme=ivy<cr>", opts)
 
     -- Diagnostics
     map("n", "<leader>df", function()

@@ -15,7 +15,9 @@ rust_tools.setup({
             max_width = 100,
         },
         inlay_hints = {
-            auto = false,
+            auto = true,
+            only_current_line = false,
+            show_parameter_hints = false,
         }
     },
     server = {
