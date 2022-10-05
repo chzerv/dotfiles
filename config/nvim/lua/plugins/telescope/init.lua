@@ -41,8 +41,8 @@ telescope.setup({
             "node_modules",
             "pycache",
             ".venv/*",
-            ".png",
-            ".jpg",
+            ".png$",
+            ".jpg$",
         },
         path_display = { "truncate" },
         vimgrep_arguments = {
