@@ -105,7 +105,7 @@ return require("packer").startup({
         })
 
         -- DAP
-        use ({
+        use({
             "mfussenegger/nvim-dap",
             keys = {
                 { "n", "<leader>db" },
@@ -114,17 +114,16 @@ return require("packer").startup({
             },
             config = function()
                 require("plugins.dap")
-            end
+            end,
         })
 
-        use ({
+        use({
             "rcarriga/nvim-dap-ui",
             after = "nvim-dap",
             config = function()
                 require("plugins.dap.dap-ui")
-            end
+            end,
         })
-
 
         use({
             "hrsh7th/nvim-cmp",

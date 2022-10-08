@@ -1,9 +1,8 @@
 /* Tokyo night */
-/* @define-color bg #1a1b26; */
+/* @define-color bg #16161e; */
 /* @define-color fg #a9b1d6; */
 /* @define-color borders-dark #737aa2; */
 /* @define-color urgent #db4b4b; */
-/* @define-color ws-focused-border #7dcfff; */
 /* @define-color ws-focused-color #9d7cd8; */
 /* @define-color ws-unfocused-color #3b4261; */
 /* @define-color red #f7768e; */
@@ -18,7 +17,6 @@
 @define-color fg #d4be98;
 @define-color borders-dark #282828;
 @define-color urgent #ea6962;
-@define-color ws-focused-border #7daea3;
 @define-color ws-focused-color #f5c2e7;
 @define-color ws-unfocused-color #665c54;
 @define-color red #ea6962;
@@ -27,4 +25,3 @@
 @define-color green #a9b665;
 @define-color orange #e78a4e;
 @define-color magenta #d3869b;
-@define-color lavender #b4befe;

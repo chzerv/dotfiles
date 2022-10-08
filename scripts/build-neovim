@@ -7,16 +7,13 @@ dest=$HOME/Projects/src/neovim
 current_dir=$(pwd)
 
 build() {
-    echo -e "${YELLOW} Clean up build files ${NC}"
-    make clean
-    make distclean
-
     echo -e "${YELLOW} make && make install ${NC}"
     make CMAKE_BUILD_TYPE=Release -j16
 
     echo -e "${YELLOW} Clean up previous installation files ${NC}"
     sudo rm -rf /usr/local/share/nvim/runtime
     sudo rm -rf /usr/local/bin/nvim
+    sudo rm -rf /usr/local/lib/nvim
 
     sudo make install
 
@@ -24,6 +21,10 @@ build() {
 
 if [ -d "$dest" ]; then
     cd "$dest" || return
+    echo -e "${YELLOW} Clean up build files ${NC}"
+    make clean
+    make distclean
+
     git pull
     build
     cd "$current_dir" || return

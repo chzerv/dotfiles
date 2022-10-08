@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
-session=$( (echo 'Create new session'; tmux list-sessions -F '#S') | fzf --ansi --reverse --height=25%)
+session=$( (echo 'Create new session'; tmux list-sessions -F '#S' 2>/dev/null) | fzf --ansi --reverse --height=25%)
 
 if [[ "Create new session" = "${session}" ]]; then
-    tmux new -s "$(echo "" | fzf --print-query --height=25% --prompt="Enter session name > ")"
+    new_ses=$(echo "" | fzf --print-query --height=25% --prompt="Enter session name> ")
+    if [[ "${new_ses}" == "notes" ]]; then
+        tmux new -d -s "$new_ses"
+        tmux send-keys 'cd ~/Documents/Syncthing/Notes' C-m
+        tmux attach-session -t "$new_ses"
+    else
+        tmux new -s "$new_ses"
+    fi
 elif [[ -z "${session}" ]]; then
     echo "Cancel"
 else

@@ -8,11 +8,11 @@ $rust\
 $nodejs\
 $lua\
 $golang\
+$python\
 $c\
 $terraform\
 $line_break\
 $jobs\
-$python\
 $character"""
 
 right_format = "$cmd_duration"
