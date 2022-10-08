@@ -1,4 +1,3 @@
-abbr --add btm "btm --color gruvbox -c"
 abbr --add rsync "rsync --progress"
 abbr --add cp "cp -i -v"
 abbr --add rm "rm -i -v"
