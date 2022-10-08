@@ -104,6 +104,28 @@ return require("packer").startup({
             end,
         })
 
+        -- DAP
+        use ({
+            "mfussenegger/nvim-dap",
+            keys = {
+                { "n", "<leader>db" },
+                { "n", "<leader>dB" },
+                { "n", "<leader>dl" },
+            },
+            config = function()
+                require("plugins.dap")
+            end
+        })
+
+        use ({
+            "rcarriga/nvim-dap-ui",
+            after = "nvim-dap",
+            config = function()
+                require("plugins.dap.dap-ui")
+            end
+        })
+
+
         use({
             "hrsh7th/nvim-cmp",
             event = "InsertEnter",

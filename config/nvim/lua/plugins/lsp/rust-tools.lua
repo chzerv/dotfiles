@@ -8,6 +8,10 @@ if not rust_tools_ok then
     return
 end
 
+local extension_path = vim.env.HOME .. '/.local/share/nvim/mason/packages/codelldb/extension/'
+local codelldb_path = extension_path .. 'adapter/codelldb'
+local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
+
 rust_tools.setup({
     tools = {
         hover_actions = {
@@ -19,6 +23,11 @@ rust_tools.setup({
             only_current_line = false,
             show_parameter_hints = false,
         }
+    },
+    dap = {
+        adapter = require('rust-tools.dap').get_codelldb_adapter(
+            codelldb_path, liblldb_path
+        )
     },
     server = {
         on_attach = function(client, bufnr)
