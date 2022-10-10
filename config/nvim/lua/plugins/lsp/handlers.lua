@@ -42,6 +42,7 @@ function M.lsp_mappings(client, bufnr)
     end
 
     map("n", "gd", vim.lsp.buf.definition, opts)
+    map("n", "2gd", ":belowright split | lua vim.lsp.buf.definition()<CR>", opts)
     map("n", "gD", vim.lsp.buf.declaration, opts)
     map("n", "gr", vim.lsp.buf.references, opts)
     map("n", "<leader>ct", vim.lsp.buf.type_definition, opts)
@@ -65,15 +66,7 @@ function M.lsp_mappings(client, bufnr)
         vim.diagnostic.goto_next({ float = { border = "rounded" } })
     end, opts)
 
-    map("n", "<leader>dn", function()
-        vim.diagnostic.goto_next({ float = { border = "rounded" } })
-    end, opts)
-
     map("n", "[d", function()
-        vim.diagnostic.goto_prev({ float = { border = "rounded" } })
-    end, opts)
-
-    map("n", "<leader>dp", function()
         vim.diagnostic.goto_prev({ float = { border = "rounded" } })
     end, opts)
 end
