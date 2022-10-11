@@ -7,6 +7,7 @@ local servers = {
     "sumneko_lua",
     "dockerls",
     "emmet_ls",
+    "terraformls"
 }
 
 local has_mason, mason = pcall(require, "mason")

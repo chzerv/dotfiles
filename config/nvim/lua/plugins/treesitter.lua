@@ -24,6 +24,7 @@ ts.setup({
         "yaml",
         "fish",
         "make",
+        "hcl",
     },
 
     sync_install = false,

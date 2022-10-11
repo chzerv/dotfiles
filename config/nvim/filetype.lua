@@ -1,6 +1,8 @@
 vim.filetype.add({
     extension = {
         conf = "conf",
+        tf = "terraform",
+        tfvars = "terraform",
     },
     pattern = {
         ["site.y(a*)ml"] = "yaml.ansible",
@@ -14,5 +16,6 @@ vim.filetype.add({
     },
     filename = {
         ["go.mod"] = "go",
+        ["cloud-init.cfg"] = "yaml",
     }
 })
