@@ -101,7 +101,7 @@ vim.cmd([[
 
 -- Use 'rg' for vimgrep
 if vim.fn.executable("rg") then
-    vim.opt.grepprg = "rg --vimgrep --no-heading --hidden --smart-case --no-ignore-vcs --ignore-file ~/.config/.ignore"
+    vim.opt.grepprg = "rg --vimgrep --no-heading --hidden --smart-case --no-ignore-vcs"
     vim.opt.grepformat = {
         "%f:%l:%c:%m",
         "%f:%l:%m",
