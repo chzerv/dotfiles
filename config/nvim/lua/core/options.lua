@@ -108,6 +108,10 @@ if vim.fn.executable("rg") then
     }
 end
 
+-- Netrw
+vim.g.netrw_banner = 0
+vim.g.netrw_liststyle = 3
+
 -- Disable builtin plugins
 local builtin_plugins = {
     loaded_gzip = 1,
