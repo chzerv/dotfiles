@@ -77,6 +77,7 @@ map("n", "<leader>z", "<Plug>(ToggleZoom)", opts)
 -- Substitute the word under cursor...
 map("n", "<leader>sl", ":s/<C-R><C-W>//g<left><left>") -- line wise
 map("n", "<leader>sg", ":%s/<C-R><C-W>//g<left><left>") -- buffer wise
+map({ "x", "v" }, "<leader>sg", [["zy:%s/<C-R>z//g<left><left>]]) -- buffer wise but use the visual selection
 
 -- Avoid clobbering yanked content when pasting in visual mode
 -- ref: https://github.com/neovim/neovim/issues/19354
