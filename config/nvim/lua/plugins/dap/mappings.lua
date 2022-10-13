@@ -11,7 +11,7 @@ end
 map("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", opts)
 map("n", "<leader>dB", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts)
 map("n", "<leader>dl", "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", opts)
-map('n', '<leader>dr', "<cmd>lua require'dap'.repl.open()<CR>", opts)
+map("n", "<leader>dr", "<cmd>lua require'dap'.repl.open()<CR>", opts)
 
 map("n", "<F5>", "<Cmd>lua require'dap'.continue()<CR>", opts)
 map("n", "<F10>", "<Cmd>lua require'dap'.step_over()<CR>", opts)

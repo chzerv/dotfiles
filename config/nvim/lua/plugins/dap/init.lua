@@ -20,10 +20,11 @@ dap.adapters.rust = dap.adapters.lldb
 -- for the `program` function
 dap.configurations.rust = {
     {
-        name = "Launch",
+        name = "Default",
         type = "lldb",
         request = "launch",
         program = function()
+            vim.fn.jobstart('cargo build')
             local metadata_json = vim.fn.system("cargo metadata --format-version 1 --no-deps")
             local metadata = vim.fn.json_decode(metadata_json)
             local target_name = metadata.packages[1].targets[1].name
@@ -32,7 +33,25 @@ dap.configurations.rust = {
         end,
         -- cwd = "${workspaceFolder}",
         stopOnEntry = false,
-        -- args = {},
+        --runInTerminal = true,
+    },
+    {
+        name = "Extra Arguments",
+        type = "lldb",
+        request = "launch",
+        program = function()
+            vim.fn.jobstart('cargo build')
+            local metadata_json = vim.fn.system("cargo metadata --format-version 1 --no-deps")
+            local metadata = vim.fn.json_decode(metadata_json)
+            local target_name = metadata.packages[1].targets[1].name
+            local target_dir = metadata.target_directory
+            return target_dir .. "/debug/" .. target_name
+        end,
+        stopOnEntry = false,
+        args = function()
+            local input_args = vim.fn.input("Input arguments: ")
+            return vim.fn.split(input_args, " ", true)
+        end
         --runInTerminal = true,
     },
 }
