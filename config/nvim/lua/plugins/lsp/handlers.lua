@@ -1,26 +1,5 @@
 local M = {}
 
-function M.capabilities()
-    -- To get a list of a server's supported capabilities:
-    -- :lua =vim.lsp.get_active_clients()[1].server_capabilities
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
-    capabilities.textDocument.completion.completionItem.resolveSupport = {
-        properties = {
-            "documentation",
-            "detail",
-            "additionalTextEdits",
-        },
-    }
-
-    local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-    if ok then
-        capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
-    end
-
-    return capabilities
-end
-
 -- Let null-ls handle formatting
 function M.disable_formatting(client)
     client.server_capabilities.documentFormattingProvider = false

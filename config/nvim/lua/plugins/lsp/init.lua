@@ -46,9 +46,11 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
     { border = "rounded", silent = true, max_height = 20, relative = "cursor" }
 )
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 for _, server in ipairs(servers) do
         local opts = {
-            capabilities = handlers.capabilities(),
+            capabilities = capabilities,
             on_attach = function(client, bufnr)
                 handlers.disable_formatting(client)
                 handlers.lsp_mappings(client, bufnr)
@@ -70,7 +72,7 @@ end
 
 -- FIXME: ansiblels is not working if installed via lsp-installer
 lspconfig.ansiblels.setup({
-    capabilities = handlers.capabilities(),
+    capabilities = capabilities,
     on_attach = function(client, bufnr)
         handlers.disable_formatting(client)
         handlers.lsp_mappings(client, bufnr)
@@ -96,7 +98,7 @@ lspconfig.ansiblels.setup({
 })
 
 lspconfig.bashls.setup({
-    capabilities = handlers.capabilities(),
+    capabilities = capabilities,
     on_attach = function(client, bufnr)
         handlers.lsp_mappings(client, bufnr)
     end
