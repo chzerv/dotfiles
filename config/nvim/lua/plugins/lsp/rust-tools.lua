@@ -34,7 +34,7 @@ rust_tools.setup({
             handlers.lsp_mappings(client, bufnr)
             handlers.codelens(client, bufnr)
         end,
-        cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+        cmd = { "rust-analyzer" },
         settings = {
             -- https://rust-analyzer.github.io/manual.html
             ["rust-analyzer"] = {
