@@ -37,5 +37,5 @@ fi
 
 SAVE_FILE="$HOME/Videos/recording-$(date '+%F-%T-%N-%Z').mp4"
 
-# wf-recorder -f "$SAVE_FILE" -c h264_vaapi -d /dev/dri/renderD128 -t -F hwupload,scale_vaapi=format=nv12 "$@"
-wf-recorder -f "$SAVE_FILE" "$@" -c libx264rgb -g "$GEOMETRY"
+wf-recorder -f "$SAVE_FILE" -c h264_vaapi -d /dev/dri/renderD128 -t -F hwupload,scale_vaapi=format=nv12 "$@" -g "$GEOMETRY"
+# wf-recorder -f "$SAVE_FILE" "$@" -c libx264rgb -g "$GEOMETRY"

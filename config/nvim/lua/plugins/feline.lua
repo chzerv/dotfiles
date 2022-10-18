@@ -119,8 +119,8 @@ require("feline").setup({
                 end
             end
 
-            return table.concat(active_clients), "   "
-        end
+            return table.concat(active_clients), "  "
+        end,
     },
 })
 
