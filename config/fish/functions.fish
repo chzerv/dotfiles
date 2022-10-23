@@ -35,3 +35,7 @@ end
 function def --wraps=translate-shell --description 'Call translate-shell with specific arguments'
     trans :el $argv
 end
+
+function explain --wraps=rustc --description 'Call rustc --explain and pipe the output to bat'
+    rustc --explain $argv | bat -l rs
+end
