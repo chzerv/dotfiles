@@ -5,12 +5,13 @@
 
 local g = vim.g
 
-if vim.fn.executable("evince") then
+if vim.fn.executable("zathura") then
+    g.vimtex_view_general_viewer = "zathura"
+elseif vim.fn.executable("evince") then
     g.vimtex_view_general_viewer = "evince"
 elseif vim.fn.executable("okular") then
     g.vimtex_view_general_viewer = "okular"
 end
-
 
 g.vimtex_quickfix_ignore_filters = {
     "Command terminated with space",
@@ -24,5 +25,6 @@ g.vimtex_quickfix_ignore_filters = {
     [[Package fancyhdr Warning: \\headheight is too small]],
     [[Underfull \\hbox (badness [0-9]*) in paragraph at lines]],
     "Package hyperref Warning: Token not allowed in a PDF string",
+    "Package fontspec Warning: OpenType feature",
     [[Overfull \\hbox ([0-9]*.[0-9]*pt too wide) in paragraph at lines]],
 }
