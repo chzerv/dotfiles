@@ -11,7 +11,7 @@ M.kanagawa = function()
         variablebuiltinStyle = { italic = false },
         specialReturn = true,
         specialException = true,
-        transparent = true,
+        transparent = false,
         dimInactive = false,
         globalStatus = true,
         terminalColors = true,
@@ -77,7 +77,7 @@ M.tokyonight_night_colors = {
 
 M.gruvbox = function()
     vim.o.background = "dark"
-    vim.g.gruvbox_material_background = "hard" -- hard, medium, soft
+    vim.g.gruvbox_material_background = "medium" -- hard, medium, soft
     vim.g.gruvbox_material_better_performance = 1
     vim.g.gruvbox_material_transparent_background = 1
     vim.g.gruvbox_material_foreground = "material"
@@ -98,9 +98,30 @@ M.gruvbox_colors = {
     red = "#ea6962",
     cyan = "#89b482",
     magenta = "#d3869b",
-    darkmagenta = "#d3869b",
     yellow = "#d8a657",
-    orange = "#e78a4e",
+    orange = "#cc9057",
+}
+
+M.onedark = function()
+    require("onedark").setup({
+        style = "darker", -- 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+        toggle_style_key = "<leader>ts",
+        transparent = false,
+    })
+    require("onedark").load()
+end
+
+M.onedark_darker_colors = {
+    bg = "#30363f",
+    fg = "#a0a8b7",
+    gray = "#535965",
+    blue = "#4fa6ed",
+    green = "#8ebd6b",
+    red = "#e55561",
+    cyan = "#48b0bd",
+    magenta = "#bf68d9",
+    yellow = "#e2b86b",
+    orange = "#e2b86b",
 }
 
 return M

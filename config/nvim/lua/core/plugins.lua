@@ -162,10 +162,17 @@ return require("packer").startup({
         })
         use({ "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" })
 
+        -- use({
+        --     "sainnhe/gruvbox-material",
+        --     config = function()
+        --         require("plugins.colors").gruvbox()
+        --     end,
+        -- })
+
         use({
-            "sainnhe/gruvbox-material",
+            "navarasu/onedark.nvim",
             config = function()
-                require("plugins.colors").gruvbox()
+                require("plugins.colors").onedark()
             end,
         })
 
