@@ -4,12 +4,11 @@ session=$( (echo 'Create new session'; tmux list-sessions -F '#S' 2>/dev/null) |
 
 if [[ "Create new session" = "${session}" ]]; then
     new_ses=$(echo "" | fzf --print-query --height=25% --prompt="Enter session name> ")
+
     if [[ "${new_ses}" == "notes" ]]; then
-        tmux new -d -s "$new_ses"
-        tmux send-keys 'cd ~/Documents/Syncthing/Notes' C-m
-        tmux attach-session -t "$new_ses"
+        tmux new -s "$new_ses" -c "$HOME/Documents/Syncthing/Notes" -n "main"
     else
-        tmux new -s "$new_ses"
+        tmux new -s "$new_ses" -n "main"
     fi
 elif [[ -z "${session}" ]]; then
     echo "Cancel"

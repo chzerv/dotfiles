@@ -6,8 +6,8 @@
 ## https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/bin/tmux-sessionizer
 ###############################################################################################
 
-# Find all directories in ~/Projects
-project=$(dirname $(find ~/Projects -type d -name "*.git" | fzf --preview-window hidden))
+# Find all git repos in ~/Projects
+project=$(fd --type d --hidden '.git$' "$HOME"/Projects | sed 's/\.git\///' | fzf)
 
 if [[ -z $project ]]; then
     exit 0
@@ -18,12 +18,12 @@ fi
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUZ ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -s "$project_basename" -c "$project"
+    tmux new-session -s "$project_basename" -c "$project" -n "main"
     exit 0
 fi
 
 if ! tmux has-session -t="$project_basename" 2> /dev/null; then
-    tmux new-session -ds "$project_basename" -c "$project"
+    tmux new-session -ds "$project_basename" -c "$project" -n "main"
 fi
 
 tmux switch-client -t "$project_basename"
