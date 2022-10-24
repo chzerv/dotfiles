@@ -83,7 +83,7 @@ ls.add_snippets("tex", {
     ls.parser.parse_snippet("fig", [[
 \\begin{figure}[!htb]
   \\centering
-  \\includegraphics[${1:width=0.7\textwidth}]{${2:file}})
+  \\includegraphics[${1:width=0.7\textwidth}]{${2:file}}
   \\caption{${3:caption}}
   \\label{${4:label}}
 \\end{figure}

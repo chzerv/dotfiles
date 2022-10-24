@@ -1,11 +1,15 @@
 local map = vim.keymap.set
 local opts = { silent = true, noremap = true }
 
+local breakpoints = require("dap.breakpoints")
+local dap = require("dap")
+local dapui = require("dapui")
+
 local function dap_close()
-    require("dap.breakpoints").clear()
-    require("dap").disconnect()
-    require("dap").close()
-    require("dapui").close()
+    breakpoints.clear()
+    dap.disconnect()
+    dap.close()
+    dapui.close()
 end
 
 map("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", opts)
