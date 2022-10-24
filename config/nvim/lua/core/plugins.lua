@@ -241,15 +241,6 @@ return require("packer").startup({
         -- TODO: https://github.com/kevinhwang91/nvim-bqf
         use("romainl/vim-qf")
 
-        -- LaTeX
-        use({
-            "lervag/vimtex",
-            ft = { "tex" },
-            config = function()
-                require("plugins.vimtex")
-            end,
-        })
-
         use({
             ft = { "markdown" },
             "iamcco/markdown-preview.nvim",
