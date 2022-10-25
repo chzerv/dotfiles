@@ -1,0 +1,12 @@
+@define-color bg #192330;
+@define-color fg #cdcecf;
+@define-color borders-dark #39506d;
+@define-color urgent #c94f6d;
+@define-color ws-focused-color #d6d6d7;
+@define-color ws-unfocused-color #71839b;
+@define-color red #c94f6d;
+@define-color blue #719cd6;
+@define-color yellow #dbc074;
+@define-color green #81b29a;
+@define-color orange #f4a261;
+@define-color magenta #9d79d6;
