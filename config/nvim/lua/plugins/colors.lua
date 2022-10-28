@@ -104,7 +104,7 @@ M.gruvbox_colors = {
 
 M.onedark = function()
     require("onedark").setup({
-        style = "darker", -- 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+        style = "dark", -- 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
         toggle_style_key = "<leader>ts",
         transparent = false,
     })
@@ -122,6 +122,19 @@ M.onedark_darker_colors = {
     magenta = "#bf68d9",
     yellow = "#e2b86b",
     orange = "#e2b86b",
+}
+
+M.onedark_dark_colors = {
+    bg = "#393f4a",
+    fg = "#abb2bf",
+    grey = "#5c6370",
+    blue = "#61afef",
+    green = "#98c379",
+    red = "#e86671",
+    cyan = "#56b6c2",
+    magenta = "#c678dd",
+    yellow = "#e5c07b",
+    orange = "#d19a66",
 }
 
 return M

@@ -16,4 +16,4 @@ configuration{
     sidebar-mode: true;
 }
 
-@theme "onedark"
+@theme "theme"
