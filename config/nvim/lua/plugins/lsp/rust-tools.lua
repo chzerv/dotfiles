@@ -20,7 +20,7 @@ rust_tools.setup({
         },
         inlay_hints = {
             auto = true,
-            only_current_line = false,
+            only_current_line = true,
             show_parameter_hints = false,
         }
     },

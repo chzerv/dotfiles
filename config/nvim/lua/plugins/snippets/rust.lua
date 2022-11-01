@@ -21,33 +21,39 @@ local conds = require("luasnip.extras.expand_conditions")
 -- Simple placeholders
 ls.add_snippets("rust", {
     s(
-        "main",
-        fmt(
-            [[
-        fn main() {{
-            {}
-        }}
-        {}
-        ]],
-            { i(1), i(2) }
-        )
-    ),
-    s(
-        "pr",
-        fmt(
-            [[
-        println!("{}", {});
-        ]],
-            { i(1, "text"), i(2, "var") }
-        )
-    ),
-    s(
         "debug",
         fmt(
             [[
         #[derive(Debug)]{}
         ]],
             { i(1) }
+        )
+    ),
+    s(
+        "modtest",
+        fmt(
+            [[
+        #[cfg(test)]
+        mod test {{
+            use super::*;
+
+            {}
+        }}
+        ]],
+            { i(1) }
+        )
+    ),
+    s(
+        "test",
+        fmt(
+            [[
+        /// {}
+        #[test]
+        fn test_{}() {{
+            {}
+        }}
+        ]],
+            { i(1, "description"), i(2), i(3) }
         )
     ),
 })
