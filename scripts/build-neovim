@@ -3,7 +3,7 @@
 YELLOW='\033[0;33m'
 NC='\033[0m'
 
-dest=$HOME/Projects/src/neovim
+dest=$HOME/Projects/tmp/neovim
 current_dir=$(pwd)
 
 build() {
