@@ -51,21 +51,6 @@ return require("packer").startup({
             },
         })
 
-        use({
-            "ThePrimeagen/harpoon",
-            keys = {
-                { "n", "<leader>ha" },
-                { "n", "<leader>hh" },
-                { "n", "<leader>1" },
-                { "n", "<leader>2" },
-                { "n", "<leader>3" },
-                { "n", "<leader>4" },
-            },
-            config = function()
-                require("plugins.harpoon")
-            end,
-        })
-
         -- LSP, completion and snippets
         use({
             "williamboman/mason.nvim",
@@ -221,6 +206,21 @@ return require("packer").startup({
             ft = { "yaml", "python", "json", "yaml.ansible" },
             config = function()
                 require("plugins.indentline")
+            end,
+        })
+
+        -- Git integration
+        use({
+            "tpope/vim-fugitive",
+            cmd = { "Git", "Gdiffsplit", "Gclog", "Gedit", "Gsplit", "Gread" },
+            keys = { "n", "<leader>gg" },
+            config = function()
+                vim.keymap.set("n", "<leader>gg", function()
+                    vim.cmd([[
+                    :tabnew | Git
+                    wincmd o
+                    ]])
+                end, { noremap = true, silent = true })
             end,
         })
 
