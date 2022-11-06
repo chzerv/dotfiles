@@ -10,6 +10,7 @@ abbr --add sshfs sshfs -o idmap=user,ServerAliveInterval=5,ServerAliveCountMax=3
 # Git related
 abbr --add g "git"
 abbr --add ga "git add"
+abbr --add gaf "git add-fzf"
 abbr --add glo "git log --oneline"
 abbr --add gs "git status"
 abbr --add gst "git stash"
