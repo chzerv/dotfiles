@@ -31,3 +31,5 @@
     hunk-header-decoration-style = yellow box
     hunk-header-style = file line-number syntax
     side-by-side = false
+[merge]
+    ff = false
