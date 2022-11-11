@@ -58,8 +58,6 @@ map("n", "<C-j>", ":m .+1<CR>==", opts)
 map("n", "<C-k>", ":m .-2<CR>==", opts)
 map("v", "<C-j>", ":m '>+<CR>gv=gv", opts)
 map("v", "<C-k>", ":m -2<CR>gv=gv", opts)
-map("i", "<C-j>", "<Esc>:m .+1<CR>==gi", opts)
-map("i", "<C-k>", "<Esc>:m .-2<CR>==gi", opts)
 
 -- Toggle spellcheck
 -- The blank string in the mode indicates that this is a 'map' mapping
@@ -143,3 +141,7 @@ map("t", "<A-l>", "<C-\\><C-n><C-w>l", { noremap = true })
 map("c", "<C-a>", "<Home>", { noremap = true })
 map("c", "<C-e>", "<End>", { noremap = true })
 map("c", "<C-e>", "<End>", { noremap = true })
+
+-- Mimic shell bindings in VIM
+map("i", "<C-e>", "<C-o>$")
+map("i", "<C-a>", "<C-o>^")
