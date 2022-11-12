@@ -1,22 +1,21 @@
 [user]
-	email = xrist.zerv@protonmail.com
-	name = Chris Zervakis
+    email = xrist.zerv@protonmail.com
+    name = Chris Zervakis
 [alias]
+st = status
     co = checkout
-    br = branch
-    cm = commit -v
-    st = status
+    cm = commit --verbose
     ca = commit --amend
     can = commit --amend --no-edit
     graph = log --oneline --graph --all --decorate
-    p = add -p
+    ap = add --patch
     find = "!f() { cd `git rev-parse --show-toplevel` && git ls-files | rg \"$@\"; }; f"
 [commit]
     verbose = true
 [diff]
-	tool = vimdiff
+    tool = vimdiff
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [core]
     editor = nvim
     pager = delta
