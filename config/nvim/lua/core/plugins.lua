@@ -147,13 +147,6 @@ return require("packer").startup({
         })
         use({ "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" })
 
-        -- use({
-        --     "sainnhe/gruvbox-material",
-        --     config = function()
-        --         require("plugins.colors").gruvbox()
-        --     end,
-        -- })
-
         use({
             "navarasu/onedark.nvim",
             config = function()
@@ -203,6 +196,7 @@ return require("packer").startup({
 
         use({
             "lukas-reineke/indent-blankline.nvim",
+            disable = true,
             ft = { "yaml", "python", "json", "yaml.ansible" },
             config = function()
                 require("plugins.indentline")

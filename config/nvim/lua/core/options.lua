@@ -52,7 +52,7 @@ opt.incsearch = true -- Show search results as you type
 opt.hlsearch = true -- Highlight search results
 
 -- Undo, Swap and Backup
-opt.backup = false  -- Disable permanent backups..
+opt.backup = false -- Disable permanent backups..
 opt.writebackup = true -- but enable temporary backups
 opt.dir = vim.fn.stdpath("data") .. "/cache/swap"
 opt.undofile = true
@@ -85,10 +85,11 @@ set_cursorline({ "BufEnter", "InsertLeave" }, true)
 -- Visualize tabs, spaces, unwrapped text and non-breaking spaces
 opt.list = true
 opt.listchars = {
-    extends = "›",
-    precedes = "‹",
+    tab = "──",
     nbsp = "␣",
-    tab = "» ",
+    trail = "•",
+    precedes = "«",
+    extends = "»",
 }
 
 -- Don't show trailing whitespaces in insert mode
