@@ -134,10 +134,11 @@ telescope.setup({
                     results_width = 0.4,
                 },
             },
-            -- theme = "dropdown",
-            -- previewer = false,
         },
-        lsp_references = { path_display = { "shorten" } },
+        lsp_references = {
+            path_display = { "shorten" },
+            show_line = false,
+       },
         oldfiles = {
             sort_lastused = true,
             -- cwd_only = true,

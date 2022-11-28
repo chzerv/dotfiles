@@ -21,7 +21,7 @@ function M.lsp_mappings(client, bufnr)
     end
 
     map("n", "gd", vim.lsp.buf.definition, opts)
-    map("n", "2gd", ":belowright split | lua vim.lsp.buf.definition()<CR>", opts)
+    map("n", "2gd", ":vsplit | lua vim.lsp.buf.definition()<CR>", opts)
     map("n", "gD", vim.lsp.buf.declaration, opts)
     map("n", "gr", vim.lsp.buf.references, opts)
     map("n", "<leader>ct", vim.lsp.buf.type_definition, opts)

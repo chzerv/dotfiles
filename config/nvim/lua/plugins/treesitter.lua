@@ -25,6 +25,9 @@ ts.setup({
         "fish",
         "make",
         "hcl",
+        "toml",
+        "html",
+        "sql",
     },
 
     sync_install = false,
