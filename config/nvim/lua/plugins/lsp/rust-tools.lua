@@ -8,9 +8,9 @@ if not rust_tools_ok then
     return
 end
 
-local extension_path = vim.env.HOME .. '/.local/share/nvim/mason/packages/codelldb/extension/'
-local codelldb_path = extension_path .. 'adapter/codelldb'
-local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
+local extension_path = vim.env.HOME .. "/.local/share/nvim/mason/packages/codelldb/extension/"
+local codelldb_path = extension_path .. "adapter/codelldb"
+local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
 
 rust_tools.setup({
     tools = {
@@ -22,12 +22,10 @@ rust_tools.setup({
             auto = true,
             only_current_line = false,
             show_parameter_hints = false,
-        }
+        },
     },
     dap = {
-        adapter = require('rust-tools.dap').get_codelldb_adapter(
-            codelldb_path, liblldb_path
-        )
+        adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
     },
     server = {
         on_attach = function(client, bufnr)
@@ -36,17 +34,20 @@ rust_tools.setup({
         end,
         cmd = { "rust-analyzer" },
         settings = {
-            -- https://rust-analyzer.github.io/manual.html
+            -- https://rust-analyzer.github.io/manual.html#configuration
             ["rust-analyzer"] = {
-                assist = {
-                    importEnforceGranularity = true,
-                    importPrefix = "crate",
-                },
                 cargo = {
                     allFeatures = true,
                 },
                 checkOnSave = {
+                    enable = true,
                     command = "clippy",
+                    allFeatures = true,
+                },
+                rustfmt = {
+                    rangeFormatting = {
+                        enable = true,
+                    },
                 },
             },
             inlayHints = {
@@ -55,6 +56,6 @@ rust_tools.setup({
                     useParameterNames = true,
                 },
             },
-        }
-    }
+        },
+    },
 })

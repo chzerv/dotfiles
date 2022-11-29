@@ -13,7 +13,7 @@ opt.number = true
 opt.relativenumber = true
 opt.shortmess:append("cs")
 opt.showmode = false
-opt.showcmd = true
+opt.showcmd = false
 opt.cmdheight = 1
 opt.laststatus = 3 -- Global status line
 opt.termguicolors = true

@@ -14,38 +14,21 @@ local formatting = null_ls.builtins.formatting
 -- The following programs must be in your $PATH:
 -- yamllint, ansiblelint, black, isort, stylua, prettier
 local sources = {
-    -- isort and black for Python
-    formatting.isort.with({
-        extra_args = { "--profile", "black" },
-    }),
-
     formatting.black,
-
-    -- stylua for Lua
     formatting.stylua.with({
-        -- By default, stylua uses Tabs
-        args = {
-            "--indent-width",
-            "4",
-            "--indent-type",
-            "Spaces",
-            "-",
+        extra_args = {
+            "--quote-style", "AlwaysPreferDouble",
+            "--indent-width", "4",
+            "--indent-type", "Spaces",
         },
     }),
-
-    -- Prettier for HTML, CSS, YAML and JSON
     formatting.prettier.with({
         filetypes = { "html", "css", "yaml", "json", "yaml", "markdown", "graphql", "typescript", "javascript" },
     }),
-
-    -- yamllint for YAML
     diagnostics.yamllint,
-
-    -- ansible-lint for Ansible
     diagnostics.ansiblelint,
-
     formatting.gofmt,
-    formatting.rustfmt,
+    -- formatting.rustfmt,
 }
 
 local on_attach = function(client, bufnr)
@@ -54,9 +37,12 @@ local on_attach = function(client, bufnr)
 
     map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 
-    -- If formatting is available, create a binding and a command for it.
     if client.server_capabilities.documentFormattingProvider then
         map("n", "<leader>cf", vim.lsp.buf.format, opts)
+    end
+
+    if client.server_capabilities.documentRangeFormattingProvider then
+        map("v", "<leader>cf", vim.lsp.buf.format)
     end
 end
 
