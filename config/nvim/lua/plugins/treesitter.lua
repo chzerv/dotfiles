@@ -28,6 +28,8 @@ ts.setup({
         "toml",
         "html",
         "sql",
+        "gitcommit",
+        "diff",
     },
 
     sync_install = false,
