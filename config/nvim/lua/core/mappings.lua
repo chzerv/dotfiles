@@ -13,7 +13,7 @@ g.mapleader = " "
 g.maplocalleader = "\\"
 
 -- Use double ESC to turn off search highlighting
-map("n", "<Esc><Esc>", "<cmd> :noh <CR>")
+map("n", "<Esc>", "<cmd> :noh <CR>")
 
 -- Cycle through tabs
 map("n", "[t", [[<Cmd>tabprevious<CR>]], opts)
@@ -56,14 +56,17 @@ map("x", ">", ">gv", opts)
 -- Drag line(s) vertically and auto-indent
 map("n", "<C-j>", ":m .+1<CR>==", opts)
 map("n", "<C-k>", ":m .-2<CR>==", opts)
-map("v", "<C-j>", ":m '>+<CR>gv=gv", opts)
-map("v", "<C-k>", ":m -2<CR>gv=gv", opts)
+map("x", "<C-k>", ":move '<-2<CR>gv-gv", opts)
+map("x", "<C-j>", ":move '>+1<CR>gv-gv", opts)
 
 -- Toggle spellcheck
 -- The blank string in the mode indicates that this is a 'map' mapping
 map("", "<F6>", "<Cmd>setlocal spell! spelllang=en_us<CR>")
 map("", "<F7>", "<Cmd>setlocal spell! spelllang=el<CR>")
 map("", "<F8>", "<Cmd>setlocal spell! spelllang=en_us,el<CR>")
+
+-- Autocorrect the last spelling error
+map("i", "<C-s>", "<c-g>u<Esc>[s1z=`]a<c-g>u", opts)
 
 -- Open a quickfix window with all the terms I last searched for
 -- (credits to Steve Losh)
