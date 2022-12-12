@@ -44,6 +44,7 @@ telescope.setup({
             ".venv/*",
             ".png$",
             ".jpg$",
+            ".terraform"
         },
         path_display = { "truncate" },
         vimgrep_arguments = {
@@ -122,7 +123,7 @@ telescope.setup({
             previewer = false,
             mappings = {
                 i = {
-                    ["<C-d>"] = require("telescope.actions").delete_buffer,
+                    ["<C-x>"] = require("telescope.actions").delete_buffer,
                 },
             },
         },
