@@ -16,7 +16,7 @@ function M.lsp_mappings(client, bufnr)
         map("n", "K", rt.hover_actions.hover_actions, opts)
     else
         map("n", "K", function()
-            return require("plugins.lsp.utils").fix_buf_hover()
+            return require("chzerv.plugins.lsp.utils").fix_buf_hover()
         end, opts)
     end
 
