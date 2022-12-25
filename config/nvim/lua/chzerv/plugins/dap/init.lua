@@ -1,10 +1,6 @@
 local M = {
     "mfussenegger/nvim-dap",
-    keys = {
-        { "n", "<leader>db" },
-        { "n", "<leader>dB" },
-        { "n", "<leader>dl" },
-    },
+    keys = {  "<leader>db", "<leader>dB", "<leader>dl" },
     dependencies = {
         {
             "rcarriga/nvim-dap-ui",

@@ -1,10 +1,11 @@
 local M = {
     "kylechui/nvim-surround",
+    lazy = false,
 }
 
 function M.config()
     local surround = require("nvim-surround")
-    surround.setup {}
+    surround.setup()
 
     -- https://github.com/kylechui/nvim-surround/issues/109#issuecomment-1194034971
     require("nvim-surround.buffer").format_lines = function(_, _)
