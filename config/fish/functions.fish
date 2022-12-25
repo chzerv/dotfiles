@@ -14,12 +14,6 @@ function shutdown --wraps='systemctl poweroff' --description 'alias shutdown sys
   systemctl poweroff $argv;
 end
 
-function mpv --description "Run mpv with specific flags"
-    set ytdlp_path (which yt-dlp)
-
-    command mpv --hwdec=vaapi --script-opts=ytdl_hook-ytdl_path=$ytdlp_path $argv
-end
-
 function ls --wraps='ls' --description 'ls with extra flags'
     command ls --color=always --group-directories-first $argv;
 end
