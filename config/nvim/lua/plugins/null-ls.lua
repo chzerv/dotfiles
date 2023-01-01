@@ -20,7 +20,7 @@ function M.setup()
             formatting.black,
             formatting.stylua.with({
                 extra_args = {
-                    "--quote-style", "AlwaysPreferDouble",
+                    "--quote-style", "ForceDouble",
                     "--indent-width", "4",
                     "--indent-type", "Spaces",
                 },

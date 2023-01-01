@@ -1,7 +1,5 @@
 local M = {
     "lukas-reineke/indent-blankline.nvim",
-    event = "BufReadPre",
-    -- event = "VeryLazy",
     ft = { "yaml", "python", "json", "yaml.ansible" },
 }
 
