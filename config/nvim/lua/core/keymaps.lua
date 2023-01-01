@@ -97,21 +97,6 @@ map("n", "<leader>cd", "<cmd>lcd %:p:h<CR>:pwd<CR>", opts)
 -- "Invert" the word under cursor, e.g., true -> false
 map("n", "!", "<cmd>lua require'my_plugins.invert-text'.invert()<cr>", opts)
 
--- Save and source the current file (credits to TJ)
-map("n", "<leader><leader>x", function()
-    if vim.bo.filetype == "vim" then
-        vim.cmd([[
-        silent! write
-        source %
-        ]])
-    elseif vim.bo.filetype == "lua" then
-        vim.cmd([[
-        silent! write
-        luafile %
-        ]])
-    end
-end, opts)
-
 -- Go to help page of the word under the cursor
 map("n", "gh", "yiw:help <C-R><C-W><CR>", opts)
 
