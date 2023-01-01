@@ -67,7 +67,7 @@ function M.config()
         },
     }
 
-    require("plugins.dap.mappings")
+    require("plugins.dap.keymaps")
 end
 
 return M

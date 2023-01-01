@@ -13,7 +13,7 @@ function M.config()
     local actions = require("telescope.actions")
     local actions_layout = require("telescope.actions.layout")
 
-    local mappings = require("plugins.telescope.mappings")
+    local mappings = require("plugins.telescope.keymaps")
 
     telescope.setup({
         defaults = {
