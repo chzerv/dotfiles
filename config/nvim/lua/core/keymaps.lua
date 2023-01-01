@@ -115,6 +115,10 @@ end, opts)
 -- Go to help page of the word under the cursor
 map("n", "gh", "yiw:help <C-R><C-W><CR>", opts)
 
+-- Search within visual selection
+-- https://www.reddit.com/r/neovim/comments/zy3qq0/til_search_within_visual_selection/
+vim.keymap.set('v', '<m-/>', '<esc>/\\%V')
+
 -- Since we disable netrw, create a binding to replicate "gx"
 -- Credits to kutsan
 -- map("n", "gx", function()
