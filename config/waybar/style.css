@@ -1,4 +1,4 @@
-@import url("colors.css");
+@import url("colors/onedark.css");
 
 * {
   border: none;
@@ -6,7 +6,7 @@
   font-family: "JetBrainsMono Nerd Font";
   font-size: 12px;
   min-height: 0;
-  margin: 1px 6px;
+  margin: 1px 4.2px;
   padding: 0;
   background: @bg;
 }
@@ -34,7 +34,7 @@ window#waybar {
 }
 
 #workspaces button.focused {
-  color: @orange;
+  color: @fg;
 }
 
 #workspaces button.urgent {
@@ -86,7 +86,7 @@ window#waybar {
 
 #custom-media {
   padding: 2px;
-  color: @green;
+  color: @fg;
 }
 
 #idle_inhibitor.activated {
@@ -94,7 +94,7 @@ window#waybar {
 }
 
 #idle_inhibitor.deactivated {
-  color: @yellow;
+  color: @fg;
 }
 
 #battery.charging {
@@ -115,7 +115,7 @@ window#waybar {
 }
 
 #custom-power {
-  color: @orange;
+  color: @fg;
   padding-left: 6px;
 }
 

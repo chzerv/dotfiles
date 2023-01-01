@@ -13,11 +13,12 @@ opt.number = true
 opt.relativenumber = true
 opt.shortmess:append("cs")
 opt.showmode = false
-opt.showcmd = true
+opt.showcmd = false
 opt.cmdheight = 1
 opt.laststatus = 3 -- Global status line
 opt.termguicolors = true
 opt.signcolumn = "yes" -- Avoid shifting the screen whenever a diagnostic appears
+opt.diffopt:append({ "linematch:60" })
 -- opt.winbar = "=%=%m %t"
 
 -- Indent and Tab Behavior
@@ -51,7 +52,7 @@ opt.incsearch = true -- Show search results as you type
 opt.hlsearch = true -- Highlight search results
 
 -- Undo, Swap and Backup
-opt.backup = false  -- Disable permanent backups..
+opt.backup = false -- Disable permanent backups..
 opt.writebackup = true -- but enable temporary backups
 opt.dir = vim.fn.stdpath("data") .. "/cache/swap"
 opt.undofile = true
@@ -84,10 +85,11 @@ set_cursorline({ "BufEnter", "InsertLeave" }, true)
 -- Visualize tabs, spaces, unwrapped text and non-breaking spaces
 opt.list = true
 opt.listchars = {
-    extends = "›",
-    precedes = "‹",
+    tab = "──",
     nbsp = "␣",
-    tab = "» ",
+    trail = "•",
+    precedes = "«",
+    extends = "»",
 }
 
 -- Don't show trailing whitespaces in insert mode
@@ -101,12 +103,16 @@ vim.cmd([[
 
 -- Use 'rg' for vimgrep
 if vim.fn.executable("rg") then
-    vim.opt.grepprg = "rg --vimgrep --no-heading --hidden --smart-case --no-ignore-vcs --ignore-file ~/.config/.ignore"
+    vim.opt.grepprg = "rg --vimgrep --no-heading --hidden --smart-case --no-ignore-vcs"
     vim.opt.grepformat = {
         "%f:%l:%c:%m",
         "%f:%l:%m",
     }
 end
+
+-- Netrw
+vim.g.netrw_banner = 0
+vim.g.netrw_liststyle = 3
 
 -- Disable builtin plugins
 local builtin_plugins = {

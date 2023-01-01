@@ -1,11 +1,3 @@
-function :q --wraps=exit --description 'alias :q exit'
-    exit $argv;
-end
-
-function lg --wraps=lazygit --description 'alias lg lazygit'
-  lazygit $argv;
-end
-
 function reboot --description 'alias reboot systemctl reboot'
   systemctl reboot $argv;
 end
@@ -22,26 +14,12 @@ function shutdown --wraps='systemctl poweroff' --description 'alias shutdown sys
   systemctl poweroff $argv;
 end
 
-function mpv --description "Run mpv with specific flags"
-    set ytdlp_path (which yt-dlp)
-
-    command mpv --hwdec=vaapi --script-opts=ytdl_hook-ytdl_path=$ytdlp_path $argv
+function ls --wraps='ls' --description 'ls with extra flags'
+    command ls --color=always --group-directories-first $argv;
 end
 
-function l --wraps='ls --color=always --group-directories-first' --description 'alias l ls --color=always --group-directories-first'
-  ls --color=always --group-directories-first $argv;
-end
-
-function ll --wraps='ls -l --color=always --group-directories-first' --description 'alias ll ls -l --color=always --group-directories-first'
-  ls -l --color=always --group-directories-first $argv;
-end
-
-function la --wraps='ls -la --color=always --group-directories-first' --description 'alias la ls -la --color=always --group-directories-first'
-  ls -la --color=always --group-directories-first $argv;
-end
-
-function vi --wraps=nvim --description 'alias vi nvim'
-  nvim $argv
+function exa --wraps='exa' --description 'exa with extra flags'
+    command exa --group-directories-first $argv;
 end
 
 function tmux --wraps=tmux --description 'alias tmux tmux -2'
@@ -50,4 +28,8 @@ end
 
 function def --wraps=translate-shell --description 'Call translate-shell with specific arguments'
     trans :el $argv
+end
+
+function explain --wraps=rustc --description 'Call rustc --explain and pipe the output to bat'
+    rustc --explain $argv | bat -l rs
 end

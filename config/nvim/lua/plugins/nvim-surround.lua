@@ -1,18 +1,20 @@
-local ok, surround = pcall(require, "nvim-surround")
-if not ok then
-    return
+local M = {
+    "kylechui/nvim-surround",
+    keys = "ys"
+}
+
+function M.config()
+    local surround = require("nvim-surround")
+    surround.setup()
+
+    -- https://github.com/kylechui/nvim-surround/issues/109#issuecomment-1194034971
+    require("nvim-surround.buffer").format_lines = function(_, _)
+        -- Do nothing
+    end
+
 end
 
-surround.setup{}
-
--- https://github.com/kylechui/nvim-surround/issues/109#issuecomment-1194034971
-require("nvim-surround.buffer").format_lines = function(_, _)
-    -- Do nothing
-end
-
-local M = {}
-
-M.get_input = function(prompt)
+function M.get_input(prompt)
     local ok, input = pcall(vim.fn.input, { prompt = prompt })
     if not ok then
         return nil

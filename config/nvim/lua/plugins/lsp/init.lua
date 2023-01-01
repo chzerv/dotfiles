@@ -1,55 +1,49 @@
--- Install servers
-local servers = {
-    "gopls",
-    "yamlls",
-    "jsonls",
-    "pyright",
-    "sumneko_lua",
-    "dockerls",
-    "emmet_ls",
+local M = {
+    "neovim/nvim-lspconfig",
+    event = "BufReadPre",
+    dependencies = { "hrsh7th/cmp-nvim-lsp" },
 }
 
-local has_mason, mason = pcall(require, "mason")
-if not has_mason then
-    return
-end
+function M.config()
+    local servers = {
+        "gopls",
+        "yamlls",
+        "jsonls",
+        "pyright",
+        "sumneko_lua",
+        "dockerls",
+        "emmet_ls",
+        "terraformls",
+        "texlab",
+        "ansiblels",
+        "bashls",
+    }
 
-mason.setup()
+    local lspconfig = require("lspconfig")
+    local handlers = require("plugins.lsp.handlers")
 
-local has_mason_lspconfig, mason_lspconfig = pcall(require, "mason-lspconfig")
-if not has_mason_lspconfig then
-    return
-end
+    local mason = require("mason")
+    local mason_lspconfig = require("mason-lspconfig")
 
-mason_lspconfig.setup({
-    ensure_installed = servers
-})
+    mason.setup()
+    mason_lspconfig.setup({
+        ensure_installed = servers,
+    })
 
-local lspconfig_ok, lspconfig = pcall(require, "lspconfig")
-if not lspconfig_ok then
-    return
-end
-
-local handlers_ok, handlers = pcall(require, "plugins.lsp.handlers")
-if not handlers_ok then
-    return
-end
-
--- Override handlers
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-    vim.lsp.handlers.hover,
-    { border = "rounded", silent = true, max_height = 20 }
-)
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+    -- Override handlers
+    vim.lsp.handlers["textDocument/hover"] =
+    vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded", silent = true, max_height = 20 })
+    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
     vim.lsp.handlers.signature_help,
     { border = "rounded", silent = true, max_height = 20, relative = "cursor" }
-)
+    )
 
-for _, server in ipairs(servers) do
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+    for _, server in ipairs(servers) do
         local opts = {
-            capabilities = handlers.capabilities(),
+            capabilities = capabilities,
             on_attach = function(client, bufnr)
-                handlers.disable_formatting(client)
                 handlers.lsp_mappings(client, bufnr)
                 -- handlers.popup_diagnostics_on_hover(bufnr)
                 -- handlers.lsp_highlight_document(client, bufnr)
@@ -65,41 +59,15 @@ for _, server in ipairs(servers) do
         end
 
         lspconfig[server].setup(opts)
+    end
+
+    -- Setup diagnostics
+    require("plugins.lsp.diagnostics").setup()
+    require("plugins.null-ls").setup()
+    require("plugins.fidget").setup()
+    require("plugins.rust-tools").setup()
+
 end
 
--- FIXME: ansiblels is not working if installed via lsp-installer
-lspconfig.ansiblels.setup({
-    capabilities = handlers.capabilities(),
-    on_attach = function(client, bufnr)
-        handlers.disable_formatting(client)
-        handlers.lsp_mappings(client, bufnr)
-        -- handlers.popup_diagnostics_on_hover(bufnr)
-        -- handlers.lsp_highlight_document(client, bufnr)
-        -- handlers.fmt_on_save(client, bufnr)
-    end,
-    cmd = { "ansible-language-server", "--stdio" },
-    settings = {
-        ansible = {
-            ansible = {
-                useFullyQualifiedCollectionNames = true,
-            },
-            -- https://github.com/ansible/ansible-language-server/issues/391
-            completion = {
-                provideRedirectModules = false,
-            },
-        },
-        ansibleLint = {
-            enabled = false,
-        },
-    },
-})
+return M
 
-lspconfig.bashls.setup({
-    capabilities = handlers.capabilities(),
-    on_attach = function(client, bufnr)
-        handlers.lsp_mappings(client, bufnr)
-    end
-})
-
--- Setup diagnostics
-require("plugins.lsp.diagnostics").setup()

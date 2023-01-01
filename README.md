@@ -4,10 +4,10 @@ This is a collection of my personal Linux dotfiles. Have a look around and hopef
 
 ## Requirements
 
-+ For icons to be displayed correctly, a [nerd-font](https://www.nerdfonts.com/) must be used
-+ (nvim) For [nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer) to automatically install LSP servers, `npm` and `go` must be in your `$PATH`
-+ (nvim) `prettier`, `yamllint`, `stylua`, `black`, `isort` and `gofmt` must be in your `$PATH` for code formatting to work
-+ (nvim) LSP servers for [Ansible](https://github.com/ansible/ansible-language-server) and [Bash](https://github.com/bash-lsp/bash-language-server) must be installed manually
++ Neovim HEAD
++ Sway HEAD
++ `npm` and `go` must be in your `$PATH` so that LSP servers can be automatically installed
++ `prettier`, `yamllint`, `stylua`, `black`, and `rustfmt` and `gofmt`must be in your `$PATH` for code formatting to work
 + Probably something else that I'm forgetting..
 
 ## Notes

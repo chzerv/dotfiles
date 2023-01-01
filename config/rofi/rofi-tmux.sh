@@ -1,16 +1,11 @@
 #! /usr/bin/env bash
 
-function tmux_sessions()
-{
-    tmux list-session -F '#S'
-}
+session=$( (echo 'Create new session'; tmux list-sessions -F '#S') | rofi -dmenu -p "Select tmux session")
 
-TMUX_SESSION=$( (echo new; tmux_sessions) | rofi -dmenu -p "Select tmux session")
-
-if [[ x"new" = x"${TMUX_SESSION}" ]]; then
-    kitty -e tmux new-session &
-elif [[ -z "${TMUX_SESSION}" ]]; then
+if [[ "Create new session" = "${session}" ]]; then
+    kitty -e tmux new -s "$(rofi -dmenu -p ">>> Session name: ")" &
+elif [[ -z "${session}" ]]; then
     echo "Cancel"
 else
-    kitty -e tmux attach -t "${TMUX_SESSION}" &
+    kitty -e tmux attach -t "${session}" &
 fi

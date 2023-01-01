@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-RED='\033[0;31m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
@@ -7,9 +6,11 @@ if command -v dnf 1>/dev/null; then
     echo -e "\n${CYAN}>> dnf update <<${NC}\n"
     sudo dnf update
 elif command -v pacman 1>/dev/null; then
-    echo -e "${CYAN}>> pacman -Syu <<${NC}"
-    echo -e ""
+    echo -e "${CYAN}>> pacman -Syu <<${NC}\n"
     sudo pacman -Syu
+
+    echo -e "\n${CYAN}>> paru -Syua --devel <<${NC}\n"
+    paru -Syua --devel
 elif command -v zypper 1>/dev/null; then
     echo -e "${CYAN}>> zypper dup <<${NC}\n"
     sudo zypper dup
@@ -24,12 +25,4 @@ if command -v flatpak 1>/dev/null; then
 
     echo -e "\n${CYAN}>> Cleanup unused flatpak packages <<${NC}\n"
     flatpak --user uninstall --unused
-fi
-
-if command -v rustup 1>/dev/null; then
-    echo -e "\n${CYAN}>> rustup self update <<${NC}\n"
-    rustup self update
-
-    echo -e "\n${CYAN}>> rustup update nightly <<${NC}\n"
-    rustup update nightly
 fi
