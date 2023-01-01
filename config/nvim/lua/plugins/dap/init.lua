@@ -5,7 +5,7 @@ local M = {
         {
             "rcarriga/nvim-dap-ui",
             config = function()
-                require("chzerv.plugins.dap.dap-ui").setup()
+                require("plugins.dap.dap-ui").setup()
             end,
         },
     },
@@ -67,7 +67,7 @@ function M.config()
         },
     }
 
-    require("chzerv.plugins.dap.mappings")
+    require("plugins.dap.mappings")
 end
 
 return M

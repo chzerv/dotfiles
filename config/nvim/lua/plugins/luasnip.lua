@@ -63,7 +63,7 @@ function M.config()
         end
     end)
 
-    require("luasnip.loaders.from_lua").lazy_load({ paths = vim.api.nvim_get_runtime_file("lua/chzerv/plugins/snippets", true) })
+    require("luasnip.loaders.from_lua").lazy_load({ paths = vim.api.nvim_get_runtime_file("lua/plugins/snippets", true) })
 end
 
 return M

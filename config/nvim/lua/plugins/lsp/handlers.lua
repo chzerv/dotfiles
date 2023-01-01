@@ -16,14 +16,15 @@ function M.lsp_mappings(client, bufnr)
         map("n", "K", rt.hover_actions.hover_actions, opts)
     else
         map("n", "K", function()
-            return require("chzerv.plugins.lsp.utils").fix_buf_hover()
+            return require("plugins.lsp.utils").fix_buf_hover()
         end, opts)
     end
 
     map("n", "gd", vim.lsp.buf.definition, opts)
     map("n", "2gd", ":vsplit | lua vim.lsp.buf.definition()<CR>", opts)
     map("n", "gD", vim.lsp.buf.declaration, opts)
-    map("n", "gr", vim.lsp.buf.references, opts)
+    -- map("n", "gr", vim.lsp.buf.references, opts)
+    map("n", "gr", require("telescope.builtin").lsp_references, opts)
     map("n", "<leader>ct", vim.lsp.buf.type_definition, opts)
     map("n", "<leader>ci", vim.lsp.buf.implementation, opts)
     map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help, opts)

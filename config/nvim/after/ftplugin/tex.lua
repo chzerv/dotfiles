@@ -12,7 +12,7 @@ if ok then
             -- so that the delimites are placed on new lines
             ["e"] = {
                 add = function()
-                    local env = require("chzerv.plugins.nvim-surround").get_input("Environment > ")
+                    local env = require("plugins.nvim-surround").get_input("Environment > ")
                     if env then
                         return {
                             { "\\begin{" .. env .. "}" },
@@ -24,7 +24,7 @@ if ok then
             -- Surround with LaTeX command
             ["c"] = {
                 add = function()
-                    local cmd = require("chzerv.plugins.nvim-surround").get_input("Command >")
+                    local cmd = require("plugins.nvim-surround").get_input("Command >")
                     return {
                         { "\\" .. cmd .. "{" }, { "}" }
                     }

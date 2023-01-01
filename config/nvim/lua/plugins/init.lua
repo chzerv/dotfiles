@@ -67,5 +67,14 @@ return {
             vim.keymap.set("n", "<A-j>", "<cmd>TmuxNavigateDown<CR>", { noremap = true, silent = true })
             vim.keymap.set("n", "<A-k>", "<cmd>TmuxNavigateUp<CR>", { noremap = true, silent = true })
         end
-    }
+    },
+
+    -- Visualize undo history
+    {
+        "mbbill/undotree",
+        keys = "<leader>u",
+        config = function()
+            vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+        end
+    },
 }

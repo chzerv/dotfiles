@@ -33,7 +33,7 @@ if ok then
             -- Surround visual selection with a code block of a user specified language
             ["c"] = {
                 add = function()
-                    local lang = require("chzerv.plugins.nvim-surround").get_input("Enter code block language: ") or ""
+                    local lang = require("plugins.nvim-surround").get_input("Enter code block language: ") or ""
                     return {
                         { "```" .. lang },
                         { "```" },

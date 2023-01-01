@@ -20,7 +20,7 @@ function M.config()
     }
 
     local lspconfig = require("lspconfig")
-    local handlers = require("chzerv.plugins.lsp.handlers")
+    local handlers = require("plugins.lsp.handlers")
 
     local mason = require("mason")
     local mason_lspconfig = require("mason-lspconfig")
@@ -52,7 +52,7 @@ function M.config()
         }
 
         -- If there is a custom configuration for a server...
-        local has_custom_opts, custom_opts = pcall(require, "chzerv.plugins.lsp.servers." .. server)
+        local has_custom_opts, custom_opts = pcall(require, "plugins.lsp.servers." .. server)
 
         if has_custom_opts then
             opts = vim.tbl_deep_extend("force", custom_opts, opts)
@@ -62,10 +62,10 @@ function M.config()
     end
 
     -- Setup diagnostics
-    require("chzerv.plugins.lsp.diagnostics").setup()
-    require("chzerv.plugins.null-ls").setup()
-    require("chzerv.plugins.fidget").setup()
-    require("chzerv.plugins.rust-tools").setup()
+    require("plugins.lsp.diagnostics").setup()
+    require("plugins.null-ls").setup()
+    require("plugins.fidget").setup()
+    require("plugins.rust-tools").setup()
 
 end
 

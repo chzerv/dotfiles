@@ -12,7 +12,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-require("lazy").setup("chzerv.plugins", {
+-- Remap space as leader key
+-- Must be before lazy
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
+vim.g.mapleader = " "
+
+require("lazy").setup("plugins", {
     defaults = { lazy = true },
     checker = {
         -- automatically check for plugin updates
@@ -23,7 +28,6 @@ require("lazy").setup("chzerv.plugins", {
         enabled = false,
         notify = true,
     },
-    install = { colorscheme = { "sonokai" } },
     performance = {
         rtp = {
             disabled_plugins = {

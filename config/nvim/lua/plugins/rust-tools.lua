@@ -4,7 +4,7 @@ local M = {
 
 function M.setup()
 
-    local handlers = require("chzerv.plugins.lsp.handlers")
+    local handlers = require("plugins.lsp.handlers")
     local rust_tools = require("rust-tools")
 
     local extension_path = vim.env.HOME .. "/.local/share/nvim/mason/packages/codelldb/extension/"

@@ -1,7 +1,7 @@
 local M = {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
-    keys = { "<localleader>f", "<localleader>o" },
+    keys = { "<leader>sf", "<leader>so" },
     dependencies = {
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
         { "nvim-telescope/telescope-ui-select.nvim" },
@@ -13,7 +13,7 @@ function M.config()
     local actions = require("telescope.actions")
     local actions_layout = require("telescope.actions.layout")
 
-    local mappings = require("chzerv.plugins.telescope.mappings")
+    local mappings = require("plugins.telescope.mappings")
 
     telescope.setup({
         defaults = {

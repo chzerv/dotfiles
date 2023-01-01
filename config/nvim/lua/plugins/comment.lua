@@ -1,6 +1,6 @@
 local M = {
     "numToStr/Comment.nvim",
-    keys = { "gc", "gcc", "gbc" },
+    keys = { "gc", "gcc", "gbc", { "gc", mode = "v" } },
 }
 
 function M.config()

@@ -1,5 +1,5 @@
 local M = {
-    -- enabled = false,
+    enabled = false,
     "feline-nvim/feline.nvim",
     lazy = false,
     -- event = "VeryLazy",
@@ -11,7 +11,7 @@ local M = {
 function M.config()
     local vi_mode = require("feline.providers.vi_mode")
     local lsp = require("feline.providers.lsp")
-    local colors = require("chzerv.util.colors").onedark_darker_colors
+    local colors = require("util.colors").onedark_darker_colors
 
     -- Change the default mode colors
     local vi_mode_colors = {

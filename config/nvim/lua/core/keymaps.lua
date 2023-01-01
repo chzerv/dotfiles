@@ -124,12 +124,12 @@ map("n", "gh", "yiw:help <C-R><C-W><CR>", opts)
 -- end, { silent = true })
 
 -- Neovim Terminal
-map("n", "<C-\\>", [[<cmd>lua require'term'.toggle_term("split", 15)<cr>]], opts)
-map("t", "<C-\\>", "<C-\\><C-n><cmd>lua require'term'.toggle_term('split', 15)<cr>", opts)
-map("n", "<leader>tt", "<cmd>lua require'term'.launch_term_in_tab()<cr>", opts)
+map("n", "<C-\\>", [[<cmd>lua require'my_plugins.term'.toggle_term("split", 15)<cr>]], opts)
+map("t", "<C-\\>", "<C-\\><C-n><cmd>lua require'my_plugins.term'.toggle_term('split', 15)<cr>", opts)
+map("n", "<leader>tt", "<cmd>lua require'my_plugins.term'.launch_term_in_tab()<cr>", opts)
 
-map("n", "<leader>ts", "<cmd>lua require'term'.send_line_to_term()<cr>", opts)
-map("v", "<leader>ts", "<cmd>lua require'term'.send_visual_to_term()<cr>", opts)
+map("n", "<leader>ts", "<cmd>lua require'my_plugins.term'.send_line_to_term()<cr>", opts)
+map("v", "<leader>ts", "<cmd>lua require'my_plugins.term'.send_visual_to_term()<cr>", opts)
 
 map("t", "[t", "<C-\\><C-n><cmd>tabprevious<CR>", opts)
 map("t", "]t", "<C-\\><C-n><cmd>tabnext<CR>", opts)
