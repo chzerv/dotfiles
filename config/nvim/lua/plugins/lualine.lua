@@ -3,30 +3,34 @@ local M = {
     event = "VeryLazy",
 }
 
-local function clock()
-    return " " .. os.date("%H:%M")
-end
-
 function M.config()
+    -- Bubbles config for lualine
+    -- Author: lokesh-krishna
+    -- MIT license, see LICENSE for more details.
+
     require("lualine").setup({
         options = {
             theme = "auto",
-            section_separators = { left = "", right = "" },
-            component_separators = { left = "", right = "" },
             icons_enabled = true,
             globalstatus = true,
-            disabled_filetypes = { statusline = { "dashboard" } },
+            component_separators = "|",
+            section_separators = { left = "", right = "" },
         },
         sections = {
-            lualine_a = { { "mode", separator = { left = "" } } },
-            lualine_b = { "branch" },
+            lualine_a = {
+                { "mode", separator = { left = "" }, right_padding = 2 },
+            },
+            lualine_b = { "branch", "diff" },
             lualine_c = {
-                { "diagnostics", sources = { "nvim_diagnostic" } },
                 { "filename", path = 1, symbols = { modified = " ± ", readonly = "", unnamed = "" } },
             },
             lualine_x = {},
-            lualine_y = { "location" },
-            lualine_z = { { clock, separator = { right = "" } } },
+            lualine_y = {
+                { "diagnostics", sources = { "nvim_diagnostic" } },
+            },
+            lualine_z = {
+                { "location", separator = { right = "" }, left_padding = 2 },
+            },
         },
         inactive_sections = {
             lualine_a = {},
@@ -36,23 +40,6 @@ function M.config()
             lualine_y = {},
             lualine_z = {},
         },
-        -- winbar = {
-        --   lualine_a = {},
-        --   lualine_b = {},
-        --   lualine_c = { "filename" },
-        --   lualine_x = {},
-        --   lualine_y = {},
-        --   lualine_z = {},
-        -- },
-        --
-        -- inactive_winbar = {
-        --   lualine_a = {},
-        --   lualine_b = {},
-        --   lualine_c = { "filename" },
-        --   lualine_x = {},
-        --   lualine_y = {},
-        --   lualine_z = {},
-        -- },
     })
 end
 
