@@ -11,6 +11,7 @@ local M = {
 
   dependencies = {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    "mrjones2014/nvim-ts-rainbow",
   },
 }
 
@@ -109,6 +110,10 @@ function M.config()
                 node_decremental = "<M-C-w.",
                 scope_incremental = "<M-e>",
             },
+        },
+        rainbow = {
+            enable = true,
+            extended_mode = true,
         },
     })
 end
