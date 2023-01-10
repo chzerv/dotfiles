@@ -38,34 +38,19 @@ aucmd("TermOpen", {
     desc = "Disable numbers and enter insert mode in the terminal",
 })
 
--- Restore the cursorline to its last position in a file
--- https://github.com/famiu/dot-nvim
--- local no_cursor_restore_buftype = {
---     "quickfix",
---     "help",
---     "terminal",
--- }
---
--- local no_cursor_restore_fts = {
---     "gitcommit",
---     "gitrebase",
--- }
---
--- local cursor_group = augroup("CursorGroup", { clear = true })
---
--- aucmd("BufReadPost", {
---     group = cursor_group,
---     callback = function()
---         if fn.line([['"]]) >= 1
---             and fn.line([['"]]) <= fn.line("$")
---             and not vim.tbl_contains(no_cursor_restore_buftype, opt.buftype:get())
---             and not vim.tbl_contains(no_cursor_restore_fts, opt.filetype:get())
---         then
---             cmd([[normal! g`" | zz]])
---         end
---     end,
---     desc = "Restore cursor to its last position in a file",
--- })
+-- https://this-week-in-neovim.org/2023/Jan/2#tips
+vim.api.nvim_create_autocmd("BufReadPost", {
+    callback = function()
+        if vim.bo.filetype ~= "gitcommit" then
+            local mark = vim.api.nvim_buf_get_mark(0, "\"")
+            local lcount = vim.api.nvim_buf_line_count(0)
+            if mark[1] > 0 and mark[1] <= lcount then
+                pcall(vim.api.nvim_win_set_cursor, 0, mark)
+            end
+        end
+    end,
+    group = vim.api.nvim_create_augroup("RestoreCursorGroup", { clear = true }),
+})
 
 -- Automatically create a non-existing directory when writing a new file
 aucmd("BufWritePre", {
@@ -76,11 +61,11 @@ aucmd("BufWritePre", {
             fn.mkdir(path, "p")
         end
     end,
-    desc = "Create non-existing dir when writing a new file"
+    desc = "Create non-existing dir when writing a new file",
 })
 
 -- Set formatoptions
-local formatopt_group = augroup('CustomFormatOptions', {})
+local formatopt_group = augroup("CustomFormatOptions", {})
 
 -- aucmd("BufEnter", {
 --     group = formatopt_group,
@@ -92,5 +77,5 @@ local formatopt_group = augroup('CustomFormatOptions', {})
 
 aucmd("BufEnter", {
     group = formatopt_group,
-    command = "set formatoptions-=cro"
+    command = "set formatoptions-=cro",
 })
