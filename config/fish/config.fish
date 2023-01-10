@@ -33,4 +33,6 @@ if status is-interactive
 
     # https://github.com/PatrickF1/fzf.fish
     set fzf_dir_opts --bind "ctrl-e:execute(nvim {} &> /dev/tty)"
+
+    zoxide init fish | source
 end
