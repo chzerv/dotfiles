@@ -10,6 +10,7 @@ return {
     {
         "sainnhe/sonokai",
         lazy = false,
+        priority = 1000,
         config = function()
             vim.o.background = "dark"
             -- 'default', 'atlantis', 'andromeda', 'shusia', 'maia', 'espresso'

@@ -10,7 +10,8 @@ map("n", "<leader>sb", function()
 end, { desc = "[S]earch the current [B]uffer]" })
 
 map("n", "<localleader>t", "<cmd>Telescope<cr>")
-map("n", "<C-p>", builtin.git_files, { desc = "Search git files" })
+-- map("n", "<C-p>", builtin.git_files, { desc = "Search git files" })
+map("n", "<C-p>", "<cmd>lua require'plugins.telescope.utils'.project_files()<CR>", { desc = "Search git files" })
 map("n", "<leader><space>", builtin.buffers, { desc = "[b] Find open buffers" })
 map("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
 map( "n", "<leader>sF", "<cmd>lua require'plugins.telescope.utils'.prompt_find_files()<CR>",

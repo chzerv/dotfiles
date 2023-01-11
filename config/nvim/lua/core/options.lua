@@ -28,7 +28,6 @@ opt.wrap = true -- Wrap long lines
 opt.expandtab = true -- Use spaces instead of tabs
 opt.shiftwidth = 4 -- Indent with 4 spaces
 opt.softtabstop = 4 -- Insert 4 spaces when pressing <Tab>
-opt.tabstop = 4
 
 opt.breakindent = true -- Indent wrapped lines
 opt.linebreak = true

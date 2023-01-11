@@ -29,12 +29,15 @@ require("lazy").setup("plugins", {
         notify = true,
     },
     performance = {
+        cache = {
+            enabled = true,
+        },
         rtp = {
             disabled_plugins = {
                 "gzip",
                 "matchit",
                 "matchparen",
-                "netrwPlugin",
+                -- "netrwPlugin",
                 "tarPlugin",
                 "tohtml",
                 "tutor",
