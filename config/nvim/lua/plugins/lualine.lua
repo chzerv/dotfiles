@@ -1,14 +1,10 @@
-local M = {
+return {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
-}
-
-function M.config()
-    -- Bubbles config for lualine
-    -- Author: lokesh-krishna
-    -- MIT license, see LICENSE for more details.
-
-    require("lualine").setup({
+    opts = {
+        -- Bubbles config for lualine
+        -- Author: lokesh-krishna
+        -- MIT license, see LICENSE for more details.
         options = {
             theme = "auto",
             icons_enabled = true,
@@ -40,7 +36,5 @@ function M.config()
             lualine_y = {},
             lualine_z = {},
         },
-    })
-end
-
-return M
+    },
+}
