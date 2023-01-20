@@ -100,6 +100,12 @@ map("n", "gh", "yiw:help <C-R><C-W><CR>", opts)
 -- https://www.reddit.com/r/neovim/comments/zy3qq0/til_search_within_visual_selection/
 vim.keymap.set('v', '<m-/>', '<esc>/\\%V')
 
+-- Resize windows using Ctrl + arrow keys
+vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
+vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
+vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
+vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
+
 -- Since we disable netrw, create a binding to replicate "gx"
 -- Credits to kutsan
 -- map("n", "gx", function()
