@@ -70,8 +70,8 @@ map("n", "<leader>/", [[<Cmd>execute 'vimgrep /'.@/.'/g %'<CR>copen<CR><CR>nohls
 map("n", "<leader>z", "<Plug>(ToggleZoom)", opts)
 
 -- Substitute the word under cursor...
-map("n", "<leader>sl", ":s/<C-R><C-W>//g<left><left>") -- line wise
-map("n", "<leader>sg", ":%s/<C-R><C-W>//g<left><left>") -- buffer wise
+map("n", "<leader>rl", ":s/<C-R><C-W>//g<left><left>") -- line wise
+map("n", "<leader>rg", ":%s/<C-R><C-W>//g<left><left>") -- buffer wise
 
 -- Substitute in visual selection
 map('x', '<leader>sv', [[:s/\%V]])
