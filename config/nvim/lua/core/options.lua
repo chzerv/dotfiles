@@ -138,6 +138,9 @@ local builtin_plugins = {
     loaded_node_provider = 0,
     loaded_perl_provider = 0,
     loaded_ruby_provider = 0,
+    loaded_synmenu = 1,
+    loaded_optwin = 1,
+    loaded_compiler = 1,
 }
 
 for k, v in pairs(builtin_plugins) do
