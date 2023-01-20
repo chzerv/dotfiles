@@ -1,7 +1,7 @@
 local M = {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
-    keys = { "<leader>sf", "<leader>so", "<C-p>" },
+    keys = { "<leader>sf", "<leader>so", "<leader>sl", "<C-p>" },
     dependencies = {
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
         { "nvim-telescope/telescope-ui-select.nvim" },
