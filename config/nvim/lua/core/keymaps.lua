@@ -53,12 +53,6 @@ map("n", "]<Space>", "<Cmd>put =repeat(nr2char(10), v:count1) <Bar> '[-1<CR>", o
 map("x", "<", "<gv", opts)
 map("x", ">", ">gv", opts)
 
--- Drag line(s) vertically and auto-indent
-map("n", "<C-j>", ":m .+1<CR>==", opts)
-map("n", "<C-k>", ":m .-2<CR>==", opts)
-map("x", "<C-k>", ":move '<-2<CR>gv-gv", opts)
-map("x", "<C-j>", ":move '>+1<CR>gv-gv", opts)
-
 -- Toggle spellcheck
 -- The blank string in the mode indicates that this is a 'map' mapping
 map("", "<F6>", "<Cmd>setlocal spell! spelllang=en_us<CR>")

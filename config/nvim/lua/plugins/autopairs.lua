@@ -1,6 +1,7 @@
 local M = {
     "windwp/nvim-autopairs",
     event = "InsertCharPre",
+    enabled = false,
 }
 
 function M.config()
