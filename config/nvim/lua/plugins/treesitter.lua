@@ -5,7 +5,6 @@
 
 return {
     "nvim-treesitter/nvim-treesitter",
-    dev = false,
     build = ":TSUpdate",
     event = "BufReadPost",
 
@@ -37,6 +36,7 @@ return {
                 "sql",
                 "gitcommit",
                 "diff",
+                "ini",
             },
 
             sync_install = false,

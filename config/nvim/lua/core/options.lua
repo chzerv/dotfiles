@@ -1,57 +1,26 @@
---------------------------------
--- Core Options
---------------------------------
-
 local opt = vim.opt
 
--- General
-opt.updatetime = 100
-opt.scrolloff = 4
-
--- UI
-opt.number = true
-opt.relativenumber = true
-opt.shortmess:append("cs")
-opt.showmode = false
-opt.showcmd = false
-opt.cmdheight = 1
-opt.laststatus = 3 -- Global status line
-opt.termguicolors = true
-opt.signcolumn = "yes" -- Avoid shifting the screen whenever a diagnostic appears
-opt.diffopt:append({ "linematch:60" })
--- opt.winbar = "=%=%m %t"
-
--- Indent and Tab Behavior
-opt.autoindent = true -- Use indentation of current line on the next one
-opt.wrap = true -- Wrap long lines
-
-opt.expandtab = true -- Use spaces instead of tabs
-opt.shiftwidth = 4 -- Indent with 4 spaces
-opt.softtabstop = 4 -- Insert 4 spaces when pressing <Tab>
-
+-- Identation
+opt.expandtab = true   -- Use spaces instead of TABs
+opt.shiftwidth = 4     -- Indent with 4 spaces
+opt.softtabstop = 4    -- Use 4 spaces per TAB
 opt.breakindent = true -- Indent wrapped lines
-opt.linebreak = true
-opt.showbreak = string.rep(" ", 2)
-opt.joinspaces = false -- Don't join lines with spaces at the end
-
--- Better splitting
-opt.splitbelow = true -- Split new windows below the current one
-opt.splitright = true -- Split new windoes right of the current one
-opt.inccommand = "split" -- Show offscreen results in a preview window during :substitute
-
--- Folding
-opt.foldmethod = "marker"
-opt.modelines = 1
-opt.foldlevel = 0
 
 -- Searching
-opt.ignorecase = true -- Ignore case when searching ..
-opt.smartcase = true -- unless there is a capital letter in the query
-opt.incsearch = true -- Show search results as you type
-opt.hlsearch = true -- Highlight search results
+opt.ignorecase = true -- Ignore case when searching..
+opt.smartcase = true  -- unless there is a capital letter in the query
+opt.incsearch = true  -- Show search results as you type
+opt.hlsearch = true   -- Highlight matching search results
 
--- Undo, Swap and Backup
-opt.backup = false -- Disable permanent backups..
+-- Use 'ripgrep' for grepping
+opt.grepprg = "rg --smart-case --vimgrep"
+opt.grepformat = {
+    "%f:%l:%c:%m",
+    "%f:%l:%m",
+}
+
+-- Backup, undo and swap files
+opt.backup = false     -- Disable permanent backups..
 opt.writebackup = true -- but enable temporary backups
 opt.dir = vim.fn.stdpath("data") .. "/cache/swap"
 opt.undofile = true
@@ -59,13 +28,66 @@ opt.undodir = vim.fn.stdpath("data") .. "/cache/undo"
 
 -- Completion
 opt.pumheight = 10 -- Only show 10 completion candidates
-opt.pumblend = 10 -- Add transparency to the pummenu
+opt.pumblend = 10  -- Add trnsparency to the pummenu
 opt.completeopt = { "menuone", "noselect" }
 
--- Command Line Completion
+-- Command line completion
 opt.wildignorecase = true
 opt.wildoptions = "pum"
-opt.wildignore:append("*.o,*~,*pycache*")
+opt.wildignore:append("*.o,*~,*pycache*","**/node_modules/**","**/.git/**")
+
+-- UX
+opt.updatetime = 100      -- Trigger CursorHold (:h CursorHold) events faster
+opt.scrolloff = 4         -- Lines to keep above/below the cursor while scrolling
+opt.inccommand = "split"  -- Preview offscreen substitutions
+opt.splitbelow = true     -- Split new windows below the current one
+opt.splitright = true     -- Split new windows right of the current one
+opt.joinspaces = false    -- Don't join lines with spaces at the end
+opt.wrap = true           -- Don't wrap long lines
+opt.virtualedit = "block" -- Allow going past the end of line in visual block mode
+
+-- UI
+opt.number = true
+opt.relativenumber = true
+opt.numberwidth = 3
+opt.showmode = false
+opt.showcmd = false
+opt.cmdheight = 1
+opt.laststatus = 3
+opt.termguicolors = true
+opt.signcolumn = "yes"
+--opt.statuscolumn = "%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}%=%s"
+opt.diffopt = { "filler", "internal", "algorithm:histogram", "indent-heuristic", "linematch:60" }
+
+opt.linebreak = true -- Break lines on spaces or TABs
+opt.showbreak = '↳ ' -- String to put at the start of wrapped lines
+
+-- Visualize tabs, spaces and non-breaking spaces
+opt.list = true
+opt.listchars = {
+    tab = "» ",
+    nbsp = "␣",
+    trail = "•",
+    extends = "›",
+    precedes = "‹",
+}
+
+-- Don't show trailing whitespaces in insert mode
+vim.cmd([[
+    augroup ListcharsTrail autocmd!
+        autocmd InsertEnter * :set listchars-=trail:•
+        autocmd InsertLeave * :set listchars+=trail:•
+    augroup END
+]])
+
+opt.shortmess:append {
+    I = false, -- Show the intro screen
+    W = true,  -- Don't print "written" when editing
+    a = true,  -- Use abbreviations in messages, e.g., [RO] intead of [readonly]
+    c = true,  -- Don't show ins-completion-menu messages (match 1 of 2)
+    F = true,  -- Don't print the file name when opening a file
+    s = true,  -- Don't show "Search hit BOTTOM" message
+}
 
 -- Show the cursor line, but only in normal mode
 local group = vim.api.nvim_create_augroup("CursorLine", { clear = true })
@@ -81,39 +103,7 @@ end
 set_cursorline({ "WinLeave", "InsertEnter" }, false)
 set_cursorline({ "BufEnter", "InsertLeave" }, true)
 
--- Visualize tabs, spaces, unwrapped text and non-breaking spaces
-opt.list = true
-opt.listchars = {
-    tab = "──",
-    nbsp = "␣",
-    trail = "•",
-    precedes = "«",
-    extends = "»",
-}
-
--- Don't show trailing whitespaces in insert mode
-vim.cmd([[
-    augroup ListcharsTrail
-        autocmd!
-        autocmd InsertEnter * :set listchars-=trail:•
-        autocmd InsertLeave * :set listchars+=trail:•
-    augroup END
-]])
-
--- Use 'rg' for vimgrep
-if vim.fn.executable("rg") then
-    vim.opt.grepprg = "rg --vimgrep --no-heading --hidden --smart-case --no-ignore-vcs"
-    vim.opt.grepformat = {
-        "%f:%l:%c:%m",
-        "%f:%l:%m",
-    }
-end
-
--- Netrw
-vim.g.netrw_banner = 0
-vim.g.netrw_liststyle = 3
-
--- Disable builtin plugins
+-- Disable built-ins
 local builtin_plugins = {
     loaded_gzip = 1,
     loaded_zip = 1,
@@ -146,3 +136,4 @@ local builtin_plugins = {
 for k, v in pairs(builtin_plugins) do
     vim.g[k] = v
 end
+

@@ -3,20 +3,13 @@ return {
     event = "BufReadPre",
     opts = {
         signs = {
-            add = { hl = "GitSignsAdd", text = "+", linehl = "GitSignsAddLn" },
-            change = { hl = "GitSignsChange", text = "~", linehl = "GitSignsChangeLn" },
-            delete = { hl = "GitSignsDelete", text = "-", linehl = "GitSignsDeleteLn" },
-            topdelete = { hl = "GitSignsDelete", text = "‾", linehl = "GitSignsDeleteLn" },
-            changedelete = { hl = "GitSignsChange", text = "_", linehl = "GitSignsChangeLn" },
+            add = { text = "▎" },
+            change = { text = "▎" },
+            delete = { text = "▁" },
+            topdelete = { text = "▔" },
+            changedelete = { text = "▎" },
+            untracked = { text = "▎" },
         },
-        -- signs = {
-        --     add = { text = "▎" },
-        --     change = { text = "▎" },
-        --     delete = { text = "契" },
-        --     topdelete = { text = "契" },
-        --     changedelete = { text = "▎" },
-        --     untracked = { text = "▎" },
-        -- },
         on_attach = function(bufnr)
             local gitsigns = require("gitsigns")
 

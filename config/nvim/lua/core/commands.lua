@@ -11,3 +11,8 @@ vim.api.nvim_create_user_command("Source", function()
         ]])
     end
 end, {})
+
+vim.api.nvim_create_user_command("Lcd", function()
+    vim.cmd("lcd %:p:h")
+    vim.cmd("pwd")
+end, {})

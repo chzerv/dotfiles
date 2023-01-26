@@ -32,6 +32,7 @@ function M.setup()
                 handlers.codelens(client, bufnr)
             end,
             cmd = { "rust-analyzer" },
+            root_dir = require("lspconfig").util.root_pattern("Cargo.toml"),
             settings = {
                 -- https://rust-analyzer.github.io/manual.html#configuration
                 ["rust-analyzer"] = {
