@@ -4,9 +4,9 @@ return {
             ansible = {
                 useFullyQualifiedCollectionNames = true,
             },
-            -- https://github.com/ansible/ansible-language-server/issues/391
             completion = {
-                provideRedirectModules = false,
+                provideRedirectModules = true,
+                provideModuleOptionAliases = true,
             },
         },
         -- Let null-ls handle linting

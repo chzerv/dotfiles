@@ -8,6 +8,7 @@ vim.filetype.add({
         ["site.y(a*)ml"] = "yaml.ansible",
         ["playbook.y(a*)ml"] = "yaml.ansible",
         [".*/tasks/.*%.y(a*)ml"] = "yaml.ansible",
+        [".*/handlers/.*%.y(a*)ml"] = "yaml.ansible",
         [".*/role(s*)/.*%.y(a*)ml"] = "yaml.ansible",
         [".*/playbook(s*)/.*%.y(a*)ml"] = "yaml.ansible",
         [".*/vars/.*%.y(a*)ml"] = "yaml.ansible",
