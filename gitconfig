@@ -2,14 +2,15 @@
     email = xrist.zerv@protonmail.com
     name = Chris Zervakis
 [alias]
-st = status
+    st = status
     co = checkout
     cm = commit --verbose
     ca = commit --amend
     can = commit --amend --no-edit
     graph = log --oneline --graph --all --decorate
-    ap = add --patch
     find = "!f() { cd `git rev-parse --show-toplevel` && git ls-files | rg \"$@\"; }; f"
+    # Show the most recent commit matching a query
+    query = "!f() { git show :/\"$@\"; }; f"
 [commit]
     verbose = true
 [diff]
@@ -30,5 +31,8 @@ st = status
     hunk-header-decoration-style = yellow box
     hunk-header-style = file line-number syntax
     side-by-side = false
+    navigate = true
 [merge]
     ff = false
+[rebase]
+    autoStash = true
