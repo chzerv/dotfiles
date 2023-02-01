@@ -27,8 +27,8 @@ map("x", "p", "P", opts)
 map("x", "P", "p", opts)
 
 -- Don't yank changes
-map("n", "c", '"_c')
-map("n", "C", '"_C')
+map("n", "c", "\"_c")
+map("n", "C", "\"_C")
 
 -- Re-select block after indenting
 map("x", "<", "<gv", opts)
@@ -64,11 +64,11 @@ map("n", "<Esc>", "<cmd> :noh <CR>")
 map("n", "<leader>q/", [[<Cmd>execute 'vimgrep /'.@/.'/g %'<CR>copen<CR><CR>nohls<CR>]])
 
 -- Substitute the word under cursor...
-map("n", "<leader>rl", ":s/<C-R><C-W>//g<left><left>")  -- line wise
+map("n", "<leader>rl", ":s/<C-R><C-W>//g<left><left>") -- line wise
 map("n", "<leader>rg", ":%s/<C-R><C-W>//g<left><left>") -- buffer wise
 
 -- Substitution in visual selection
-map('x', '<leader>rv', [[:s/\%V]])
+map("x", "<leader>rv", [[:s/\%V]])
 
 -- "Invert" the word under cursor, e.g., true -> false
 map("n", "!", "<cmd>lua require'my_plugins.invert-text'.invert()<cr>", opts)
@@ -78,7 +78,7 @@ map("n", "gh", "yiw:help <C-R><C-W><CR>", opts)
 
 -- Search within visual selection
 -- https://www.reddit.com/r/neovim/comments/zy3qq0/til_search_within_visual_selection/
-vim.keymap.set('v', '<m-/>', '<esc>/\\%V')
+vim.keymap.set("v", "<m-/>", "<esc>/\\%V")
 
 -- Resize windows using Ctrl + arrow keys
 vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
@@ -95,7 +95,7 @@ map("n", "<C-w><C-q>", ":tabclose<CR>", opts)
 -- Buffer navigation
 map("n", "[b", ":bprevious<CR>", opts)
 map("n", "]b", ":bnext<CR>", opts)
-map('n', '<leader><leader>', '<c-^>')
+map("n", "<leader><leader>", "<c-^>")
 
 -- Quickfix navigation
 map("n", "[q", ":cprevious<CR>", opts)
@@ -114,6 +114,14 @@ map("n", "<Bslash>l", ":lclose<CR>", opts)
 -- Mimic shell bindings in VIM
 map("i", "<C-e>", "<C-o>$")
 map("i", "<C-a>", "<C-o>^")
+
+-- Since we disable netrw, create a binding to replicate "gx"
+-- Credits to kutsan
+map("n", "gx", function()
+    local url = vim.fn.expand("<cfile>")
+    local escaped_url = vim.fn.escape(url, "#%!")
+    vim.cmd(("silent !xdg-open \"%s\""):format(escaped_url))
+end, { silent = true })
 
 -- Neovim Terminal
 map("n", "<C-\\>", [[<cmd>lua require'my_plugins.term'.toggle_term("split", 15)<cr>]], opts)

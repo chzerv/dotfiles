@@ -1,22 +1,28 @@
 return {
-    "echasnovski/mini.nvim",
-    event = "InsertCharPre",
-    config = function()
-        require("mini.pairs").setup()
-        require("mini.align").setup()
-        require("mini.move").setup({
-            mappings = {
-                left = "<C-h>",
-                right = "<C-l>",
-                down = "<C-j>",
-                up = "<C-k>",
+    {
+        "echasnovski/mini.align",
+        keys = { "ga", "gA", move = "v" },
+        config = function()
+            require('mini.align').setup()
+        end,
+    },
+    {
+        "echasnovski/mini.move",
+        keys = { "<C-k>", "<C-j>" },
+        config = function()
+            require("mini.move").setup({
+                mappings = {
+                    left = "<C-h>",
+                    right = "<C-l>",
+                    down = "<C-j>",
+                    up = "<C-k>",
 
-                line_left = "<C-h>",
-                line_right = "<C-l>",
-                line_down = "<C-j>",
-                line_up = "<C-k>",
-                -- Move current line in Normal mode
-            },
-        })
-    end,
+                    line_left = "<C-h>",
+                    line_right = "<C-l>",
+                    line_down = "<C-j>",
+                    line_up = "<C-k>",
+                },
+            })
+        end,
+    },
 }

@@ -1,10 +1,21 @@
 return {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
-    keys = { "<leader>sf", "<leader>so", "<leader>sl", "<C-p>" },
+    keys = { "<leader>sf", "<leader>so", "<leader>sl", "<leader>sh", "<C-p>" },
     dependencies = {
-        { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-        { "nvim-telescope/telescope-ui-select.nvim" },
+        {
+            "nvim-telescope/telescope-fzf-native.nvim",
+            build = "make",
+            config = function()
+                require("telescope").load_extension("fzf")
+            end,
+        },
+        {
+            "nvim-telescope/telescope-ui-select.nvim",
+            config = function()
+                require("telescope").load_extension("ui-select")
+            end,
+        },
     },
 
     config = function()
@@ -136,9 +147,6 @@ return {
                 },
             },
         })
-
-        telescope.load_extension("fzf")
-        telescope.load_extension("ui-select")
 
         -- Load keymaps
         require("plugins.telescope.keymaps")
