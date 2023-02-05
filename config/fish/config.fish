@@ -8,6 +8,7 @@ fish_add_path "$HOME/.local/bin/"
 fish_add_path "$HOME/.local/bin/scripts/"
 fish_add_path "$HOME/.local/bin/distrobox/bin"
 fish_add_path "/usr/local/bin/go/bin"
+fish_add_path "$HOME/go/bin"
 
 # Envvars
 set -x EDITOR nvim
