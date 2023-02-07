@@ -3,6 +3,7 @@ return {
         "navarasu/onedark.nvim",
         lazy = false,
         priority = 1000,
+        enabled = false,
         config = function()
             require("onedark").setup({
                 style = "darker",
@@ -27,6 +28,18 @@ return {
             vim.g.sonokai_transparent_background = 0
             vim.g.sonokai_diagnostic_virtual_text = "colored"
             vim.cmd.colorscheme("sonokai")
+        end,
+    },
+    {
+        "bluz71/vim-moonfly-colors",
+        lazy = false,
+        enabled = true,
+        priority = 1000,
+        config = function()
+            vim.g.moonflyCursorColor = true
+            vim.g.moonflyItalics = true
+            vim.g.moonflyVirtualTextColor = false
+            vim.cmd.colorscheme("moonfly")
         end,
     },
 }
