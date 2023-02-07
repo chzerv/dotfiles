@@ -26,9 +26,6 @@ if status is-interactive
     # Navi
     navi widget fish | source
 
-    # Source abbreviations
-    . ~/.config/fish/abbreviations.fish
-
     # Source functions
     . ~/.config/fish/functions.fish
 
