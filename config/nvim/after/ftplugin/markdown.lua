@@ -52,3 +52,4 @@ vim.g.vim_markdown_toml_frontmatter = false
 vim.g.vim_markdown_json_frontmatter = false
 vim.g.vim_markdown_no_extensions_in_markdown = false
 vim.g.vim_markdown_follow_anchor = true
+vim.g.vim_markdown_new_list_item_indent = 2

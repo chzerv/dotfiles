@@ -136,4 +136,3 @@ local builtin_plugins = {
 for k, v in pairs(builtin_plugins) do
     vim.g[k] = v
 end
-
