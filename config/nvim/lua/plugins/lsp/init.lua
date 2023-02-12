@@ -12,7 +12,7 @@ return {
             "yamlls",
             "jsonls",
             "pyright",
-            "sumneko_lua",
+            "lua_ls",
             "dockerls",
             "emmet_ls",
             "terraformls",
