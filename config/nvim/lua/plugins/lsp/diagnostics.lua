@@ -23,6 +23,24 @@ M.setup = function()
             border = "rounded",
             show_header = true,
             style = "minimal",
+            format = function(diagnostic)
+                if diagnostic.source == "" then
+                    return diagnostic.message
+                end
+
+                if diagnostic.source == "ansible-lint" then
+                    return string.format(
+                        "%s [%s]\nMore info: %s\n",
+                        diagnostic.message,
+                        diagnostic.code,
+                        diagnostic.user_data.lsp.codeDescription.href
+                    )
+                end
+                return string.format("%s [%s]", diagnostic.message, diagnostic.source)
+            end,
+            suffix = function()
+                return ""
+            end,
         },
     })
 end

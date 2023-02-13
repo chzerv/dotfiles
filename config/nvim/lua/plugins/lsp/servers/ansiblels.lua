@@ -1,19 +1,17 @@
 return {
     settings = {
         ansible = {
-            ansible = {
-                useFullyQualifiedCollectionNames = true,
+            executionEnvironment = {
+                enabled = false,
             },
-            completion = {
-                provideRedirectModules = true,
-                provideModuleOptionAliases = true,
+            validation = {
+                enabled = true,
+                lint = {
+                    enabled = true,
+                    path = "ansible-lint",
+                    arguments = "-f codeclimate --profile production",
+                },
             },
         },
-        -- Let null-ls handle linting
-        validation = {
-            lint = {
-                enabled = false
-            }
-        }
     },
 }
