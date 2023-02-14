@@ -112,8 +112,8 @@ map("n", "[L", ":llast<CR>")
 map("n", "<Bslash>l", ":lclose<CR>", opts)
 
 -- Mimic shell bindings in VIM
-map("i", "<C-e>", "<C-o>$")
-map("i", "<C-a>", "<C-o>^")
+map("i", "<C-e>", "<End>")
+map("i", "<C-a>", "<Home>")
 
 -- Since we disable netrw, create a binding to replicate "gx"
 -- Credits to kutsan
