@@ -5,6 +5,13 @@ return {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "hrsh7th/cmp-nvim-lsp",
+        {
+            "j-hui/fidget.nvim",
+            opts = {
+                text = { spinner = "dots_pulse" },
+                window = { relative = "editor", blend = 0 }
+            }
+        },
     },
     config = function()
         local servers = {
@@ -72,7 +79,6 @@ return {
         -- Setup diagnostics
         require("plugins.lsp.diagnostics").setup()
         require("plugins.null-ls").setup()
-        require("plugins.fidget").setup()
         require("plugins.rust-tools").setup()
     end,
 }
