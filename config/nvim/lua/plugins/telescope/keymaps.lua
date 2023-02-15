@@ -3,6 +3,7 @@ local builtin = require("telescope.builtin")
 
 map("n", "<C-p>", "<cmd>lua require'plugins.telescope.utils'.project_files()<CR>", { desc = "Search git files" })
 map("n", "<localleader>t", "<cmd>Telescope<cr>")
+map("n", "<localleader>s", "<cmd>Telescope resume<cr>")
 map("n", "<leader>,", builtin.buffers, { desc = "[b] Find open buffers" })
 
 map("n", "<leader>so", builtin.oldfiles, { desc = "[S]earch [O]ld files" })
