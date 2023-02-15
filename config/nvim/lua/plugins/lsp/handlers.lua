@@ -15,9 +15,7 @@ function M.lsp_mappings(client, bufnr)
     if client.name == "rust_analyzer" and has_rt then
         map("n", "K", rt.hover_actions.hover_actions, opts)
     else
-        map("n", "K", function()
-            return require("plugins.lsp.utils").fix_buf_hover()
-        end, opts)
+        map("n", "K", vim.lsp.buf.hover, opts)
     end
 
     map("n", "gd", vim.lsp.buf.definition, opts)
