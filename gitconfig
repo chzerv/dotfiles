@@ -1,6 +1,7 @@
 [user]
     email = xrist.zerv@protonmail.com
     name = Chris Zervakis
+
 [alias]
     st = status
     co = checkout
@@ -8,31 +9,38 @@
     ca = commit --amend
     can = commit --amend --no-edit
     graph = log --oneline --graph --all --decorate
+    lg = log --oneline
     find = "!f() { cd `git rev-parse --show-toplevel` && git ls-files | rg \"$@\"; }; f"
     # Show the most recent commit matching a query
     query = "!f() { git show :/\"$@\"; }; f"
+
 [commit]
     verbose = true
-[diff]
-    tool = vimdiff
+
 [init]
     defaultBranch = main
+
 [core]
     editor = nvim
     pager = delta
+
 [interactive]
     diffFilter = delta --color-only
+
+[diff]
+    tool = nvimdiff
+
+[difftool "nvimdiff"]
+    cmd = nvim -d $LOCAL $REMOTE
+
 [delta]
-    line-numbers = true
-    decorations = true
-    paging=always
+    features = line-numbers decorations
+    whitespace-error-style = 22 reverse
     syntax-theme = TwoDark
-    file-decoration-style = yellow ul
-    hunk-header-decoration-style = yellow box
-    hunk-header-style = file line-number syntax
     side-by-side = false
-    navigate = true
+
 [merge]
     ff = false
+
 [rebase]
     autoStash = true
