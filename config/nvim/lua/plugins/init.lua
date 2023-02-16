@@ -5,13 +5,14 @@ return {
     -- Seamless navigation between tmux and neovim
     {
         "christoomey/vim-tmux-navigator",
-        keys = { "<A-h>", "<A-l>", "<A-j>", "<A-k>" },
-        config = function()
+        keys = {
+            { "<A-h>", "<cmd>TmuxNavigateLeft<CR>" },
+            { "<A-l>", "<cmd>TmuxNavigateRight<CR>" },
+            { "<A-j>", "<cmd>TmuxNavigateDown<CR>" },
+            { "<A-k>", "<cmd>TmuxNavigateUp<CR>" },
+        },
+        init = function()
             vim.g.tmux_navigator_no_mappings = 1
-            vim.keymap.set("n", "<A-h>", "<cmd>TmuxNavigateLeft<CR>")
-            vim.keymap.set("n", "<A-l>", "<cmd>TmuxNavigateRight<CR>")
-            vim.keymap.set("n", "<A-j>", "<cmd>TmuxNavigateDown<CR>")
-            vim.keymap.set("n", "<A-k>", "<cmd>TmuxNavigateUp<CR>")
         end,
     },
 
