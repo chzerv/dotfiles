@@ -31,5 +31,8 @@ return {
     },
 
     -- Quick fix list enhancements
-    "romainl/vim-qf",
+    {
+        "romainl/vim-qf",
+        event = "QuickFixCmdPost",
+    },
 }
