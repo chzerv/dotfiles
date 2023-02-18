@@ -143,7 +143,7 @@ return {
                 },
                 oldfiles = {
                     sort_lastused = true,
-                    -- cwd_only = true,
+                    cwd_only = true,
                 },
             },
         })

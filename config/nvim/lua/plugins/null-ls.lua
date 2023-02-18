@@ -12,6 +12,7 @@ function M.setup()
 
     local diagnostics = nls.builtins.diagnostics
     local formatting = nls.builtins.formatting
+    local code_actions = nls.builtins.code_actions
 
     nls.setup({
         debug = false,
@@ -34,6 +35,8 @@ function M.setup()
             diagnostics.yamllint,
             formatting.rustfmt,
             formatting.gofumpt,
+            formatting.terraform_fmt,
+            code_actions.shellcheck,
         },
         on_attach = function(client, bufnr)
             local opts = { noremap = true, silent = true, buffer = bufnr }

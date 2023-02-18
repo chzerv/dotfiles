@@ -7,7 +7,6 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     event = "BufReadPost",
-
     dependencies = {
         "nvim-treesitter/nvim-treesitter-textobjects",
     },
@@ -38,16 +37,15 @@ return {
                 "diff",
                 "ini",
             },
-
             sync_install = false,
-
-            -- List of parsers to ignore installing (for "all")
             ignore_install = {},
-
             highlight = {
-                -- `false` will disable the whole extension
                 enable = true,
-                disable = {},
+                -- Disable TS highlighting on large files or files with very long lines
+                disable = function(_, bufnr)
+                    return vim.api.nvim_buf_line_count(bufnr) > 5000
+                        or vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1]:len() > 500
+                end,
                 additional_vim_regex_highlighting = false,
             },
             indent = {
