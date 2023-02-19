@@ -14,7 +14,7 @@ map("n", "<leader>sF", "<cmd>lua require'plugins.telescope.utils'.prompt_find_fi
     { desc = "Prompt for files to search for" }
 )
 map("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
-map("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
+map({ "n", "x" }, "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord or selection" })
 map("n", "<leader>sl", builtin.live_grep, { desc = "[S]earch using [L]ive grep" })
 map("n", "<leader>sL", "<cmd>lua require'plugins.telescope.utils'.grep_prompt()<CR>",
     { desc = "Prompt for the word to grep for" }
