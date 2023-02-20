@@ -33,3 +33,11 @@ end
 function explain --wraps=rustc --description 'Call rustc --explain and pipe the output to bat'
     rustc --explain $argv | bat -l rs
 end
+
+function k --wraps=kubectl --description 'Alias kubectl to k'
+    command kubectl $argv
+end
+
+function kubectx --wraps=kubectl --description 'Show Kubernetes contexts, highlighting the current one'
+    kubectl config get-contexts | awk '{ if ($1 == "*") { print "\033[32m→ " $2 } else { print $2 } }' | tail -n +2
+end
