@@ -30,6 +30,7 @@ return {
                 "fish",
                 "make",
                 "hcl",
+                "terraform",
                 "toml",
                 "html",
                 "sql",
