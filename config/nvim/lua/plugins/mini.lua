@@ -1,9 +1,9 @@
 return {
     {
         "echasnovski/mini.align",
-        keys = { "ga", "gA", move = "v" },
+        keys = { { "ga", mode = "x" }, { "gA", mode = "x" } },
         config = function()
-            require('mini.align').setup()
+            require("mini.align").setup()
         end,
     },
     {
