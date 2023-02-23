@@ -67,6 +67,7 @@ return {
                         ["<M-p>"] = actions_layout.toggle_preview,
                         ["<C-e>"] = actions.results_scrolling_down,
                         ["<C-y>"] = actions.results_scrolling_up,
+                        ["<CR>"] = actions.select_default + actions.center,
                     },
                     n = {
                         ["<C-e>"] = actions.results_scrolling_down,
