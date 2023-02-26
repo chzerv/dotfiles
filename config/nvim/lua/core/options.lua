@@ -103,6 +103,17 @@ end
 set_cursorline({ "WinLeave", "InsertEnter" }, false)
 set_cursorline({ "BufEnter", "InsertLeave" }, true)
 
+-- Netrw
+-- https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
+
+vim.g.netrw_keepdir = 0
+vim.g.netrw_banner = 0
+vim.g.netrw_localcopydircmd = "cp -r"
+vim.g.netrw_browse_split = 0
+vim.g.preview = 1
+vim.g.netrw_liststyle = 3
+vim.g.netrw_winsize = 20
+
 -- Disable built-ins
 local builtin_plugins = {
     loaded_gzip = 1,

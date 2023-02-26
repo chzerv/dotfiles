@@ -117,11 +117,13 @@ map("i", "<C-a>", "<Home>")
 
 -- Since we disable netrw, create a binding to replicate "gx"
 -- Credits to kutsan
-map("n", "gx", function()
-    local url = vim.fn.expand("<cfile>")
-    local escaped_url = vim.fn.escape(url, "#%!")
-    vim.cmd(("silent !xdg-open \"%s\""):format(escaped_url))
-end, { silent = true })
+-- map("n", "gx", function()
+--     local url = vim.fn.expand("<cfile>")
+--     local escaped_url = vim.fn.escape(url, "#%!")
+--     vim.cmd(("silent !xdg-open \"%s\""):format(escaped_url))
+-- end, { silent = true })
+
+map("n", "<leader>pf", "<cmd>Ex<cr>", opts)
 
 -- Neovim Terminal
 map("n", "<C-\\>", [[<cmd>lua require'my_plugins.term'.toggle_term("split", 15)<cr>]], opts)
