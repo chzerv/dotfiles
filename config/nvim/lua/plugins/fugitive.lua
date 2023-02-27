@@ -12,6 +12,14 @@ return {
                     ]])
                 end,
             },
+            {
+                "<leader>gl",
+                function()
+                    vim.cmd([[
+                    :tabnew | Gclog
+                    ]])
+                end,
+            },
         },
     },
 }
