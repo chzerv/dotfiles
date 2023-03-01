@@ -1,6 +1,7 @@
 format = """
 $username\
 $hostname\
+$kubernetes\
 $directory\
 $git_branch\
 $git_status\
@@ -19,7 +20,7 @@ right_format = "$cmd_duration"
 
 [character]
 success_symbol = "[»](purple)"
-error_symbol = "[»](red) "
+error_symbol = "[»](red)"
 
 [directory]
 read_only = " "
@@ -61,3 +62,8 @@ disabled = true
 [package]
 disabled = true
 
+[kubernetes]
+symbol = "☸ "
+style = "blue"
+format = "[$symbol$context( \\($namespace\\))]($style) in "
+disabled = false
