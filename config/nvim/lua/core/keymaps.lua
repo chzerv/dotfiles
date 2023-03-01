@@ -123,8 +123,6 @@ map("i", "<C-a>", "<Home>")
 --     vim.cmd(("silent !xdg-open \"%s\""):format(escaped_url))
 -- end, { silent = true })
 
-map("n", "<leader>pf", "<cmd>Ex<cr>", opts)
-
 -- Neovim Terminal
 map("n", "<C-\\>", [[<cmd>lua require'my_plugins.term'.toggle_term("split", 15)<cr>]], opts)
 map("t", "<C-\\>", "<C-\\><C-n><cmd>lua require'my_plugins.term'.toggle_term('split', 15)<cr>", opts)

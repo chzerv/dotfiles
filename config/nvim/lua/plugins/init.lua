@@ -1,7 +1,4 @@
 return {
-    -- Required by many plugins
-    "nvim-lua/plenary.nvim",
-
     -- Seamless navigation between tmux and neovim
     {
         "christoomey/vim-tmux-navigator",
