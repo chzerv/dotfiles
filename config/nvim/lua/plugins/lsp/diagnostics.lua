@@ -36,7 +36,7 @@ M.setup = function()
                         diagnostic.user_data.lsp.codeDescription.href
                     )
                 end
-                return string.format("%s [%s]", diagnostic.message, diagnostic.source)
+                return string.format("[%s] %s %s", diagnostic.source, diagnostic.code, diagnostic.message)
             end,
             suffix = function()
                 return ""
