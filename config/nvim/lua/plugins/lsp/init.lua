@@ -26,6 +26,7 @@ return {
             "texlab",
             "ansiblels",
             "bashls",
+            "tsserver",
         }
 
         local lspconfig = require("lspconfig")
