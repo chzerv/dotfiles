@@ -35,6 +35,7 @@ function M.setup()
             diagnostics.yamllint,
             formatting.rustfmt,
             formatting.gofumpt,
+            formatting.goimports,
             formatting.terraform_fmt,
             code_actions.shellcheck,
         },
