@@ -55,10 +55,10 @@ return {
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
                     handlers.lsp_mappings(client, bufnr)
-                    client.server_capabilities.semanticTokensProvider = nil
+                    handlers.fmt_on_save(client, bufnr)
+                    -- client.server_capabilities.semanticTokensProvider = nil
                     -- handlers.popup_diagnostics_on_hover(bufnr)
                     -- handlers.lsp_highlight_document(client, bufnr)
-                    -- handlers.fmt_on_save(client, bufnr)
                     if server == "ansiblels" then
                         -- LSP hover provides nothing of value for Ansible. A more useful thing to do would be to call 'ansible-doc'.
                         -- To do so, we set 'keywordprg' to 'ansible-doc' in 'after/ftplugin/ansible.lua' and call it via the regular 'K' command.

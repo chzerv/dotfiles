@@ -8,7 +8,6 @@ return {
         "hrsh7th/cmp-nvim-lsp-signature-help",
         "saadparwaiz1/cmp_luasnip",
     },
-
     opts = function()
         local cmp = require("cmp")
         local luasnip = require("luasnip")
@@ -46,16 +45,13 @@ return {
                     luasnip.lsp_expand(args.body)
                 end,
             },
-
             confirm_opts = {
                 behavior = cmp.ConfirmBehavior.Replace,
                 select = false,
             },
-
             experimental = {
                 ghost_text = false,
             },
-
             mapping = {
                 -- If pummenu is visible, select next item. If not, trigger completion
                 ["<C-n>"] = function()
@@ -66,7 +62,6 @@ return {
                     end
                 end,
                 ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-
                 ["<C-b>"] = cmp.mapping.scroll_docs(-4),
                 ["<C-f>"] = cmp.mapping.scroll_docs(4),
                 ["<C-e>"] = cmp.mapping.abort(),
@@ -78,7 +73,6 @@ return {
                     { "i", "c" }
                 ),
             },
-
             sources = {
                 { name = "nvim_lsp" },
                 { name = "nvim_lsp_signature_help" },
@@ -86,7 +80,6 @@ return {
                 { name = "buffer", keyword_length = 3 },
                 { name = "path" },
             },
-
             formatting = {
                 fields = { "abbr", "kind", "menu" },
                 format = function(entry, item)
