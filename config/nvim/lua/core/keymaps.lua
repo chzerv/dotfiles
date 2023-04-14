@@ -30,6 +30,9 @@ map("x", "P", "p", opts)
 map("n", "c", "\"_c")
 map("n", "C", "\"_C")
 
+-- Delete without yanking
+map({ "n", "x" }, "<leader>d", "\"_d", opts)
+
 -- Re-select block after indenting
 map("x", "<", "<gv", opts)
 map("x", ">", ">gv", opts)
