@@ -6,6 +6,7 @@ local words = vim.tbl_add_reverse_lookup({
     ["true"] = "false",
     ["yes"] = "no",
     ["on"] = "off",
+    ["present"] = "absent",
 })
 
 function M.invert()
