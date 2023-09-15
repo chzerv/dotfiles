@@ -3,7 +3,7 @@ return {
         "navarasu/onedark.nvim",
         lazy = false,
         priority = 1000,
-        enabled = true,
+        enabled = false,
         config = function()
             require("onedark").setup({
                 style = "darker",
@@ -13,33 +13,50 @@ return {
     },
 
     {
-        "sainnhe/sonokai",
+        "sainnhe/gruvbox-material",
         lazy = false,
-        enabled = false,
+        enabled = true,
         priority = 1000,
         config = function()
             vim.o.background = "dark"
-            -- 'default', 'atlantis', 'andromeda', 'shusia', 'maia', 'espresso'
-            vim.g.sonokai_style = "maia"
-            vim.g.sonokai_better_performance = 1
-            vim.g.sonokai_disable_italic_comment = 0
-            vim.g.sonokai_enable_bold = 0
-            vim.g.sonokai_enable_italic = 1
-            vim.g.sonokai_transparent_background = 0
-            vim.g.sonokai_diagnostic_virtual_text = "colored"
-            vim.cmd.colorscheme("sonokai")
+            vim.g.gruvbox_material_background = "hard"
+            vim.g.gruvbox_material_better_performance = 1
+            vim.g.gruvbox_material_disable_italic_comment = 0
+            vim.g.gruvbox_material_enable_bold = 0
+            vim.g.gruvbox_material_enable_italic = 1
+            vim.g.gruvbox_material_transparent_background = 0
+            vim.g.gruvbox_material_diagnostic_virtual_text = "colored"
+            vim.cmd.colorscheme("gruvbox-material")
         end,
     },
+
     {
-        "bluz71/vim-moonfly-colors",
+        "folke/tokyonight.nvim",
         lazy = false,
         enabled = false,
         priority = 1000,
         config = function()
-            vim.g.moonflyCursorColor = true
-            vim.g.moonflyItalics = true
-            vim.g.moonflyVirtualTextColor = false
-            vim.cmd.colorscheme("moonfly")
+            require("tokyonight").setup({
+                style = "night",
+                light_style = "day",
+                transparent = false,
+                terminal_colors = true,
+                styles = {
+                    comments = { italic = true },
+                    keywords = { italic = false },
+                    functions = {},
+                    variables = {},
+                    sidebars = "dark",
+                    floats = "dark",
+                },
+                sidebars = { "qf", "help" },
+                day_brightness = 0.3,
+                hide_inactive_statusline = false,
+                dim_inactive = true,
+                lualine_bold = false,
+            })
+
+            vim.cmd.colorscheme("tokyonight")
         end,
     },
 }
