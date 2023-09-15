@@ -18,6 +18,7 @@ set -x npm_config_prefix "$HOME/.node_modules/"
 set -x RIPGREP_CONFIG_PATH "$HOME/.config/ripgrep.conf"
 set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
 set -x ANSIBLE_FORCE_COLOR 1
+set -x GTK_USE_PORTAL 1
 
 if status is-interactive
 
